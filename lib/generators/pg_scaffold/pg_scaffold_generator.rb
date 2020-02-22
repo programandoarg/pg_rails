@@ -6,6 +6,9 @@
 # class PgScaffoldGenerator < Rails::Generators::ScaffoldGenerator
 # class PgScaffoldGenerator < Rails::Generators::ResourceGenerator
 # class PgScaffoldGenerator < Rails::Generators::NamedBase
+
+require 'pg_rails/monkey_patches/quitar_rspec_a_generator_de_policies'
+
 class PgScaffoldGenerator < Rails::Generators::NamedBase
   source_root File.expand_path('templates', __dir__)
 
@@ -18,13 +21,12 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
 
   # invoke :scaffold_controller
 
-  # def create_controller_files
-  #   template "controller.rb", File.join("app/controllers", controller_class_path, "#{controller_file_name}_controller.rb")
-  # end
+  def create_controller_files
+    template "controller.rb", File.join("app/controllers", controller_class_path, "#{controller_file_name}_controller.rb")
+  end
   invoke :model
-  # invoke :resource_route
+  invoke :resource_route
   invoke :pg_slim
-  # invoke :pg_factory_bot
-  # invoke :pg_decorator
-  # invoke 'pundit:policy'
+  invoke :pg_decorator
+  invoke 'pundit:policy', 'test_framework' => false
 end

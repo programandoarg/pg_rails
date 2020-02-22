@@ -11,7 +11,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   add_breadcrumb "<%= plural_name.humanize %>", :<%= plural_table_name %>_path
 
   def index
-    @filtros = SlimSmartListingRails::FiltrosBuilder.new(
+    @filtros = PgRails::FiltrosBuilder.new(
       self, <%= class_name %>, [<%= attributes_names.map{|nombre| ":#{nombre}" }.join(', ') %>])
     @<%= plural_table_name %> = @filtros.filtrar <%= orm_class.all(class_name) %>
 
