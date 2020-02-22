@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.version     = PgRails::VERSION
   spec.authors     = ["Martín Rosso"]
   spec.email       = ["mrosso10@gmail.com"]
-  spec.homepage    = "TODO"
-  spec.summary     = "TODO: Summary of PgRails."
-  spec.description = "TODO: Description of PgRails."
+  spec.homepage    = ""
+  spec.summary     = ": Summary of PgRails."
+  spec.description = ": Description of PgRails."
   spec.license     = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   spec.add_dependency "rails", "~> 5.2.4", ">= 5.2.4.1"
+  spec.add_dependency "slim-rails"
 
   spec.add_development_dependency "sqlite3"
 end

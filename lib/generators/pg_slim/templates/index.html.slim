@@ -1,0 +1,17 @@
+- content_for(:title, '<%= plural_table_name.titleize %>')
+- content_for :actions do
+  = link_to new_<%= singular_table_name %>_path, class: 'btn btn-primary' do 
+    span.fa.fa-plus
+    |  Crear <%= human_name %>
+  .btn.btn-warning.exportar data-url="#{<%= plural_table_name %>_path(format: 'xlsx')}"
+    span.fa.fa-list
+    |  Exportar
+.form-wrapper
+  = smart_listing_controls_for(:<%= plural_table_name %>) do |c|
+    = @filtros.filtros_html
+
+  .card.float-e-margins
+    .card-title
+      h5 Listado de <%= plural_table_name %>
+    .card-body
+      = smart_listing_render(:<%= plural_table_name %>)

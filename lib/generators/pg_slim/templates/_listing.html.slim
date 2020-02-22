@@ -1,0 +1,25 @@
+- unless smart_listing.empty?
+  .table-responsive
+    table.table.table-striped.listado
+      thead
+        tr
+  <%- for attribute in attributes -%>
+          th <%= attribute.human_name %>
+  <%- end -%>
+          th
+      tbody
+        - smart_listing.collection.each do |<%= singular_table_name %>|
+          - <%= singular_table_name %> = <%= singular_table_name %>.decorate
+          tr
+  <%- for attribute in attributes -%>
+            td = <%= singular_table_name %>.<%= attribute.name %>
+  <%- end -%>
+            td
+              = <%= singular_table_name %>.show_link
+              = <%= singular_table_name %>.edit_link
+              = <%= singular_table_name %>.destroy_link
+- else
+  p No hay <%= plural_table_name %> que mostrar
+
+= smart_listing.paginate
+= smart_listing.pagination_per_page_links
