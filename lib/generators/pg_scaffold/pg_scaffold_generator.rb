@@ -1,12 +1,3 @@
-# require "rails/generators/rails/model/model_generator"
-# require "rails/generators/rails/resource/resource_generator"
-# require "rails/generators/rails/scaffold/scaffold_generator"
-# require "rails/generators/rails/scaffold_controller/scaffold_controller_generator"
-
-# class PgScaffoldGenerator < Rails::Generators::ScaffoldGenerator
-# class PgScaffoldGenerator < Rails::Generators::ResourceGenerator
-# class PgScaffoldGenerator < Rails::Generators::NamedBase
-
 require 'pg_rails/monkey_patches/quitar_rspec_a_generator_de_policies'
 
 class PgScaffoldGenerator < Rails::Generators::NamedBase
@@ -18,8 +9,6 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
                      desc: "ORM to generate the controller for"
 
   argument :attributes, type: :array, default: [], banner: "field:type field:type"
-
-  # invoke :scaffold_controller
 
   def create_controller_files
     template "controller.rb", File.join("app/controllers", controller_class_path, "#{controller_file_name}_controller.rb")

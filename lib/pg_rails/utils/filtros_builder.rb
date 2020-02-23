@@ -85,12 +85,16 @@ module PgRails
 
     def filtro_asociacion(campo, placeholder = '')
       asociacion = @clase_modelo.reflect_on_all_associations.find {|a| a.name == campo }
-      clase_asociacion = Object.const_get(asociacion.options[:class_name])
+      nombre_clase = asociacion.options[:class_name]
+      if nombre_clase.nil?
+        nombre_clase = asociacion.name.to_s.titleize
+      end
+      clase_asociacion = Object.const_get(nombre_clase)
       map = clase_asociacion.all.map { |o| [o.to_s, o.id] }
-      map.unshift ["-", nil]
+      map.unshift ["Seleccionar #{clase_asociacion.model_name.human.downcase}", nil]
       default = params[campo].nil? ? nil : params[campo]
       content_tag :div, class: 'filter' do
-        select_tag campo, options_for_select(map, default), class: 'form-control pg-input-lg'
+        select_tag campo, options_for_select(map, default), class: 'form-control chosen-select pg-input-lg'
       end
     end
 
