@@ -6,10 +6,11 @@ module PgRails
   class Engine < ::Rails::Engine
     isolate_namespace PgRails
 
-    initializer 'cosas', after: "factory_bot.set_fixture_replacement" do
+    initializer 'configurar_generators', after: "factory_bot.set_fixture_replacement" do
       config.app_generators do |g|
         g.fixture_replacement :pg_factory_bot, dir: 'spec/factories'
         g.test_framework :rspec
+        g.orm :active_record
       end
     end
   end

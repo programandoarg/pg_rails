@@ -1,28 +1,28 @@
 # # frozen_string_literal: true
 
-# if Rails.env.development?
-#   Annotate.set_defaults(
-#     'show_foreign_keys' => 'true',
-#     'show_indexes' => 'true',
-#     'exclude_controllers' => 'true',
-#     'exclude_helpers' => 'true',
-#     'exclude_tests' => 'true',
-#     'sort' => 'true'
-#   )
+if Rails.env.development?
+  Annotate.set_defaults(
+    'show_foreign_keys' => 'true',
+    'show_indexes' => 'true',
+    'exclude_controllers' => 'true',
+    'exclude_helpers' => 'true',
+    'exclude_tests' => 'true',
+    'sort' => 'true'
+  )
 
-#   # Annotate models
-#   task :annotate do
-#     puts 'Annotating models...'
-#     system 'bundle exec annotate --models'
-#   end
+  # Annotate models
+  task :annotate do
+    puts 'Annotating models...'
+    system 'bundle exec annotate --models'
+  end
 
-#   # Run annotate task after db:migrate
-#   #  and db:rollback tasks
-#   Rake::Task['db:migrate'].enhance do
-#     Rake::Task['annotate'].invoke
-#   end
+  # Run annotate task after db:migrate
+  #  and db:rollback tasks
+  Rake::Task['db:migrate'].enhance do
+    Rake::Task['annotate'].invoke
+  end
 
-#   Rake::Task['db:rollback'].enhance do
-#     Rake::Task['annotate'].invoke
-#   end
-# end
+  Rake::Task['db:rollback'].enhance do
+    Rake::Task['annotate'].invoke
+  end
+end

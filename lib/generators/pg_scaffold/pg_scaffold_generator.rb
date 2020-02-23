@@ -24,9 +24,10 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
   def create_controller_files
     template "controller.rb", File.join("app/controllers", controller_class_path, "#{controller_file_name}_controller.rb")
   end
+
   invoke :model
   invoke :resource_route
   invoke :pg_slim
   invoke :pg_decorator
-  invoke 'pundit:policy', 'test_framework' => false
+  invoke 'pundit:policy'
 end
