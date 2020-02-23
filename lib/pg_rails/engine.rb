@@ -13,5 +13,11 @@ module PgRails
         g.orm :active_record
       end
     end
+
+    if Rails.env.test?
+      initializer 'configuracion_rspec' do
+        require 'pg_rails/utils/configurador_rspec'
+      end
+    end
   end
 end
