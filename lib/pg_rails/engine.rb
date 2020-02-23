@@ -1,4 +1,5 @@
 require 'pg_rails/utils/filtros_builder'
+require 'pg_rails/utils/logueador'
 require 'pg_rails/simple_form/initializer'
 
 module PgRails
