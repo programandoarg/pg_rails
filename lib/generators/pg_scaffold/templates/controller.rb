@@ -20,7 +20,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   def index
     @filtros = PgRails::FiltrosBuilder.new(
-      self, <%= class_name %>, [<%= attributes_names.map{|nombre| ":#{nombre}" }.join(', ') %>])
+      self, <%= class_name %>, [<%= atributos_a_filtrar.map{|at| ":#{at.name}" }.join(', ') %>])
     @<%= plural_table_name %> = @filtros.filtrar <%= orm_class.all(class_name) %>
 
     respond_to do |format|

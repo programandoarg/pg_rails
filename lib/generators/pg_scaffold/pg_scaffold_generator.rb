@@ -19,4 +19,10 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
   invoke :pg_slim
   invoke :pg_decorator
   invoke 'pundit:policy'
+
+  private
+
+  def atributos_a_filtrar
+    attributes
+  end
 end
