@@ -8,6 +8,8 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
   class_option :orm, banner: "NAME", type: :string, required: true,
                      desc: "ORM to generate the controller for"
 
+  class_option :decorator, type: :boolean, default: true,  :desc => "Generate view specs"
+
   argument :attributes, type: :array, default: [], banner: "field:type field:type"
 
   def create_controller_files
@@ -17,7 +19,13 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
   invoke :model
   invoke :resource_route
   invoke :pg_slim
-  invoke :pg_decorator
+
+  def decorator
+    if options[:decorator]
+      invoke :pg_decorator
+    end
+  end
+
   invoke 'pundit:policy'
 
   private
