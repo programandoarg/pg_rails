@@ -71,7 +71,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def destroy
-    destroy_and_respond(@<%= orm_instance.destroy %>, <%= index_helper %>_url)
+    destroy_and_respond(@<%= singular_table_name %>, <%= index_helper %>_url)
   end
 
   private
