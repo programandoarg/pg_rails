@@ -11,8 +11,10 @@ module PgRails
     initializer 'configurar_generators', after: "factory_bot.set_fixture_replacement" do
       config.app_generators do |g|
         g.fixture_replacement :pg_factory_bot, dir: 'spec/factories'
-        g.test_framework :rspec
         g.orm :active_record
+        g.test_framework :pg_rspec
+
+        g.fallbacks[:pg_rspec] = :rspec
       end
     end
 

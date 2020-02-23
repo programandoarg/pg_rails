@@ -16,6 +16,8 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
     template "controller.rb", File.join("app/controllers", controller_class_path, "#{controller_file_name}_controller.rb")
   end
 
+  hook_for :test_framework, as: :scaffold
+
   invoke :model
   invoke :resource_route
   invoke :pg_slim
