@@ -2,6 +2,7 @@ require 'pg_rails/utils/filtros_builder'
 require 'pg_rails/utils/logueador'
 require 'pg_rails/simple_form/initializer'
 require 'pg_rails/monkey_patches/mejoras_de_atributos'
+require 'pg_rails/monkey_patches/mejoras_a_named_base'
 
 module PgRails
   class Engine < ::Rails::Engine

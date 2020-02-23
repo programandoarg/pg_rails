@@ -77,11 +77,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   private
 
     def render_smart_listing
-<% if namespaced? -%>
-      smart_listing(:<%= plural_table_name %>, @<%= plural_table_name %>, '<%= namespaced_path %>/<%= plural_table_name %>/listing')
-<% else -%>
-      smart_listing(:<%= plural_table_name %>, @<%= plural_table_name %>, '<%= plural_table_name %>/listing')
-<% end -%>
+      smart_listing(:<%= plural_table_name %>, @<%= plural_table_name %>, '<%= ruta_vistas %>/listing')
     end
 
     def set_<%= singular_table_name %>
