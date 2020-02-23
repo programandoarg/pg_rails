@@ -1,0 +1,18 @@
+.form-group {
+  /*transition: height .5s ease 0s;*/
+  transition: opacity .3s ease 0s;
+  opacity: 1;
+  max-width: 300px;
+
+  &.ocultar {
+    /*height: 0px;*/
+    opacity: 0;
+  }
+}
+
+.filter {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  vertical-align: top;
+}
