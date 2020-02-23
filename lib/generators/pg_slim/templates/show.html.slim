@@ -10,6 +10,6 @@
     table.table.table-borderless.table-sm.w-auto.mb-0
     <%- for attribute in attributes -%>
       tr
-        th <%= attribute.human_name %>
+        th = <%= class_name %>.human_attribute_name(:<%= attribute.name %>)
         td = @<%= singular_table_name %>.<%= attribute.name %>
     <%- end -%>

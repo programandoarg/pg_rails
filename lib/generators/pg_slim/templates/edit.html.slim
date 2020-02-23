@@ -1,5 +1,4 @@
 - content_for :title do
-  | Modificar 
-  = t('activerecord.models.<%= singular_table_name %>')
+  | Modificar #{<%= class_name %>.model_name.human.downcase}
 
 = render 'form'

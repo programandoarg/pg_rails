@@ -1,5 +1,4 @@
 - content_for :title do
-  | Crear 
-  = t('activerecord.models.<%= singular_table_name %>')
+  | Crear #{<%= class_name %>.model_name.human.downcase}
 
 = render 'form'

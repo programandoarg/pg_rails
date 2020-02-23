@@ -71,13 +71,13 @@ module PgRails
       res = ''
       @campos.each do |campo|
         if tipo(campo) == :enumerized
-          res += filtro_select(campo, campo.to_s.humanize)
+          res += filtro_select(campo, @clase_modelo.human_attribute_name(campo))
         elsif tipo(campo) == :asociacion
-          res += filtro_asociacion(campo, campo.to_s.humanize)
+          res += filtro_asociacion(campo, @clase_modelo.human_attribute_name(campo))
         elsif tipo(campo) == :date
-          res += filtro_fecha(campo, campo.to_s.humanize)
+          res += filtro_fecha(campo, @clase_modelo.human_attribute_name(campo))
         else
-          res += filtro_texto(campo, campo.to_s.humanize)
+          res += filtro_texto(campo, @clase_modelo.human_attribute_name(campo))
         end
       end
       res.html_safe

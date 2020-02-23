@@ -8,7 +8,7 @@ require_dependency "<%= namespaced_path %>/application_controller"
 class <%= controller_class_name %>Controller < ApplicationController
   before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
 
-  add_breadcrumb "<%= plural_name.humanize %>", :<%= plural_table_name %>_path
+  add_breadcrumb <%= class_name %>.model_name.human.pluralize, :<%= plural_table_name %>_path
 
   def index
     @filtros = PgRails::FiltrosBuilder.new(
@@ -29,7 +29,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def new
-    add_breadcrumb <%= "'Crear #{human_name}'" %>
+    add_breadcrumb "Crear #{ <%= class_name %>.model_name.human.downcase }"
 
     @<%= singular_table_name %> = <%= orm_class.build(class_name) %>
     @<%= singular_table_name %> = @<%= singular_table_name %>.decorate
@@ -45,7 +45,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     @<%= singular_table_name %>.current_user = current_user
 
     if @<%= orm_instance.save %>
-      redirect_to @<%= singular_table_name %>, notice: <%= "'#{human_name} creado/a.'" %>
+      redirect_to @<%= singular_table_name %>, notice: "#{ <%= class_name %>.model_name.human } creadx."
     else
       render :new
     end
@@ -56,7 +56,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     @<%= singular_table_name %>.current_user = current_user
 
     if @<%= orm_instance.save %>
-      redirect_to @<%= singular_table_name %>, notice: <%= "'#{human_name} actualizado/a.'" %>
+      redirect_to @<%= singular_table_name %>, notice: "#{ <%= class_name %>.model_name.human } actualizadx."
     else
       render :edit
     end
