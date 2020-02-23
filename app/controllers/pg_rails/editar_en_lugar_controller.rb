@@ -4,7 +4,7 @@ module PgRails
       key_modelo = params.keys[1]
       modelo = Kernel.const_get(key_modelo)
       objeto = modelo.find params[:id]
-      authorize objeto
+      authorize objeto, :editar_en_lugar?
       object_params = request.parameters[key_modelo]
       objeto.update_attributes(object_params)
       respond_with_bip(objeto, param: key_modelo)

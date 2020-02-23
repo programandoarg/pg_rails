@@ -1,8 +1,7 @@
 module PgRails
   module EditarEnLugarHelper
     def editar_en_lugar(objeto, atributo, tipo = :input, _url = nil, collection = nil)
-      byebug
-      _url = editar_en_lugar_url(objeto) if _url.nil?
+      _url = pg_rails.editar_en_lugar_path(objeto) if _url.nil?
       if tipo == :checkbox
         best_in_place objeto, atributo, url: _url, as: tipo, collection: ["No", "Si"], param: objeto.model_name.name
       elsif tipo == :date

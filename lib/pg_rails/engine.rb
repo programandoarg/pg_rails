@@ -3,9 +3,7 @@ require 'pg_rails/simple_form/initializer'
 
 module PgRails
   class Engine < ::Rails::Engine
-    config.eager_load_paths += %W(#{config.root}/app/inputs)
-
-    config.autoload_paths << File.expand_path("../app/inputs", __FILE__)
+    isolate_namespace PgRails
 
     initializer 'cosas', after: "factory_bot.set_fixture_replacement" do
       config.app_generators do |g|
