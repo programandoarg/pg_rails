@@ -10,6 +10,14 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   add_breadcrumb <%= class_name %>.model_name.human.pluralize, :<%= plural_table_name %>_path
 
+  before_action only: [:show, :edit, :update, :destroy] do
+    authorize @<%= singular_table_name %>
+  end
+
+  before_action except: [:show, :edit, :update, :destroy] do
+    authorize <%= class_name %>
+  end
+
   def index
     @filtros = PgRails::FiltrosBuilder.new(
       self, <%= class_name %>, [<%= attributes_names.map{|nombre| ":#{nombre}" }.join(', ') %>])
