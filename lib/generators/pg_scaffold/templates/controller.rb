@@ -19,6 +19,7 @@ class <%= controller_class_name %>Controller < ApplicationController
       format.json { render json: @<%= plural_table_name %> }
       format.js { render_smart_listing }
       format.html { render_smart_listing }
+      format.xlsx { render xlsx: 'download', filename: "<%= plural_table_name %>-#{Date.today}.xlsx" }
     end
   end
 
