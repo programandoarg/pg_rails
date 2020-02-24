@@ -2,7 +2,7 @@ wb = xlsx_package.workbook
 wb.add_worksheet(name: '<%= human_name %>') do |sheet|
   sheet.add_row [
 <%- for attribute in attributes -%>
-    '<%= attribute.human_name %>',
+    <%= class_name %>.human_attribute_name(:<%= attribute.name %>),
 <%- end -%>
   ]
 

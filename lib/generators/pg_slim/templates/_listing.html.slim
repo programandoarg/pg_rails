@@ -4,7 +4,7 @@
       thead
         tr
   <%- for attribute in attributes -%>
-          th <%= attribute.human_name %>
+          th = <%= class_name %>.human_attribute_name(:<%= attribute.name %>)
   <%- end -%>
           th
       tbody
