@@ -5,6 +5,10 @@ module PgRails
     include ActionView::Helpers
     delegate_all
 
+    def as_json(options = {})
+      object.as_json.tap { |o| o[:to_s] = self.to_s }
+    end
+
     def method_missing(m, *args, &block)
       if m.match(/(fecha|date)/) && self.object.attributes.keys.include?(m.to_s)
         value = self.object.public_send(m)
