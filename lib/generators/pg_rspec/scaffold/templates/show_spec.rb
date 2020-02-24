@@ -9,7 +9,7 @@ RSpec.describe "<%= ns_table_name %>/show", <%= type_metatag(:view) %> do
   it "renders attributes in <p>" do
     render
 <% for attribute in output_attributes -%>
-    expect(rendered).to match(/<%= raw_value_for(attribute) %>/)
+    expect(rendered).to match(/<%= raw_value_for(attribute).capitalize %>/)
 <% end -%>
   end
 end

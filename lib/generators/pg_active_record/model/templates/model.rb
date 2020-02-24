@@ -16,5 +16,9 @@ class <%= class_name %> < <%= parent_class_name.classify %>
 <% if attributes.any? { |at| at.required? } -%>
   validates <%= attributes.select { |at| at.required? }.map { |at| ":#{at.name}" }.join(', ') %>, presence: true
 <% end -%>
+
+<% attributes.select(&:es_enum?).each do |attribute| -%>
+  enumerize :<%= attribute.name %>, in: { completar: 0, los: 1, valores: 2}
+<% end -%>
 end
 <% end -%>

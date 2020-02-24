@@ -47,8 +47,9 @@ module PgFactoryBot
             "Faker::Date.backward"
           elsif attribute.type == :float || attribute.type == :decimal
             "Faker::Number.decimal(l_digits: 3, r_digits: 2)"
+          elsif attribute.es_enum?
+            "#{class_name}.#{attribute.name}.values.sample"
           else
-            # byebug
             attribute.default.inspect
           end
         end
