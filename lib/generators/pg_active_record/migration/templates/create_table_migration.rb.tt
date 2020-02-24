@@ -15,6 +15,8 @@ class <%= migration_class_name %> < ActiveRecord::Migration[<%= ActiveRecord::Mi
 <% if options[:timestamps] %>
       t.timestamps
 <% end -%>
+      t.references :creado_por, index: true
+      t.references :actualizado_por, index: true
     end
 <% attributes.select(&:token?).each do |attribute| -%>
     add_index :<%= table_name %>, :<%= attribute.index_name %><%= attribute.inject_index_options %>, unique: true
@@ -25,5 +27,8 @@ class <%= migration_class_name %> < ActiveRecord::Migration[<%= ActiveRecord::Mi
 <% attributes.select(&:tiene_modulo?).each do |attribute| -%>
     add_foreign_key :<%= table_name %>, :<%= attribute.tabla_referenciada %>, column: '<%= attribute.name %>_id'
 <% end -%>
+
+    add_foreign_key :<%= table_name %>, :users, column: 'creado_por_id'
+    add_foreign_key :<%= table_name %>, :users, column: 'actualizado_por_id'
   end
 end

@@ -3,8 +3,10 @@
 <% module_namespacing do -%>
 class <%= class_name %> < <%= parent_class_name.classify %>
 <% attributes.select(&:reference?).each do |attribute| -%>
-  belongs_to :<%= attribute.name %><%= ', polymorphic: true' if attribute.polymorphic? %><%= ', required: true' if attribute.required? %><%= ", class_name: '#{attribute.clase_con_modulo}'" if attribute.tiene_modulo? %>
+  belongs_to :<%= attribute.name %><%= ', polymorphic: true' if attribute.polymorphic? %><%= ', optional: true' unless attribute.required? %><%= ", class_name: '#{attribute.clase_con_modulo}'" if attribute.tiene_modulo? %>
 <% end -%>
+  belongs_to :creado_por, optional: true, class_name: 'User'
+  belongs_to :actualizado_por, optional: true, class_name: 'User'
 <% attributes.select(&:token?).each do |attribute| -%>
   has_secure_token<% if attribute.name != "token" %> :<%= attribute.name %><% end %>
 <% end -%>

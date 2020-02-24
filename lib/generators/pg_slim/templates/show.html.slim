@@ -13,3 +13,9 @@
         th = <%= class_name %>.human_attribute_name(:<%= attribute.name %>)
         td = @<%= singular_name %>.<%= attribute.name %>
     <%- end -%>
+      tr
+        th = <%= class_name %>.human_attribute_name(:creado_por)
+        td = @<%= singular_name %>.creado_por
+      tr
+        th = <%= class_name %>.human_attribute_name(:actualizado_por)
+        td = @<%= singular_name %>.actualizado_por
