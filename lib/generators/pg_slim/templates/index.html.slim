@@ -7,11 +7,11 @@
     span.fa.fa-list
     |  Exportar
 .form-wrapper
-  = smart_listing_controls_for(:<%= plural_table_name %>) do |c|
+  = smart_listing_controls_for(:<%= plural_name %>) do |c|
     = @filtros.filtros_html
 
   .card.float-e-margins
     .card-title
       h5 Listado de #{<%= class_name %>.model_name.human.pluralize.downcase}
     .card-body
-      = smart_listing_render(:<%= plural_table_name %>)
+      = smart_listing_render(:<%= plural_name %>)

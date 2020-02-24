@@ -1,7 +1,7 @@
 - content_for :title do
-  = @<%= singular_table_name %>.to_s
+  = @<%= singular_name %>.to_s
 - content_for :actions do
-  = link_to edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), class: 'btn btn-sm btn-primary' do 
+  = link_to edit_<%= singular_table_name %>_path(@<%= singular_name %>), class: 'btn btn-sm btn-primary' do 
     i.fa.fa-edit
     |  Modificar
 
@@ -11,5 +11,5 @@
     <%- for attribute in attributes -%>
       tr
         th = <%= class_name %>.human_attribute_name(:<%= attribute.name %>)
-        td = @<%= singular_table_name %>.<%= attribute.name %>
+        td = @<%= singular_name %>.<%= attribute.name %>
     <%- end -%>

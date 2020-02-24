@@ -6,10 +6,10 @@ wb.add_worksheet(name: '<%= human_name %>') do |sheet|
 <%- end -%>
   ]
 
-  @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+  @<%= plural_name %>.each do |<%= singular_name %>|
     sheet.add_row [
 <%- for attribute in attributes -%>
-      <%= singular_table_name %>.<%= attribute.name %>,
+      <%= singular_name %>.<%= attribute.name %>,
 <%- end -%>
     ]
   end
