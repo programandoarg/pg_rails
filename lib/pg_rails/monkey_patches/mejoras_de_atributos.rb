@@ -50,10 +50,12 @@ module Rails
       end
 
       def tabla_referenciada_singular
+        return singular_name unless tiene_modulo?
         "#{@attr_options[:modulo]}_#{singular_name}"
       end
 
       def tabla_referenciada
+        return plural_name unless tiene_modulo?
         "#{@attr_options[:modulo]}_#{plural_name}"
       end
 
