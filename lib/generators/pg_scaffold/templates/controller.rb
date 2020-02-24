@@ -37,6 +37,11 @@ class <%= controller_class_name %>Controller < ApplicationController
   def show
     add_breadcrumb @<%= singular_name %>, @<%= singular_name %>
     @<%= singular_name %> = @<%= singular_name %>.decorate
+
+    respond_to do |format|
+      format.json { render json: @cosas_category }
+      format.html
+    end
   end
 
   def new
@@ -55,10 +60,14 @@ class <%= controller_class_name %>Controller < ApplicationController
     @<%= singular_name %> = <%= orm_class.build(class_name, "#{singular_name}_params") %>
     @<%= singular_name %>.current_user = current_user
 
-    if @<%= orm_instance(singular_name).save %>
-      redirect_to @<%= singular_name %>, notice: "#{ <%= class_name %>.model_name.human } creadx."
-    else
-      render :new
+    respond_to do |format|
+      if @<%= orm_instance(singular_name).save %>
+        format.html { redirect_to @<%= singular_name %>, notice: "#{ <%= class_name %>.model_name.human } creadx." }
+        format.json { render json: @<%= singular_name %>.decorate }
+      else
+        format.html { render :new }
+        format.json { render json: @<%= singular_name %>.errors }
+      end
     end
   end
 
@@ -66,10 +75,14 @@ class <%= controller_class_name %>Controller < ApplicationController
     @<%= singular_name %>.assign_attributes(<%= "#{singular_name}_params" %>)
     @<%= singular_name %>.current_user = current_user
 
-    if @<%= orm_instance(singular_name).save %>
-      redirect_to @<%= singular_name %>, notice: "#{ <%= class_name %>.model_name.human } actualizadx."
-    else
-      render :edit
+    respond_to do |format|
+      if @<%= orm_instance(singular_name).save %>
+        format.html { redirect_to @<%= singular_name %>, notice: "#{ <%= class_name %>.model_name.human } actualizadx." }
+        format.json { render json: @<%= singular_name %>.decorate }
+      else
+        format.html { render :edit }
+        format.json { render json: @<%= singular_name %>.errors }
+      end
     end
   end
 
