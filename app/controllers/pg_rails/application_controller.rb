@@ -4,6 +4,12 @@ module PgRails
     include SmartListing::Helper::ControllerExtensions
     helper  SmartListing::Helper
 
+    def self.inherited(klass)
+      super
+      # incluyo los helpers de /app/helpers de la main_app
+      klass.helper :all
+    end
+
     protected
       def smart_listing(smart_listing_key, scope, partial)
         smart_listing_create smart_listing_key, scope, partial: partial, default_sort: { id: :desc }
