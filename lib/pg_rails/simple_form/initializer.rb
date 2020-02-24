@@ -14,6 +14,7 @@
 
 require 'simple_form'
 require 'pg_rails/simple_form/inputs/fecha_input'
+require 'pg_rails/simple_form/inputs/asociacion_creable_input'
 require 'pg_rails/simple_form/inputs/selects_dependientes_input'
 
 module SimpleForm
@@ -152,6 +153,18 @@ SimpleForm.setup do |config|
     b.use :label, class: 'form-control-label'
     b.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center' do |ba|
       ba.use :input, class: 'form-control chosen-select mx-1', error_class: 'is-invalid', valid_class: 'is-valid'
+    end
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+  config.wrappers :asociacion_creable, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.use :label, class: 'form-control-label'
+    b.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center' do |ba|
+      ba.use :input, class: 'form-control chosen-select mx-1', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :crear
     end
     b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
@@ -460,16 +473,18 @@ SimpleForm.setup do |config|
   # type as key and the wrapper that will be used for all inputs with specified type.
   config.wrapper_mappings = {} if config.wrapper_mappings.nil?
   config.wrapper_mappings.merge!({
-    boolean:       :vertical_boolean,
-    check_boxes:   :vertical_collection,
-    date:          :vertical_multi_select,
-    datetime:      :vertical_multi_select,
-    file:          :vertical_file,
-    radio_buttons: :vertical_collection,
-    range:         :vertical_range,
-    time:          :vertical_multi_select,
-    select:        :chosen_select,
+    boolean:               :vertical_boolean,
+    check_boxes:           :vertical_collection,
+    date:                  :vertical_multi_select,
+    datetime:              :vertical_multi_select,
+    file:                  :vertical_file,
+    radio_buttons:         :vertical_collection,
+    range:                 :vertical_range,
+    time:                  :vertical_multi_select,
+    select:                :chosen_select,
+    asociacion_creable:    :asociacion_creable,
   })
+  config.wrapper_mappings.merge!({ 'pg_rails/asociacion_creable' => :asociacion_creable })
 
   # enable custom form wrappers
   # config.wrapper_mappings = {

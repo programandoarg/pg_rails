@@ -44,6 +44,29 @@ window.PgRails = new function() {
       self.showToast("success", "👍")
     });
     $.fn.datepicker.defaults.format = 'dd/mm/yyyy';
+
+    $('.crear_asociado').click(function() {
+      var boton_crear = this;
+      $.get($(this).data('url') + ".js").done(function(response) {
+        var modal = self.abrir_modal(response);
+        modal.find('form').ajaxForm({
+          dataType: 'json',
+          success: function(responseJSON, statusText, xhr) {
+            var select = $(boton_crear).closest('.form-group').find('select');
+            select.append('<option value="' + responseJSON['id'] + '" selected>' + responseJSON['to_s'] + '</option>')
+            select.trigger('chosen:updated');
+            $(modal).modal('hide');
+            PgRails.showToast('Elemento creado.')
+          },
+          error: function(responseText, statusText, xhr) {
+            alert("mal");
+            console.log(responseText);
+            console.log(statusText);
+          }
+        });
+      })
+    });
+
     $('.datefield').datepicker({
       'format': 'dd/mm/yyyy',
       'todayBtn': 'linked',
@@ -90,6 +113,12 @@ window.PgRails = new function() {
   }
 
 
+  self.abrir_modal = function(contenido) {
+    var modal = $('<div class="modal"><div class="modal-dialog"><div class="modal-content"><div class="modal-body">');
+    modal.find('.modal-body').html(contenido);
+    $(modal).modal('show');
+    return modal;
+  }
 
   self.showToast = function (type, message) {
     
@@ -101,8 +130,10 @@ window.PgRails = new function() {
       type="warning";
     else if (type === "info" )
       type="info";
-    else 
-      return;
+    else {
+      message = type;
+      type = "success";
+    }
 
     // Otro tipo que no use aca porque no encuentro el flash correspondiente es WARNING e INFO
 
