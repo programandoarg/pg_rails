@@ -1,9 +1,10 @@
 module PgRails
   class ApplicationController < ActionController::Base
     include Pundit
-    include PrintHelper
     include SmartListing::Helper::ControllerExtensions
     helper  SmartListing::Helper
+    include PrintHelper
+    include PostgresHelper
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
 
