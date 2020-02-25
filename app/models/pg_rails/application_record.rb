@@ -1,6 +1,7 @@
 module PgRails
   class ApplicationRecord < ActiveRecord::Base
     extend Enumerize
+    include PrintHelper
 
     self.abstract_class = true
 

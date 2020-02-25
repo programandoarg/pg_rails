@@ -3,6 +3,8 @@
 module PgRails
   class BaseDecorator < Draper::Decorator
     include ActionView::Helpers
+    include PrintHelper
+
     delegate_all
 
     def as_json(options = {})
@@ -13,7 +15,7 @@ module PgRails
       if m.match(/(fecha|date)/) && self.object.attributes.keys.include?(m.to_s)
         value = self.object.public_send(m)
         if value.class == Date
-          value.strftime('%d/%m/%Y')
+          dmy('%d/%m/%Y')
         else
           super
         end
