@@ -1,10 +1,11 @@
 module PgRails
   class ApplicationController < ActionController::Base
     include Pundit
+    include PrintHelper
     include SmartListing::Helper::ControllerExtensions
     helper  SmartListing::Helper
 
-    rescue_from ArgumentError, with: :invalid_argument
+    rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
 
     def self.inherited(klass)
       super
@@ -74,11 +75,11 @@ module PgRails
         false
       end
 
-      def invalid_argument
+      def fecha_invalida
         respond_to do |format|
-          format.json { render json: { error: "Parámetro inválido" }, status: :unprocessable_entity }
-          format.js { render inline: 'showToast("error", "Parámetro inválido")' }
-          format.html { go_back('Parámetro inválido') }
+          format.json { render json: { error: "Formato de fecha inválido" }, status: :unprocessable_entity }
+          format.js { render inline: 'showToast("error", "Formato de fecha inválido")' }
+          format.html { go_back('Formato de fecha inválido') }
         end
       end
   end
