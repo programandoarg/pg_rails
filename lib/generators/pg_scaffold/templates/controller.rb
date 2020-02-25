@@ -39,7 +39,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     @<%= singular_name %> = @<%= singular_name %>.decorate
 
     respond_to do |format|
-      format.json { render json: @cosas_category }
+      format.json { render json: @<%= singular_name %> }
       format.html
     end
   end

@@ -4,6 +4,8 @@ module PgRails
     include SmartListing::Helper::ControllerExtensions
     helper  SmartListing::Helper
 
+    rescue_from ArgumentError, with: :invalid_argument
+
     def self.inherited(klass)
       super
       # incluyo los helpers de /app/helpers de la main_app
@@ -70,6 +72,14 @@ module PgRails
           logger.debug e.message
         end
         false
+      end
+
+      def invalid_argument
+        respond_to do |format|
+          format.json { render json: { error: "Parámetro inválido" }, status: :unprocessable_entity }
+          format.js { render inline: 'showToast("error", "Parámetro inválido")' }
+          format.html { go_back('Parámetro inválido') }
+        end
       end
   end
 end
