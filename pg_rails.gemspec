@@ -34,6 +34,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'smart_listing', '~> 1.2.3'
   spec.add_dependency "rainbow"
   spec.add_dependency "enumerize"
+  spec.add_dependency 'sass-rails', '~> 5.0.4'
 
-  spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency 'factory_bot'
+  spec.add_development_dependency 'rspec-rails', '~> 3.8'
 end
