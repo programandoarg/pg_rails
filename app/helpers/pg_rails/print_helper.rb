@@ -3,7 +3,7 @@ module PgRails
     class FechaInvalidaError < StandardError
     end
 
-    def cuit(cuit_number)
+    def print_cuit(cuit_number)
       return '' unless cuit_number.present?
 
       str = cuit_number.to_s
