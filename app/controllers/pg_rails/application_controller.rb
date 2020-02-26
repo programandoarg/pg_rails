@@ -15,8 +15,8 @@ module PgRails
     end
 
     protected
-      def smart_listing(smart_listing_key, scope, partial)
-        smart_listing_create smart_listing_key, scope, partial: partial, default_sort: { id: :desc }
+      def smart_listing(smart_listing_key, scope, partial, default_sort = { id: :desc })
+        smart_listing_create smart_listing_key, scope, partial: partial, default_sort: default_sort
         if params["#{smart_listing_key}_smart_listing"].present?
           render partial: 'actualizar_smart_listing', locals: { smart_listing_key: smart_listing_key },
                  layout: false, content_type: 'text/javascript'
