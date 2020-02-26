@@ -3,8 +3,10 @@ module PgRails
     isolate_namespace PgRails
 
     initializer 'configurar_generators', after: "factory_bot.set_fixture_replacement" do
-      require 'pg_rails/monkey_patches/mejoras_de_atributos'
-      require 'pg_rails/monkey_patches/mejoras_a_named_base'
+      unless Rails.env.production?
+        require 'pg_rails/monkey_patches/mejoras_de_atributos'
+        require 'pg_rails/monkey_patches/mejoras_a_named_base'
+      end
 
       require 'pg_rails/utils/filtros_builder'
       require 'pg_rails/utils/logueador'
