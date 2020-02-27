@@ -32,7 +32,7 @@ module PgRails
 
       def setear_si_existe(campo, valor)
         metodo = "#{campo}="
-        if respond_to?(metodo)
+        if respond_to?(metodo) && valor.present?
           send(metodo, valor)
         end
       end
