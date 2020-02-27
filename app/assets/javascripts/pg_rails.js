@@ -121,52 +121,83 @@ window.PgRails = new function() {
   }
 
   self.showToast = function (type, message) {
-    
-    if (type === "notice" || type === "success")
+    var title = null;
+    if (type === "notice" || type === "success") {
       type="success";
-    else if (type === "alert" || type === "error")
+      title = "Notificación";
+    } else if (type === "alert" || type === "error") {
       type="error";
-    else if (type === "warning" )
+      title = "Error";
+    } else if (type === "warning" ) {
       type="warning";
-    else if (type === "info" )
+      title = "Advertencia";
+    } else if (type === "info" ) {
       type="info";
-    else {
+      title = "Notificación";
+    } else {
       message = type;
+      title = "Notificación";
       type = "success";
     }
 
-    // Otro tipo que no use aca porque no encuentro el flash correspondiente es WARNING e INFO
+    if (typeof $.fn.toast == "function") {
+      var template_html = "\
+        <div class='toast toast-{{type}}' role='alert' aria-live='assertive' aria-atomic='true'>\
+          <div class='toast-header'>\
+            <strong class='mr-auto'>{{title}}</strong>\
+            <button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>\
+              <span aria-hidden='true'>&times;</span>\
+            </button>\
+          </div>\
+          <div class='toast-body'>\
+            {{message}}\
+          </div>\
+        </div>";
 
-    var shortCutFunction = type;
+      var template = Handlebars.compile(template_html);
+      var toast = $(template({message: message, title: title, type: type}));
+      $("#toast-container").append(toast);
+      $(toast).toast({
+        delay: 3000,
+        // autohide: false,
+      });
+      $(toast).toast('show');
+      $(toast).on('hidden.bs.toast', function () {
+        $(toast).remove();
+      })
+    } else {
 
-    title = "";
+      var shortCutFunction = type;
 
-    toastr.options = {
-      closeButton: true,
-      debug: false,
-      progressBar: true,
-      preventDuplicates: false,
-      positionClass: "toast-top-right",
-      onclick: null,
-      showDuration: "400",
-      hideDuration: "1000",
-      timeOut: "7000",
-      extendedTimeOut: "1000",
-      showEasing: "swing",
-      hideEasing: "linear",
-      showMethod: "fadeIn",
-      hideMethod: "fadeOut"
-    };
+      title = "";
 
-    $("#toastrOptions").text("Command: toastr["
-            + shortCutFunction
-            + "](\""
-            + message
-            + (title ? "\", \"" + title : '')
-            + "\")\n\ntoastr.options = "
-            + JSON.stringify(toastr.options, null, 2)
-    );
-    var $toast = toastr[shortCutFunction](message, title); // Wire up an event handler to a button in the toast, if it exists
+      window.toastr.options = {
+        closeButton: true,
+        debug: false,
+        progressBar: true,
+        preventDuplicates: false,
+        positionClass: "toast-top-right",
+        onclick: null,
+        showDuration: "400",
+        hideDuration: "1000",
+        timeOut: "7000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut"
+      };
+
+      $("#toastrOptions").text("Command: toastr["
+              + shortCutFunction
+              + "](\""
+              + message
+              + (title ? "\", \"" + title : '')
+              + "\")\n\ntoastr.options = "
+              + JSON.stringify(toastr.options, null, 2)
+      );
+      var $toast = window.toastr[shortCutFunction](message, title);
+    }
   }
 
   window.jQuery.fn.dependent_fields = function() {
