@@ -15,7 +15,7 @@ module PgRails
       if m.match(/(fecha|date)/) && self.object.attributes.keys.include?(m.to_s)
         value = self.object.public_send(m)
         if value.class == Date
-          dmy('%d/%m/%Y')
+          dmy(value)
         else
           super
         end
