@@ -31,14 +31,6 @@ module PgFactoryBot
         ", class: '#{nombre_clase_completo}'"
       end
 
-      def nombre_clase_completo
-        if namespaced?
-          (namespaced_class_path + [file_name]).map!(&:camelize).join("::")
-        else
-          (regular_class_path + [file_name]).map!(&:camelize).join("::")
-        end
-      end
-
       private
 
         # Genero los valores de las factories con los helpers de Faker

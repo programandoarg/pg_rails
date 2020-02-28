@@ -7,13 +7,14 @@ if Rails.env.development?
     'exclude_controllers' => 'true',
     'exclude_helpers' => 'true',
     'exclude_tests' => 'true',
-    'sort' => 'true'
+    'sort' => 'true',
+    'models' => 'true',
   )
 
   # Annotate models
   task :annotate do
     puts 'Annotating models...'
-    system 'bundle exec annotate --models'
+    system 'bundle exec annotate'
   end
 
   # Run annotate task after db:migrate

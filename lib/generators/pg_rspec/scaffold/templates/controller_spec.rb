@@ -27,14 +27,18 @@ require 'rails_helper'
 
 <% module_namespacing do -%>
 RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:controller) %> do
+<% if mountable_engine? -%>
+  routes { <%= mountable_engine? %>::Engine.routes }
+<% end -%>
 
   # This should return the minimal set of attributes required to create a valid
   # <%= class_name %>. As you add validations to <%= class_name %>, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    attributes_for(:<%= singular_table_name %>)
+    attributes_for(:<%= nombre_tabla_completo_singular %>)
   }
 
+<% if attributes.any? { |at| at.required? } -%>
   let(:invalid_attributes) {
     {
 <% attributes.select { |at| at.required? }.each do |atributo| -%>
@@ -42,6 +46,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% end -%>
     }
   }
+<% end -%>
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -125,6 +130,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
       end
     end
 
+<% if attributes.any? { |at| at.required? } -%>
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
 <% if Rails::VERSION::STRING < '5.0' -%>
@@ -135,12 +141,13 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
         expect(response).to be_successful
       end
     end
+<% end -%>
   end
 
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        attributes_for(:<%= singular_table_name %>)
+        attributes_for(:<%= nombre_tabla_completo_singular %>)
       }
 
       it "updates the requested <%= ns_file_name %>" do
@@ -170,6 +177,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
       end
     end
 
+<% if attributes.any? { |at| at.required? } -%>
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
         <%= file_name %> = <%= class_name %>.create! valid_attributes
@@ -181,6 +189,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
         expect(response).to be_successful
       end
     end
+<% end -%>
   end
 
   describe "DELETE #destroy" do

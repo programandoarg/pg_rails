@@ -11,7 +11,7 @@ module PgRspec
       remove_hook_for :integration_tool, :as => :integration
 
       def generate_routing_spec
-        # piso el método para que no genera nada
+        # piso el método para que no genere nada
       end
     end
   end
