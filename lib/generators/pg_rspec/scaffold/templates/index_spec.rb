@@ -2,7 +2,10 @@ require 'rails_helper'
 
 <% output_attributes = attributes.reject{|attribute| [:datetime, :timestamp, :time, :date].index(attribute.type) } -%>
 RSpec.describe "<%= ns_table_name %>/index", <%= type_metatag(:view) %> do
-  helper  SmartListing::Helper
+  PgRails::ConfiguradorRSpec.helpers(self)
+
+  let(:user) { create(:user, :admin) }
+  let!(:<%= plural_name %>) { create_list(:<%= singular_name %>, rand(10..20))}
 
   before(:each) do
     create_list(:<%= singular_table_name %>, 10)

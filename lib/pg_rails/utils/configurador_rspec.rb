@@ -1,5 +1,24 @@
 module PgRails
+  module PunditSpecHelper
+    def enable_pundit(view, user)
+      without_partial_double_verification do
+        allow(view).to receive(:policy) do |record|
+          Pundit.policy(user, record)
+        end
+      end
+    end
+  end
+
   class ConfiguradorRSpec
+    def self.helpers(rspec)
+      rspec.helper PgRails::PrintHelper
+      rspec.helper PgRails::EditarEnLugarHelper
+      rspec.helper SmartListing::Helper
+      rspec.before do
+        enable_pundit(view, user)
+      end
+    end
+
     def self.configurar(config)
       config.include FactoryBot::Syntax::Methods
       config.include Devise::Test::ControllerHelpers, type: :controller
@@ -7,6 +26,8 @@ module PgRails
       config.include ActiveSupport::Testing::TimeHelpers
       config.include SmartListing::Helper::ControllerExtensions, type: :view
       config.include SmartListing::Helper, type: :view
+      config.include PgRails::PunditSpecHelper, type: :view
+      config.include PgRails::PrintHelper, type: :view
     end
   end
 end

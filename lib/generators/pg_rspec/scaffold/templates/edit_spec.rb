@@ -2,6 +2,10 @@ require 'rails_helper'
 
 <% output_attributes = attributes.reject{|attribute| [:datetime, :timestamp, :time, :date].index(attribute.type) } -%>
 RSpec.describe "<%= ns_table_name %>/edit", <%= type_metatag(:view) %> do
+  PgRails::ConfiguradorRSpec.helpers(self)
+
+  let(:user) { create(:user, :admin) }
+
   before(:each) do
     @<%= singular_name %> = assign(:<%= singular_name %>, create(:<%= ns_file_name %>))
   end
