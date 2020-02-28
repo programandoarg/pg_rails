@@ -16,6 +16,12 @@ module PgFactoryBot
 
       source_root File.expand_path('templates', __dir__)
 
+      class_option(
+        :dir,
+        type: :string,
+        default: "spec/factories",
+        desc: "The directory or file root where factories belong",
+      )
 
       # este método es igual al de FactoryBot::Generators::Base
       # pero si no lo pongo acá pone las clases sin el prefijo del módulo
