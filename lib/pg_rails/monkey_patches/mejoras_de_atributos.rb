@@ -1,3 +1,4 @@
+require 'rails/generators'
 require 'rails/generators/generated_attribute'
 require 'generators/rspec'
 
@@ -11,7 +12,7 @@ module Rails
           case type
           when /(string|text|binary|integer)\{(\d+)\}/
             return $1, limit: $2.to_i
-          when /(string|text|binary|integer|date|datetime)\{(.+)\}/
+          when /(string|text|binary|float|integer|date|datetime)\{(.+)\}/
             type = $1
             provided_options = $2.split(/[,.-]/)
             options = Hash[provided_options.map { |opt| [opt.to_sym, true] }]
@@ -49,18 +50,22 @@ module Rails
         @attr_options[:modulo].present?
       end
 
+      def tiene_tabla?
+        @attr_options[:tabla].present?
+      end
+
       def es_enum?
         @attr_options[:enum].present?
       end
 
       def tabla_referenciada_singular
-        return singular_name unless tiene_modulo?
-        "#{@attr_options[:modulo]}_#{singular_name}"
+        return singular_name unless tiene_tabla?
+        @attr_options[:tabla].singularize
       end
 
       def tabla_referenciada
-        return plural_name unless tiene_modulo?
-        "#{@attr_options[:modulo]}_#{plural_name}"
+        return plural_name unless tiene_tabla?
+        @attr_options[:tabla]
       end
 
       # pisa geneators/rspec
@@ -89,6 +94,7 @@ module Rails
             options[:foreign_key] = true
           end
           options.delete(:modulo)
+          options.delete(:tabla)
         end
       end
     end

@@ -20,11 +20,18 @@ module PgFactoryBot
       # este método es igual al de FactoryBot::Generators::Base
       # pero si no lo pongo acá pone las clases sin el prefijo del módulo
       def explicit_class_option
-        return if class_name == singular_table_name.camelize
+        return if nombre_clase_completo == singular_table_name.camelize
 
-        ", class: '#{class_name}'"
+        ", class: '#{nombre_clase_completo}'"
       end
 
+      def nombre_clase_completo
+        if namespaced?
+          (namespaced_class_path + [file_name]).map!(&:camelize).join("::")
+        else
+          (regular_class_path + [file_name]).map!(&:camelize).join("::")
+        end
+      end
 
       private
 
@@ -48,7 +55,7 @@ module PgFactoryBot
           elsif attribute.type == :float || attribute.type == :decimal
             "Faker::Number.decimal(l_digits: 3, r_digits: 2)"
           elsif attribute.es_enum?
-            "#{class_name}.#{attribute.name}.values.sample"
+            "#{nombre_clase_completo}.#{attribute.name}.values.sample"
           else
             attribute.default.inspect
           end
