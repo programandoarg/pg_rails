@@ -7,7 +7,7 @@ RSpec.describe "<%= ns_table_name %>/new", <%= type_metatag(:view) %> do
   let(:user) { create(:user, :admin) }
 
   before(:each) do
-    @<%= singular_name %> = assign(:<%= singular_name %>, build(:<%= ns_file_name %>))
+    @<%= singular_name %> = assign(:<%= singular_name %>, build(:<%= nombre_tabla_completo_singular %>))
   end
 
   it "renders new <%= ns_file_name %> form" do

@@ -7,7 +7,7 @@ RSpec.describe "<%= ns_table_name %>/edit", <%= type_metatag(:view) %> do
   let(:user) { create(:user, :admin) }
 
   before(:each) do
-    @<%= singular_name %> = assign(:<%= singular_name %>, create(:<%= ns_file_name %>))
+    @<%= singular_name %> = assign(:<%= singular_name %>, create(:<%= nombre_tabla_completo_singular %>))
   end
 
   it "renders the edit <%= singular_name %> form" do
