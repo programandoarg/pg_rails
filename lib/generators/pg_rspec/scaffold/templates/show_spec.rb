@@ -1,13 +1,17 @@
 require 'rails_helper'
 
 <% output_attributes = attributes.reject{|attribute| [:datetime, :timestamp, :time, :date].index(attribute.type) } -%>
-RSpec.describe "<%= ns_table_name %>/show", <%= type_metatag(:view) %> do
+RSpec.describe "<%= ruta_vistas %>/show", <%= type_metatag(:view) %> do
   PgRails::ConfiguradorRSpec.helpers(self)
+<% if mountable_engine? -%>
+  helper <%= mountable_engine? %>::Engine.routes.url_helpers
+<% end -%>
 
   let(:user) { create(:user, :admin) }
 
   before(:each) do
     @<%= singular_name %> = assign(:<%= singular_name %>, create(:<%= nombre_tabla_completo_singular %>))
+    @clase_modelo = assign(:clase_modelo, <%= nombre_clase_completo %>)
   end
 
   it "renders attributes in <p>" do

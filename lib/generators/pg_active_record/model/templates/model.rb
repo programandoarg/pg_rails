@@ -3,7 +3,7 @@
 <% module_namespacing do -%>
 class <%= class_name %> < <%= parent_class_name.classify %>
 <% attributes.select(&:reference?).each do |attribute| -%>
-  belongs_to :<%= attribute.name %><%= ', polymorphic: true' if attribute.polymorphic? %><%= ', optional: true' unless attribute.required? %><%= ", class_name: '#{attribute.clase_con_modulo}'" if attribute.tiene_modulo? %>
+  belongs_to :<%= attribute.name %><%= ', polymorphic: true' if attribute.polymorphic? %><%= ', optional: true' unless attribute.required? %><%= ", class_name: '#{attribute.clase_con_modulo}'" if attribute.tiene_nombre_de_clase_explicito? %>
 <% end -%>
   belongs_to :creado_por, optional: true, class_name: 'User'
   belongs_to :actualizado_por, optional: true, class_name: 'User'

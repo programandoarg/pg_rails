@@ -24,7 +24,7 @@ class <%= migration_class_name %> < ActiveRecord::Migration[<%= ActiveRecord::Mi
 <% attributes_with_index.each do |attribute| -%>
     add_index :<%= table_name %>, :<%= attribute.index_name %><%= attribute.inject_index_options %>
 <% end -%>
-<% attributes.select(&:tiene_modulo?).each do |attribute| -%>
+<% attributes.select(&:tiene_nombre_de_clase_explicito?).each do |attribute| -%>
     add_foreign_key :<%= table_name %>, :<%= attribute.tabla_referenciada %>, column: '<%= attribute.name %>_id'
 <% end -%>
 

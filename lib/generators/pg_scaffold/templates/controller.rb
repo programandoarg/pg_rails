@@ -10,6 +10,10 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   add_breadcrumb <%= class_name %>.model_name.human.pluralize, :<%= plural_table_name %>_path
 
+  before_action do
+    @clase_modelo = <%= class_name %>
+  end
+
   before_action only: [:show, :edit, :update, :destroy] do
     authorize @<%= singular_name %>
   end

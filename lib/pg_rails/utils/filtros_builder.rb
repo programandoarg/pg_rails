@@ -87,7 +87,7 @@ module PgRails
       asociacion = @clase_modelo.reflect_on_all_associations.find {|a| a.name == campo }
       nombre_clase = asociacion.options[:class_name]
       if nombre_clase.nil?
-        nombre_clase = asociacion.name.to_s.titleize
+        nombre_clase = asociacion.name.to_s.camelize
       end
       clase_asociacion = Object.const_get(nombre_clase)
       map = clase_asociacion.all.map { |o| [o.to_s, o.id] }

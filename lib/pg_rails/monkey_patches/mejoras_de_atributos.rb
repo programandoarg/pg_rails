@@ -43,29 +43,34 @@ module Rails
       end
 
       def clase_con_modulo
-        "#{@attr_options[:modulo].camelize}::#{name.camelize}"
+        return name.camelize unless tiene_nombre_de_clase_explicito?
+        @attr_options[:clase].gsub('/', '::')
       end
 
-      def tiene_modulo?
-        @attr_options[:modulo].present?
+      # def tiene_modulo?
+      #   @attr_options[:modulo].present?
+      # end
+
+      def tiene_nombre_de_clase_explicito?
+        @attr_options[:clase].present?
       end
 
-      def tiene_tabla?
-        @attr_options[:tabla].present?
-      end
+      # def tiene_tabla?
+      #   @attr_options[:tabla].present?
+      # end
 
       def es_enum?
         @attr_options[:enum].present?
       end
 
       def tabla_referenciada_singular
-        return singular_name unless tiene_tabla?
-        @attr_options[:tabla].singularize
+        return singular_name unless tiene_nombre_de_clase_explicito?
+        @attr_options[:clase].gsub('/', '').underscore
       end
 
       def tabla_referenciada
-        return plural_name unless tiene_tabla?
-        @attr_options[:tabla]
+        return plural_name unless tiene_nombre_de_clase_explicito?
+        @attr_options[:clase].gsub('/', '').underscore.pluralize
       end
 
       # pisa geneators/rspec
@@ -90,11 +95,12 @@ module Rails
             options[:null] = false
           end
 
-          if reference? && !polymorphic? && !tiene_modulo?
+          if reference? && !polymorphic? && !tiene_nombre_de_clase_explicito?
             options[:foreign_key] = true
           end
-          options.delete(:modulo)
-          options.delete(:tabla)
+          # options.delete(:modulo)
+          # options.delete(:tabla)
+          options.delete(:clase)
         end
       end
     end
