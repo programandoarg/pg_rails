@@ -1,3 +1,5 @@
+require 'byebug'
+
 module PgRails
   class Engine < ::Rails::Engine
     isolate_namespace PgRails
