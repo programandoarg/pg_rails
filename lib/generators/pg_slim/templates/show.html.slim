@@ -8,11 +8,11 @@
 .card.d-inline-block
   .card-body
     table.table.table-borderless.table-sm.w-auto.mb-0
-    <%- for attribute in attributes -%>
+<%- for attribute in attributes -%>
       tr
         th = @clase_modelo.human_attribute_name(:<%= attribute.name %>)
         td = @<%= singular_name %>.<%= attribute.name %>
-    <%- end -%>
+<%- end -%>
       tr
         th = @clase_modelo.human_attribute_name(:creado_por)
         td = @<%= singular_name %>.creado_por

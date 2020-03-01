@@ -91,7 +91,8 @@ module PgRails
       end
       clase_asociacion = Object.const_get(nombre_clase)
       map = clase_asociacion.all.map { |o| [o.to_s, o.id] }
-      map.unshift ["Seleccionar #{clase_asociacion.model_name.human.downcase}", nil]
+
+      map.unshift ["Seleccionar #{@clase_modelo.human_attribute_name(campo.to_sym).downcase}", nil]
       default = params[campo].nil? ? nil : params[campo]
       content_tag :div, class: 'filter' do
         select_tag campo, options_for_select(map, default), class: 'form-control chosen-select pg-input-lg'
