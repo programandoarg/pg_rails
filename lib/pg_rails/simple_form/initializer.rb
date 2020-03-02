@@ -481,7 +481,7 @@ SimpleForm.setup do |config|
     radio_buttons:         :vertical_collection,
     range:                 :vertical_range,
     time:                  :vertical_multi_select,
-    select:                :chosen_select,
+    # select:                :chosen_select,
     asociacion_creable:    :asociacion_creable,
   })
   config.wrapper_mappings.merge!({ 'pg_rails/asociacion_creable' => :asociacion_creable })
