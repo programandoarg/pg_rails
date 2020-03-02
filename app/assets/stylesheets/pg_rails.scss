@@ -16,3 +16,19 @@
   margin-bottom: 10px;
   vertical-align: top;
 }
+
+.dependent_fields select {
+  // width: calc(99% / 2);
+  // width: 500px;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.dependent_fields label {
+  display: block;
+  text-align: left!important;
+}
+
+.dependent_fields {
+  // max-width: 400px;
+}

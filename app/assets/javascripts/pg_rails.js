@@ -219,7 +219,7 @@ window.PgRails = new function() {
       .done(function(response) {
         var id = $(target).data('id')
         var siguiente_select = $("[data-id='"+id+"'] ~ select").first();
-        self.insert_options(siguiente_select, response, 'Seleccione una opción', null, 'nombre');
+        self.insert_options(siguiente_select, response, 'Seleccione una opción', null, 'to_s');
         $(siguiente_select).trigger('change');
       }).fail(function(response) { });
     }
