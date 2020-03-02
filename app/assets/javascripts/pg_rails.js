@@ -200,6 +200,14 @@ window.PgRails = new function() {
     }
   }
 
+  window.jQuery.fn.ocultar_campo = function() {
+    this.find('.chosen-select').addClass('ignore-validation');
+    this.hide();
+  }
+  window.jQuery.fn.mostrar_campo = function() {
+    this.find('.chosen-select').removeClass('ignore-validation');
+    this.show();
+  }
   window.jQuery.fn.dependent_fields = function() {
     var that = this;
 
