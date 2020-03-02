@@ -497,4 +497,19 @@ SimpleForm.setup do |config|
   #   range:         :custom_range,
   #   time:          :custom_multi_select
   # }
+
+
+  config.browser_validations = true
+
+  # Collection of methods to detect if a file type was given.
+  # config.file_methods = [ :mounted_as, :file?, :public_filename, :attached? ]
+
+  # Custom mappings for input types. This should be a hash containing a regexp
+  # to match as key, and the input type that will be used when the field name
+  # matches the regexp as value.
+  # config.input_mappings = { /count/ => :integer }
+  config.input_mappings = {
+    /fecha/ => :fecha,
+    /date/ => :fecha
+  }
 end
