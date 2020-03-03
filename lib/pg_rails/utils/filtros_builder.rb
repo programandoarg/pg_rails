@@ -125,7 +125,9 @@ module PgRails
       clase_asociacion = Object.const_get(nombre_clase)
       map = clase_asociacion.all.map { |o| [o.to_s, o.id] }
 
-      map.unshift ["Seleccionar #{@clase_modelo.human_attribute_name(campo.to_sym).downcase}", nil]
+      nombre_modelo = @clase_modelo.human_attribute_name(campo.to_sym).downcase
+      nombre_modelo_placeholder = I18n.t("activerecord.models.#{nombre_modelo}", default: nombre_modelo )
+      map.unshift ["Seleccionar #{nombre_modelo_placeholder}", nil]
       default = params[campo].nil? ? nil : params[campo]
       content_tag :div, class: 'filter' do
         if multiple
