@@ -214,7 +214,7 @@ window.PgRails = new function() {
     var update_dependent = function() {
       var target = this;
       var options = {};
-      options[$(target).data('key')] = $(this).val();
+      options[$(target).data('key')] = $(this).val().toString();
       $.getJSON($(target).data('url'), options)
       .done(function(response) {
         var id = $(target).data('id')

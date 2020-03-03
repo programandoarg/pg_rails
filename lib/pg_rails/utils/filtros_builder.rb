@@ -10,17 +10,29 @@ module PgRails
       @clase_modelo = clase_modelo
       @campos = campos
       @controller = controller
+      @filtros = {}
+      @campos.each { |campo| @filtros[campo] = {} }
+    end
+
+    def filtro_oculto(campo)
+      @filtros[campo] = { oculto: true }
     end
 
     def filtrar(query)
-      @campos.each do |campo|
+      (@filtros).each do |campo, opciones|
         next unless params[campo].present?
         if tipo(campo).in?([:integer, :float, :decimal])
           query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", params[campo])
         elsif tipo(campo) == :enumerized
           query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", params[campo])
         elsif tipo(campo) == :asociacion
-          query = query.where("#{@clase_modelo.table_name}.#{campo}_id = ?", params[campo])
+          asociacion = @clase_modelo.reflect_on_all_associations.find {|a| a.name == campo }
+          if asociacion.class == ActiveRecord::Reflection::HasAndBelongsToManyReflection
+            array = params[campo].class == Array ? params[campo].join(',') : params[campo]
+            query = query.joins(campo).group("#{@clase_modelo.table_name}.id").having("ARRAY_AGG(#{asociacion.join_table}.#{asociacion.association_foreign_key}) @> ARRAY[#{array}]::bigint[]")
+          else
+            query = query.where("#{@clase_modelo.table_name}.#{campo}_id = ?", params[campo])
+          end
         elsif tipo(campo) == :string
           query = query.where("#{@clase_modelo.table_name}.#{campo} ILIKE '%#{params[campo]}%'")
         elsif tipo(campo) == :date || tipo(campo) == :datetime
@@ -88,7 +100,8 @@ module PgRails
 
     def filtros_html
       res = ''
-      @campos.each do |campo|
+      @filtros.each do |campo, opciones|
+        next if opciones[:oculto]
         if tipo(campo) == :enumerized
           res += filtro_select(campo, placeholder_campo(campo))
         elsif tipo(campo) == :asociacion
@@ -104,6 +117,7 @@ module PgRails
 
     def filtro_asociacion(campo, placeholder = '')
       asociacion = @clase_modelo.reflect_on_all_associations.find {|a| a.name == campo }
+      multiple = asociacion.class == ActiveRecord::Reflection::HasAndBelongsToManyReflection
       nombre_clase = asociacion.options[:class_name]
       if nombre_clase.nil?
         nombre_clase = asociacion.name.to_s.camelize
@@ -114,7 +128,11 @@ module PgRails
       map.unshift ["Seleccionar #{@clase_modelo.human_attribute_name(campo.to_sym).downcase}", nil]
       default = params[campo].nil? ? nil : params[campo]
       content_tag :div, class: 'filter' do
-        select_tag campo, options_for_select(map, default), class: 'form-control chosen-select pg-input-lg'
+        if multiple
+          select_tag campo, options_for_select(map, default), multiple: true, class: 'form-control selectize pg-input-lg'
+        else
+          select_tag campo, options_for_select(map, default), class: 'form-control chosen-select pg-input-lg'
+        end
       end
     end
 
