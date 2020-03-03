@@ -3,6 +3,27 @@ module PgRails
     class FechaInvalidaError < StandardError
     end
 
+    def mostrar_con_link(objeto, &block)
+      if objeto.present?
+        if policy(objeto).show?
+          link_to truncate_title(block_given? ? yield : objeto), objeto
+        else
+          truncate_title(block_given? ? yield : objeto)
+        end
+      end
+    end
+
+    def truncate_title(input, length = 20)
+      string = input.to_s
+      if string.length > length
+        content_tag :span, title: input, rel: :tooltip do
+          truncate string, length: length
+        end
+      else
+        string
+      end
+    end
+
     def print_cuit(cuit_number)
       return '' unless cuit_number.present?
 

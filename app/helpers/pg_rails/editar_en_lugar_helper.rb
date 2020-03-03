@@ -21,5 +21,9 @@ module PgRails
         best_in_place objeto, atributo, url: _url, as: tipo, param: objeto.model_name.name
       end
     end
+
+    def ordenable(smart_listing, campo)
+      smart_listing.sortable @clase_modelo.human_attribute_name(campo), campo
+    end
   end
 end
