@@ -2,6 +2,8 @@
 
 <% module_namespacing do -%>
 class <%= class_name %> < <%= parent_class_name.classify %>
+  audited
+
 <% attributes.select(&:reference?).each do |attribute| -%>
   belongs_to :<%= attribute.name %><%= ', polymorphic: true' if attribute.polymorphic? %><%= ', optional: true' unless attribute.required? %><%= ", class_name: '#{attribute.clase_con_modulo}'" if attribute.tiene_nombre_de_clase_explicito? %>
 <% end -%>
