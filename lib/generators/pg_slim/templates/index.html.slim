@@ -11,7 +11,7 @@
     = @filtros.filtros_html
 
   .card.float-e-margins
-    .card-title
+    .card-header
       h5 Listado de #{@clase_modelo.model_name.human.pluralize.downcase}
     .card-body
       = smart_listing_render(:<%= plural_name %>)

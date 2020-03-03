@@ -1,9 +1,8 @@
 - content_for :title do
   = @<%= singular_name %>.to_s
 - content_for :actions do
-  = link_to edit_<%= singular_table_name %>_path(@<%= singular_name %>), class: 'btn btn-sm btn-primary' do 
-    i.fa.fa-edit
-    |  Modificar
+  = @<%= singular_name %>.destroy_link
+  = @<%= singular_name %>.edit_link
 
 .card.d-inline-block
   .card-body
@@ -17,5 +16,11 @@
         th = @clase_modelo.human_attribute_name(:creado_por)
         td = @<%= singular_name %>.creado_por
       tr
+        th = I18n.t(:created_at)
+        td = dmy_time @<%= singular_name %>.created_at
+      tr
         th = @clase_modelo.human_attribute_name(:actualizado_por)
         td = @<%= singular_name %>.actualizado_por
+      tr
+        th = I18n.t(:updated_at)
+        td = dmy_time @<%= singular_name %>.updated_at
