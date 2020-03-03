@@ -4,6 +4,8 @@ module PgRails
     include ActionView::Context
     attr_accessor :controller
 
+    SUFIJOS = ['desde', 'hasta']
+
     def initialize(controller, clase_modelo, campos)
       @clase_modelo = clase_modelo
       @campos = campos
@@ -14,17 +16,17 @@ module PgRails
       @campos.each do |campo|
         next unless params[campo].present?
         if tipo(campo).in?([:integer, :float, :decimal])
-          query = query.where("#{campo} = ?", params[campo])
+          query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", params[campo])
         elsif tipo(campo) == :enumerized
-          query = query.where("#{campo} = ?", params[campo])
+          query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", params[campo])
         elsif tipo(campo) == :asociacion
-          query = query.where("#{campo}_id = ?", params[campo])
+          query = query.where("#{@clase_modelo.table_name}.#{campo}_id = ?", params[campo])
         elsif tipo(campo) == :string
-          query = query.where("#{campo} ILIKE '%#{params[campo]}%'")
-        elsif tipo(campo) == :date
+          query = query.where("#{@clase_modelo.table_name}.#{campo} ILIKE '%#{params[campo]}%'")
+        elsif tipo(campo) == :date || tipo(campo) == :datetime
           begin
             fecha = Date.parse(params[campo])
-            query = query.where("#{quitar_sufijo(campo)} #{comparador(campo)} ?", fecha)
+            query = query.where("#{@clase_modelo.table_name}.#{quitar_sufijo(campo)} #{comparador(campo)} ?", fecha)
           rescue ArgumentError
           end
         end
@@ -58,26 +60,43 @@ module PgRails
       end
     end
 
+    def sufijo(campo)
+      SUFIJOS.each do |sufijo|
+        if campo.to_s.ends_with?("_" + sufijo)
+          return sufijo
+        end
+      end
+      nil
+    end
+
     def quitar_sufijo(campo)
       ret = campo.to_s.dup
-      sufijos = ['_desde', '_hasta']
-      sufijos.each do |sufijo|
-        ret.gsub!(/#{sufijo}$/, '')
+      SUFIJOS.each do |sufijo|
+        ret.gsub!(/_#{sufijo}$/, '')
       end
       ret
+    end
+
+    def placeholder_campo(campo)
+      suf = sufijo(campo)
+      if suf.present?
+        "#{@clase_modelo.human_attribute_name(quitar_sufijo(campo))} #{suf}"
+      else
+        @clase_modelo.human_attribute_name(campo)
+      end
     end
 
     def filtros_html
       res = ''
       @campos.each do |campo|
         if tipo(campo) == :enumerized
-          res += filtro_select(campo, @clase_modelo.human_attribute_name(campo))
+          res += filtro_select(campo, placeholder_campo(campo))
         elsif tipo(campo) == :asociacion
-          res += filtro_asociacion(campo, @clase_modelo.human_attribute_name(campo))
-        elsif tipo(campo) == :date
-          res += filtro_fecha(campo, @clase_modelo.human_attribute_name(campo))
+          res += filtro_asociacion(campo, placeholder_campo(campo))
+        elsif tipo(campo) == :date || tipo(campo) == :datetime
+          res += filtro_fecha(campo, placeholder_campo(campo))
         else
-          res += filtro_texto(campo, @clase_modelo.human_attribute_name(campo))
+          res += filtro_texto(campo, placeholder_campo(campo))
         end
       end
       res.html_safe
