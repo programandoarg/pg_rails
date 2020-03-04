@@ -8,11 +8,11 @@ module PgRails
     end
 
     def editar_en_lugar?
-      admin?
+      usuario_habilitado?
     end
 
     def index?
-      admin?
+      usuario_habilitado?
     end
 
     def show?
@@ -20,7 +20,7 @@ module PgRails
     end
 
     def create?
-      admin?
+      usuario_habilitado?
     end
 
     def new?
@@ -28,7 +28,7 @@ module PgRails
     end
 
     def update?
-      admin?
+      usuario_habilitado?
     end
 
     def edit?
@@ -36,7 +36,7 @@ module PgRails
     end
 
     def destroy?
-      admin?
+      usuario_habilitado?
     end
 
     def scope
@@ -52,14 +52,24 @@ module PgRails
       end
 
       def resolve
-        scope
+        if usuario_habilitado?
+          scope
+        else
+          scope.none
+        end
       end
+
+      protected
+
+        def usuario_habilitado?
+          user.admin?
+        end
     end
 
     protected
 
-    def admin?
-      user.admin?
-    end
+      def usuario_habilitado?
+        user.admin?
+      end
   end
 end
