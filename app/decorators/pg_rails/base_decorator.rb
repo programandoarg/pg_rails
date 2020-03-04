@@ -4,6 +4,7 @@ module PgRails
   class BaseDecorator < Draper::Decorator
     include ActionView::Helpers
     include PrintHelper
+    include Pundit
 
     delegate_all
 
@@ -25,6 +26,7 @@ module PgRails
     end
 
     def destroy_link(message = '¿Estás seguro?')
+      return unless Pundit.policy!(helpers.current_user, object).destroy?
       helpers.content_tag :span, rel: :tooltip, title: 'Eliminar' do
         helpers.link_to object_url, data: { confirm: message }, method: :delete, class: 'btn btn-sm btn-danger' do
           helpers.content_tag :span, nil, class: 'fa fa-trash'
@@ -33,6 +35,7 @@ module PgRails
     end
 
     def edit_link
+      return unless Pundit.policy!(helpers.current_user, object).edit?
       helpers.content_tag :span, rel: :tooltip, title: 'Editar' do
         helpers.link_to edit_object_url, class: 'btn btn-sm btn-info' do
           helpers.content_tag :span, nil, class: 'fa fa-edit'
@@ -41,6 +44,7 @@ module PgRails
     end
 
     def show_link
+      return unless Pundit.policy!(helpers.current_user, object).show?
       helpers.content_tag :span, rel: :tooltip, title: 'Ver' do
         helpers.link_to object_url, class: 'btn btn-sm btn-primary' do
           helpers.content_tag :span, nil, class: 'fa fa-eye'
