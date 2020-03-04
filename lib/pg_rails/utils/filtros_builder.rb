@@ -2,6 +2,7 @@ module PgRails
   class FiltrosBuilder
     include ActionView::Helpers
     include ActionView::Context
+    include PostgresHelper
     attr_accessor :controller
 
     SUFIJOS = ['desde', 'hasta']
@@ -38,7 +39,11 @@ module PgRails
         elsif tipo(campo) == :date || tipo(campo) == :datetime
           begin
             fecha = Date.parse(params[campo])
-            query = query.where("#{@clase_modelo.table_name}.#{quitar_sufijo(campo)} #{comparador(campo)} ?", fecha)
+            if tipo(campo) == :datetime && comparador(campo) == '<'
+              fecha = fecha + 1.day - 1.second
+            end
+            campo_a_comparar = "#{@clase_modelo.table_name}.#{quitar_sufijo(campo)}"
+            query = query.where("#{campo_a_comparar} #{comparador(campo)} ?", fecha)
           rescue ArgumentError
           end
         end
