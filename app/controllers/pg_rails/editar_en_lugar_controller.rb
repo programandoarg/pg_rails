@@ -6,6 +6,7 @@ module PgRails
       objeto = modelo.find params[:id]
       authorize objeto, :editar_en_lugar?
       object_params = request.parameters[key_modelo]
+      objeto.current_user = current_user
       objeto.update_attributes(object_params)
       respond_with_bip(objeto, param: key_modelo)
     rescue Pundit::NotAuthorizedError => e
