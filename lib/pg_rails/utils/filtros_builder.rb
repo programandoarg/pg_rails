@@ -5,7 +5,7 @@ module PgRails
     include PostgresHelper
     attr_accessor :controller
 
-    SUFIJOS = ['desde', 'hasta']
+    SUFIJOS = ['desde', 'hasta', 'incluye', 'es_igual_a']
 
     def initialize(controller, clase_modelo, campos)
       @clase_modelo = clase_modelo
@@ -19,30 +19,34 @@ module PgRails
       @filtros[campo] = { oculto: true }
     end
 
-    def filtrar(query)
-      (@filtros).each do |campo, opciones|
-        next unless params[campo].present?
+    def filtrar(query, parametros = nil)
+      parametros = parametros_controller if parametros.nil?
+      @filtros.each do |campo, opciones|
+        next unless parametros[campo].present?
         if tipo(campo).in?([:integer, :float, :decimal])
-          query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", params[campo])
+          query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo])
         elsif tipo(campo) == :enumerized
-          query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", params[campo])
+          query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo])
         elsif tipo(campo) == :asociacion
-          asociacion = @clase_modelo.reflect_on_all_associations.find {|a| a.name == campo }
+          nombre_campo = sin_sufijo(campo)
+          suf = extraer_sufijo(campo)
+          asociacion = @clase_modelo.reflect_on_all_associations.find {|a| a.name == nombre_campo.to_sym }
           if asociacion.class == ActiveRecord::Reflection::HasAndBelongsToManyReflection
-            array = params[campo].class == Array ? params[campo].join(',') : params[campo]
-            query = query.joins(campo).group("#{@clase_modelo.table_name}.id").having("ARRAY_AGG(#{asociacion.join_table}.#{asociacion.association_foreign_key}) @> ARRAY[#{array}]::bigint[]")
+            array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
+            query = query.joins(nombre_campo.to_sym).group("#{@clase_modelo.table_name}.id")
+              .having("ARRAY_AGG(#{asociacion.join_table}.#{asociacion.association_foreign_key}) #{comparador_array(suf)} ARRAY[#{array}]::bigint[]")
           else
-            query = query.where("#{@clase_modelo.table_name}.#{campo}_id = ?", params[campo])
+            query = query.where("#{@clase_modelo.table_name}.#{campo}_id = ?", parametros[campo])
           end
         elsif tipo(campo) == :string
-          query = query.where("#{@clase_modelo.table_name}.#{campo} ILIKE '%#{params[campo]}%'")
+          query = query.where("#{@clase_modelo.table_name}.#{campo} ILIKE '%#{parametros[campo]}%'")
         elsif tipo(campo) == :date || tipo(campo) == :datetime
           begin
-            fecha = Date.parse(params[campo])
+            fecha = Date.parse(parametros[campo])
             if tipo(campo) == :datetime && comparador(campo) == '<'
               fecha = fecha + 1.day - 1.second
             end
-            campo_a_comparar = "#{@clase_modelo.table_name}.#{quitar_sufijo(campo)}"
+            campo_a_comparar = "#{@clase_modelo.table_name}.#{sin_sufijo(campo)}"
             query = query.where("#{campo_a_comparar} #{comparador(campo)} ?", fecha)
           rescue ArgumentError
           end
@@ -52,18 +56,29 @@ module PgRails
     end
 
     def tipo(campo)
-      if @clase_modelo.respond_to?(:enumerized_attributes) && @clase_modelo.enumerized_attributes[campo.to_s].present?
+      nombre_campo = sin_sufijo(campo)
+      if @clase_modelo.respond_to?(:enumerized_attributes) && @clase_modelo.enumerized_attributes[nombre_campo.to_s].present?
         :enumerized
-      elsif @clase_modelo.reflect_on_all_associations.find {|a| a.name == campo }.present?
+      elsif @clase_modelo.reflect_on_all_associations.find {|a| a.name == nombre_campo.to_sym }.present?
         :asociacion
       else
-        campo = quitar_sufijo(campo)
-        columna = @clase_modelo.columns.find {|columna| columna.name == campo.to_s}
+        columna = @clase_modelo.columns.find {|columna| columna.name == nombre_campo.to_s}
         if columna.nil?
-          Logueador.warning("no existe el campo: #{campo}")
+          Logueador.warning("no existe el campo: #{nombre_campo}")
           return
         end
         columna.type
+      end
+    end
+
+    def comparador_array(sufijo)
+      if sufijo == 'es_igual_a'
+        '='
+      elsif sufijo == 'incluye'
+        '@>'
+      else
+        # si no tiene sufijo que por defecto se use el includes
+        '@>'
       end
     end
 
@@ -77,7 +92,7 @@ module PgRails
       end
     end
 
-    def sufijo(campo)
+    def extraer_sufijo(campo)
       SUFIJOS.each do |sufijo|
         if campo.to_s.ends_with?("_" + sufijo)
           return sufijo
@@ -86,7 +101,7 @@ module PgRails
       nil
     end
 
-    def quitar_sufijo(campo)
+    def sin_sufijo(campo)
       ret = campo.to_s.dup
       SUFIJOS.each do |sufijo|
         ret.gsub!(/_#{sufijo}$/, '')
@@ -95,9 +110,9 @@ module PgRails
     end
 
     def placeholder_campo(campo)
-      suf = sufijo(campo)
+      suf = extraer_sufijo(campo)
       if suf.present?
-        "#{@clase_modelo.human_attribute_name(quitar_sufijo(campo))} #{suf}"
+        "#{@clase_modelo.human_attribute_name(sin_sufijo(campo))} #{suf}"
       else
         @clase_modelo.human_attribute_name(campo)
       end
@@ -131,7 +146,7 @@ module PgRails
       map = clase_asociacion.all.map { |o| [o.to_s, o.id] }
 
       map.unshift ["Seleccionar #{@clase_modelo.human_attribute_name(campo.to_sym).downcase}", nil]
-      default = params[campo].nil? ? nil : params[campo]
+      default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
       content_tag :div, class: 'filter' do
         if multiple
           select_tag campo, options_for_select(map, default), multiple: true, class: 'form-control selectize pg-input-lg'
@@ -144,7 +159,7 @@ module PgRails
     def filtro_select(campo, placeholder = '')
       map = @clase_modelo.send(campo).values.map { |key| [key.humanize, key.value] }
       map.unshift ["-", nil]
-      default = params[campo].nil? ? nil : params[campo]
+      default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
       content_tag :div, class: 'filter' do
         select_tag campo, options_for_select(map, default), class: 'form-control pg-input-lg'
       end
@@ -154,7 +169,7 @@ module PgRails
       content_tag :div, class: 'filter' do
         content_tag :div, class: 'input-group', style: 'width:230px' do
           text_field_tag(
-            campo, params[campo], class: "form-control", placeholder: placeholder, autocomplete: "off"
+            campo, parametros_controller[campo], class: "form-control", placeholder: placeholder, autocomplete: "off"
           ) + content_tag(:span, class: 'input-group-btn', type: :submit) do
             button_tag class: 'btn btn-primary disabled' do
               content_tag :span, nil, class: 'fa fa-search'
@@ -168,7 +183,7 @@ module PgRails
       content_tag :div, class: 'filter' do
         content_tag :div, class: 'input-group', style: 'width:230px' do
           text_field_tag(
-            campo, params[campo], class: "form-control datefield", placeholder: placeholder, autocomplete: "off"
+            campo, parametros_controller[campo], class: "form-control datefield", placeholder: placeholder, autocomplete: "off"
           ) + content_tag(:span, class: 'input-group-btn', type: :submit) do
             button_tag class: 'btn btn-primary disabled' do
               content_tag :span, nil, class: 'fa fa-search'
@@ -176,6 +191,10 @@ module PgRails
           end
         end
       end
+    end
+
+    def parametros_controller
+      params
     end
   end
 end
