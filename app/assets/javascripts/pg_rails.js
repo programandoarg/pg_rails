@@ -41,13 +41,8 @@ window.PgRails = new function() {
           dataType: 'json',
           method: 'DELETE',
         }).done(function(response) {
-          try {
-            res = $(boton).closest('.smart-listing').smart_listing().reload()
-            debugger
-            self.showToast("Elemento borrado");
-          } catch(err) {
-            location.reload();
-          }
+          res = $(boton).closest('.smart-listing').smart_listing().reload()
+          self.showToast("Elemento borrado");
         }).fail(function(response) {
           self.showToast(response.responseJSON.error);
         });
@@ -192,37 +187,40 @@ window.PgRails = new function() {
         $(toast).remove();
       })
     } else {
+      if (window.toastr) {
+        var shortCutFunction = type;
 
-      var shortCutFunction = type;
+        title = "";
 
-      title = "";
+        window.toastr.options = {
+          closeButton: true,
+          debug: false,
+          progressBar: true,
+          preventDuplicates: false,
+          positionClass: "toast-top-right",
+          onclick: null,
+          showDuration: "400",
+          hideDuration: "1000",
+          timeOut: "7000",
+          extendedTimeOut: "1000",
+          showEasing: "swing",
+          hideEasing: "linear",
+          showMethod: "fadeIn",
+          hideMethod: "fadeOut"
+        };
 
-      window.toastr.options = {
-        closeButton: true,
-        debug: false,
-        progressBar: true,
-        preventDuplicates: false,
-        positionClass: "toast-top-right",
-        onclick: null,
-        showDuration: "400",
-        hideDuration: "1000",
-        timeOut: "7000",
-        extendedTimeOut: "1000",
-        showEasing: "swing",
-        hideEasing: "linear",
-        showMethod: "fadeIn",
-        hideMethod: "fadeOut"
-      };
-
-      $("#toastrOptions").text("Command: toastr["
-              + shortCutFunction
-              + "](\""
-              + message
-              + (title ? "\", \"" + title : '')
-              + "\")\n\ntoastr.options = "
-              + JSON.stringify(toastr.options, null, 2)
-      );
-      var $toast = window.toastr[shortCutFunction](message, title);
+        $("#toastrOptions").text("Command: toastr["
+                + shortCutFunction
+                + "](\""
+                + message
+                + (title ? "\", \"" + title : '')
+                + "\")\n\ntoastr.options = "
+                + JSON.stringify(toastr.options, null, 2)
+        );
+        var $toast = window.toastr[shortCutFunction](message, title);
+      } else {
+        alert(message);
+      }
     }
   }
 
