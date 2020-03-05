@@ -38,6 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'breadcrumbs_on_rails'
   spec.add_dependency 'caxlsx_rails'
   spec.add_dependency 'rollbar'
+  spec.add_dependency 'paranoia'
 
   spec.add_development_dependency 'factory_bot'
   spec.add_development_dependency 'rspec-rails', '~> 3.8'
