@@ -30,13 +30,15 @@ module PgRails
         elsif tipo(campo) == :asociacion
           nombre_campo = sin_sufijo(campo)
           suf = extraer_sufijo(campo)
-          asociacion = @clase_modelo.reflect_on_all_associations.find {|a| a.name == nombre_campo.to_sym }
+          asociacion = obtener_asociacion(nombre_campo)
           if asociacion.class == ActiveRecord::Reflection::HasAndBelongsToManyReflection
             array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
             query = query.joins(nombre_campo.to_sym).group("#{@clase_modelo.table_name}.id")
               .having("ARRAY_AGG(#{asociacion.join_table}.#{asociacion.association_foreign_key}) #{comparador_array(suf)} ARRAY[#{array}]::bigint[]")
-          else
+          elsif asociacion.class == ActiveRecord::Reflection::BelongsToReflection
             query = query.where("#{@clase_modelo.table_name}.#{campo}_id = ?", parametros[campo])
+          else
+            fail 'filtro de asociacion no soportado'
           end
         elsif tipo(campo) == :string
           query = query.where("#{@clase_modelo.table_name}.#{campo} ILIKE '%#{parametros[campo]}%'")
@@ -135,8 +137,23 @@ module PgRails
       res.html_safe
     end
 
+    def obtener_asociacion(campo)
+      nombre_campo = sin_sufijo(campo)
+      suf = extraer_sufijo(campo)
+      asociacion = @clase_modelo.reflect_on_all_associations.find {|a| a.name == nombre_campo.to_sym }
+      fail 'no se encontró la asociacion' if asociacion.nil?
+      if asociacion.class == ActiveRecord::Reflection::ThroughReflection
+        through_class = asociacion.through_reflection.class_name.constantize
+        asociacion_posta = through_class.reflect_on_all_associations.find {|a| a.name == nombre_campo.to_sym }
+        fail 'no se encontró la asociacion' if asociacion_posta.nil?
+        asociacion_posta
+      else
+        asociacion
+      end
+    end
+
     def filtro_asociacion(campo, placeholder = '')
-      asociacion = @clase_modelo.reflect_on_all_associations.find {|a| a.name == campo }
+      asociacion = obtener_asociacion(campo)
       multiple = asociacion.class == ActiveRecord::Reflection::HasAndBelongsToManyReflection
       nombre_clase = asociacion.options[:class_name]
       if nombre_clase.nil?
