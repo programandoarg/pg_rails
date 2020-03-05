@@ -13,4 +13,4 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
-gem 'smart_listing', git: 'https://github.com/mrosso10/smart_listing.git', ref: 'd011e7ac8d3a84255859f72bf4c83c0e94f8edd4'
+gem 'smart_listing', git: 'https://github.com/mrosso10/smart_listing.git', ref: '2f2e94da0b057ae003d9ffec66e9bde2a985f39f'
