@@ -31,7 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'best_in_place', '~> 3.1.1'
   spec.add_dependency "pundit"
   spec.add_dependency "simple_form"
-  spec.add_dependency 'smart_listing', '~> 1.2.3'
   spec.add_dependency "rainbow"
   spec.add_dependency "enumerize"
   spec.add_dependency 'sass-rails', '~> 5.0.4'
