@@ -27,6 +27,32 @@ window.PgRails = new function() {
     self.campo_dependiente_hacer(principal, dependiente, valor);
   }
   self.bindear = function() {
+    $('.smart-listing a[data-method=delete][data-remote=true]').click(function(e) {
+      var boton = this;
+      e.preventDefault();
+      e.stopPropagation();
+      var url = $(this).attr('href');
+      var confirmar = $(this).data('confirm');
+      if(!confirmar) {
+        confirmar = "¿Estás seguroooo?"
+      }
+      if( confirm(confirmar) ) {
+        $.ajax(url, {
+          dataType: 'json',
+          method: 'DELETE',
+        }).done(function(response) {
+          try {
+            res = $(boton).closest('.smart-listing').smart_listing().reload()
+            debugger
+            self.showToast("Elemento borrado");
+          } catch(err) {
+            location.reload();
+          }
+        }).fail(function(response) {
+          self.showToast(response.responseJSON.error);
+        });
+      }
+    })
     $('table:has(.best_in_place)').css('table-layout', 'fixed');
     $(".best_in_place").best_in_place();
     $(".best_in_place").on('ajax:error', function(event, response) {

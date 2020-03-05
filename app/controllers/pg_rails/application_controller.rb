@@ -66,8 +66,12 @@ module PgRails
       def destroy_model(model)
         @error_message = 'No se pudo eliminar el registro'
         begin
-          model.destroy
-          return true
+          if model.destroy
+            return true
+          else
+            @error_message = model.errors.full_messages.join(', ')
+            return false
+          end
         rescue ActiveRecord::InvalidForeignKey => e
           # class_name = /from table \"(?<table_name>[\p{L}_]*)\"/.match(e.message)[:table_name].singularize.camelcase
           # # pk_id = /from table \"(?<pk_id>[\p{L}_]*)\"/.match(e.message)[:pk_id].singularize.camelcase
