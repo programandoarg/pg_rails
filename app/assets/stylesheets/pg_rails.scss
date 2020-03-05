@@ -1,3 +1,21 @@
+.simple_form {
+  .ocultar {
+    input, select, textarea {
+      display: none;
+    }
+  }
+}
+
+.listado .btn-xs {
+  margin-right: 4px;
+}
+.listado .btn-sm {
+  width: 25px;
+  height: 25px;
+  padding: 1px;
+  margin-right: 4px;
+}
+
 .form-group {
   /*transition: height .5s ease 0s;*/
   transition: opacity .3s ease 0s;

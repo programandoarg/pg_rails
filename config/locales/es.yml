@@ -1,0 +1,9 @@
+es:
+  simple_form:
+    # labels:
+    #   user:
+    #     username: 'User name'
+    #     password: 'Password'
+    # hints:
+    error_notification:
+      default_message: "hubo algunos errores:"

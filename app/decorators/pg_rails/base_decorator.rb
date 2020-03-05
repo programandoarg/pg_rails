@@ -28,8 +28,8 @@ module PgRails
     def destroy_link(message = '¿Estás seguro?')
       return unless Pundit.policy!(helpers.current_user, object).destroy?
       helpers.content_tag :span, rel: :tooltip, title: 'Eliminar' do
-        helpers.link_to object_url, data: { confirm: message }, method: :delete, class: 'btn btn-sm btn-danger' do
-          helpers.content_tag :span, nil, class: 'fa fa-trash'
+        helpers.link_to object_url, data: { confirm: message }, method: :delete, class: "btn #{config.clase_botones_chicos} btn-#{config.boton_destroy}" do
+          helpers.content_tag :span, nil, class: "#{clase_icono(config.icono_destroy)}"
         end
       end
     end
@@ -37,8 +37,8 @@ module PgRails
     def edit_link
       return unless Pundit.policy!(helpers.current_user, object).edit?
       helpers.content_tag :span, rel: :tooltip, title: 'Editar' do
-        helpers.link_to edit_object_url, class: 'btn btn-sm btn-info' do
-          helpers.content_tag :span, nil, class: 'fa fa-edit'
+        helpers.link_to edit_object_url, class: "btn #{config.clase_botones_chicos} btn-#{config.boton_edit}" do
+          helpers.content_tag :span, nil, class: "#{clase_icono(config.icono_edit)}"
         end
       end
     end
@@ -46,8 +46,8 @@ module PgRails
     def show_link
       return unless Pundit.policy!(helpers.current_user, object).show?
       helpers.content_tag :span, rel: :tooltip, title: 'Ver' do
-        helpers.link_to object_url, class: 'btn btn-sm btn-primary' do
-          helpers.content_tag :span, nil, class: 'fa fa-eye'
+        helpers.link_to object_url, class: "btn #{config.clase_botones_chicos} btn-#{config.boton_show}" do
+          helpers.content_tag :span, nil, class: "#{clase_icono(config.icono_show)}"
         end
       end
     end
@@ -59,5 +59,15 @@ module PgRails
     def object_url
       helpers.url_for(object)
     end
+
+    private
+
+      def config
+        PgRails.configuracion
+      end
+
+      def clase_icono(icono)
+        "#{config.sistema_iconos} #{config.sistema_iconos}-#{icono}"
+      end
   end
 end
