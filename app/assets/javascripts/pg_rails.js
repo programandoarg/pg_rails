@@ -44,7 +44,7 @@ window.PgRails = new function() {
           res = $(boton).closest('.smart-listing').smart_listing().reload()
           self.showToast("Elemento borrado");
         }).fail(function(response) {
-          self.showToast(response.responseJSON.error);
+          self.error_toast(response.responseJSON.error);
         });
       }
     })
@@ -139,6 +139,10 @@ window.PgRails = new function() {
     modal.find('.modal-body').html(contenido);
     $(modal).modal('show');
     return modal;
+  }
+
+  self.error_toast = function(message) {
+    self.showToast("error", message);
   }
 
   self.showToast = function (type, message) {
