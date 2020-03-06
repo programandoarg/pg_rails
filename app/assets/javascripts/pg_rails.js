@@ -61,9 +61,9 @@ window.PgRails = new function() {
         textarea.val(valor)
       }
     });
-    $(".best_in_place").on('ajax:success', function(event, response) {
-      self.showToast("success", "👍")
-    });
+    // $(".best_in_place").on('ajax:success', function(event, response) {
+    //   self.showToast("success", "👍")
+    // });
     $.fn.datepicker.defaults.format = 'dd/mm/yyyy';
 
     $('.crear_asociado').click(function() {
@@ -133,9 +133,14 @@ window.PgRails = new function() {
     element.trigger("chosen:updated");
   }
 
-
-  self.abrir_modal = function(contenido) {
-    var modal = $('<div class="modal"><div class="modal-dialog"><div class="modal-content"><div class="modal-body">');
+  self.abrir_modal = function(contenido, titulo = '') {
+    var header = '<div class="modal-header">' +
+    '  <h5 class="modal-title">' + titulo + '</h5>' +
+    '  <button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+    '    <span aria-hidden="true">&times;</span>' +
+    '  </button>' +
+    '</div>'
+    var modal = $('<div class="modal"><div class="modal-dialog"><div class="modal-content">' + header + '<div class="modal-body">');
     modal.find('.modal-body').html(contenido);
     $(modal).modal('show');
     return modal;
