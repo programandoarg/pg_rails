@@ -51,7 +51,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   def new
     add_breadcrumb "Crear #{ <%= class_name %>.model_name.human.downcase }"
 
-    @<%= singular_name %> = <%= orm_class.build(class_name) %>
+    @<%= singular_name %> = <%= orm_class.build(class_name, "#{singular_name}_params") %>
     @<%= singular_name %> = @<%= singular_name %>.decorate
   end
 
@@ -108,8 +108,24 @@ class <%= controller_class_name %>Controller < ApplicationController
       <%- if attributes_names.empty? -%>
       params.fetch(:<%= singular_table_name %>, {})
       <%- else -%>
-      params.require(:<%= singular_table_name %>).permit(<%= attributes_names.map { |name| ":#{name}" }.join(', ') %>)
+      if action_name == 'new'
+        params.permit(atributos_permitidos)
+      else
+        params.require(:<%= singular_table_name %>).permit(atributos_permitidos)
+      end
       <%- end -%>
+    end
+
+    def producto_proveedor_params
+      if action_name == 'new'
+        params.permit(atributos_permitidos)
+      else
+        params.require(:producto_proveedor).permit(atributos_permitidos)
+      end
+    end
+
+    def atributos_permitidos
+      [<%= attributes_names.map { |name| ":#{name}" }.join(', ') %>]
     end
 end
 <% end -%>
