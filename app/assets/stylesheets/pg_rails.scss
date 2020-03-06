@@ -21,6 +21,10 @@
   transition: opacity .3s ease 0s;
   opacity: 1;
   max-width: 300px;
+  
+  &.dependent_fields {
+    max-width: 600px;
+  }
 
   &.ocultar {
     /*height: 0px;*/
