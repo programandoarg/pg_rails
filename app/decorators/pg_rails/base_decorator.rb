@@ -28,8 +28,8 @@ module PgRails
     def destroy_link(message = '¿Estás seguro?')
       return unless Pundit.policy!(helpers.current_user, object).destroy?
       helpers.content_tag :span, rel: :tooltip, title: 'Eliminar' do
-        helpers.link_to object_url, data: { confirm: message }, remote: true, method: :delete, class: "btn #{config.clase_botones_chicos} btn-#{config.boton_destroy}" do
-          helpers.content_tag :span, nil, class: "#{clase_icono(config.icono_destroy)}"
+        helpers.link_to object_url, data: { confirm: message }, remote: true, method: :delete, class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_destroy}" do
+          helpers.content_tag :span, nil, class: "#{clase_icono(_config.icono_destroy)}"
         end
       end
     end
@@ -37,8 +37,8 @@ module PgRails
     def edit_link
       return unless Pundit.policy!(helpers.current_user, object).edit?
       helpers.content_tag :span, rel: :tooltip, title: 'Editar' do
-        helpers.link_to edit_object_url, class: "btn #{config.clase_botones_chicos} btn-#{config.boton_edit}" do
-          helpers.content_tag :span, nil, class: "#{clase_icono(config.icono_edit)}"
+        helpers.link_to edit_object_url, class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_edit}" do
+          helpers.content_tag :span, nil, class: "#{clase_icono(_config.icono_edit)}"
         end
       end
     end
@@ -46,8 +46,8 @@ module PgRails
     def show_link
       return unless Pundit.policy!(helpers.current_user, object).show?
       helpers.content_tag :span, rel: :tooltip, title: 'Ver' do
-        helpers.link_to object_url, class: "btn #{config.clase_botones_chicos} btn-#{config.boton_show}" do
-          helpers.content_tag :span, nil, class: "#{clase_icono(config.icono_show)}"
+        helpers.link_to object_url, class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_show}" do
+          helpers.content_tag :span, nil, class: "#{clase_icono(_config.icono_show)}"
         end
       end
     end
@@ -62,12 +62,12 @@ module PgRails
 
     private
 
-      def config
+      def _config
         PgRails.configuracion
       end
 
       def clase_icono(icono)
-        "#{config.sistema_iconos} #{config.sistema_iconos}-#{icono}"
+        "#{_config.sistema_iconos} #{_config.sistema_iconos}-#{icono}"
       end
   end
 end
