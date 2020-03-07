@@ -55,7 +55,7 @@ module PgRails
     def new_link
       return unless Pundit.policy!(helpers.current_user, object).new?
       helpers.content_tag :span, rel: :tooltip, title: 'Crear' do
-        helpers.link_to object_url, class: "btn #{_config.clase_botones_chicos} btn-primary" do
+        helpers.link_to new_object_url, class: "btn #{_config.clase_botones_chicos} btn-primary" do
           helpers.content_tag( :span, nil, class: "#{clase_icono('plus')}") + " Crear #{object.class.nombre_singular.downcase}"
         end
       end
@@ -63,6 +63,10 @@ module PgRails
 
     def edit_object_url
       helpers.url_for([:edit, object])
+    end
+
+    def new_object_url
+      helpers.url_for(object.class) + '/new'
     end
 
     def object_url
