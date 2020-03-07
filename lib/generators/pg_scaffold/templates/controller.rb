@@ -6,26 +6,16 @@ require_dependency "<%= namespaced_path %>/application_controller"
 <% end -%>
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < ApplicationController
-  before_action :set_<%= singular_name %>, only: [:show, :edit, :update, :destroy]
+  before_action { @clase_modelo = <%= class_name %> }
 
-  add_breadcrumb <%= class_name %>.model_name.human.pluralize, :<%= plural_table_name %>_path
-
-  before_action do
-    @clase_modelo = <%= class_name %>
-  end
-
-  before_action only: [:show, :edit, :update, :destroy] do
-    authorize @<%= singular_name %>
-  end
-
-  before_action except: [:show, :edit, :update, :destroy] do
+  before_action only: :index do
     authorize <%= class_name %>
   end
 
+  before_action :set_<%= singular_name %>, only: %i[new create show edit update destroy]
+
   def index
-    @filtros = PgRails::FiltrosBuilder.new(
-      self, <%= class_name %>, [<%= atributos_a_filtrar.map{|at| ":#{at.name}" }.join(', ') %>])
-    @<%= plural_name %> = @filtros.filtrar <%= orm_class.all(class_name) %>
+    @<%= plural_name %> = filtros_y_policy [<%= atributos_a_filtrar.map{|at| ":#{at.name}" }.join(', ') %>]
 
     respond_to do |format|
       format.json { render json: @<%= plural_name %> }
@@ -39,9 +29,6 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def show
-    add_breadcrumb @<%= singular_name %>, @<%= singular_name %>
-    @<%= singular_name %> = @<%= singular_name %>.decorate
-
     respond_to do |format|
       format.json { render json: @<%= singular_name %> }
       format.html
@@ -49,21 +36,12 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def new
-    add_breadcrumb "Crear #{ <%= class_name %>.model_name.human.downcase }"
-
-    @<%= singular_name %> = <%= orm_class.build(class_name, "#{singular_name}_params") %>
-    @<%= singular_name %> = @<%= singular_name %>.decorate
   end
 
   def edit
-    add_breadcrumb @<%= singular_name %>
-    @<%= singular_name %> = @<%= singular_name %>.decorate
   end
 
   def create
-    @<%= singular_name %> = <%= orm_class.build(class_name, "#{singular_name}_params") %>
-    @<%= singular_name %>.current_user = current_user
-
     respond_to do |format|
       if @<%= orm_instance(singular_name).save %>
         format.html { redirect_to @<%= singular_name %>, notice: "#{ <%= class_name %>.model_name.human } creadx." }
@@ -76,9 +54,6 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def update
-    @<%= singular_name %>.assign_attributes(<%= "#{singular_name}_params" %>)
-    @<%= singular_name %>.current_user = current_user
-
     respond_to do |format|
       if @<%= orm_instance(singular_name).save %>
         format.html { redirect_to @<%= singular_name %>, notice: "#{ <%= class_name %>.model_name.human } actualizadx." }
@@ -104,6 +79,26 @@ class <%= controller_class_name %>Controller < ApplicationController
       @<%= singular_name %> = <%= orm_class.find(class_name, "params[:id]") %>
     end
 
+    def set_<%= singular_name %>
+      if action_name.in? %w(new create)
+        @<%= singular_name %> = @clase_modelo.new(<%= "#{singular_name}_params" %>)
+      else
+        @<%= singular_name %> = @clase_modelo.find(params[:id])
+
+        if action_name.in? %w(update)
+          @<%= singular_name %>.assign_attributes(<%= "#{singular_name}_params" %>)
+        end
+      end
+
+      @<%= singular_name %>.current_user = current_user
+
+      authorize @<%= singular_name %>
+
+      if action_name.in? %w(show new edit)
+        @<%= singular_name %> = @<%= singular_name %>.decorate
+      end
+    end
+
     def <%= "#{singular_name}_params" %>
       <%- if attributes_names.empty? -%>
       params.fetch(:<%= singular_table_name %>, {})
@@ -114,14 +109,6 @@ class <%= controller_class_name %>Controller < ApplicationController
         params.require(:<%= singular_table_name %>).permit(atributos_permitidos)
       end
       <%- end -%>
-    end
-
-    def producto_proveedor_params
-      if action_name == 'new'
-        params.permit(atributos_permitidos)
-      else
-        params.require(:producto_proveedor).permit(atributos_permitidos)
-      end
     end
 
     def atributos_permitidos

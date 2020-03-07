@@ -15,6 +15,14 @@ module PgRails
     end
 
     protected
+
+      def filtros_y_policy(campos)
+        @filtros = PgRails::FiltrosBuilder.new(
+          self, @clase_modelo, campos)
+        scope = policy_scope(@clase_modelo)
+        @filtros.filtrar(scope)
+      end
+
       def smart_listing(smart_listing_key, scope, partial, options = {})
         unless options[:default_sort].present?
           options[:default_sort] = { id: :desc }
