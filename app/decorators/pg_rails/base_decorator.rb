@@ -34,20 +34,29 @@ module PgRails
       end
     end
 
-    def edit_link
+    def edit_link(texto = '')
       return unless Pundit.policy!(helpers.current_user, object).edit?
       helpers.content_tag :span, rel: :tooltip, title: 'Editar' do
         helpers.link_to edit_object_url, class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_edit}" do
-          helpers.content_tag :span, nil, class: "#{clase_icono(_config.icono_edit)}"
+          helpers.content_tag(:span, nil, class: "#{clase_icono(_config.icono_edit)}") + texto
         end
       end
     end
 
-    def show_link
+    def show_link(texto = '')
       return unless Pundit.policy!(helpers.current_user, object).show?
       helpers.content_tag :span, rel: :tooltip, title: 'Ver' do
         helpers.link_to object_url, class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_show}" do
-          helpers.content_tag :span, nil, class: "#{clase_icono(_config.icono_show)}"
+          helpers.content_tag(:span, nil, class: "#{clase_icono(_config.icono_show)}") + texto
+        end
+      end
+    end
+
+    def new_link
+      return unless Pundit.policy!(helpers.current_user, object).new?
+      helpers.content_tag :span, rel: :tooltip, title: 'Crear' do
+        helpers.link_to object_url, class: "btn #{_config.clase_botones_chicos} btn-primary" do
+          helpers.content_tag( :span, nil, class: "#{clase_icono('plus')}") + " Crear #{object.class.nombre_singular.downcase}"
         end
       end
     end

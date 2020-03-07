@@ -11,6 +11,14 @@ module PgRails
     before_create :setear_creado_y_actualizado_por
     before_update :setear_actualizado_por
 
+    def self.nombre_plural
+      model_name.human(count: 2)
+    end
+
+    def self.nombre_singular
+      model_name.human(count: 1)
+    end
+
     def to_s
       [:nombre, :name].each do |campo|
         if try(campo).present?
