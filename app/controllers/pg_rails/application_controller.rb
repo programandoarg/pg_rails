@@ -16,10 +16,18 @@ module PgRails
 
     protected
 
+      def clase_modelo
+        # agarro la variable o intento con el nombre del controller
+        @clase_modelo ||= self.class.name.singularize.gsub('Controller', '').constantize
+      end
+
       def filtros_y_policy(campos)
         @filtros = PgRails::FiltrosBuilder.new(
-          self, @clase_modelo, campos)
-        scope = policy_scope(@clase_modelo)
+          self, clase_modelo, campos)
+        scope = policy_scope(clase_modelo)
+        if scope.respond_to?(:without_deleted)
+          scope = scope.without_deleted
+        end
         @filtros.filtrar(scope)
       end
 

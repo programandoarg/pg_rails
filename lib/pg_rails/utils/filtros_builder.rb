@@ -160,7 +160,11 @@ module PgRails
         nombre_clase = asociacion.name.to_s.camelize
       end
       clase_asociacion = Object.const_get(nombre_clase)
-      map = clase_asociacion.all.map { |o| [o.to_s, o.id] }
+      scope = clase_asociacion.all
+      if scope.respond_to?(:without_deleted)
+        scope = clase_asociacion.without_deleted
+      end
+      map = scope.map { |o| [o.to_s, o.id] }
 
       map.unshift ["Seleccionar #{@clase_modelo.human_attribute_name(campo.to_sym).downcase}", nil]
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
