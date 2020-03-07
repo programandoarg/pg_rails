@@ -14,6 +14,8 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   before_action :set_<%= singular_name %>, only: %i[new create show edit update destroy]
 
+  add_breadcrumb <%= class_name %>.nombre_plural, :<%= plural_table_name %>_path
+
   def index
     @<%= plural_name %> = filtros_y_policy [<%= atributos_a_filtrar.map{|at| ":#{at.name}" }.join(', ') %>]
 
@@ -23,12 +25,14 @@ class <%= controller_class_name %>Controller < ApplicationController
       format.html { render_smart_listing }
       format.xlsx do
         render xlsx: 'download',
-          filename: "#{<%= class_name %>.model_name.human.pluralize.gsub(' ','-').downcase}-#{Date.today}.xlsx"
+          filename: "#{<%= class_name %>.nombre_plural.gsub(' ','-').downcase}-#{Date.today}.xlsx"
       end
     end
   end
 
   def show
+    add_breadcrumb @<%= singular_name %>, @<%= singular_name %>
+
     respond_to do |format|
       format.json { render json: @<%= singular_name %> }
       format.html
@@ -36,15 +40,17 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def new
+    add_breadcrumb "Crear #{ <%= class_name %>.nombre_singular.downcase }"
   end
 
   def edit
+    add_breadcrumb @<%= singular_name %>
   end
 
   def create
     respond_to do |format|
       if @<%= orm_instance(singular_name).save %>
-        format.html { redirect_to @<%= singular_name %>, notice: "#{ <%= class_name %>.model_name.human } creadx." }
+        format.html { redirect_to @<%= singular_name %>, notice: "#{ <%= class_name %>.nombre_singular } creadx." }
         format.json { render json: @<%= singular_name %>.decorate }
       else
         format.html { render :new }
@@ -56,7 +62,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   def update
     respond_to do |format|
       if @<%= orm_instance(singular_name).save %>
-        format.html { redirect_to @<%= singular_name %>, notice: "#{ <%= class_name %>.model_name.human } actualizadx." }
+        format.html { redirect_to @<%= singular_name %>, notice: "#{ <%= class_name %>.nombre_singular } actualizadx." }
         format.json { render json: @<%= singular_name %>.decorate }
       else
         format.html { render :edit }
