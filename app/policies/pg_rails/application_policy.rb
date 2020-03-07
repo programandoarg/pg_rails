@@ -8,19 +8,20 @@ module PgRails
     end
 
     def editar_en_lugar?
-      usuario_habilitado?
+      puede_editar?
     end
 
     def index?
-      usuario_habilitado?
+      fail "esta policy se llama con la clase modelo y no con #{record.class}" unless record.class
+      acceso_total? || Pundit.policy_scope!(user, record).any?
     end
 
     def show?
-      scope.where(:id => record.id).exists?
+      scope.where(id: record.id).exists?
     end
 
     def create?
-      usuario_habilitado?
+      puede_crear?
     end
 
     def new?
@@ -28,7 +29,7 @@ module PgRails
     end
 
     def update?
-      usuario_habilitado?
+      puede_editar?
     end
 
     def edit?
@@ -36,7 +37,7 @@ module PgRails
     end
 
     def destroy?
-      usuario_habilitado?
+      puede_borrar?
     end
 
     def scope
@@ -52,24 +53,33 @@ module PgRails
       end
 
       def resolve
-        if usuario_habilitado?
-          scope
+        if policy.acceso_total?
+          scope.all
         else
           scope.none
         end
       end
 
-      protected
-
-        def usuario_habilitado?
-          user.admin?
-        end
+      def policy
+        fail "el scope debe ser una clase modelo y no #{scope.class}" unless scope.class
+        Pundit.policy!(user, scope)
+      end
     end
 
-    protected
+    def puede_editar?
+      acceso_total?
+    end
 
-      def usuario_habilitado?
-        user.admin?
-      end
+    def puede_crear?
+      acceso_total?
+    end
+
+    def puede_borrar?
+      acceso_total?
+    end
+
+    def acceso_total?
+      user.admin?
+    end
   end
 end
