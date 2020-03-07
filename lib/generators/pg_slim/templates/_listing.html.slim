@@ -19,7 +19,7 @@
               = <%= singular_name %>.edit_link
               = <%= singular_name %>.destroy_link
 - else
-  p No hay #{@clase_modelo.model_name.human.pluralize.downcase} que mostrar
+  p No hay #{@clase_modelo.nombre_plural.downcase} que mostrar
 
 = smart_listing.paginate
 = smart_listing.pagination_per_page_links

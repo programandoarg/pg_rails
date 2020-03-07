@@ -1,8 +1,6 @@
-- content_for(:title, @clase_modelo.model_name.human.pluralize)
+- content_for(:title, @clase_modelo.nombre_plural)
 - content_for :actions do
-  = link_to new_<%= singular_table_name %>_path, class: 'btn btn-primary' do 
-    span.fa.fa-plus
-    |  Crear #{@clase_modelo.model_name.human.downcase}
+  = @clase_modelo.new.decorate.new_link
   .btn.btn-warning.exportar data-url="#{<%= plural_table_name %>_path(format: 'xlsx')}"
     span.fa.fa-list
     |  Exportar
@@ -12,6 +10,6 @@
 
   .card.float-e-margins
     .card-header
-      h5 Listado de #{@clase_modelo.model_name.human.pluralize.downcase}
+      h5 Listado de #{@clase_modelo.nombre_plural.downcase}
     .card-body
       = smart_listing_render(:<%= plural_name %>)
