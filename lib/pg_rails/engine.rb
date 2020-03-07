@@ -1,4 +1,6 @@
-require 'byebug'
+unless Rails.env.production?
+  require 'byebug'
+end
 
 module PgRails
   class Engine < ::Rails::Engine
