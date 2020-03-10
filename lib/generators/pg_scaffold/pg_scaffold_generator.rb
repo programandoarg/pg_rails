@@ -1,5 +1,3 @@
-require 'pg_rails/monkey_patches/quitar_rspec_a_generator_de_policies'
-
 class PgScaffoldGenerator < Rails::Generators::NamedBase
   source_root File.expand_path('templates', __dir__)
 
@@ -28,7 +26,7 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
     end
   end
 
-  invoke 'pundit:policy'
+  invoke :pg_pundit
 
   private
 
