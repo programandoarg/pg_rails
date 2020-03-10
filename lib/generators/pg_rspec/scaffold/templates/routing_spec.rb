@@ -1,3 +1,5 @@
+# generado con pg_rails
+
 require "rails_helper"
 
 <% module_namespacing do -%>
