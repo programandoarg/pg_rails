@@ -6,6 +6,8 @@ module PgRails
   class Engine < ::Rails::Engine
     isolate_namespace PgRails
 
+    config.i18n.default_locale = :es
+
     initializer 'configurar_generators', after: "factory_bot.set_fixture_replacement" do
       unless Rails.env.production?
         require 'pg_rails/monkey_patches/mejoras_de_atributos'
