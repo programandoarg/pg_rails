@@ -158,7 +158,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
         put :update, params: {id: <%= file_name %>.to_param, <%= ns_file_name %>: new_attributes}, session: valid_session
 <% end -%>
         <%= file_name %>.reload
-<% atributo = attributes.find { |at| at.required? } -%>
+<% atributo = attributes.find { |at| !at.reference? && at.required? } -%>
 <% if atributo.present? -%>
         expect(<%= file_name%>.<%= atributo.name %>).to eq new_attributes[:<%= atributo.name %>]
 <% else -%>

@@ -38,7 +38,7 @@ module PgFactoryBot
         def factory_attributes
           attributes.map do |attribute|
             if attribute.reference?
-              "#{attribute.name}_id { create(:#{attribute.tabla_referenciada_singular}).id }"
+              "association :#{attribute.name}, factory: :#{attribute.tabla_referenciada_singular}"
             else
               "#{attribute.name} { #{valor_atributo(attribute)} }"
             end
