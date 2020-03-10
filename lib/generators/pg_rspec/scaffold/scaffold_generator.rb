@@ -9,6 +9,9 @@ module PgRspec
       source_paths << File.expand_path('templates', __dir__)
 
       remove_hook_for :integration_tool, :as => :integration
+      remove_hook_for :fixture_replacement
+
+      invoke 'pg_factory_bot:model'
 
       def generate_routing_spec
         # piso el método para que no genere nada
