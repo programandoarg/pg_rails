@@ -1,5 +1,9 @@
 # generado con pg_rails
 
+<% if namespaced? -%>
+require_dependency "<%= namespaced_path %>/application_record"
+
+<% end -%>
 <% module_namespacing do -%>
 class <%= class_name %> < <%= parent_class_name.classify %>
   audited

@@ -8,9 +8,7 @@ require_dependency "<%= namespaced_path %>/application_controller"
 class <%= controller_class_name %>Controller < ApplicationController
   before_action { @clase_modelo = <%= class_name %> }
 
-  before_action only: :index do
-    authorize <%= class_name %>
-  end
+  before_action(only: :index) { authorize <%= class_name %> }
 
   before_action :set_<%= singular_name %>, only: %i[new create show edit update destroy]
 
