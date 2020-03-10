@@ -22,7 +22,11 @@ module Rails
 
       private
         def ruta_vistas
-          namespaced_class_path.dup.push(plural_name).join('/')
+          if namespaced?
+            namespaced_class_path.dup.push(plural_name).join('/')
+          else
+            regular_class_path.dup.push(plural_name).join('/')
+          end
         end
     end
   end
