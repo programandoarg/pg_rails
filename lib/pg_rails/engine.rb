@@ -17,7 +17,7 @@ module PgRails
       require 'pg_rails/utils/logueador'
       require 'pg_rails/simple_form/initializer'
 
-      config.app_generators do |g|
+      config.generators do |g|
         g.fixture_replacement :pg_factory_bot, dir: 'spec/factories'
         g.test_framework :pg_rspec
         g.orm :pg_active_record
