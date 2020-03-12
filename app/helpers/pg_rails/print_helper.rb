@@ -105,8 +105,23 @@ module PgRails
       '$'
     end
 
-    def print_value(value)
-      value.nil? ? '<vacío>' : value
+    def print_value(nombre_clase, field, value)
+      if !!value == value # es booleano
+        value ? 'Si' : 'No'
+      elsif value.nil?
+        '-'
+      else
+        begin
+          if nombre_clase.constantize.defined_enums[field].present?
+            valor = nombre_clase.constantize.defined_enums[field].invert[value]
+            I18n.t("enums.#{nombre_clase.downcase}.#{field}.#{valor}", default: valor)
+          else
+            truncate_title(value.to_s.encode("UTF-8", invalid: :replace, undef: :replace))
+          end
+        rescue NameError
+          truncate_title(value.to_s.encode("UTF-8", invalid: :replace, undef: :replace))
+        end
+      end
     end
 
     def parsear_tiempo(datetime)
