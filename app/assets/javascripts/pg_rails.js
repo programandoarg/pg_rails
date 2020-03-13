@@ -1,5 +1,7 @@
 //= require jquery3
 //= require jquery_ujs
+//= require popper
+//= require bootstrap-sprockets
 //= require smart_listing
 //= require best_in_place
 //= require bootstrap-datepicker/core
@@ -60,6 +62,7 @@ window.PgRails = new function() {
         });
       }
     })
+    $("[rel=tooltip]").tooltip();
     $('form.pg-form').each(function(i,e) {
       $(e).validate();
     });
