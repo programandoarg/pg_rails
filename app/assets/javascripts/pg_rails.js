@@ -6,6 +6,7 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
 //= require selectize
 //= require jquery_nested_form
+//= require pg_rails/validaciones
 //= xrequire handlebars
 //= xrequire chosen
 
@@ -59,6 +60,9 @@ window.PgRails = new function() {
         });
       }
     })
+    $('form.pg-form').each(function(i,e) {
+      $(e).validate();
+    });
     $('table:has(.best_in_place)').css('table-layout', 'fixed');
     $(".best_in_place").best_in_place();
     $(".best_in_place").on('ajax:error', function(event, response) {

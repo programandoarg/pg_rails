@@ -33,6 +33,14 @@
       opacity: 0;
     }
   }
+
+  .form-control.error {
+    border: 1px solid red;
+  }
+
+  label.error {
+    color: red;
+  }
 }
 
 .filter {
