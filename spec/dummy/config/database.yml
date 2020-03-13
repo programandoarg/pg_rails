@@ -1,8 +1,8 @@
 default: &default
   host: localhost
   port: 5432
-  username: pg_rails
-  password: pg_rails
+  username: pgrails
+  password: pgrails
   adapter: postgresql
   encoding: unicode
   min_messages: WARNING

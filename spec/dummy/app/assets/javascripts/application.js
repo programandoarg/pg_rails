@@ -13,3 +13,10 @@
 //= require rails-ujs
 //= require activestorage
 //= require_tree .
+
+//= require pg_rails
+
+$(document).ready(function() {
+
+  PgRails.bindear();
+});
