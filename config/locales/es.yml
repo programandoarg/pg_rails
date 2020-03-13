@@ -1,4 +1,6 @@
 es:
+  created_at: Fecha de creación
+  updated_at: Fecha de actualización
   simple_form:
     # labels:
     #   user:
