@@ -80,10 +80,6 @@ class <%= controller_class_name %>Controller < ApplicationController
     end
 
     def set_<%= singular_name %>
-      @<%= singular_name %> = <%= orm_class.find(class_name, "params[:id]") %>
-    end
-
-    def set_<%= singular_name %>
       if action_name.in? %w(new create)
         @<%= singular_name %> = @clase_modelo.new(<%= "#{singular_name}_params" %>)
       else
