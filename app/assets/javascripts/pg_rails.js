@@ -1,3 +1,14 @@
+//= require jquery3
+//= require jquery_ujs
+//= require smart_listing
+//= require best_in_place
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
+//= require selectize
+//= require jquery_nested_form
+//= xrequire handlebars
+//= xrequire chosen
+
 window.PgRails = new function() {
   self = this
   self.campo_dependiente_hacer = function(principal, dependiente, valor) {
@@ -276,4 +287,3 @@ window.PgRails = new function() {
     })
   }
 }
-

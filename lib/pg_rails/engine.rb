@@ -2,6 +2,26 @@ unless Rails.env.production?
   require 'byebug'
 end
 
+require "nested_form"
+require 'audited'
+require 'best_in_place'
+require 'bootstrap'
+require 'bootstrap-datepicker-rails'
+require 'breadcrumbs_on_rails'
+require 'caxlsx_rails'
+require 'devise'
+require 'devise/orm/active_record'
+require 'draper'
+require 'enumerize'
+require 'font-awesome-rails'
+require 'jquery-rails'
+require 'paranoia'
+require 'pundit'
+require 'rails-i18n'
+require 'selectize-rails'
+require 'simple_form'
+require 'slim'
+
 module PgRails
   class Engine < ::Rails::Engine
     isolate_namespace PgRails

@@ -25,22 +25,36 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  spec.add_dependency "rails", "~> 5.2.3"
-  spec.add_dependency "slim-rails"
-  spec.add_dependency "draper"
+  spec.add_dependency 'audited', '~> 4.7'
   spec.add_dependency 'best_in_place', '~> 3.1.1'
-  spec.add_dependency "pundit"
-  spec.add_dependency "simple_form"
-  spec.add_dependency "rainbow"
-  spec.add_dependency "enumerize"
-  spec.add_dependency 'sass-rails', '~> 5.0.4'
+  spec.add_dependency 'bootstrap', '~> 4.3.1'
+  spec.add_dependency 'bootstrap-datepicker-rails'
   spec.add_dependency 'breadcrumbs_on_rails'
   spec.add_dependency 'caxlsx_rails'
-  spec.add_dependency 'rollbar'
+  spec.add_dependency 'devise'
+  spec.add_dependency 'draper'
+  spec.add_dependency 'enumerize'
+  spec.add_dependency 'font-awesome-rails'
+  spec.add_dependency 'jquery-rails'
+  spec.add_dependency 'nested_form'
   spec.add_dependency 'paranoia'
   spec.add_dependency 'pg'
+  spec.add_dependency 'pundit'
+  spec.add_dependency 'rails', '~> 5.2.3'
+  spec.add_dependency 'rails-i18n'
+  spec.add_dependency 'rainbow'
+  spec.add_dependency 'rollbar'
+  spec.add_dependency 'sass-rails', '~> 5.0.4'
+  spec.add_dependency 'selectize-rails'
+  spec.add_dependency 'simple_form'
+  spec.add_dependency 'slim-rails'
 
-  spec.add_development_dependency 'factory_bot_rails'
-  spec.add_development_dependency 'rspec-rails', '~> 3.8'
+
+  spec.add_development_dependency 'annotate'
   spec.add_development_dependency 'byebug'
+  spec.add_development_dependency 'database_cleaner'
+  spec.add_development_dependency 'factory_bot_rails'
+  spec.add_development_dependency 'faker'
+  spec.add_development_dependency 'rspec-rails', '~> 3.8'
+  spec.add_development_dependency 'simplecov'
 end
