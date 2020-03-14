@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'devise'
   spec.add_dependency 'draper'
   spec.add_dependency 'enumerize'
-  spec.add_dependency 'font-awesome-rails'
+  # spec.add_dependency 'font-awesome-rails'
   spec.add_dependency 'jquery-rails'
   spec.add_dependency 'nested_form'
   spec.add_dependency 'paranoia'
