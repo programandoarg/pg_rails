@@ -2,12 +2,15 @@
 
 if Rails.env.development?
   Annotate.set_defaults(
+    # 'show_migration' => 'true',
     'show_foreign_keys' => 'true',
     'show_indexes' => 'true',
     'exclude_controllers' => 'true',
     'exclude_helpers' => 'true',
     'exclude_tests' => 'true',
-    'sort' => 'true',
+    'classified_sort' => 'true',
+    'with_comment' => 'true',
+
     'models' => 'true',
   )
 
