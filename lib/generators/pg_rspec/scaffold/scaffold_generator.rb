@@ -8,6 +8,9 @@ module PgRspec
       # para poder copiar sólo los que quiero cambiar
       source_paths << File.expand_path('templates', __dir__)
 
+      class_option :paranoia, type: :boolean, default: false, desc: "Paranoid y deleted_at."
+      class_option :trackeo_de_usuarios, type: :boolean, default: true, desc: "Genera campos creado_por y actualizado_por."
+
       remove_hook_for :integration_tool, :as => :integration
       remove_hook_for :fixture_replacement
 

@@ -201,7 +201,11 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% else -%>
         delete :destroy, params: {id: <%= file_name %>.to_param}, session: valid_session
 <% end -%>
+<% if options[:paranoia] -%>
+      }.to change(<%= class_name %>.without_deleted, :count).by(-1)
+<% else -%>
       }.to change(<%= class_name %>, :count).by(-1)
+<% end -%>
     end
 
     it "redirects to the <%= table_name %> list" do

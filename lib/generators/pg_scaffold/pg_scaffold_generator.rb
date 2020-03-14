@@ -8,6 +8,9 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
 
   class_option :decorator, type: :boolean, default: true,  :desc => "Generate view specs"
 
+  class_option :paranoia, type: :boolean, default: false, desc: "Paranoid y deleted_at."
+  class_option :trackeo_de_usuarios, type: :boolean, default: true, desc: "Genera campos creado_por y actualizado_por."
+
   argument :attributes, type: :array, default: [], banner: "field:type field:type"
 
   def create_controller_files
