@@ -10,9 +10,8 @@
 //= require jquery_nested_form
 //= require jquery.form.min.js
 //= require handlebars
+//= require chosen
 //= require pg_rails/validaciones
-//= xrequire handlebars
-//= xrequire chosen
 
 window.PgRails = new function() {
   self = this
