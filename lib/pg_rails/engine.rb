@@ -40,7 +40,6 @@ module PgRails
       require 'pg_rails/utils/filtros'
       require 'pg_rails/utils/logueador'
       require 'pg_rails/simple_form/initializer'
-      require 'pg_rails/simple_form/pg_form_builder'
 
       config.generators do |g|
         g.test_framework :pg_rspec

@@ -5,6 +5,7 @@ module PgRails
     attr_accessor :boton_destroy
     attr_accessor :boton_edit
     attr_accessor :boton_show
+    attr_accessor :boton_light
     attr_accessor :icono_destroy
     attr_accessor :icono_edit
     attr_accessor :icono_show
@@ -15,6 +16,7 @@ module PgRails
       @boton_destroy = 'danger'
       @boton_edit = 'info'
       @boton_show = 'primary'
+      @boton_light = 'light'
       @icono_destroy = 'trash'
       @icono_edit = 'edit'
       @icono_show = 'eye'

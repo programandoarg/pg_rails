@@ -13,9 +13,6 @@
 # Dir[Rails.root.join('lib/components/**/*.rb')].each { |f| require f }
 
 require 'simple_form'
-require 'pg_rails/simple_form/inputs/fecha_input'
-require 'pg_rails/simple_form/inputs/asociacion_creable_input'
-require 'pg_rails/simple_form/inputs/selects_dependientes_input'
 
 module SimpleForm
   class FormBuilder < ActionView::Helpers::FormBuilder
@@ -82,7 +79,7 @@ SimpleForm.setup do |config|
     b.optional :readonly
     b.use :label, class: 'form-control-label'
     b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+    # b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
 
