@@ -17,6 +17,18 @@ module PgRspec
       def generate_routing_spec
         # piso el método para que no genere nada
       end
+
+      protected
+
+        def referencias_requeridas
+          attributes.select { |at| at.reference? && at.required? }
+        end
+
+        def merge_referencias
+          return unless referencias_requeridas.present?
+          asd = referencias_requeridas.map { |r| "#{r.name}_id: #{r.name}.id"}
+          ".merge(#{asd.join(', ')})"
+        end
     end
   end
 end
