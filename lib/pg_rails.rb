@@ -1,4 +1,5 @@
 require "pg_rails/engine"
+require "pg_rails/core_ext"
 require "pg_rails/configuracion"
 
 module PgRails

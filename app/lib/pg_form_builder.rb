@@ -9,6 +9,7 @@ class PgFormBuilder < SimpleForm::FormBuilder
   end
 
   map_type :date, to: PgRails::FechaInput
+  # map_type :datetime, to: PgRails::FechaInput
 
   def submit_button(*args, &block)
     options = args.extract_options!.dup

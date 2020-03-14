@@ -506,7 +506,7 @@ SimpleForm.setup do |config|
   # matches the regexp as value.
   # config.input_mappings = { /count/ => :integer }
   config.input_mappings = {
-    /fecha/ => :fecha,
-    /date/ => :fecha
+    /fecha/ => 'pg_rails/fecha',
+    /date/ => 'pg_rails/fecha',
   }
 end

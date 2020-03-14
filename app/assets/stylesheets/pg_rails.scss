@@ -1,3 +1,11 @@
+@import "bootstrap";
+@import "bootstrap-datepicker";
+@import "chosen";
+@import "font-awesome";
+@import 'selectize';
+@import 'selectize.bootstrap3';
+@import 'pg_rails/chosen';
+
 .simple_form {
   .ocultar {
     input, select, textarea {
@@ -23,6 +31,10 @@
     transition: opacity .3s ease 0s;
     opacity: 1;
     max-width: 300px;
+
+    &.datetime {
+      max-width: 600px;
+    }
     
     &.dependent_fields {
       max-width: 600px;

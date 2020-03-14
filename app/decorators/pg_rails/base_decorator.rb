@@ -13,13 +13,12 @@ module PgRails
     end
 
     def method_missing(m, *args, &block)
-      if m.match(/(fecha|date)/) && self.object.attributes.keys.include?(m.to_s)
-        value = self.object.public_send(m)
-        if value.class == Date
-          dmy(value)
-        else
-          super
-        end
+      valor = self.object.attributes[m.to_s]
+      return super unless valor.present?
+      if valor.class == Date
+        dmy(valor)
+      # elsif valor.class == ActiveSupport::TimeWithZone
+      #   dmy_time(valor)
       else
         super
       end

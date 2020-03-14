@@ -29,6 +29,7 @@ module PgRails
     isolate_namespace PgRails
 
     config.i18n.default_locale = :es
+    config.time_zone = 'America/Argentina/Buenos_Aires'
 
     initializer 'configurar_generators', after: "factory_bot.set_fixture_replacement" do
       unless Rails.env.production?
