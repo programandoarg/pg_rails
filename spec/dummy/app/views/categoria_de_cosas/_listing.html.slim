@@ -1,0 +1,27 @@
+- unless smart_listing.empty?
+  .table-responsive
+    table.table.table-striped.listado
+      thead
+        tr
+          th = encabezado smart_listing, :nombre, ordenable: true
+          th = encabezado smart_listing, :tipo, ordenable: true
+          th = encabezado smart_listing, :fecha, ordenable: true
+          th = encabezado smart_listing, :tiempo, ordenable: true
+          th
+      tbody
+        - smart_listing.collection.each do |categoria_de_cosa|
+          - categoria_de_cosa = categoria_de_cosa.decorate
+          tr
+            td = categoria_de_cosa.nombre
+            td = categoria_de_cosa.tipo
+            td = categoria_de_cosa.fecha
+            td = categoria_de_cosa.tiempo
+            td
+              = categoria_de_cosa.show_link
+              = categoria_de_cosa.edit_link
+              = categoria_de_cosa.destroy_link
+- else
+  p No hay #{@clase_modelo.nombre_plural.downcase} que mostrar
+
+= smart_listing.paginate
+= smart_listing.pagination_per_page_links

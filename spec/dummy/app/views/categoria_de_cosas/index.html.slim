@@ -1,0 +1,15 @@
+- content_for(:title, @clase_modelo.nombre_plural)
+- content_for :actions do
+  = @clase_modelo.new.decorate.new_link
+  .btn.btn-sm.btn-warning.exportar data-url="#{categoria_de_cosas_path(format: 'xlsx')}"
+    span.fa.fa-list
+    |  Exportar
+.form-wrapper
+  = smart_listing_controls_for(:categoria_de_cosas) do |c|
+    = @filtros.filtros_html
+
+  .card.float-e-margins
+    .card-header
+      h5 Listado de #{@clase_modelo.nombre_plural.downcase}
+    .card-body
+      = smart_listing_render(:categoria_de_cosas)
