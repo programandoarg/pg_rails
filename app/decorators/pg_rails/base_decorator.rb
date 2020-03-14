@@ -27,7 +27,7 @@ module PgRails
     def destroy_link(message = '¿Estás seguro?')
       return unless Pundit.policy!(helpers.current_user, object).destroy?
       helpers.content_tag :span, rel: :tooltip, title: 'Eliminar' do
-        helpers.link_to object_url, data: { confirm: message }, remote: true, method: :delete, class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_destroy}" do
+        helpers.link_to object_url, data: { confirm: message }, method: :delete, class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_destroy}" do
           helpers.content_tag :span, nil, class: "#{clase_icono(_config.icono_destroy)}"
         end
       end

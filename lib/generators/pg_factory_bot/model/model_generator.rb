@@ -46,7 +46,9 @@ module PgFactoryBot
         end
 
         def valor_atributo(attribute)
-          if attribute.type == :string
+          if attribute.es_enum?
+            "#{nombre_clase_completo}.#{attribute.name}.values.sample"
+          elsif attribute.type == :string
             "Faker::Lorem.sentence"
           elsif attribute.type == :date
             "Faker::Date.backward"

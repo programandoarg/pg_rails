@@ -42,7 +42,7 @@ window.PgRails = new function() {
     self.campo_dependiente_hacer(principal, dependiente, valor);
   }
   self.bindear = function() {
-    $('.smart-listing a[data-method=delete][data-remote=true]').click(function(e) {
+    $('.smart-listing a[data-method=delete]').click(function(e) {
       var boton = this;
       e.preventDefault();
       e.stopPropagation();
@@ -63,6 +63,7 @@ window.PgRails = new function() {
         });
       }
     })
+    $('.tooltip').remove();
     $("[rel=tooltip]").tooltip();
     $('form.pg-form').each(function(i,e) {
       $(e).validate();
