@@ -12,15 +12,19 @@
         th = @clase_modelo.human_attribute_name(:<%= attribute.name %>)
         td = @<%= singular_name %>.<%= attribute.name %>
 <%- end -%>
+<%- if options[:trackeo_de_usuarios] -%>
       tr
         th = @clase_modelo.human_attribute_name(:creado_por)
         td = @<%= singular_name %>.creado_por
+<%- end -%>
       tr
         th = I18n.t(:created_at)
         td = dmy_time @<%= singular_name %>.created_at
+<%- if options[:trackeo_de_usuarios] -%>
       tr
         th = @clase_modelo.human_attribute_name(:actualizado_por)
         td = @<%= singular_name %>.actualizado_por
+<%- end -%>
       tr
         th = I18n.t(:updated_at)
         td = dmy_time @<%= singular_name %>.updated_at
