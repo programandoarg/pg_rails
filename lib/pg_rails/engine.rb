@@ -37,7 +37,7 @@ module PgRails
         require 'pg_rails/monkey_patches/mejoras_a_named_base'
       end
 
-      require 'pg_rails/utils/filtros_builder'
+      # require 'pg_rails/utils/filtros_builder'
       require 'pg_rails/utils/filtros'
       require 'pg_rails/utils/logueador'
       require 'pg_rails/simple_form/initializer'
