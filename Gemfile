@@ -16,4 +16,5 @@ gemspec
 gem 'smart_listing', git: 'https://github.com/mrosso10/smart_listing.git', ref: '2f2e94da0b057ae003d9ffec66e9bde2a985f39f'
 source 'https://rails-assets.org' do
   gem 'rails-assets-jquery-validation'
+  gem 'rails-assets-handlebars'
 end

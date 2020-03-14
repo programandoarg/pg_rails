@@ -8,6 +8,8 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
 //= require selectize
 //= require jquery_nested_form
+//= require jquery.form.min.js
+//= require handlebars
 //= require pg_rails/validaciones
 //= xrequire handlebars
 //= xrequire chosen
