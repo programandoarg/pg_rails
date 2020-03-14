@@ -12,7 +12,8 @@ RSpec.describe "<%= ruta_vistas %>/edit", <%= type_metatag(:view) %> do
   let(:user) { create(:user, :admin) }
 
   before(:each) do
-    @<%= singular_name %> = assign(:<%= singular_name %>, create(:<%= nombre_tabla_completo_singular %>))
+    sign_in user
+    @<%= singular_name %> = assign(:<%= singular_name %>, create(:<%= nombre_tabla_completo_singular %>).decorate)
     @clase_modelo = assign(:clase_modelo, <%= nombre_clase_completo %>)
   end
 

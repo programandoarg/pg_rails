@@ -13,7 +13,10 @@ module PgRails
     def self.helpers(rspec)
       rspec.helper PgRails::PrintHelper
       rspec.helper PgRails::EditarEnLugarHelper
+      rspec.helper PgRails::FormHelper
+      rspec.helper PgRails::PostgresHelper
       rspec.helper SmartListing::Helper
+      rspec.include Devise::Test::ControllerHelpers
       rspec.before do
         enable_pundit(view, user)
       end

@@ -13,6 +13,7 @@ RSpec.describe "<%= ruta_vistas %>/index", <%= type_metatag(:view) %> do
   let!(:<%= plural_name %>) { create_list(:<%= nombre_tabla_completo_singular %>, rand(10..20))}
 
   before(:each) do
+    sign_in user
     @clase_modelo = assign(:clase_modelo, <%= nombre_clase_completo %>)
     smart_listing_create :<%= plural_name %>, <%= nombre_clase_completo %>.all, partial: '<%= ruta_vistas %>/listing'
 
