@@ -22,6 +22,15 @@ module PgRails
       end
     end
 
+    def encabezado(smart_listing, campo, options = {})
+      if options[:ordenable]
+        smart_listing.sortable @clase_modelo.human_attribute_name(campo), campo
+      else
+        @clase_modelo.human_attribute_name(campo)
+      end
+    end
+
+    # deprecado
     def ordenable(smart_listing, campo)
       smart_listing.sortable @clase_modelo.human_attribute_name(campo), campo
     end

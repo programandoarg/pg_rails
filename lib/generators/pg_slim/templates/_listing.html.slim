@@ -4,7 +4,7 @@
       thead
         tr
   <%- for attribute in attributes -%>
-          th = @clase_modelo.human_attribute_name(:<%= attribute.name %>)
+          th = encabezado smart_listing, :<%= attribute.name %>, ordenable: true
   <%- end -%>
           th
       tbody

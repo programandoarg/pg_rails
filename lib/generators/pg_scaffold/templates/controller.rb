@@ -76,7 +76,13 @@ class <%= controller_class_name %>Controller < ApplicationController
   private
 
     def render_smart_listing
-      smart_listing(:<%= plural_name %>, @<%= plural_name %>, '<%= ruta_vistas %>/listing')
+      smart_listing(:<%= plural_name %>, @<%= plural_name %>, '<%= ruta_vistas %>/listing',
+        sort_attributes: [
+          <%- for attribute in attributes -%>
+          [:<%= attribute.name %>, "<%= attribute.name %>"],
+          <%- end -%>
+        ]
+      )
     end
 
     def set_<%= singular_name %>
