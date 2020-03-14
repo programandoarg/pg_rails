@@ -29,7 +29,7 @@ module PgRails
     end
 
     def update?
-      puede_editar?
+      puede_editar? && !objeto_borrado?
     end
 
     def edit?
@@ -37,7 +37,7 @@ module PgRails
     end
 
     def destroy?
-      puede_borrar?
+      puede_borrar? && !objeto_borrado?
     end
 
     def scope
@@ -80,6 +80,11 @@ module PgRails
 
     def acceso_total?
       user.admin?
+    end
+
+    def objeto_borrado?
+      return false unless record.respond_to?(:deleted?)
+      record.deleted?
     end
   end
 end
