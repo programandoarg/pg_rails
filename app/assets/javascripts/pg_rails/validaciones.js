@@ -26,7 +26,11 @@ $.extend( $.validator.messages, {
 $.validator.setDefaults({
   ignore: ":hidden:not(select.chosen-select):not(.hidden-validation-field),.ignore-validation",
   errorPlacement: function(error, element) {
-    error.appendTo( element.parent() );
+    if( element.closest('.form-group') ) {
+      error.appendTo( element.closest('.form-group') );
+    } else {
+      error.appendTo( element.parent() );
+    }
   }
 })
 $.validator.addMethod("nestedPresence", function(value, element) {
