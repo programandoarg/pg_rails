@@ -1,4 +1,4 @@
-class PgFormBuilder < SimpleForm::FormBuilder
+class PgFormBuilder < NestedForm::SimpleBuilder
   def mensajes_de_error
     return unless object.errors.present?
     (
