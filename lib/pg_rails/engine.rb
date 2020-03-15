@@ -1,7 +1,9 @@
 unless Rails.env.production?
   require 'byebug'
+  require 'factory_bot_rails'
 end
 
+# require 'font-awesome-rails'
 require "nested_form"
 require 'audited'
 require 'best_in_place'
@@ -9,20 +11,20 @@ require 'bootstrap'
 require 'bootstrap-datepicker-rails'
 require 'breadcrumbs_on_rails'
 require 'caxlsx_rails'
-require 'rails-assets-chosen'
 require 'devise'
 require 'devise/orm/active_record'
 require 'draper'
 require 'enumerize'
-# require 'font-awesome-rails'
 require 'jquery-rails'
 require 'paranoia'
 require 'pundit'
+require 'rails-assets-chosen'
 require 'rails-i18n'
 require 'rollbar'
 require 'selectize-rails'
 require 'simple_form'
 require 'slim'
+require 'smart_listing'
 
 module PgRails
   class Engine < ::Rails::Engine
