@@ -191,7 +191,7 @@ module PgRails
         content_tag :div, class: 'input-group', style: 'width:230px' do
           text_field_tag(
             campo, parametros_controller[campo], class: "form-control", placeholder: placeholder, autocomplete: "off"
-          ) + content_tag(:div, class: 'input-group-append') do
+          ) + content_tag(:div, class: 'input-group-append input-group-btn') do
             button_tag class: 'btn btn-outline-secondary disabled', type: :button do
               content_tag :span, nil, class: 'fa fa-search'
             end

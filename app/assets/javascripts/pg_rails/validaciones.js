@@ -26,8 +26,13 @@ $.extend( $.validator.messages, {
 $.validator.setDefaults({
   ignore: ":hidden:not(select.chosen-select):not(.hidden-validation-field),.ignore-validation",
   errorPlacement: function(error, element) {
-    if( element.closest('.form-group') ) {
-      error.appendTo( element.closest('.form-group') );
+    var group = element.closest('.form-group');
+    if( group ) {
+      if( group.hasClass('row') ) {
+        error.appendTo( element.parent() );
+      } else {
+        error.appendTo( element.closest('.form-group') );
+      }
     } else {
       error.appendTo( element.parent() );
     }
