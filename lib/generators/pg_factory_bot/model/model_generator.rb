@@ -33,6 +33,28 @@ module PgFactoryBot
 
       private
 
+        def factory_definition
+          <<~RUBY
+              factory :#{singular_table_name}#{explicit_class_option} do
+            #{factory_attributes.gsub(/^/, '    ')}
+
+            #{los_traits.gsub(/^/, '    ')}
+              end
+
+          RUBY
+        end
+
+        def los_traits
+          attributes.select(&:reference?).map do |atributo|
+            <<~RUBY
+              trait :#{atributo.name}_existente do
+                #{atributo.name} { nil }
+                #{atributo.name}_id { #{atributo.clase_con_modulo}.all.pluck(:id).sample }
+              end
+            RUBY
+          end.join("\n")
+        end
+
         # Genero los valores de las factories con los helpers de Faker
 
         def factory_attributes
