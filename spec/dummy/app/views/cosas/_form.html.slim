@@ -1,0 +1,10 @@
+= pg_form_for(@cosa) do |f|
+  = f.mensajes_de_error
+
+  .form-inputs
+    = f.input :nombre
+    = f.input :tipo
+    = f.association :categoria_de_cosa
+
+  .form-actions
+    = f.button :submit

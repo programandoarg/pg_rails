@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :cosas
   resources :categoria_de_cosas
   mount PgRails::Engine => '/pg_rails'
   devise_for :users

@@ -1,0 +1,16 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: 'Cosa') do |sheet|
+  sheet.add_row [
+    @clase_modelo.human_attribute_name(:nombre),
+    @clase_modelo.human_attribute_name(:tipo),
+    @clase_modelo.human_attribute_name(:categoria_de_cosa),
+  ]
+
+  @cosas.each do |cosa|
+    sheet.add_row [
+      cosa.nombre,
+      cosa.tipo,
+      cosa.categoria_de_cosa,
+    ]
+  end
+end
