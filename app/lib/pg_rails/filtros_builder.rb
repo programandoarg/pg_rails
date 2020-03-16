@@ -160,9 +160,9 @@ module PgRails
         nombre_clase = asociacion.name.to_s.camelize
       end
       clase_asociacion = Object.const_get(nombre_clase)
-      scope = clase_asociacion.all
+      scope = Pundit.policy_scope!(controller.current_user, clase_asociacion)
       if scope.respond_to?(:without_deleted)
-        scope = clase_asociacion.without_deleted
+        scope = scope.without_deleted
       end
       map = scope.map { |o| [o.to_s, o.id] }
 
@@ -179,7 +179,7 @@ module PgRails
 
     def filtro_select(campo, placeholder = '')
       map = @clase_modelo.send(campo).values.map { |key| [key.humanize, key.value] }
-      map.unshift ["-", nil]
+      map.unshift ["Seleccionar #{placeholder.downcase}", nil]
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
       content_tag :div, class: 'filter' do
         select_tag campo, options_for_select(map, default), class: 'form-control pg-input-lg'
