@@ -14,15 +14,15 @@
 //= require pg_rails/validaciones
 
 window.PgRails = new function() {
-  self = this
-  self.campo_dependiente_hacer = function(principal, dependiente, valor) {
+  pg_rails = this
+  pg_rails.campo_dependiente_hacer = function(principal, dependiente, valor) {
     if( principal.val() == valor ) {
       dependiente.closest('.form-group').removeClass('ocultar')
     } else {
       dependiente.closest('.form-group').addClass('ocultar')
     }
   }
-  self.encolumnar = function(principal, dependiente) {
+  pg_rails.encolumnar = function(principal, dependiente) {
     var fila = $('<div class="row">');
     fila = fila.insertBefore(principal.closest('.form-group'));
     var col1 = $('<div class="col-sm-6">');
@@ -32,16 +32,16 @@ window.PgRails = new function() {
     fila.append(col1);
     fila.append(col2);
   }
-  self.campo_dependiente = function(campo, depende_de, valor) {
+  pg_rails.campo_dependiente = function(campo, depende_de, valor) {
     var principal = $('form.simple_form *[name*=' + depende_de + ']');
     var dependiente = $('form.simple_form *[name*=' + campo + ']');
-    self.encolumnar(principal, dependiente)
+    pg_rails.encolumnar(principal, dependiente)
     principal.change(function() {
-      self.campo_dependiente_hacer(principal, dependiente, valor);
+      pg_rails.campo_dependiente_hacer(principal, dependiente, valor);
     })
-    self.campo_dependiente_hacer(principal, dependiente, valor);
+    pg_rails.campo_dependiente_hacer(principal, dependiente, valor);
   }
-  self.bindear = function() {
+  pg_rails.bindear = function() {
     $('.smart-listing a[data-method=delete]').click(function(e) {
       var boton = this;
       e.preventDefault();
@@ -57,9 +57,9 @@ window.PgRails = new function() {
           method: 'DELETE',
         }).done(function(response) {
           res = $(boton).closest('.smart-listing').smart_listing().reload()
-          self.showToast("Elemento borrado");
+          pg_rails.showToast("Elemento borrado");
         }).fail(function(response) {
-          self.error_toast(response.responseJSON.error);
+          pg_rails.error_toast(response.responseJSON.error);
         });
       }
     })
@@ -71,7 +71,7 @@ window.PgRails = new function() {
     $('table:has(.best_in_place)').css('table-layout', 'fixed');
     $(".best_in_place").best_in_place();
     $(".best_in_place").on('ajax:error', function(event, response) {
-      self.showToast("error", response.responseText)
+      pg_rails.showToast("error", response.responseText)
     });
     $(".best_in_place").on('best_in_place:activate', function(event, response) {
       var textarea = $(this).find('textarea');
@@ -82,14 +82,14 @@ window.PgRails = new function() {
       }
     });
     // $(".best_in_place").on('ajax:success', function(event, response) {
-    //   self.showToast("success", "👍")
+    //   pg_rails.showToast("success", "👍")
     // });
     $.fn.datepicker.defaults.format = 'dd/mm/yyyy';
 
     $('.crear_asociado').click(function() {
       var boton_crear = this;
       $.get($(this).data('url') + ".js").done(function(response) {
-        var modal = self.abrir_modal(response);
+        var modal = pg_rails.abrir_modal(response);
         modal.find('form').ajaxForm({
           dataType: 'json',
           success: function(responseJSON, statusText, xhr) {
@@ -137,7 +137,7 @@ window.PgRails = new function() {
     })
   }
 
-  self.insert_options = function(element, options, default_option, template_id, atributo_nombre) {
+  pg_rails.insert_options = function(element, options, default_option, template_id, atributo_nombre) {
     if (options.length === 0) {
       default_option = '-';
     }
@@ -153,7 +153,7 @@ window.PgRails = new function() {
     element.trigger("chosen:updated");
   }
 
-  self.abrir_modal = function(contenido, titulo = '') {
+  pg_rails.abrir_modal = function(contenido, titulo = '') {
     var header = '<div class="modal-header">' +
     '  <h5 class="modal-title">' + titulo + '</h5>' +
     '  <button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
@@ -166,11 +166,11 @@ window.PgRails = new function() {
     return modal;
   }
 
-  self.error_toast = function(message) {
-    self.showToast("error", message);
+  pg_rails.error_toast = function(message) {
+    pg_rails.showToast("error", message);
   }
 
-  self.showToast = function (type, message) {
+  pg_rails.showToast = function (type, message) {
     var title = null;
     if (type === "notice" || type === "success") {
       type="success";
@@ -272,7 +272,7 @@ window.PgRails = new function() {
       .done(function(response) {
         var id = $(target).data('id')
         var siguiente_select = $("[data-id='"+id+"'] ~ select").first();
-        self.insert_options(siguiente_select, response, 'Seleccione una opción', null, 'to_s');
+        pg_rails.insert_options(siguiente_select, response, 'Seleccione una opción', null, 'to_s');
         $(siguiente_select).trigger('change');
       }).fail(function(response) { });
     }
