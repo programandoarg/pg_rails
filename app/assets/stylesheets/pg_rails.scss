@@ -25,8 +25,20 @@
   margin-right: 4px;
 }
 
+.form-group.producto {
+  .form-control.selectize-control {
+    height: 36px;
+    // width: 200px;
+  }
+  .chosen-container {
+    // max-width: 200px;
+  }
+}
 // hay que agregar la clase pg-form a los forms que queremos afectar
 .pg-form {
+  .form-control.selectize-control {
+    height: 36px;
+  }
   .form-group {
     /*transition: height .5s ease 0s;*/
     transition: opacity .3s ease 0s;
