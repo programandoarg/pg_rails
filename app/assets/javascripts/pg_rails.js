@@ -41,8 +41,13 @@ window.PgRails = new function() {
     })
     pg_rails.campo_dependiente_hacer(principal, dependiente, valor);
   }
-  pg_rails.bindear = function() {
-    $('.smart-listing a[data-method=delete]').click(function(e) {
+  pg_rails.bindear = function(contexto) {
+    if(contexto == null) {
+      contexto = $('body');
+    } else {
+      contexto = $(contexto);
+    }
+    $(contexto).find('.smart-listing a[data-method=delete]').click(function(e) {
       var boton = this;
       e.preventDefault();
       e.stopPropagation();
@@ -63,17 +68,17 @@ window.PgRails = new function() {
         });
       }
     })
-    $('.tooltip').remove();
-    $("[rel=tooltip]").tooltip();
-    $('form.pg-form').each(function(i,e) {
+    $(contexto).find('.tooltip').remove();
+    $(contexto).find("[rel=tooltip]").tooltip();
+    $(contexto).find('form.pg-form').each(function(i,e) {
       $(e).validate();
     });
-    $('table:has(.best_in_place)').css('table-layout', 'fixed');
-    $(".best_in_place").best_in_place();
-    $(".best_in_place").on('ajax:error', function(event, response) {
+    $(contexto).find('table:has(.best_in_place)').css('table-layout', 'fixed');
+    $(contexto).find(".best_in_place").best_in_place();
+    $(contexto).find(".best_in_place").on('ajax:error', function(event, response) {
       pg_rails.showToast("error", response.responseText)
     });
-    $(".best_in_place").on('best_in_place:activate', function(event, response) {
+    $(contexto).find(".best_in_place").on('best_in_place:activate', function(event, response) {
       var textarea = $(this).find('textarea');
       if( textarea.length > 0 ) {
         var valor = textarea.val();
@@ -86,7 +91,7 @@ window.PgRails = new function() {
     // });
     $.fn.datepicker.defaults.format = 'dd/mm/yyyy';
 
-    $('.crear_asociado').click(function() {
+    $(contexto).find('.crear_asociado').click(function() {
       var boton_crear = this;
       $.get($(this).data('url') + ".js").done(function(response) {
         var modal = pg_rails.abrir_modal(response);
@@ -108,24 +113,24 @@ window.PgRails = new function() {
       })
     });
 
-    $('.datefield').datepicker({
+    $(contexto).find('.datefield').datepicker({
       'format': 'dd/mm/yyyy',
       'todayBtn': 'linked',
       'autoclose': 'true',
       'language': 'es',
       'zIndexOffset': 2000,
     });
-    $('.datefield').on('changeDate', function() {
+    $(contexto).find('.datefield').on('changeDate', function() {
       $(this).keydown();
     });
     if( typeof($.fn.selectize) == 'function' ) {
-      $('select[multiple=multiple]').selectize();
+      $(contexto).find('select[multiple=multiple]').selectize();
     }
     if( typeof($.fn.chosen) == 'function' ) {
-      $(".chosen-select").chosen();
+      $(contexto).find(".chosen-select").chosen();
     }
-    $('form').dependent_fields();
-    $('.exportar').click(function() {
+    $(contexto).find('form').dependent_fields();
+    $(contexto).find('.exportar').click(function() {
       filtros = ''
       $('.filter').each(function(i, elem) {
         var input = $(elem).find('input,select');
@@ -270,8 +275,9 @@ window.PgRails = new function() {
       options[$(target).data('key')] = $(this).val().toString();
       $.getJSON($(target).data('url'), options)
       .done(function(response) {
-        var id = $(target).data('id')
-        var siguiente_select = $("[data-id='"+id+"'] ~ select").first();
+        // var id = $(target).data('id')
+        // var siguiente_select = $("[data-id='"+id+"'] ~ select").first();
+        var siguiente_select = $(target).nextAll('select').first()
         pg_rails.insert_options(siguiente_select, response, 'Seleccione una opción', null, 'to_s');
         $(siguiente_select).trigger('change');
       }).fail(function(response) { });
