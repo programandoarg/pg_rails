@@ -302,3 +302,7 @@ window.PgRails = new function() {
     })
   }
 }
+
+$(document).on('nested:fieldAdded', function(event){
+  PgRails.bindear(event.field);
+});
