@@ -127,6 +127,7 @@ window.PgRails = new function() {
       $(contexto).find('select[multiple=multiple]').selectize();
     }
     if( typeof($.fn.chosen) == 'function' ) {
+      $(contexto).find(".chosen-select").chosen('destroy');
       $(contexto).find(".chosen-select").chosen();
     }
     $(contexto).find('form').dependent_fields();
@@ -305,4 +306,15 @@ window.PgRails = new function() {
 
 $(document).on('nested:fieldAdded', function(event){
   PgRails.bindear(event.field);
+});
+
+
+// para que no se submiteen los forms al apretar enter
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
 });

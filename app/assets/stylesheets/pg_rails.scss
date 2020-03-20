@@ -36,6 +36,12 @@
 }
 // hay que agregar la clase pg-form a los forms que queremos afectar
 .pg-form {
+  max-width: 1000px;
+
+  .form-control {
+    font-size: 13px;
+  }
+
   .form-control.selectize-control {
     height: 36px;
   }
