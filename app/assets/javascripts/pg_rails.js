@@ -54,7 +54,7 @@ window.PgRails = new function() {
       var url = $(this).attr('href');
       var confirmar = $(this).data('confirm');
       if(!confirmar) {
-        confirmar = "¿Estás seguroooo?"
+        confirmar = "¿Estás seguro?"
       }
       if( confirm(confirmar) ) {
         $.ajax(url, {

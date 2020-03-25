@@ -1,4 +1,8 @@
-@import "bootstrap";
+@import "bootstrap"; // puede ser el 3 o el 4 dependiendo de la gema que cargue la main_app
+@import "bootstrap-4.4.1/_functions";
+@import "bootstrap-4.4.1/_variables";
+@import "bootstrap-4.4.1/_mixins";
+@import "bootstrap-4.4.1/_card";
 @import "bootstrap-datepicker";
 @import "chosen";
 // @import "font-awesome";
