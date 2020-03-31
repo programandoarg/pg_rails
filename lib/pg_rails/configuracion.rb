@@ -9,6 +9,7 @@ module PgRails
     attr_accessor :icono_destroy
     attr_accessor :icono_edit
     attr_accessor :icono_show
+    attr_accessor :boton_export
 
     def initialize
       @sistema_iconos = 'fa'
