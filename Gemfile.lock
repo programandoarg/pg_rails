@@ -14,7 +14,7 @@ PATH
   specs:
     pg_rails (0.1.4)
       audited (~> 4.7)
-      best_in_place (~> 3.1.1)
+      best_in_place (~> 3.0)
       bootstrap (~> 4.3.1)
       bootstrap-datepicker-rails
       breadcrumbs_on_rails
