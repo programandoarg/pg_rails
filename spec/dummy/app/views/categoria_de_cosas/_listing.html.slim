@@ -1,6 +1,6 @@
 - unless smart_listing.empty?
   .table-responsive
-    table.table.table-striped.listado
+    table.table.table-striped.listado.table-sm
       thead
         tr
           th = encabezado smart_listing, :nombre, ordenable: true
@@ -11,7 +11,7 @@
       tbody
         - smart_listing.collection.each do |categoria_de_cosa|
           - categoria_de_cosa = categoria_de_cosa.decorate
-          tr
+          tr data-id="#{categoria_de_cosa.id}"
             td = categoria_de_cosa.nombre
             td = categoria_de_cosa.tipo
             td = categoria_de_cosa.fecha

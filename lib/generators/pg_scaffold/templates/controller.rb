@@ -52,7 +52,7 @@ class <%= controller_class_name %>Controller < ApplicationController
         format.json { render json: @<%= singular_name %>.decorate }
       else
         format.html { render :new }
-        format.json { render json: @<%= singular_name %>.errors }
+        format.json { render json: @<%= singular_name %>.errors.full_messages }
       end
     end
   end

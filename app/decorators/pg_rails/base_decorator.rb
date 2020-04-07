@@ -51,10 +51,10 @@ module PgRails
       end
     end
 
-    def export_link(data, texto = '')
+    def export_link(url, texto = '')
       return unless Pundit.policy!(helpers.current_user, object).export?
       helpers.content_tag :span, rel: :tooltip, title: 'Exportar' do
-        helpers.content_tag :button, class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_export} exportar", data: {url: data} do
+        helpers.content_tag :button, class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_export} exportar", data: {url: url} do
           helpers.content_tag(:span, nil, class: "fa fa-list") + ' ' + texto
         end
       end

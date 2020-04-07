@@ -20,6 +20,28 @@
     }
   }
 }
+.form-group.asociacion_creable {
+  input.oculto {
+    visibility: hidden;
+    position: absolute;
+  }
+  button {
+    font-size: 11px;
+  }
+}
+// oculto la columna de actions
+.modal-seleccionar-asociado .listado th:last-child,
+  .modal-seleccionar-asociado .listado td:last-child {
+  display: none;
+}
+.modal-seleccionar-asociado .listado {
+  td {
+    cursor: pointer;
+  }
+}
+.modal-seleccionar-asociado .listado tr:hover {
+  background-color: lightgrey;
+}
 
 .listado .btn-xs {
   margin-right: 4px;

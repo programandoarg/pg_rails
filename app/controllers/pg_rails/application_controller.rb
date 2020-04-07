@@ -37,6 +37,7 @@ module PgRails
         end
         options[:partial] = partial
         smart_listing_create smart_listing_key, scope, options
+
         if params["#{smart_listing_key}_smart_listing"].present?
           render partial: 'actualizar_smart_listing', locals: { smart_listing_key: smart_listing_key },
                  layout: false, content_type: 'text/javascript'

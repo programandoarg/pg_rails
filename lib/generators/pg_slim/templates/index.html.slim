@@ -1,9 +1,7 @@
 - content_for(:title, @clase_modelo.nombre_plural)
 - content_for :actions do
   = @clase_modelo.new.decorate.new_link
-  .btn.btn-sm.btn-warning.exportar data-url="#{<%= plural_table_name %>_path(format: 'xlsx')}"
-    span.fa.fa-list
-    |  Exportar
+  = @clase_modelo.new.decorate.export_link(<%= plural_table_name %>_path(format: 'xlsx'))
 .form-wrapper
   = smart_listing_controls_for(:<%= plural_name %>) do |c|
     = @filtros.filtros_html
@@ -12,4 +10,4 @@
     .card-header
       h5 Listado de #{@clase_modelo.nombre_plural.downcase}
     .card-body
-      = smart_listing_render(:<%= plural_name %>)
+      = smart_listing_render(:<%= plural_name %>, data: { href: <%= plural_table_name %>_path})

@@ -10,7 +10,7 @@
       tbody
         - smart_listing.collection.each do |cosa|
           - cosa = cosa.decorate
-          tr
+          tr data-id="#{cosa.id}"
             td = cosa.nombre
             td = cosa.tipo
             td = cosa.categoria_de_cosa

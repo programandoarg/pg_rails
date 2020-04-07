@@ -12,6 +12,7 @@
 //= require handlebars
 //= require chosen
 //= require pg_rails/validaciones
+//= require pg_rails/asociacion_creable
 
 window.PgRails = new function() {
   pg_rails = this
@@ -47,6 +48,7 @@ window.PgRails = new function() {
     } else {
       contexto = $(contexto);
     }
+    AsociacionCreable.bindear(contexto);
     $(contexto).find('.smart-listing a[data-method=delete]').click(function(e) {
       var boton = this;
       e.preventDefault();
@@ -90,28 +92,6 @@ window.PgRails = new function() {
     //   pg_rails.showToast("success", "👍")
     // });
     $.fn.datepicker.defaults.format = 'dd/mm/yyyy';
-
-    $(contexto).find('.crear_asociado').click(function() {
-      var boton_crear = this;
-      $.get($(this).data('url') + ".js").done(function(response) {
-        var modal = pg_rails.abrir_modal(response);
-        modal.find('form').ajaxForm({
-          dataType: 'json',
-          success: function(responseJSON, statusText, xhr) {
-            var select = $(boton_crear).closest('.form-group').find('select');
-            select.append('<option value="' + responseJSON['id'] + '" selected>' + responseJSON['to_s'] + '</option>')
-            select.trigger('chosen:updated');
-            $(modal).modal('hide');
-            PgRails.showToast('Elemento creado.')
-          },
-          error: function(responseText, statusText, xhr) {
-            alert("mal");
-            console.log(responseText);
-            console.log(statusText);
-          }
-        });
-      })
-    });
 
     $(contexto).find('.datefield').datepicker({
       'format': 'dd/mm/yyyy',
@@ -159,16 +139,26 @@ window.PgRails = new function() {
     element.trigger("chosen:updated");
   }
 
-  pg_rails.abrir_modal = function(contenido, titulo = '') {
+  pg_rails.abrir_modal = function(contenido, titulo = '', opciones = {}) {
     var header = '<div class="modal-header">' +
     '  <h5 class="modal-title">' + titulo + '</h5>' +
     '  <button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
     '    <span aria-hidden="true">&times;</span>' +
     '  </button>' +
-    '</div>'
-    var modal = $('<div class="modal"><div class="modal-dialog"><div class="modal-content">' + header + '<div class="modal-body">');
+    '</div>';
+    if( opciones['dialog_class'] ) {
+      var dialog_class = 'modal-dialog ' + opciones['dialog_class'];
+    } else {
+      var dialog_class = 'modal-dialog';
+    }
+    var modal = $('<div class="modal"><div class="' + dialog_class + '"><div class="modal-content">' + header + '<div class="modal-body">');
     modal.find('.modal-body').html(contenido);
-    $(modal).modal('show');
+    $('body').append(modal);
+    modal.on('hidden.bs.modal', function() {
+      $(this).modal('dispose');
+      $(this).remove();
+    })
+    modal.modal('show');
     return modal;
   }
 

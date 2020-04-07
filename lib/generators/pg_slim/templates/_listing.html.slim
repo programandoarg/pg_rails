@@ -10,7 +10,7 @@
       tbody
         - smart_listing.collection.each do |<%= singular_name %>|
           - <%= singular_name %> = <%= singular_name %>.decorate
-          tr
+          tr data-id="#{<%= singular_name %>.id}"
   <%- for attribute in attributes -%>
             td = <%= singular_name %>.<%= attribute.name %>
   <%- end -%>

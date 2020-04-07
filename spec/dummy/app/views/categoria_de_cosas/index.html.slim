@@ -12,4 +12,4 @@
     .card-header
       h5 Listado de #{@clase_modelo.nombre_plural.downcase}
     .card-body
-      = smart_listing_render(:categoria_de_cosas)
+      = smart_listing_render(:categoria_de_cosas, data: { href: categoria_de_cosas_path })
