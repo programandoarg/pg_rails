@@ -313,8 +313,10 @@ $(document).on('nested:fieldAdded', function(event){
 $(document).ready(function() {
   $(window).keydown(function(event){
     if(event.keyCode == 13) {
-      event.preventDefault();
-      return false;
+      if( event.target.tagName == 'INPUT' ) {
+        event.preventDefault();
+        return false;
+      }
     }
   });
 });
