@@ -45,7 +45,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rails-i18n'
   spec.add_dependency 'rainbow'
   spec.add_dependency 'rollbar'
-  spec.add_dependency 'sass-rails', '~> 5.0.4'
+  spec.add_dependency 'sass-rails', '~> 5.0'
   spec.add_dependency 'selectize-rails'
   spec.add_dependency 'simple_form'
   spec.add_dependency 'slim-rails'

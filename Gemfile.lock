@@ -32,7 +32,7 @@ PATH
       rails-i18n
       rainbow
       rollbar
-      sass-rails (~> 5.0.4)
+      sass-rails (~> 5.0)
       selectize-rails
       simple_form
       slim-rails
