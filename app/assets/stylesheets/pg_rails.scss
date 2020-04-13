@@ -65,12 +65,6 @@
 // hay que agregar la clase pg-form a los forms que queremos afectar
 .pg-form {
   max-width: 1000px;
-  @media (min-width: 800px) {
-    margin-left: 20px;
-  }
-  @media (min-width: 1000px) {
-    margin-left: 70px;
-  }
 
   .form-control {
     font-size: 13px;
