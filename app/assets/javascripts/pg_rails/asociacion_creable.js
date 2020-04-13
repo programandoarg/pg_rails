@@ -38,7 +38,9 @@ window.AsociacionCreable = new function() {
     });
     $(contexto).find('.seleccionar_asociado').click(function() {
       var boton_seleccionar = this;
-      $.get($(this).data('url') + ".js").done(function(response) {
+      var url = new URL($(this).data('url'));
+      url.searchParams.set("sin_layout", "true");
+      $.get(url, null, null, 'html').done(function(response) {
         var modal = pg_rails.abrir_modal(response, "Seleccionar", { dialog_class: 'modal-xl modal-seleccionar-asociado' });
 
         var elemento_seleccionado = function() {
@@ -56,14 +58,14 @@ window.AsociacionCreable = new function() {
               input_visible.val(response.to_s);
             } else {
               console.error('El JSON no tiene to_s')
-              input_visible.val(response.to_s);
+              input_visible.val("#" + response.id);
             }
             // select.html('<option value="'+id+'">'+response.to_s+'</option>');
             $(modal).modal('hide');
             $(modal).modal('dispose');
             $(modal).remove();
           }).fail(function() {
-            pg_rails.showToast("Hubo un error");
+            pg_rails.error_toast("Hubo un error");
           });
         }
 

@@ -8,6 +8,8 @@ module PgRails
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
 
+    layout :setear_layout
+
     def self.inherited(klass)
       super
       # incluyo los helpers de /app/helpers de la main_app
@@ -15,6 +17,14 @@ module PgRails
     end
 
     protected
+
+      def setear_layout
+        if params[:sin_layout] == 'true'
+          false
+        else
+          "application"
+        end
+      end
 
       def clase_modelo
         # agarro la variable o intento con el nombre del controller
