@@ -5,6 +5,7 @@ window.AsociacionCreable = new function() {
       var boton_crear = this;
       $.get($(this).data('url') + ".js").done(function(response) {
         var modal = pg_rails.abrir_modal(response);
+        PgRails.bindear(modal);
         modal.find('form').ajaxForm({
           dataType: 'json',
           success: function(responseJSON, statusText, xhr) {
