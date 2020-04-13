@@ -10,6 +10,7 @@ module PgRails
     attr_accessor :icono_edit
     attr_accessor :icono_show
     attr_accessor :boton_export
+    attr_accessor :bootstrap_version
 
     def initialize
       @sistema_iconos = 'fa'
@@ -21,6 +22,7 @@ module PgRails
       @icono_destroy = 'trash'
       @icono_edit = 'edit'
       @icono_show = 'eye'
+      @bootstrap_version = 4
     end
   end
 end

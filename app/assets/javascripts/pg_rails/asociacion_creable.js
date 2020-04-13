@@ -41,7 +41,7 @@ window.AsociacionCreable = new function() {
       var url = new URL($(this).data('url'));
       url.searchParams.set("sin_layout", "true");
       $.get(url, null, null, 'html').done(function(response) {
-        var modal = pg_rails.abrir_modal(response, "Seleccionar", { dialog_class: 'modal-xl modal-seleccionar-asociado' });
+        var modal = pg_rails.abrir_modal(response, "Seleccionar", { dialog_class: 'modal-xl modal-lg modal-seleccionar-asociado' });
 
         var elemento_seleccionado = function() {
           var id = $(this).closest('tr').data('id');

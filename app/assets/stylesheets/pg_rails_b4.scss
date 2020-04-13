@@ -1,0 +1,10 @@
+// estilos para Bootstrap 4
+
+@import 'pg_rails/pg_rails';
+@import 'pg_rails/chosen';
+
+.form-group.asociacion_creable {
+  button {
+    font-size: 11px;
+  }
+}
