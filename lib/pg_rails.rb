@@ -10,6 +10,10 @@ module PgRails
       @configuracion ||= Configuracion.new
     end
 
+    def config
+      configuracion
+    end
+
     def configurar
       yield(configuracion)
     end
