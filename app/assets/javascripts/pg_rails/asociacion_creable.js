@@ -17,7 +17,7 @@ window.AsociacionCreable = new function() {
             // select.html('<option value="' + responseJSON['id'] + '" selected>' + responseJSON['to_s'] + '</option>')
             // select.trigger('chosen:updated');
             $(modal).modal('hide');
-            $(modal).modal('dispose');
+            // $(modal).modal('dispose');
             $(modal).remove();
             PgRails.showToast('Elemento creado.')
           },
@@ -43,7 +43,7 @@ window.AsociacionCreable = new function() {
       url.searchParams.set("sin_layout", "true");
       $.get(url, null, null, 'html').done(function(response) {
         var modal = pg_rails.abrir_modal(response, "Seleccionar", { dialog_class: 'modal-xl modal-lg modal-seleccionar-asociado' });
-
+        PgRails.bindear(modal);
         var elemento_seleccionado = function() {
           var id = $(this).closest('tr').data('id');
           if(!id) {
@@ -63,7 +63,7 @@ window.AsociacionCreable = new function() {
             }
             // select.html('<option value="'+id+'">'+response.to_s+'</option>');
             $(modal).modal('hide');
-            $(modal).modal('dispose');
+            // $(modal).modal('dispose');
             $(modal).remove();
           }).fail(function() {
             pg_rails.error_toast("Hubo un error");

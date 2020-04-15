@@ -142,7 +142,7 @@ window.PgRails = new function() {
     modal.find('.modal-body').html(contenido);
     $('body').append(modal);
     modal.on('hidden.bs.modal', function() {
-      $(this).modal('dispose');
+      // $(this).modal('dispose');
       $(this).remove();
     })
     modal.modal('show');
