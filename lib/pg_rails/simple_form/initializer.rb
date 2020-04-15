@@ -167,7 +167,7 @@ SimpleForm.setup do |config|
           append.use :boton, class: 'btn btn-outline-secondary dropdown-toggle', type: :button, data: { toggle: :dropdown }
           append.wrapper class: 'dropdown-menu' do |dropdown|
             dropdown.use :seleccionar_asociado
-            dropdown.use :crear_asociado
+            dropdown.optional :crear_asociado
             dropdown.use :borrar_seleccion
           end
         end
@@ -187,7 +187,7 @@ SimpleForm.setup do |config|
           append.use :boton, class: 'btn btn-default dropdown-toggle', type: :button, data: { toggle: :dropdown }
           append.wrapper class: 'dropdown-menu' do |dropdown|
             dropdown.use :seleccionar_asociado
-            dropdown.use :crear_asociado
+            dropdown.optional :crear_asociado
             dropdown.use :borrar_seleccion
           end
         end

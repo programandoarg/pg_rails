@@ -13,9 +13,6 @@ window.AsociacionCreable = new function() {
             var input_visible = $(boton_crear).closest('.form-group').find('input:not(.oculto)');
             input_oculto.val(responseJSON['id']);
             input_visible.val(responseJSON['to_s']);
-            // var select = $(boton_crear).closest('.form-group').find('select');
-            // select.html('<option value="' + responseJSON['id'] + '" selected>' + responseJSON['to_s'] + '</option>')
-            // select.trigger('chosen:updated');
             $(modal).modal('hide');
             // $(modal).modal('dispose');
             $(modal).remove();
@@ -34,6 +31,7 @@ window.AsociacionCreable = new function() {
     $(contexto).find('.borrar_seleccion').click(function() {
       var input_oculto = $(this).closest('.form-group').find('input.oculto');
       var input_visible = $(this).closest('.form-group').find('input:not(.oculto)');
+      $(this).closest('.form-group').removeClass('completado');
       input_oculto.val(null);
       input_visible.val(null);
     });
@@ -61,6 +59,7 @@ window.AsociacionCreable = new function() {
               console.error('El JSON no tiene to_s')
               input_visible.val("#" + response.id);
             }
+            $(boton_seleccionar).closest('.form-group').addClass('completado');
             // select.html('<option value="'+id+'">'+response.to_s+'</option>');
             $(modal).modal('hide');
             // $(modal).modal('dispose');

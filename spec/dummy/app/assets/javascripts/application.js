@@ -14,6 +14,7 @@
 //= require activestorage
 //= require_tree .
 
+//= require pg_rails/librerias
 //= require pg_rails
 
 $(document).ready(function() {

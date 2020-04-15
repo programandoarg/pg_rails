@@ -11,6 +11,12 @@
     visibility: hidden;
     position: absolute;
   }
+
+  &:not(.completado) {
+    .borrar_seleccion {
+      display: none;
+    }
+  }
 }
 // oculto la columna de actions
 .modal-seleccionar-asociado .listado th:last-child,

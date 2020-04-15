@@ -11,9 +11,15 @@ class PgFormBuilder < NestedForm::SimpleBuilder
   map_type :date, to: PgRails::FechaInput
   # map_type :datetime, to: PgRails::FechaInput
 
-  def asociacion_creable(atributo, url_seleccionar, url_crear)
-    association atributo, as: 'pg_rails/asociacion_creable', wrapper: :asociacion_creable,
-      url_seleccionar: url_seleccionar, url_crear: url_crear
+  def asociacion_creable(atributo, url_seleccionar, url_crear, options = {})
+    options[:as] = 'pg_rails/asociacion_creable'
+    options[:wrapper] = :asociacion_creable
+    options[:url_seleccionar] = url_seleccionar
+    options[:url_crear] = url_crear
+    if object.send(atributo).present?
+      options[:wrapper_html] = { class: 'completado' }
+    end
+    association atributo, options
   end
 
   def submit_button(*args, &block)
