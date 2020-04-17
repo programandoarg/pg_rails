@@ -22,7 +22,7 @@ RSpec.describe "cosas/new", type: :view do
 
       assert_select "select[name=?]", "cosa[tipo]"
 
-      assert_select "select[name=?]", "cosa[categoria_de_cosa_id]"
+      assert_select "input[name=?]", "cosa[categoria_de_cosa_id]"
     end
   end
 end
