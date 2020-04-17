@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'audited', '~> 4.7'
   spec.add_dependency 'best_in_place', '~> 3.0'
-  spec.add_dependency 'bootstrap', '~> 4.3.1'
+  # spec.add_dependency 'bootstrap', '~> 4.3.1'
   spec.add_dependency 'bootstrap-datepicker-rails'
   spec.add_dependency 'breadcrumbs_on_rails'
   spec.add_dependency 'caxlsx_rails'

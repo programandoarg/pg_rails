@@ -1,7 +1,6 @@
 //= require jquery3
 //= require jquery_ujs
-//= require popper
-//= require bootstrap
+//= require bootstrap.bundle-4.4.1.min
 //= require smart_listing
 //= require best_in_place
 //= require bootstrap-datepicker/core
@@ -9,5 +8,5 @@
 //= require selectize
 //= require jquery_nested_form
 //= require jquery.form.min.js
-//= require handlebars
+//= require handlebars-4.7.6.min
 //= require chosen

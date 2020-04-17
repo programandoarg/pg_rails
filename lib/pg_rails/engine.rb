@@ -7,7 +7,7 @@ end
 require "nested_form"
 require 'audited'
 require 'best_in_place'
-require 'bootstrap'
+# require 'bootstrap'
 require 'bootstrap-datepicker-rails'
 require 'breadcrumbs_on_rails'
 require 'caxlsx_rails'
