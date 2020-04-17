@@ -1,6 +1,9 @@
 # PgRails
 Short description and motivation.
 
+[![CircleCI](https://circleci.com/gh/programandoarg/pg_rails.svg?style=shield)](https://circleci.com/gh/programandoarg/pg_rails)
+
+
 ## Usage
 How to use my plugin.
 

@@ -1,0 +1,54 @@
+---
+version: 2
+jobs:
+  build:
+    working_directory: ~/pg_rails
+    docker:
+      - image: circleci/ruby:2.6.3-node
+        environment:
+          PGHOST: localhost
+          PGUSER: pgrails
+          RAILS_ENV: test
+          BUNDLE_PATH: vendor/bundle
+      - image: postgres:9.5
+        environment:
+          POSTGRES_USER: pgrails
+          POSTGRES_DB: pg_rails_test
+          POSTGRES_PASSWORD: pgrails
+      # - image: circleci/node:10.16.3
+    steps:
+      - checkout
+
+
+
+      # Restore Cached Dependencies
+      - type: cache-restore
+        name: Restore bundle cache
+        key: pg_rails-1-{{ checksum "Gemfile.lock" }}
+
+
+      # Instalar bundler
+      - run: gem install bundler
+
+      # Bundle install dependencies
+      - run: bundle install
+
+      # Cache Dependencies
+      - type: cache-save
+        name: Store bundle cache
+        key: pg_rails-1-{{ checksum "Gemfile.lock" }}
+        paths:
+          - vendor/bundle
+          # - /usr/local/bundle
+
+      # Wait for DB
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      # Setup the environment
+      # - run: cp .sample.env .env
+
+      # Setup the database
+      - run: bundle exec rake db:schema:load
+
+      # Run the tests
+      - run: bundle exec rspec
