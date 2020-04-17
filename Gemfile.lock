@@ -27,7 +27,7 @@ PATH
       paranoia
       pg
       pundit
-      rails (~> 5.2.3)
+      rails (~> 5.0)
       rails-assets-chosen
       rails-i18n
       rainbow

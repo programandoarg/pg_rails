@@ -40,7 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'paranoia'
   spec.add_dependency 'pg'
   spec.add_dependency 'pundit'
-  spec.add_dependency 'rails', '~> 5.2.3'
+  spec.add_dependency 'rails', '~> 5.0'
   spec.add_dependency 'rails-assets-chosen'
   spec.add_dependency 'rails-i18n'
   spec.add_dependency 'rainbow'
