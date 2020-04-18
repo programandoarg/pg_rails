@@ -71,7 +71,7 @@ window.AsociacionCreable = new function() {
 
         modal.find(SmartListing.config.class_name("main")).smart_listing()
         modal.find(SmartListing.config.class_name("controls")).smart_listing_controls()
-        modal.find(SmartListing.config.class_name("main")).on('ajax:success', function(a,b) {
+        modal.find(SmartListing.config.class_name("main")).on('ajax:success smart_listing:update_list', function() {
           $(this).find('td').click(elemento_seleccionado);
         })
         modal.find('td').click(elemento_seleccionado);
