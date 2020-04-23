@@ -36,7 +36,7 @@ window.PgRails = new function() {
       contexto = $(contexto);
     }
     AsociacionCreable.bindear(contexto);
-    $(contexto).find('.smart-listing a[data-method=delete]').click(function(e) {
+    $(contexto).find('.listado a[data-method=delete]').click(function(e) {
       var boton = this;
       e.preventDefault();
       e.stopPropagation();

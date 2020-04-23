@@ -86,9 +86,9 @@ module PgRails
 
     def comparador(campo)
       if campo.to_s.ends_with?('_desde')
-        '>'
+        '>='
       elsif campo.to_s.ends_with?('_hasta')
-        '<'
+        '<='
       else
         '='
       end
