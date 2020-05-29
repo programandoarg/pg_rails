@@ -48,7 +48,8 @@ window.AsociacionCreable = new function() {
             console.error("La fila no tiene ID")
             return
           }
-          var url = $(boton_seleccionar).data('url') + "/" + id + '.json';
+          var url = new URL($(boton_seleccionar).data('url'));
+          url.pathname += "/" + id + '.json';
           $.get(url).done(function(response) {
             var input_oculto = $(boton_seleccionar).closest('.form-group').find('input.oculto');
             var input_visible = $(boton_seleccionar).closest('.form-group').find('input:not(.oculto)');
