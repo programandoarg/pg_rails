@@ -16,7 +16,7 @@ module PgRails
         end
         best_in_place objeto, atributo, url: _url, as: tipo, display_with: funcion, param: objeto.model_name.name
       elsif tipo == :select && collection.present?
-        best_in_place objeto, atributo, url: _url, as: tipo, collection: collection, param: objeto.model_name.name, value: objeto.send(atributo)
+        best_in_place objeto, atributo, url: _url, as: tipo, collection: collection, param: objeto.model_name.name, value: objeto.send(atributo), inner_class: 'form-control'
       else
         best_in_place objeto, atributo, url: _url, as: tipo, param: objeto.model_name.name
       end
