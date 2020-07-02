@@ -22,6 +22,38 @@ module PgRails
       end
     end
 
+    # Versión mejorada de editar_en_lugar, pero le pongo v2 por retrocompatibilidad
+    # La diferencia es que recibe un hash "options" y se le pueden agregar cualquiera de las options
+    # que admite best_in_place
+    def editar_en_lugar_v2(objeto, atributo, tipo = :input, options = {})
+      options[:url] = pg_rails.editar_en_lugar_path(objeto) if options[:url].nil?
+      options[:as] = tipo
+      options[:param] = objeto.model_name.name
+      options[:inner_class] = 'form-control' if options[:inner_class].nil?
+      options[:class] = 'editar_en_lugar_v2'
+      # _url = pg_rails.editar_en_lugar_path(objeto) if _url.nil?
+      if tipo == :checkbox
+        options[:collection] = ["No", "Si"]
+
+      elsif tipo == :date
+        options[:display_with] = lambda { |v| dmy(v) } if options[:display_with].nil?
+
+      elsif tipo == :textarea
+        funcion = lambda do |valor|
+          return unless valor.present?
+          valor.gsub!("\r\n", '<br>')
+          valor.gsub!("\n", '<br>')
+          valor.html_safe
+        end
+        options[:display_with] = funcion if options[:display_with].nil?
+
+      elsif tipo == :select && collection.present?
+        options[:value] = objeto.send(atributo)
+      end
+
+      best_in_place objeto, atributo, options
+    end
+
     def encabezado(smart_listing, campo, options = {})
       if options[:ordenable]
         smart_listing.sortable @clase_modelo.human_attribute_name(campo), campo

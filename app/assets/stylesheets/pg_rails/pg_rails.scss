@@ -119,3 +119,14 @@
 .btn.exportar:hover {
   cursor: pointer;
 }
+
+
+// Editar en lugar
+.editar_en_lugar_v2 {
+    cursor: pointer;
+    text-decoration: underline dotted;
+}
+.editar_en_lugar_v2::after {
+  padding-left: 13px;
+  content: '✎';
+}
