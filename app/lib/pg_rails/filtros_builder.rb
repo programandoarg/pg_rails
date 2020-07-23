@@ -40,7 +40,7 @@ module PgRails
           else
             fail 'filtro de asociacion no soportado'
           end
-        elsif tipo(campo) == :string
+        elsif tipo(campo).in?([:string, :text])
           query = query.where("#{@clase_modelo.table_name}.#{campo} ILIKE '%#{parametros[campo]}%'")
         elsif tipo(campo) == :date || tipo(campo) == :datetime
           begin

@@ -124,9 +124,13 @@
 // Editar en lugar
 .editar_en_lugar_v2 {
     cursor: pointer;
-    text-decoration: underline dotted;
+    text-decoration: underline dotted lightgrey;
 }
 .editar_en_lugar_v2::after {
   padding-left: 13px;
   content: '✎';
+  opacity: 0;
+}
+.editar_en_lugar_v2:hover::after {
+  opacity: 1;
 }

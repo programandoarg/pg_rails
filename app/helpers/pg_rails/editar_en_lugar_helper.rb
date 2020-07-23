@@ -47,7 +47,7 @@ module PgRails
         end
         options[:display_with] = funcion if options[:display_with].nil?
 
-      elsif tipo == :select && collection.present?
+      elsif tipo == :select && options[:collection].present?
         options[:value] = objeto.send(atributo)
       end
 
