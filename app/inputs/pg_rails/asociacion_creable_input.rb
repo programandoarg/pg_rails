@@ -23,6 +23,7 @@ module PgRails
       end
 
       merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
+      merged_input_options = merge_wrapper_options(merged_input_options, { class: 'keep-disabled' })
 
       text_field_tag(nil, object.send(reflection.name).to_s, merged_input_options)
     end

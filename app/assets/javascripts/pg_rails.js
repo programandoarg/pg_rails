@@ -237,13 +237,19 @@ window.PgRails = new function() {
   }
 
   window.jQuery.fn.ocultar_campo = function() {
-    this.find('.chosen-select').addClass('ignore-validation');
     this.hide();
+    this.find('.chosen-select').addClass('ignore-validation');
+    this.find("input:not(.keep-disabled), select:not(.keep-disabled)").attr("disabled",true);
+    this.find("input, select").trigger("change"); //Esto es por si hay dependencias internas que se acomoden
   }
+
   window.jQuery.fn.mostrar_campo = function() {
-    this.find('.chosen-select').removeClass('ignore-validation');
     this.show();
+    this.find('.chosen-select').removeClass('ignore-validation');
+    this.find("input:not(.keep-disabled), select:not(.keep-disabled)").attr("disabled",false);
+    this.find("input, select").trigger("change"); //Esto es por si hay dependencias internas que se acomoden
   }
+
   window.jQuery.fn.dependent_fields = function() {
     var that = this;
 
