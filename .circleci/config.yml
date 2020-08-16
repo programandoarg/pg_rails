@@ -1,5 +1,7 @@
 ---
-version: 2
+version: 2.1
+# orbs:
+#   codecov: codecov/codecov@1.1.1
 jobs:
   build:
     working_directory: ~/pg_rails
@@ -10,6 +12,7 @@ jobs:
           PGUSER: pgrails
           RAILS_ENV: test
           BUNDLE_PATH: vendor/bundle
+          CC_TEST_REPORTER_ID: 06b784c7df61a8978ec796c2acbbf9c686eb701e336fba3900b997427b06076b
       - image: postgres:9.5
         environment:
           POSTGRES_USER: pgrails
@@ -22,9 +25,9 @@ jobs:
 
 
       # Restore Cached Dependencies
-      - type: cache-restore
-        name: Restore bundle cache
-        key: pg_rails-1-{{ checksum "Gemfile.lock" }}
+      - restore_cache:
+          keys:
+            - pg_rails-1-{{ checksum "Gemfile.lock" }}
 
 
       # Instalar bundler
@@ -34,12 +37,10 @@ jobs:
       - run: bundle install
 
       # Cache Dependencies
-      - type: cache-save
-        name: Store bundle cache
-        key: pg_rails-1-{{ checksum "Gemfile.lock" }}
-        paths:
-          - vendor/bundle
-          # - /usr/local/bundle
+      - save_cache:
+          key: pg_rails-1-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
 
       # Wait for DB
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -50,5 +51,25 @@ jobs:
       # Setup the database
       - run: bundle exec rake db:schema:load
 
-      # Run the tests
-      - run: bundle exec rspec
+
+      # name: Setup Code Climate test-reporter
+      # download test reporter as a static binary
+      - run:
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+
+      # name: Run tests
+      - run:
+          command: |
+            ./cc-test-reporter before-build
+            bundle exec rspec
+            ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
+
+      # - codecov/upload:
+      #     file: coverage/.resultset.json
+      #     token: 'ecbbd491-7d97-48cd-9f9e-35816ede8e6b'
+workflows:
+  build-test:
+    jobs:
+      - build
