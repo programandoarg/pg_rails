@@ -18,3 +18,9 @@ gem 'smart_listing', git: 'https://github.com/mrosso10/smart_listing.git', tag: 
 source 'https://rails-assets.org' do
   gem 'rails-assets-jquery-validation'
 end
+
+group :development, :test do
+  gem 'fuubar'
+  gem 'spring'
+  gem 'spring-commands-rspec'
+end
