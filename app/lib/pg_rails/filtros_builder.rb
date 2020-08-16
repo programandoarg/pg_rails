@@ -15,15 +15,28 @@ module PgRails
       @campos.each { |campo| @filtros[campo] = {} }
     end
 
-    def filtro_oculto(campo)
-      @filtros[campo] = { oculto: true }
+    def opciones(campo, opciones)
+      # TODO mergear
+      @filtros[campo] = opciones
+    end
+
+    # querys customizadas por campo
+    def query(campo, &block)
+      @filtros[campo] = {} if @filtros[campo].nil?
+      @filtros[campo][:query] = block
+    end
+
+    def algun_filtro_presente?
+      @campos.any? { |campo| parametros_controller[campo].present? }
     end
 
     def filtrar(query, parametros = nil)
       parametros = parametros_controller if parametros.nil?
       @filtros.each do |campo, opciones|
         next unless parametros[campo].present?
-        if tipo(campo).in?([:integer, :float, :decimal])
+        if @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:query].present?
+          query = @filtros[campo.to_sym][:query].call(query, parametros[campo])
+        elsif tipo(campo).in?([:integer, :float, :decimal])
           query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo])
         elsif tipo(campo) == :enumerized
           query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo])
@@ -41,7 +54,11 @@ module PgRails
             fail 'filtro de asociacion no soportado'
           end
         elsif tipo(campo).in?([:string, :text])
-          query = query.where("#{@clase_modelo.table_name}.#{campo} ILIKE '%#{parametros[campo]}%'")
+          match_vector = parametros[campo].split.map {|a| a + ':*'}.join(' & ')
+          match_like = "%#{parametros[campo]}%"
+          condicion = "to_tsvector(coalesce(unaccent(#{campo}), '')) @@ to_tsquery( unaccent(?) )"
+          condicion += " OR unaccent(CONCAT(#{campo})) ILIKE unaccent(?)"
+          query = query.where(condicion, "#{I18n.transliterate(match_vector)}", "#{I18n.transliterate(match_like)}")
         elsif tipo(campo) == :date || tipo(campo) == :datetime
           begin
             fecha = Date.parse(parametros[campo])
@@ -59,14 +76,16 @@ module PgRails
 
     def tipo(campo)
       nombre_campo = sin_sufijo(campo)
-      if @clase_modelo.respond_to?(:enumerized_attributes) && @clase_modelo.enumerized_attributes[nombre_campo.to_s].present?
+      if @filtros[nombre_campo.to_sym].present? && @filtros[nombre_campo.to_sym][:tipo].present?
+        @filtros[nombre_campo.to_sym][:tipo]
+      elsif @clase_modelo.respond_to?(:enumerized_attributes) && @clase_modelo.enumerized_attributes[nombre_campo.to_s].present?
         :enumerized
       elsif @clase_modelo.reflect_on_all_associations.find {|a| a.name == nombre_campo.to_sym }.present?
         :asociacion
       else
         columna = @clase_modelo.columns.find {|columna| columna.name == nombre_campo.to_s}
         if columna.nil?
-          Logueador.warning("no existe el campo: #{nombre_campo}")
+          Rails.logger.warn("no existe el campo: #{nombre_campo}")
           return
         end
         columna.type
@@ -120,16 +139,23 @@ module PgRails
       end
     end
 
-    def filtros_html
+    def filtros_html(options = {})
       res = ''
       @filtros.each do |campo, opciones|
-        next if opciones[:oculto]
+        if opciones[:oculto] ||
+          (options[:except].present? && options[:except].include?(campo.to_sym)) ||
+          (options[:only].present? && !options[:only].include?(campo.to_sym))
+          next
+        end
+
         if tipo(campo) == :enumerized
           res += filtro_select(campo, placeholder_campo(campo))
         elsif tipo(campo) == :asociacion
           res += filtro_asociacion(campo, placeholder_campo(campo))
         elsif tipo(campo) == :date || tipo(campo) == :datetime
           res += filtro_fecha(campo, placeholder_campo(campo))
+        elsif tipo(campo) == :boolean
+          res += filtro_checkbox(campo)
         else
           res += filtro_texto(campo, placeholder_campo(campo))
         end
@@ -166,7 +192,10 @@ module PgRails
       end
       map = scope.map { |o| [o.to_s, o.id] }
 
-      map.unshift ["Seleccionar #{@clase_modelo.human_attribute_name(campo.to_sym).downcase}", nil]
+      unless @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:include_blank] == false
+        map.unshift ["Seleccionar #{@clase_modelo.human_attribute_name(campo.to_sym).downcase}", nil]
+      end
+
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
       content_tag :div, class: 'filter' do
         if multiple
@@ -178,8 +207,12 @@ module PgRails
     end
 
     def filtro_select(campo, placeholder = '')
-      map = @clase_modelo.send(campo).values.map { |key| [key.humanize, key.value] }
-      map.unshift ["Seleccionar #{placeholder.downcase}", nil]
+      map = @clase_modelo.send(campo).values.map do |key|
+        [I18n.t("#{@clase_modelo.to_s.underscore}.#{campo}.#{key}", default: key.humanize), key.value]
+      end
+      unless @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:include_blank] == false
+        map.unshift ["Seleccionar #{placeholder.downcase}", nil]
+      end
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
       content_tag :div, class: 'filter' do
         select_tag campo, options_for_select(map, default), class: 'form-control pg-input-lg'
@@ -196,6 +229,15 @@ module PgRails
               content_tag :span, nil, class: 'fa fa-search'
             end
           end
+        end
+      end
+    end
+    def filtro_checkbox(campo)
+      content_tag :div, class: 'filter' do
+        content_tag :div, class: 'input-group', style: 'width:230px' do
+          check_box_tag(
+            campo, parametros_controller[campo], false, class: "form-control"
+          )
         end
       end
     end
