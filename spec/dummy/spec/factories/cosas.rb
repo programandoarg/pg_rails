@@ -35,5 +35,6 @@ FactoryBot.define do
       categoria_de_cosa { nil }
       categoria_de_cosa_id { CategoriaDeCosa.all.pluck(:id).sample }
     end
+
   end
 end

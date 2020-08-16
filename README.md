@@ -34,3 +34,20 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 rails g pg_scaffold CategoriaDeCosa nombre:string{required} "tipo:integer{enum,required}" fecha:date tiempo:datetime --paranoia
 rails g pg_scaffold Cosa nombre:string{required} "tipo:integer{enum,required}" categoria_de_cosa:references{required} --paranoia
+
+## Upgrading
+#### Actualizar a version 0.2
+  - `PgRails::Filtros.filtrar` no va más
+  - FiltrosBuilder: attr_accessor :controller no está más
+  -
+    - def initialize(controller, clase_modelo, filtros_permitidos)
+    + def initialize(opciones = {})
+    + def opciones_generales(opciones = {})
+  - 
+    - def filtrar(query)
+    + def filtrar(query, parametros = nil)
+
+  - filtros_y_policy no va más
+    + crear_filtros
+
+  - por defecto aplica policy scope y without_deleted

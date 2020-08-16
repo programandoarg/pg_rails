@@ -23,6 +23,7 @@
 #  fk_rails_...  (actualizado_por_id => users.id)
 #  fk_rails_...  (creado_por_id => users.id)
 #
+# generado con pg_rails
 
 class CategoriaDeCosa < ApplicationRecord
   audited

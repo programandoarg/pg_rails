@@ -10,7 +10,9 @@ class CategoriaDeCosasController < ApplicationController
   add_breadcrumb CategoriaDeCosa.nombre_plural, :categoria_de_cosas_path
 
   def index
-    @categoria_de_cosas = filtros_y_policy [:nombre, :tipo, :fecha, :tiempo]
+    filtros_permitidos = [:nombre, :tipo, :fecha, :tiempo]
+    @filtros = PgRails::FiltrosBuilder.new(controller: self, filtros_permitidos: filtros_permitidos)
+    @categoria_de_cosas = @filtros.filtrar
 
     respond_to do |format|
       format.json { render json: @categoria_de_cosas }
@@ -47,7 +49,7 @@ class CategoriaDeCosasController < ApplicationController
         format.json { render json: @categoria_de_cosa.decorate }
       else
         format.html { render :new }
-        format.json { render json: @categoria_de_cosa.errors }
+        format.json { render json: @categoria_de_cosa.errors.full_messages }
       end
     end
   end

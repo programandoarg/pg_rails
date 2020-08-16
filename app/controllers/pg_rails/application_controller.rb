@@ -16,6 +16,11 @@ module PgRails
       klass.helper :all
     end
 
+    def clase_modelo
+      # agarro la variable o intento con el nombre del controller
+      @clase_modelo ||= self.class.name.singularize.gsub('Controller', '').constantize
+    end
+
     protected
 
       def setear_layout
@@ -24,21 +29,6 @@ module PgRails
         else
           "application"
         end
-      end
-
-      def clase_modelo
-        # agarro la variable o intento con el nombre del controller
-        @clase_modelo ||= self.class.name.singularize.gsub('Controller', '').constantize
-      end
-
-      def filtros_y_policy(campos)
-        @filtros = PgRails::FiltrosBuilder.new(
-          self, clase_modelo, campos)
-        scope = policy_scope(clase_modelo)
-        if scope.respond_to?(:without_deleted)
-          scope = scope.without_deleted
-        end
-        @filtros.filtrar(scope)
       end
 
       def smart_listing(smart_listing_key, scope, partial, options = {})

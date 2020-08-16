@@ -15,7 +15,9 @@ class <%= controller_class_name %>Controller < ApplicationController
   add_breadcrumb <%= class_name %>.nombre_plural, :<%= plural_table_name %>_path
 
   def index
-    @<%= plural_name %> = filtros_y_policy [<%= atributos_a_filtrar.map{|at| ":#{at.name}" }.join(', ') %>]
+    filtros_permitidos = [<%= atributos_a_filtrar.map{|at| ":#{at.name}" }.join(', ') %>]
+    @filtros = PgRails::FiltrosBuilder.new(controller: self, filtros_permitidos: filtros_permitidos)
+    @<%= plural_name %> = @filtros.filtrar
 
     respond_to do |format|
       format.json { render json: @<%= plural_name %> }
