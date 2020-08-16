@@ -2,7 +2,8 @@
 Short description and motivation.
 
 [![CircleCI](https://circleci.com/gh/programandoarg/pg_rails.svg?style=shield)](https://circleci.com/gh/programandoarg/pg_rails)
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/2a3081a26ca2ab9feac6/maintainability)](https://codeclimate.com/github/programandoarg/pg_rails/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/2a3081a26ca2ab9feac6/test_coverage)](https://codeclimate.com/github/programandoarg/pg_rails/test_coverage)
 
 ## Usage
 How to use my plugin.
