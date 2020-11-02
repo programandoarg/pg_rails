@@ -16,10 +16,6 @@ module PgRails
       acceso_total? || Pundit.policy_scope!(user, record).any?
     end
 
-    def export?
-      index?
-    end
-
     def show?
       scope.where(id: record.id).exists?
     end
