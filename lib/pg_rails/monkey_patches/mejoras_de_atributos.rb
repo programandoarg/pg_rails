@@ -86,6 +86,10 @@ module Rails
                         end
       end
 
+      def required?
+        attr_options[:required]
+      end
+
       private
 
       def options_for_migration
