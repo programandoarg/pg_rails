@@ -56,8 +56,8 @@ module PgRails
         elsif tipo(campo).in?([:string, :text])
           match_vector = parametros[campo].split.map {|a| a + ':*'}.join(' & ')
           match_like = "%#{parametros[campo]}%"
-          condicion = "to_tsvector(coalesce(unaccent(#{campo}), '')) @@ to_tsquery( unaccent(?) )"
-          condicion += " OR unaccent(CONCAT(#{campo})) ILIKE unaccent(?)"
+          condicion = "to_tsvector(coalesce(unaccent(#{@clase_modelo.table_name}.#{campo}), '')) @@ to_tsquery( unaccent(?) )"
+          condicion += " OR unaccent(CONCAT(#{@clase_modelo.table_name}.#{campo})) ILIKE unaccent(?)"
           query = query.where(condicion, "#{I18n.transliterate(match_vector)}", "#{I18n.transliterate(match_like)}")
         elsif tipo(campo) == :date || tipo(campo) == :datetime
           begin
