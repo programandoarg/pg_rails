@@ -1,17 +1,21 @@
 window.AsociacionCreable = new function() {
   asociacion_creable = this;
   asociacion_creable.bindear = function(contexto) {
-    $(contexto).find('.crear_asociado').click(function() {
+    $(contexto).find('.crear_asociado').off('click').click(function() {
       var boton_crear = this;
       $.get($(this).data('url') + ".js").done(function(response) {
         var modal = pg_rails.abrir_modal(response);
         PgRails.bindear(modal);
+        modal.find('form').on('ajax:before', function(e) {
+          // para que no haga doble submit
+          return false;
+        });
         modal.find('form').ajaxForm({
           dataType: 'json',
           success: function(responseJSON, statusText, xhr) {
             var input_oculto = $(boton_crear).closest('.form-group').find('input.oculto');
             var input_visible = $(boton_crear).closest('.form-group').find('input:not(.oculto)');
-            input_oculto.val(responseJSON['id']);
+            input_oculto.val(responseJSON['id']).trigger("change");
             input_visible.val(responseJSON['to_s']);
             $(modal).modal('hide');
             // $(modal).modal('dispose');
@@ -28,14 +32,14 @@ window.AsociacionCreable = new function() {
       })
     });
 
-    $(contexto).find('.borrar_seleccion').click(function() {
+    $(contexto).find('.borrar_seleccion').off('click').click(function() {
       var input_oculto = $(this).closest('.form-group').find('input.oculto');
       var input_visible = $(this).closest('.form-group').find('input:not(.oculto)');
       $(this).closest('.form-group').removeClass('completado');
-      input_oculto.val(null);
+      input_oculto.val(null).trigger("change");
       input_visible.val(null);
     });
-    $(contexto).find('.seleccionar_asociado').click(function() {
+    $(contexto).find('.seleccionar_asociado').off('click').click(function() {
       var boton_seleccionar = this;
       var url = new URL($(this).data('url'));
       url.searchParams.set("sin_layout", "true");
@@ -53,7 +57,7 @@ window.AsociacionCreable = new function() {
           $.get(url).done(function(response) {
             var input_oculto = $(boton_seleccionar).closest('.form-group').find('input.oculto');
             var input_visible = $(boton_seleccionar).closest('.form-group').find('input:not(.oculto)');
-            input_oculto.val(id);
+            input_oculto.val(id).trigger("change");
             if( response.to_s ) {
               input_visible.val(response.to_s);
             } else {
@@ -73,9 +77,9 @@ window.AsociacionCreable = new function() {
         modal.find(SmartListing.config.class_name("main")).smart_listing()
         modal.find(SmartListing.config.class_name("controls")).smart_listing_controls()
         modal.find(SmartListing.config.class_name("main")).on('ajax:success smart_listing:update_list', function() {
-          $(this).find('td').click(elemento_seleccionado);
+          $(this).find('td').off('click').click(elemento_seleccionado);
         })
-        modal.find('td').click(elemento_seleccionado);
+        modal.find('td').off('click').click(elemento_seleccionado);
       })
     });
   }
