@@ -11,6 +11,9 @@ module PgRspec
       class_option :paranoia, type: :boolean, default: false, desc: "Paranoid y deleted_at."
       class_option :trackeo_de_usuarios, type: :boolean, default: true, desc: "Genera campos creado_por y actualizado_por."
 
+      class_option :controller_specs, type: :boolean, default: true, desc: "Generate controller specs"
+      class_option :request_specs,    type: :boolean, default: false,  desc: "Generate request specs"
+
       remove_hook_for :integration_tool, :as => :integration
       remove_hook_for :fixture_replacement
 
