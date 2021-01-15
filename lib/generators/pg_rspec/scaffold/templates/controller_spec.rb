@@ -67,7 +67,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% unless options[:singleton] -%>
   describe "GET #index" do
     it "returns a success response" do
-      create(:<%= file_name %>)
+      create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
       get :index, {}, valid_session
 <% else -%>
@@ -80,7 +80,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% end -%>
   describe "GET #show" do
     it "returns a success response" do
-      <%= file_name %> = create(:<%= file_name %>)
+      <%= file_name %> = create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
       get :show, {:id => <%= file_name %>.to_param}, valid_session
 <% else -%>
@@ -103,7 +103,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 
   describe "GET #edit" do
     it "returns a success response" do
-      <%= file_name %> = create(:<%= file_name %>)
+      <%= file_name %> = create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
       get :edit, {:id => <%= file_name %>.to_param}, valid_session
 <% else -%>
@@ -156,7 +156,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
       }
 
       it "updates the requested <%= ns_file_name %>" do
-        <%= file_name %> = create(:<%= file_name %>)
+        <%= file_name %> = create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
         put :update, {:id => <%= file_name %>.to_param, :<%= ns_file_name %> => new_attributes}, valid_session
 <% else -%>
@@ -172,7 +172,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
       end
 
       it "redirects to the <%= ns_file_name %>" do
-        <%= file_name %> = create(:<%= file_name %>)
+        <%= file_name %> = create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
         put :update, {:id => <%= file_name %>.to_param, :<%= ns_file_name %> => valid_attributes}, valid_session
 <% else -%>
@@ -185,7 +185,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% if attributes.any? { |at| at.required? } -%>
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        <%= file_name %> = create(:<%= file_name %>)
+        <%= file_name %> = create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
         put :update, {:id => <%= file_name %>.to_param, :<%= ns_file_name %> => invalid_attributes}, valid_session
 <% else -%>
@@ -199,7 +199,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 
   describe "DELETE #destroy" do
     it "destroys the requested <%= ns_file_name %>" do
-      <%= file_name %> = create(:<%= file_name %>)
+      <%= file_name %> = create(:<%= ns_file_name %>)
       expect {
 <% if Rails::VERSION::STRING < '5.0' -%>
         delete :destroy, {:id => <%= file_name %>.to_param}, valid_session
@@ -214,7 +214,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
     end
 
     it "redirects to the <%= table_name %> list" do
-      <%= file_name %> = create(:<%= file_name %>)
+      <%= file_name %> = create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
       delete :destroy, {:id => <%= file_name %>.to_param}, valid_session
 <% else -%>
