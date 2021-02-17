@@ -70,15 +70,27 @@ module PgRails
     end
 
     def edit_object_url
-      helpers.url_for([:edit, object])
+      helpers.url_for([:edit, target_object].flatten)
     end
 
     def new_object_url
-      helpers.url_for(object.class) + '/new'
+      helpers.url_for(target_index) + '/new'
     end
 
     def object_url
-      helpers.url_for(object)
+      helpers.url_for(target_object)
+    end
+
+    def target_object
+      default_module.present? ? [default_module, object] : object
+    end
+
+    def target_index
+      default_module.present? ? [default_module, object.class] : object.class
+    end
+
+    def default_module
+      nil
     end
 
     private
