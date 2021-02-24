@@ -63,34 +63,38 @@ window.PgRails = new function() {
     $(contexto).find('form.pg-form').each(function(i,e) {
       $(e).validate();
     });
-    $(contexto).find('table:has(.best_in_place)').css('table-layout', 'fixed');
-    $(contexto).find(".best_in_place").best_in_place();
-    $(contexto).find(".best_in_place").on('ajax:error', function(event, response) {
-      pg_rails.showToast("error", response.responseText)
-    });
-    $(contexto).find(".best_in_place").on('best_in_place:activate', function(event, response) {
-      var textarea = $(this).find('textarea');
-      if( textarea.length > 0 ) {
-        var valor = textarea.val();
-        valor = valor.replace(/<br>/g, "\n")
-        textarea.val(valor)
-      }
-    });
+    if( typeof $.fn.best_in_place == 'function' ) {
+      $(contexto).find('table:has(.best_in_place)').css('table-layout', 'fixed');
+      $(contexto).find(".best_in_place").best_in_place();
+      $(contexto).find(".best_in_place").on('ajax:error', function(event, response) {
+        pg_rails.showToast("error", response.responseText)
+      });
+      $(contexto).find(".best_in_place").on('best_in_place:activate', function(event, response) {
+        var textarea = $(this).find('textarea');
+        if( textarea.length > 0 ) {
+          var valor = textarea.val();
+          valor = valor.replace(/<br>/g, "\n")
+          textarea.val(valor)
+        }
+      });
+    }
     // $(".best_in_place").on('ajax:success', function(event, response) {
     //   pg_rails.showToast("success", "👍")
     // });
-    $.fn.datepicker.defaults.format = 'dd/mm/yyyy';
+    if( typeof $.fn.datepicker == 'function' ) {
+      $.fn.datepicker.defaults.format = 'dd/mm/yyyy';
+      $(contexto).find('.datefield').datepicker({
+        'format': 'dd/mm/yyyy',
+        'todayBtn': 'linked',
+        'autoclose': 'true',
+        'language': 'es',
+        'zIndexOffset': 2000,
+      });
+      $(contexto).find('.datefield').on('changeDate', function() {
+        $(this).keydown();
+      });
+    }
 
-    $(contexto).find('.datefield').datepicker({
-      'format': 'dd/mm/yyyy',
-      'todayBtn': 'linked',
-      'autoclose': 'true',
-      'language': 'es',
-      'zIndexOffset': 2000,
-    });
-    $(contexto).find('.datefield').on('changeDate', function() {
-      $(this).keydown();
-    });
     if( typeof($.fn.selectize) == 'function' ) {
       $(contexto).find('select[multiple=multiple]').selectize();
     }
