@@ -1,0 +1,39 @@
+engines:
+  rubocop:
+    enabled: true
+    channel: rubocop-0-92
+  brakeman:
+    enabled: true
+  eslint:
+    enabled: true
+  csslint:
+    enabled: true
+  bundler-audit:
+    enabled: true
+  coffeelint:
+    enabled: true
+  fixme:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - ruby
+        #mass_threshold: 30
+      - javascript
+    exclude_paths:
+    - "spec"
+
+checks:
+  method-complexity:
+    config:
+      threshold: 7
+
+ratings:
+   paths:
+   - "app/**/*"
+   - "lib/**/*"
+   - "config/**/*"
+   - "Gemfile"
+   - "Gemfile.lock"
+   - "**.rb"
