@@ -14,10 +14,9 @@ module PgRspec
       class_option :trackeo_de_usuarios, type: :boolean, default: true,
                                          desc: 'Genera campos creado_por y actualizado_por.'
 
-      class_option :controller_specs, type: :boolean, default: true,
-                                      desc: 'Generate controller specs'
-      class_option :request_specs,    type: :boolean, default: false,
-                                      desc: 'Generate request specs'
+      class_option :controller_specs, type: :boolean, default: true
+      class_option :request_specs,    type: :boolean, default: false
+      class_option :view_specs,       type: :boolean, default: false
 
       remove_hook_for :integration_tool, as: :integration
       remove_hook_for :fixture_replacement
