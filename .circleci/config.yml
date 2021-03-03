@@ -6,7 +6,7 @@ jobs:
   build:
     working_directory: ~/pg_rails
     docker:
-      - image: circleci/ruby:2.6.3-node
+      - image: circleci/ruby:2.7.2-node
         environment:
           PGHOST: localhost
           PGUSER: pgrails
