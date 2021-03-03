@@ -1,11 +1,11 @@
+# frozen_string_literal: true
+
 class PgFormBuilder < NestedForm::SimpleBuilder
   def mensajes_de_error
     return unless object.errors.present?
-    (
-      "<div class='alert alert-danger'>" +
-        object.errors.full_messages.map { |m| "<li>#{m}</li>" }.join +
-        "</div>"
-    ).html_safe
+
+    errors = object.errors.full_messages.map { |m| "<li>#{m}</li>" }.join
+    "<div class='alert alert-danger'>#{errors}</div>".html_safe
   end
 
   map_type :date, to: PgRails::FechaInput
@@ -16,9 +16,7 @@ class PgFormBuilder < NestedForm::SimpleBuilder
     options[:wrapper] = :asociacion_creable
     options[:url_seleccionar] = url_seleccionar
     options[:url_crear] = url_crear
-    if object.send(atributo).present?
-      options[:wrapper_html] = { class: 'completado' }
-    end
+    options[:wrapper_html] = { class: 'completado' } if object.send(atributo).present?
     association atributo, options
   end
 

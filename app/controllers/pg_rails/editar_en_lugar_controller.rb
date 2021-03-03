@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PgRails
   class EditarEnLugarController < ::ApplicationController
     def actualizar
@@ -9,8 +11,8 @@ module PgRails
       objeto.current_user = current_user
       objeto.update_attributes(object_params)
       respond_with_bip(objeto, param: key_modelo)
-    rescue Pundit::NotAuthorizedError => e
-      objeto.errors.add(:base, "no autorizado")
+    rescue Pundit::NotAuthorizedError
+      objeto.errors.add(:base, 'no autorizado')
       respond_with_bip(objeto)
     rescue Pundit::Error => e
       Rollbar.error(e)

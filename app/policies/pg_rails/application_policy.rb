@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PgRails
   class ApplicationPolicy
     attr_reader :user, :record
@@ -12,7 +14,8 @@ module PgRails
     end
 
     def index?
-      fail "esta policy se llama con la clase modelo y no con #{record.class}" unless record.class
+      raise "esta policy se llama con la clase modelo y no con #{record.class}" unless record.class
+
       acceso_total? || Pundit.policy_scope!(user, record).any?
     end
 
@@ -61,7 +64,8 @@ module PgRails
       end
 
       def policy
-        fail "el scope debe ser una clase modelo y no #{scope.class}" unless scope.class
+        raise "el scope debe ser una clase modelo y no #{scope.class}" unless scope.class
+
         Pundit.policy!(user, scope)
       end
     end
@@ -84,6 +88,7 @@ module PgRails
 
     def objeto_borrado?
       return false unless record.respond_to?(:deleted?)
+
       record.deleted?
     end
   end

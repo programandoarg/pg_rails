@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: categoria_de_cosas
@@ -31,7 +33,7 @@ class CategoriaDeCosa < ApplicationRecord
   belongs_to :creado_por, optional: true, class_name: 'User'
   belongs_to :actualizado_por, optional: true, class_name: 'User'
 
-  enumerize :tipo, in: { completar: 0, los: 1, valores: 2}
+  enumerize :tipo, in: { completar: 0, los: 1, valores: 2 }
 
   validates :nombre, :tipo, presence: true
 end

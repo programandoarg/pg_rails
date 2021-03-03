@@ -1,16 +1,9 @@
+# frozen_string_literal: true
+
 module PgRails
   class Configuracion
-    attr_accessor :sistema_iconos
-    attr_accessor :clase_botones_chicos
-    attr_accessor :boton_destroy
-    attr_accessor :boton_edit
-    attr_accessor :boton_show
-    attr_accessor :boton_light
-    attr_accessor :icono_destroy
-    attr_accessor :icono_edit
-    attr_accessor :icono_show
-    attr_accessor :boton_export
-    attr_accessor :bootstrap_version
+    attr_accessor :sistema_iconos, :clase_botones_chicos, :boton_destroy, :boton_edit,
+                  :boton_show, :boton_light, :icono_destroy, :icono_edit, :icono_show, :boton_export, :bootstrap_version
 
     def initialize
       @sistema_iconos = 'fa'

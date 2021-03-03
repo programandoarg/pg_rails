@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 module PgRails
   module PrintHelper
     class FechaInvalidaError < StandardError
     end
 
-    def mostrar_con_link(objeto, &block)
-      if objeto.present?
-        if policy(objeto).show?
-          link_to truncate_title(block_given? ? yield : objeto), objeto
-        else
-          truncate_title(block_given? ? yield : objeto)
-        end
+    def mostrar_con_link(objeto)
+      return unless objeto.present?
+
+      if policy(objeto).show?
+        link_to truncate_title(block_given? ? yield : objeto), objeto
+      else
+        truncate_title(block_given? ? yield : objeto)
       end
     end
 
@@ -87,11 +89,13 @@ module PgRails
     def print_currency(number, moneda = 'pesos')
       return unless number.present?
 
-      "<span class='currency #{moneda}'>#{number_with_precision(number, delimiter: '.', separator: ',', precision: 2)}</span>".html_safe
+      "<span class='currency #{moneda}'>#{number_with_precision(number, delimiter: '.',
+                                                                        separator: ',', precision: 2)}</span>".html_safe
     end
 
     def print_currency2(number, moneda = 'pesos')
-      "#{simbolo_moneda(moneda)} #{number_with_precision(number, delimiter: '.', separator: ',', precision: 2)}"
+      "#{simbolo_moneda(moneda)} #{number_with_precision(number, delimiter: '.', separator: ',',
+                                                                 precision: 2)}"
     end
 
     def simbolo_moneda(moneda)
@@ -106,7 +110,7 @@ module PgRails
     end
 
     def print_value(nombre_clase, field, value)
-      if !!value == value # es booleano
+      if !value.nil? == value # es booleano
         value ? 'Si' : 'No'
       elsif value.nil?
         '-'
@@ -116,26 +120,28 @@ module PgRails
             valor = nombre_clase.constantize.defined_enums[field].invert[value]
             I18n.t("enums.#{nombre_clase.downcase}.#{field}.#{valor}", default: valor)
           else
-            truncate_title(value.to_s.encode("UTF-8", invalid: :replace, undef: :replace))
+            truncate_title(value.to_s.encode('UTF-8', invalid: :replace, undef: :replace))
           end
         rescue NameError
-          truncate_title(value.to_s.encode("UTF-8", invalid: :replace, undef: :replace))
+          truncate_title(value.to_s.encode('UTF-8', invalid: :replace, undef: :replace))
         end
       end
     end
 
     def parsear_tiempo(datetime)
       return nil unless datetime.present?
+
       DateTime.parse(datetime)
     rescue ArgumentError
-      raise FechaInvalidaError.new(datetime)
+      raise FechaInvalidaError, datetime
     end
 
     def parsear_fecha(date)
       return nil unless date.present?
+
       Date.parse(date)
     rescue ArgumentError
-      raise FechaInvalidaError.new(date)
+      raise FechaInvalidaError, date
     end
 
     def show_percentage(value)

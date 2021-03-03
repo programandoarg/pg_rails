@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module PgRails
   module PostgresHelper
     # Le pone la timezone

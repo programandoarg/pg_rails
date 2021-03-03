@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # generado con pg_rails
 
 class CategoriaDeCosaDecorator < PgRails::BaseDecorator
@@ -11,5 +13,4 @@ class CategoriaDeCosaDecorator < PgRails::BaseDecorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
-
 end

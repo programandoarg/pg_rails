@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # # frozen_string_literal: true
 
 if Rails.env.development?
@@ -11,7 +13,7 @@ if Rails.env.development?
     'classified_sort' => 'true',
     'with_comment' => 'true',
 
-    'models' => 'true',
+    'models' => 'true'
   )
 
   # Annotate models

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'generators/rspec/scaffold/scaffold_generator'
 
 module PgRspec
@@ -8,13 +10,16 @@ module PgRspec
       # para poder copiar sólo los que quiero cambiar
       source_paths << File.expand_path('templates', __dir__)
 
-      class_option :paranoia, type: :boolean, default: false, desc: "Paranoid y deleted_at."
-      class_option :trackeo_de_usuarios, type: :boolean, default: true, desc: "Genera campos creado_por y actualizado_por."
+      class_option :paranoia, type: :boolean, default: false, desc: 'Paranoid y deleted_at.'
+      class_option :trackeo_de_usuarios, type: :boolean, default: true,
+                                         desc: 'Genera campos creado_por y actualizado_por.'
 
-      class_option :controller_specs, type: :boolean, default: true, desc: "Generate controller specs"
-      class_option :request_specs,    type: :boolean, default: false,  desc: "Generate request specs"
+      class_option :controller_specs, type: :boolean, default: true,
+                                      desc: 'Generate controller specs'
+      class_option :request_specs,    type: :boolean, default: false,
+                                      desc: 'Generate request specs'
 
-      remove_hook_for :integration_tool, :as => :integration
+      remove_hook_for :integration_tool, as: :integration
       remove_hook_for :fixture_replacement
 
       def generate_routing_spec
@@ -29,7 +34,8 @@ module PgRspec
 
         def merge_referencias
           return unless referencias_requeridas.present?
-          asd = referencias_requeridas.map { |r| "#{r.name}_id: #{r.name}.id"}
+
+          asd = referencias_requeridas.map { |r| "#{r.name}_id: #{r.name}.id" }
           ".merge(#{asd.join(', ')})"
         end
     end

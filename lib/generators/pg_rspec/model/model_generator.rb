@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'generators/rspec/model/model_generator'
 
 module PgRspec

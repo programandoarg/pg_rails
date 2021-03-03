@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: categoria_de_cosas
@@ -29,6 +31,6 @@ FactoryBot.define do
     nombre { Faker::Lorem.sentence }
     tipo { CategoriaDeCosa.tipo.values.sample }
     fecha { Faker::Date.backward }
-    tiempo { "2020-03-14 18:47:19" }
+    tiempo { '2020-03-14 18:47:19' }
   end
 end

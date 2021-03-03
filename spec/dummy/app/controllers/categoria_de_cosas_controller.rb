@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # generado con pg_rails
 
 class CategoriaDeCosasController < ApplicationController
@@ -10,7 +12,7 @@ class CategoriaDeCosasController < ApplicationController
   add_breadcrumb CategoriaDeCosa.nombre_plural, :categoria_de_cosas_path
 
   def index
-    @categoria_de_cosas = filtros_y_policy [:nombre, :tipo, :fecha, :tiempo]
+    @categoria_de_cosas = filtros_y_policy %i[nombre tipo fecha tiempo]
 
     respond_to do |format|
       format.json { render json: @categoria_de_cosas }
@@ -18,7 +20,8 @@ class CategoriaDeCosasController < ApplicationController
       format.html { render_smart_listing }
       format.xlsx do
         render xlsx: 'download',
-          filename: "#{CategoriaDeCosa.nombre_plural.gsub(' ','-').downcase}-#{Date.today}.xlsx"
+               filename: "#{CategoriaDeCosa.nombre_plural.gsub(' ',
+                                                               '-').downcase}-#{Date.today}.xlsx"
       end
     end
   end
@@ -33,7 +36,7 @@ class CategoriaDeCosasController < ApplicationController
   end
 
   def new
-    add_breadcrumb "Crear #{ CategoriaDeCosa.nombre_singular.downcase }"
+    add_breadcrumb "Crear #{CategoriaDeCosa.nombre_singular.downcase}"
   end
 
   def edit
@@ -43,7 +46,9 @@ class CategoriaDeCosasController < ApplicationController
   def create
     respond_to do |format|
       if @categoria_de_cosa.save
-        format.html { redirect_to @categoria_de_cosa, notice: "#{ CategoriaDeCosa.nombre_singular } creadx." }
+        format.html do
+          redirect_to @categoria_de_cosa, notice: "#{CategoriaDeCosa.nombre_singular} creadx."
+        end
         format.json { render json: @categoria_de_cosa.decorate }
       else
         format.html { render :new }
@@ -55,7 +60,9 @@ class CategoriaDeCosasController < ApplicationController
   def update
     respond_to do |format|
       if @categoria_de_cosa.save
-        format.html { redirect_to @categoria_de_cosa, notice: "#{ CategoriaDeCosa.nombre_singular } actualizadx." }
+        format.html do
+          redirect_to @categoria_de_cosa, notice: "#{CategoriaDeCosa.nombre_singular} actualizadx."
+        end
         format.json { render json: @categoria_de_cosa.decorate }
       else
         format.html { render :edit }
@@ -72,33 +79,28 @@ class CategoriaDeCosasController < ApplicationController
 
     def render_smart_listing
       smart_listing(:categoria_de_cosas, @categoria_de_cosas, 'categoria_de_cosas/listing',
-        sort_attributes: [
-          [:nombre, "nombre"],
-          [:tipo, "tipo"],
-          [:fecha, "fecha"],
-          [:tiempo, "tiempo"],
-        ]
-      )
+                    sort_attributes: [
+                      [:nombre, 'nombre'],
+                      [:tipo, 'tipo'],
+                      [:fecha, 'fecha'],
+                      [:tiempo, 'tiempo']
+                    ])
     end
 
     def set_categoria_de_cosa
-      if action_name.in? %w(new create)
+      if action_name.in? %w[new create]
         @categoria_de_cosa = @clase_modelo.new(categoria_de_cosa_params)
       else
         @categoria_de_cosa = @clase_modelo.find(params[:id])
 
-        if action_name.in? %w(update)
-          @categoria_de_cosa.assign_attributes(categoria_de_cosa_params)
-        end
+        @categoria_de_cosa.assign_attributes(categoria_de_cosa_params) if action_name.in? %w[update]
       end
 
       @categoria_de_cosa.current_user = current_user
 
       authorize @categoria_de_cosa
 
-      if action_name.in? %w(show new edit)
-        @categoria_de_cosa = @categoria_de_cosa.decorate
-      end
+      @categoria_de_cosa = @categoria_de_cosa.decorate if action_name.in? %w[show new edit]
     end
 
     def categoria_de_cosa_params
@@ -110,6 +112,6 @@ class CategoriaDeCosasController < ApplicationController
     end
 
     def atributos_permitidos
-      [:nombre, :tipo, :fecha, :tiempo]
+      %i[nombre tipo fecha tiempo]
     end
 end

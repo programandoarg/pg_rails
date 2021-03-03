@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # generado con pg_rails
 
 require 'rails_helper'
@@ -26,24 +28,23 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe CosasController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Cosa. As you add validations to Cosa, be sure to
   # adjust the attributes here as well.
 
   let(:categoria_de_cosa) { create :categoria_de_cosa }
 
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     attributes_for(:cosa).merge(categoria_de_cosa_id: categoria_de_cosa.id)
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     {
       nombre: nil,
       tipo: nil,
-      categoria_de_cosa: nil,
+      categoria_de_cosa: nil
     }
-  }
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -51,106 +52,105 @@ RSpec.describe CosasController, type: :controller do
   let(:valid_session) { {} }
 
   let(:user) { create :user, :admin }
+
   before do
     sign_in user
   end
 
-
-  describe "GET #index" do
-    it "returns a success response" do
+  describe 'GET #index' do
+    it 'returns a success response' do
       create(:cosa)
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
     end
   end
 
-  describe "GET #show" do
-    it "returns a success response" do
+  describe 'GET #show' do
+    it 'returns a success response' do
       cosa = create(:cosa)
-      get :show, params: {id: cosa.to_param}, session: valid_session
+      get :show, params: { id: cosa.to_param }, session: valid_session
       expect(response).to be_successful
     end
   end
 
-  describe "GET #new" do
-    it "returns a success response" do
+  describe 'GET #new' do
+    it 'returns a success response' do
       get :new, params: {}, session: valid_session
       expect(response).to be_successful
     end
   end
 
-  describe "GET #edit" do
-    it "returns a success response" do
+  describe 'GET #edit' do
+    it 'returns a success response' do
       cosa = create(:cosa)
-      get :edit, params: {id: cosa.to_param}, session: valid_session
+      get :edit, params: { id: cosa.to_param }, session: valid_session
       expect(response).to be_successful
     end
   end
 
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new Cosa" do
-        expect {
-          post :create, params: {cosa: valid_attributes}, session: valid_session
-        }.to change(Cosa, :count).by(1)
+  describe 'POST #create' do
+    context 'with valid params' do
+      it 'creates a new Cosa' do
+        expect do
+          post :create, params: { cosa: valid_attributes }, session: valid_session
+        end.to change(Cosa, :count).by(1)
       end
 
-      it "redirects to the created cosa" do
-        post :create, params: {cosa: valid_attributes}, session: valid_session
+      it 'redirects to the created cosa' do
+        post :create, params: { cosa: valid_attributes }, session: valid_session
         expect(response).to redirect_to(Cosa.last)
       end
     end
 
-    context "with invalid params" do
+    context 'with invalid params' do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {cosa: invalid_attributes}, session: valid_session
+        post :create, params: { cosa: invalid_attributes }, session: valid_session
         expect(response).to be_successful
       end
     end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
+  describe 'PUT #update' do
+    context 'with valid params' do
+      let(:new_attributes) do
         attributes_for(:cosa)
-      }
+      end
 
-      it "updates the requested cosa" do
+      it 'updates the requested cosa' do
         cosa = create(:cosa)
-        put :update, params: {id: cosa.to_param, cosa: new_attributes}, session: valid_session
+        put :update, params: { id: cosa.to_param, cosa: new_attributes }, session: valid_session
         cosa.reload
         expect(cosa.nombre).to eq new_attributes[:nombre]
       end
 
-      it "redirects to the cosa" do
+      it 'redirects to the cosa' do
         cosa = create(:cosa)
-        put :update, params: {id: cosa.to_param, cosa: valid_attributes}, session: valid_session
+        put :update, params: { id: cosa.to_param, cosa: valid_attributes }, session: valid_session
         expect(response).to redirect_to(cosa)
       end
     end
 
-    context "with invalid params" do
+    context 'with invalid params' do
       it "returns a success response (i.e. to display the 'edit' template)" do
         cosa = create(:cosa)
-        put :update, params: {id: cosa.to_param, cosa: invalid_attributes}, session: valid_session
+        put :update, params: { id: cosa.to_param, cosa: invalid_attributes }, session: valid_session
         expect(response).to be_successful
       end
     end
   end
 
-  describe "DELETE #destroy" do
-    it "destroys the requested cosa" do
+  describe 'DELETE #destroy' do
+    it 'destroys the requested cosa' do
       cosa = create(:cosa)
-      expect {
-        delete :destroy, params: {id: cosa.to_param}, session: valid_session
-      }.to change(Cosa.without_deleted, :count).by(-1)
+      expect do
+        delete :destroy, params: { id: cosa.to_param }, session: valid_session
+      end.to change(Cosa.without_deleted, :count).by(-1)
     end
 
-    it "redirects to the cosas list" do
+    it 'redirects to the cosas list' do
       cosa = create(:cosa)
-      delete :destroy, params: {id: cosa.to_param}, session: valid_session
+      delete :destroy, params: { id: cosa.to_param }, session: valid_session
       expect(response).to redirect_to(cosas_url)
     end
   end
-
 end

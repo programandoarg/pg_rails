@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'generators/pundit/policy/policy_generator'
 
 class PgPunditGenerator < Pundit::Generators::PolicyGenerator

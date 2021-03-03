@@ -1,24 +1,32 @@
+# frozen_string_literal: true
+
 module PgRails
   module EditarEnLugarHelper
-    def editar_en_lugar(objeto, atributo, tipo = :input, _url = nil, collection = nil)
-      _url = pg_rails.editar_en_lugar_path(objeto) if _url.nil?
+    def editar_en_lugar(objeto, atributo, tipo = :input, url = nil, collection = nil)
+      url = pg_rails.editar_en_lugar_path(objeto) if url.nil?
       if tipo == :checkbox
-        best_in_place objeto, atributo, url: _url, as: tipo, collection: ["No", "Si"], param: objeto.model_name.name
+        best_in_place objeto, atributo, url: url, as: tipo, collection: %w[No Si],
+                                        param: objeto.model_name.name
       elsif tipo == :date
-        best_in_place objeto, atributo, url: _url, as: tipo, display_with: lambda { |v| dmy(v) }, param: objeto.model_name.name
-        # best_in_place objeto, atributo, url: editar_en_lugar_url(objeto), as: tipo, display_with: lambda { |v| dmy(v) }, class: 'datefield'
+        best_in_place objeto, atributo, url: url, as: tipo, display_with: lambda { |v|
+                                                                            dmy(v)
+                                                                          }, param: objeto.model_name.name
+        # best_in_place objeto, atributo, url: editar_en_lugarurl(objeto), as: tipo, display_with: lambda { |v| dmy(v) }, class: 'datefield'
       elsif tipo == :textarea
         funcion = lambda do |valor|
           return unless valor.present?
+
           valor.gsub!("\r\n", '<br>')
           valor.gsub!("\n", '<br>')
           valor.html_safe
         end
-        best_in_place objeto, atributo, url: _url, as: tipo, display_with: funcion, param: objeto.model_name.name
+        best_in_place objeto, atributo, url: url, as: tipo, display_with: funcion,
+                                        param: objeto.model_name.name
       elsif tipo == :select && collection.present?
-        best_in_place objeto, atributo, url: _url, as: tipo, collection: collection, param: objeto.model_name.name, value: objeto.send(atributo), inner_class: 'form-control'
+        best_in_place objeto, atributo, url: url, as: tipo, collection: collection,
+                                        param: objeto.model_name.name, value: objeto.send(atributo), inner_class: 'form-control'
       else
-        best_in_place objeto, atributo, url: _url, as: tipo, param: objeto.model_name.name
+        best_in_place objeto, atributo, url: url, as: tipo, param: objeto.model_name.name
       end
     end
 
@@ -31,16 +39,17 @@ module PgRails
       options[:param] = objeto.model_name.name
       options[:inner_class] = 'form-control' if options[:inner_class].nil?
       options[:class] = 'editar_en_lugar_v2'
-      # _url = pg_rails.editar_en_lugar_path(objeto) if _url.nil?
+      # url = pg_rails.editar_en_lugar_path(objeto) if url.nil?
       if tipo == :checkbox
-        options[:collection] = ["No", "Si"]
+        options[:collection] = %w[No Si]
 
       elsif tipo == :date
-        options[:display_with] = lambda { |v| dmy(v) } if options[:display_with].nil?
+        options[:display_with] = ->(v) { dmy(v) } if options[:display_with].nil?
 
       elsif tipo == :textarea
         funcion = lambda do |valor|
           return unless valor.present?
+
           valor.gsub!("\r\n", '<br>')
           valor.gsub!("\n", '<br>')
           valor.html_safe

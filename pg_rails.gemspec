@@ -1,29 +1,32 @@
-$:.push File.expand_path("lib", __dir__)
+# frozen_string_literal: true
+
+$LOAD_PATH.push File.expand_path('lib', __dir__)
 
 # Maintain your gem's version:
-require "pg_rails/version"
+require 'pg_rails/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
-  spec.name        = "pg_rails"
-  spec.version     = PgRails::VERSION
-  spec.authors     = ["Martín Rosso"]
-  spec.email       = ["mrosso10@gmail.com"]
-  spec.homepage    = ""
-  spec.summary     = ": Summary of PgRails."
-  spec.description = ": Description of PgRails."
-  spec.license     = "MIT"
+  spec.name                  = 'pg_rails'
+  spec.version               = PgRails::VERSION
+  spec.authors               = ['Martín Rosso']
+  spec.email                 = ['mrosso10@gmail.com']
+  spec.homepage              = ''
+  spec.summary               = ': Summary of PgRails.'
+  spec.description           = ': Description of PgRails.'
+  spec.license               = 'MIT'
+  spec.required_ruby_version = '>= 2.7.2'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
   else
-    raise "RubyGems 2.0 or newer is required to protect against " \
-      "public gem pushes."
+    raise 'RubyGems 2.0 or newer is required to protect against ' \
+      'public gem pushes.'
   end
 
-  spec.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  spec.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
   spec.add_dependency 'audited', '~> 4.7'
   # spec.add_dependency 'bootstrap', '~> 4.3.1'
@@ -49,15 +52,14 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'simple_form'
   spec.add_dependency 'slim-rails'
 
-
   spec.add_development_dependency 'annotate'
   spec.add_development_dependency 'byebug'
   spec.add_development_dependency 'database_cleaner'
   spec.add_development_dependency 'factory_bot_rails'
   spec.add_development_dependency 'faker'
   spec.add_development_dependency 'rspec-rails', '~> 4.0'
-  spec.add_development_dependency 'simplecov', '~> 0.17.1'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-rails'
   spec.add_development_dependency 'rubocop-rspec'
+  spec.add_development_dependency 'simplecov', '~> 0.17.1'
 end

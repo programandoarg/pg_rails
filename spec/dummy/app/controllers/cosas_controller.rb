@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # generado con pg_rails
 
 class CosasController < ApplicationController
@@ -10,7 +12,7 @@ class CosasController < ApplicationController
   add_breadcrumb Cosa.nombre_plural, :cosas_path
 
   def index
-    @cosas = filtros_y_policy [:nombre, :tipo, :categoria_de_cosa]
+    @cosas = filtros_y_policy %i[nombre tipo categoria_de_cosa]
 
     respond_to do |format|
       format.json { render json: @cosas }
@@ -18,7 +20,7 @@ class CosasController < ApplicationController
       format.html { render_smart_listing }
       format.xlsx do
         render xlsx: 'download',
-          filename: "#{Cosa.nombre_plural.gsub(' ','-').downcase}-#{Date.today}.xlsx"
+               filename: "#{Cosa.nombre_plural.gsub(' ', '-').downcase}-#{Date.today}.xlsx"
       end
     end
   end
@@ -33,7 +35,7 @@ class CosasController < ApplicationController
   end
 
   def new
-    add_breadcrumb "Crear #{ Cosa.nombre_singular.downcase }"
+    add_breadcrumb "Crear #{Cosa.nombre_singular.downcase}"
   end
 
   def edit
@@ -43,7 +45,7 @@ class CosasController < ApplicationController
   def create
     respond_to do |format|
       if @cosa.save
-        format.html { redirect_to @cosa, notice: "#{ Cosa.nombre_singular } creadx." }
+        format.html { redirect_to @cosa, notice: "#{Cosa.nombre_singular} creadx." }
         format.json { render json: @cosa.decorate }
       else
         format.html { render :new }
@@ -55,7 +57,7 @@ class CosasController < ApplicationController
   def update
     respond_to do |format|
       if @cosa.save
-        format.html { redirect_to @cosa, notice: "#{ Cosa.nombre_singular } actualizadx." }
+        format.html { redirect_to @cosa, notice: "#{Cosa.nombre_singular} actualizadx." }
         format.json { render json: @cosa.decorate }
       else
         format.html { render :edit }
@@ -72,32 +74,27 @@ class CosasController < ApplicationController
 
     def render_smart_listing
       smart_listing(:cosas, @cosas, 'cosas/listing',
-        sort_attributes: [
-          [:nombre, "nombre"],
-          [:tipo, "tipo"],
-          [:categoria_de_cosa, "categoria_de_cosa"],
-        ]
-      )
+                    sort_attributes: [
+                      [:nombre, 'nombre'],
+                      [:tipo, 'tipo'],
+                      [:categoria_de_cosa, 'categoria_de_cosa']
+                    ])
     end
 
     def set_cosa
-      if action_name.in? %w(new create)
+      if action_name.in? %w[new create]
         @cosa = @clase_modelo.new(cosa_params)
       else
         @cosa = @clase_modelo.find(params[:id])
 
-        if action_name.in? %w(update)
-          @cosa.assign_attributes(cosa_params)
-        end
+        @cosa.assign_attributes(cosa_params) if action_name.in? %w[update]
       end
 
       @cosa.current_user = current_user
 
       authorize @cosa
 
-      if action_name.in? %w(show new edit)
-        @cosa = @cosa.decorate
-      end
+      @cosa = @cosa.decorate if action_name.in? %w[show new edit]
     end
 
     def cosa_params
@@ -109,6 +106,6 @@ class CosasController < ApplicationController
     end
 
     def atributos_permitidos
-      [:nombre, :tipo, :categoria_de_cosa_id]
+      %i[nombre tipo categoria_de_cosa_id]
     end
 end

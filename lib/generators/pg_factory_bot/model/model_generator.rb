@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # este generator tiene que llamarse ModelGenerator para que funcione el hook_to
 # del ModelGenerator de rails
 
@@ -6,21 +8,23 @@ require 'generators/factory_bot/model/model_generator'
 module PgFactoryBot
   module Generators
     class ModelGenerator < FactoryBot::Generators::ModelGenerator
-
       # piso el método de FactoryBot::Generators::Base con el método original
       # de Rails::Generators::Base
+
+      # rubocop:disable Naming/MemoizedInstanceVariableName
       def self.source_root(path = nil)
         @_source_root = path if path
         @_source_root ||= default_source_root
       end
+      # rubocop:enable Naming/MemoizedInstanceVariableName
 
       source_root File.expand_path('templates', __dir__)
 
       class_option(
         :dir,
         type: :string,
-        default: "spec/factories",
-        desc: "The directory or file root where factories belong",
+        default: 'spec/factories',
+        desc: 'The directory or file root where factories belong'
       )
 
       # este método es igual al de FactoryBot::Generators::Base
@@ -71,13 +75,11 @@ module PgFactoryBot
           if attribute.es_enum?
             "#{nombre_clase_completo}.#{attribute.name}.values.sample"
           elsif attribute.type == :string
-            "Faker::Lorem.sentence"
+            'Faker::Lorem.sentence'
           elsif attribute.type == :date
-            "Faker::Date.backward"
+            'Faker::Date.backward'
           elsif attribute.type == :float || attribute.type == :decimal
-            "Faker::Number.decimal(l_digits: 3, r_digits: 2)"
-          elsif attribute.es_enum?
-            "#{nombre_clase_completo}.#{attribute.name}.values.sample"
+            'Faker::Number.decimal(l_digits: 3, r_digits: 2)'
           else
             attribute.default.inspect
           end

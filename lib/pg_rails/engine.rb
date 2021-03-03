@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 unless Rails.env.production?
   require 'byebug'
   require 'factory_bot_rails'
 end
 
 # require 'font-awesome-rails'
-require "nested_form"
+require 'nested_form'
 require 'audited'
 require 'best_in_place'
 # require 'bootstrap'
@@ -33,7 +35,7 @@ module PgRails
     config.i18n.default_locale = :es
     config.time_zone = 'America/Argentina/Buenos_Aires'
 
-    initializer 'configurar_generators', after: "factory_bot.set_fixture_replacement" do
+    initializer 'configurar_generators', after: 'factory_bot.set_fixture_replacement' do
       unless Rails.env.production?
         require 'pg_rails/monkey_patches/mejoras_de_atributos'
         require 'pg_rails/monkey_patches/mejoras_a_named_base'

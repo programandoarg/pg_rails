@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -11,9 +13,7 @@
 FactoryBot.define do
   factory :user, class: 'User' do
     email { Faker::Internet.email }
-
-    trait :admin do
-      
-    end
   end
+
+  trait :admin # Dummy trait
 end

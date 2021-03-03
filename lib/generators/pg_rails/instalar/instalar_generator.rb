@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PgRails
   class InstalarGenerator < Rails::Generators::Base
     source_root File.expand_path('templates', __dir__)
@@ -9,8 +11,7 @@ module PgRails
     private
 
       def clase_aplicacion
-        byebug
-        "cosa"
+        'cosa'
       end
   end
 end

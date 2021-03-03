@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 wb = xlsx_package.workbook
 wb.add_worksheet(name: 'Categoria de cosa') do |sheet|
   sheet.add_row [
     @clase_modelo.human_attribute_name(:nombre),
     @clase_modelo.human_attribute_name(:tipo),
     @clase_modelo.human_attribute_name(:fecha),
-    @clase_modelo.human_attribute_name(:tiempo),
+    @clase_modelo.human_attribute_name(:tiempo)
   ]
 
   @categoria_de_cosas.each do |categoria_de_cosa|
@@ -12,7 +14,7 @@ wb.add_worksheet(name: 'Categoria de cosa') do |sheet|
       categoria_de_cosa.nombre,
       categoria_de_cosa.tipo,
       categoria_de_cosa.fecha,
-      categoria_de_cosa.tiempo,
+      categoria_de_cosa.tiempo
     ]
   end
 end

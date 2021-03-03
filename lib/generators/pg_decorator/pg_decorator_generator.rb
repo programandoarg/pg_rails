@@ -1,4 +1,6 @@
-require "generators/rails/decorator_generator"
+# frozen_string_literal: true
+
+require 'generators/rails/decorator_generator'
 
 class PgDecoratorGenerator < Rails::Generators::DecoratorGenerator
   source_root File.expand_path('templates', __dir__)
@@ -7,7 +9,7 @@ class PgDecoratorGenerator < Rails::Generators::DecoratorGenerator
 
   private
 
-  def parent_class_name
-    "PgRails::BaseDecorator"
-  end
+    def parent_class_name
+      'PgRails::BaseDecorator'
+    end
 end
