@@ -1,18 +1,14 @@
-# PgRails
-Short description and motivation.
-
 [![CircleCI](https://circleci.com/gh/programandoarg/pg_rails.svg?style=shield)](https://circleci.com/gh/programandoarg/pg_rails)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2a3081a26ca2ab9feac6/maintainability)](https://codeclimate.com/github/programandoarg/pg_rails/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2a3081a26ca2ab9feac6/test_coverage)](https://codeclimate.com/github/programandoarg/pg_rails/test_coverage)
-
-## Usage
-How to use my plugin.
+# PgRails
+Plugin de Programando para Rails
 
 ## Installation
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'pg_rails'
+gem 'pg_rails', git: 'https://github.com/programandoarg/pg_rails.git', ref: '<commit hash>'
 ```
 
 And then execute:
@@ -20,17 +16,33 @@ And then execute:
 $ bundle
 ```
 
-Or install it yourself as:
-```bash
-$ gem install pg_rails
+## Contributing
+
+### Setup
+
+1. Ingresar a la consola de postgres:
+```
+sudo -u postgres psql template1
+```
+2. Crear el rol
+```
+create role pgrails password 'pgrails' login superuser;
 ```
 
-## Contributing
-Contribution directions go here.
+3. Ejecutar el script `bin/setup`. This script will:
 
-## License
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+* Check you have the required Ruby version
+* Install dependencies using Bundler
+* Create a `.env.development` file
+* Create, migrate, and seed the database
 
+### Testear y ejecutar
 
-rails g pg_scaffold CategoriaDeCosa nombre:string{required} "tipo:integer{enum,required}" fecha:date tiempo:datetime --paranoia
-rails g pg_scaffold Cosa nombre:string{required} "tipo:integer{enum,required}" categoria_de_cosa:references{required} --paranoia
+1. Instalar overcommit: `gem install overcommit`
+2. Correr los linters con `overcommit -r`
+3. Correr los tests con `bundle exec rspec`
+4. Instalar foreman: `gem install foreman`
+5. `cd spec/dummy`
+6. `foreman start`
+
+Acceder a la app en <http://localhost:3000/>.
