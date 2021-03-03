@@ -39,7 +39,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'paranoia'
   spec.add_dependency 'pg'
   spec.add_dependency 'pundit'
-  spec.add_dependency 'rails', '~> 6.0'
+  spec.add_dependency 'rails', '~> 6.1'
   spec.add_dependency 'rails-assets-chosen'
   spec.add_dependency 'rails-i18n'
   spec.add_dependency 'rainbow'
@@ -55,6 +55,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'database_cleaner'
   spec.add_development_dependency 'factory_bot_rails'
   spec.add_development_dependency 'faker'
-  spec.add_development_dependency 'rspec-rails', '~> 3.8'
+  spec.add_development_dependency 'rspec-rails', '~> 4.0'
   spec.add_development_dependency 'simplecov', '~> 0.17.1'
 end
