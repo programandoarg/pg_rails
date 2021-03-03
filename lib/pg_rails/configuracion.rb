@@ -16,6 +16,7 @@ module PgRails
       @sistema_iconos = 'fa'
       @clase_botones_chicos = 'btn-sm'
       @boton_destroy = 'danger'
+      @boton_export = 'warning'
       @boton_edit = 'info'
       @boton_show = 'primary'
       @boton_light = 'light'
