@@ -29,7 +29,7 @@ class <%= class_name %> < <%= parent_class_name.classify %>
   <%- if attributes.any?(&:es_enum?) -%>
 
     <%- attributes.select(&:es_enum?).each do |attribute| -%>
-  enumerize :<%= attribute.name %>, in: { completar: 0, los: 1, valores: 2}
+  enumerize :<%= attribute.name %>, in: { completar: 0, los: 1, valores: 2 }
     <%- end -%>
   <%- end -%>
   <%- if attributes.any?(&:required?) -%>
