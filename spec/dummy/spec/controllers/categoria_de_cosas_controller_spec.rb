@@ -31,7 +31,6 @@ RSpec.describe CategoriaDeCosasController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # CategoriaDeCosa. As you add validations to CategoriaDeCosa, be sure to
   # adjust the attributes here as well.
-
   let(:valid_attributes) do
     attributes_for(:categoria_de_cosa)
   end
@@ -115,25 +114,22 @@ RSpec.describe CategoriaDeCosasController, type: :controller do
 
       it 'updates the requested categoria_de_cosa' do
         categoria_de_cosa = create(:categoria_de_cosa)
-        put :update, params: { id: categoria_de_cosa.to_param, categoria_de_cosa: new_attributes },
-                     session: valid_session
+        put :update, params: { id: categoria_de_cosa.to_param, categoria_de_cosa: new_attributes }, session: valid_session
         categoria_de_cosa.reload
         expect(categoria_de_cosa.nombre).to eq new_attributes[:nombre]
       end
 
       it 'redirects to the categoria_de_cosa' do
         categoria_de_cosa = create(:categoria_de_cosa)
-        put :update,
-            params: { id: categoria_de_cosa.to_param, categoria_de_cosa: valid_attributes }, session: valid_session
+        put :update, params: { id: categoria_de_cosa.to_param, categoria_de_cosa: valid_attributes }, session: valid_session
         expect(response).to redirect_to(categoria_de_cosa)
       end
     end
 
     context 'with invalid params' do
-      it "returns a success response (i.e. to display the 'edit' template)" do
+      it 'returns a success response (i.e. to display the "edit" template)' do
         categoria_de_cosa = create(:categoria_de_cosa)
-        put :update,
-            params: { id: categoria_de_cosa.to_param, categoria_de_cosa: invalid_attributes }, session: valid_session
+        put :update, params: { id: categoria_de_cosa.to_param, categoria_de_cosa: invalid_attributes }, session: valid_session
         expect(response).to be_successful
       end
     end
@@ -144,7 +140,7 @@ RSpec.describe CategoriaDeCosasController, type: :controller do
       categoria_de_cosa = create(:categoria_de_cosa)
       expect do
         delete :destroy, params: { id: categoria_de_cosa.to_param }, session: valid_session
-      end.to change(CategoriaDeCosa.without_deleted, :count).by(-1)
+      end.to change(CategoriaDeCosa.kept, :count).by(-1)
     end
 
     it 'redirects to the categoria_de_cosas list' do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_16_155535) do
+ActiveRecord::Schema.define(version: 2021_03_03_230446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,9 +45,9 @@ ActiveRecord::Schema.define(version: 2020_03_16_155535) do
     t.datetime "tiempo"
     t.bigint "creado_por_id"
     t.bigint "actualizado_por_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["actualizado_por_id"], name: "index_categoria_de_cosas_on_actualizado_por_id"
     t.index ["creado_por_id"], name: "index_categoria_de_cosas_on_creado_por_id"
   end
@@ -58,9 +58,9 @@ ActiveRecord::Schema.define(version: 2020_03_16_155535) do
     t.bigint "categoria_de_cosa_id", null: false
     t.bigint "creado_por_id"
     t.bigint "actualizado_por_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["actualizado_por_id"], name: "index_cosas_on_actualizado_por_id"
     t.index ["categoria_de_cosa_id"], name: "index_cosas_on_categoria_de_cosa_id"
     t.index ["creado_por_id"], name: "index_cosas_on_creado_por_id"

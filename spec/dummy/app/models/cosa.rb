@@ -5,7 +5,7 @@
 # Table name: cosas
 #
 #  id                   :bigint           not null, primary key
-#  deleted_at           :datetime
+#  discarded_at         :datetime
 #  nombre               :string           not null
 #  tipo                 :integer          not null
 #  created_at           :datetime         not null
@@ -30,7 +30,7 @@
 
 class Cosa < ApplicationRecord
   audited
-  acts_as_paranoid without_default_scope: true
+  include Discard::Model
 
   belongs_to :categoria_de_cosa
 

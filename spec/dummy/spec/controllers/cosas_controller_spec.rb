@@ -28,12 +28,11 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe CosasController, type: :controller do
+  let(:categoria_de_cosa) { create :categoria_de_cosa }
+
   # This should return the minimal set of attributes required to create a valid
   # Cosa. As you add validations to Cosa, be sure to
   # adjust the attributes here as well.
-
-  let(:categoria_de_cosa) { create :categoria_de_cosa }
-
   let(:valid_attributes) do
     attributes_for(:cosa).merge(categoria_de_cosa_id: categoria_de_cosa.id)
   end
@@ -131,7 +130,7 @@ RSpec.describe CosasController, type: :controller do
     end
 
     context 'with invalid params' do
-      it "returns a success response (i.e. to display the 'edit' template)" do
+      it 'returns a success response (i.e. to display the "edit" template)' do
         cosa = create(:cosa)
         put :update, params: { id: cosa.to_param, cosa: invalid_attributes }, session: valid_session
         expect(response).to be_successful
@@ -144,7 +143,7 @@ RSpec.describe CosasController, type: :controller do
       cosa = create(:cosa)
       expect do
         delete :destroy, params: { id: cosa.to_param }, session: valid_session
-      end.to change(Cosa.without_deleted, :count).by(-1)
+      end.to change(Cosa.kept, :count).by(-1)
     end
 
     it 'redirects to the cosas list' do

@@ -14,15 +14,7 @@ class CosasController < ApplicationController
   def index
     @cosas = filtros_y_policy %i[nombre tipo categoria_de_cosa]
 
-    respond_to do |format|
-      format.json { render json: @cosas }
-      format.js { render_smart_listing }
-      format.html { render_smart_listing }
-      format.xlsx do
-        render xlsx: 'download',
-               filename: "#{Cosa.nombre_plural.gsub(' ', '-').downcase}-#{Date.today}.xlsx"
-      end
-    end
+    pg_respond_index(@cosas)
   end
 
   def show
@@ -43,31 +35,15 @@ class CosasController < ApplicationController
   end
 
   def create
-    respond_to do |format|
-      if @cosa.save
-        format.html { redirect_to @cosa, notice: "#{Cosa.nombre_singular} creadx." }
-        format.json { render json: @cosa.decorate }
-      else
-        format.html { render :new }
-        format.json { render json: @cosa.errors }
-      end
-    end
+    pg_respond_create(@cosa)
   end
 
   def update
-    respond_to do |format|
-      if @cosa.save
-        format.html { redirect_to @cosa, notice: "#{Cosa.nombre_singular} actualizadx." }
-        format.json { render json: @cosa.decorate }
-      else
-        format.html { render :edit }
-        format.json { render json: @cosa.errors }
-      end
-    end
+    pg_respond_update(@cosa)
   end
 
   def destroy
-    destroy_and_respond(@cosa, cosas_url)
+    pg_respond_destroy(@cosa, cosas_url)
   end
 
   private
