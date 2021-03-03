@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # generado con pg_rails
 
 <% if namespaced? -%>
@@ -15,7 +17,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   add_breadcrumb <%= class_name %>.nombre_plural, :<%= plural_table_name %>_path
 
   def index
-    @<%= plural_name %> = filtros_y_policy [<%= atributos_a_filtrar.map{|at| ":#{at.name}" }.join(', ') %>]
+    @<%= plural_name %> = filtros_y_policy %i[<%= atributos_a_filtrar.map(&:name).join(' ') %>]
 
     respond_to do |format|
       format.json { render json: @<%= plural_name %> }
@@ -23,7 +25,7 @@ class <%= controller_class_name %>Controller < ApplicationController
       format.html { render_smart_listing }
       format.xlsx do
         render xlsx: 'download',
-          filename: "#{<%= class_name %>.nombre_plural.gsub(' ','-').downcase}-#{Date.today}.xlsx"
+               filename: "#{<%= class_name %>.nombre_plural.gsub(' ', '-').downcase}-#{Date.today}.xlsx"
       end
     end
   end
@@ -38,7 +40,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def new
-    add_breadcrumb "Crear #{ <%= class_name %>.nombre_singular.downcase }"
+    add_breadcrumb "Crear #{<%= class_name %>.nombre_singular.downcase}"
   end
 
   def edit
@@ -48,7 +50,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   def create
     respond_to do |format|
       if @<%= orm_instance(singular_name).save %>
-        format.html { redirect_to @<%= singular_name %>, notice: "#{ <%= class_name %>.nombre_singular } creadx." }
+        format.html { redirect_to @<%= singular_name %>, notice: "#{<%= class_name %>.nombre_singular} creadx." }
         format.json { render json: @<%= singular_name %>.decorate }
       else
         format.html { render :new }
@@ -60,7 +62,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   def update
     respond_to do |format|
       if @<%= orm_instance(singular_name).save %>
-        format.html { redirect_to @<%= singular_name %>, notice: "#{ <%= class_name %>.nombre_singular } actualizadx." }
+        format.html { redirect_to @<%= singular_name %>, notice: "#{<%= class_name %>.nombre_singular} actualizadx." }
         format.json { render json: @<%= singular_name %>.decorate }
       else
         format.html { render :edit }
@@ -77,32 +79,29 @@ class <%= controller_class_name %>Controller < ApplicationController
 
     def render_smart_listing
       smart_listing(:<%= plural_name %>, @<%= plural_name %>, '<%= ruta_vistas %>/listing',
-        sort_attributes: [
-          <%- for attribute in attributes -%>
-          [:<%= attribute.name %>, "<%= attribute.name %>"],
-          <%- end -%>
-        ]
+                    sort_attributes: [
+                      <%- for attribute in attributes -%>
+                      [:<%= attribute.name %>, "<%= attribute.name %>"],
+                      <%- end -%>
+                    ]
       )
     end
 
     def set_<%= singular_name %>
-      if action_name.in? %w(new create)
+      if action_name.in? %w[new create]
         @<%= singular_name %> = @clase_modelo.new(<%= "#{singular_name}_params" %>)
       else
         @<%= singular_name %> = @clase_modelo.find(params[:id])
 
-        if action_name.in? %w(update)
-          @<%= singular_name %>.assign_attributes(<%= "#{singular_name}_params" %>)
-        end
+        
+        @<%= singular_name %>.assign_attributes(<%= "#{singular_name}_params" %>) if if action_name.in? %w(update)
       end
 
       @<%= singular_name %>.current_user = current_user
 
       authorize @<%= singular_name %>
 
-      if action_name.in? %w(show new edit)
-        @<%= singular_name %> = @<%= singular_name %>.decorate
-      end
+      @<%= singular_name %> = @<%= singular_name %>.decorate if action_name.in? %w(show new edit)
     end
 
     def <%= "#{singular_name}_params" %>
@@ -118,7 +117,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     end
 
     def atributos_permitidos
-      [<%= attributes_names.map { |name| ":#{name}" }.join(', ') %>]
+      %i[<%= attributes_names.join(' ') %>]
     end
 end
 <% end -%>

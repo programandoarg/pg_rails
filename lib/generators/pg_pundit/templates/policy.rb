@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # generado con pg_rails
 
 <% if namespaced? -%>

@@ -60,6 +60,7 @@ AllCops:
     - 'Guardfile'
     - 'config/routes.rb'
     - 'db/**/*'
+    - 'spec/dummy/db/**/*'
     - 'bin/**/*'
     - 'spec/dummy/bin/**/*'
     - 'vendor/**/*'
