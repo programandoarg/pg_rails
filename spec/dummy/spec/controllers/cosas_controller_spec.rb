@@ -57,10 +57,22 @@ RSpec.describe CosasController, type: :controller do
   end
 
   describe 'GET #index' do
+    subject { get :index, session: valid_session }
+
+    let!(:cosa) { create :cosa }
+
     it 'returns a success response' do
-      create(:cosa)
-      get :index, params: {}, session: valid_session
+      subject
       expect(response).to be_successful
+    end
+
+    context 'si está descartada' do
+      before { cosa.discard! }
+
+      it do
+        subject
+        expect(assigns(:cosas)).to be_empty
+      end
     end
   end
 
@@ -139,16 +151,23 @@ RSpec.describe CosasController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
+    subject do
+      delete :destroy, params: { id: cosa.to_param }, session: valid_session
+    end
+
+    let!(:cosa) { create :cosa }
+
     it 'destroys the requested cosa' do
-      cosa = create(:cosa)
-      expect do
-        delete :destroy, params: { id: cosa.to_param }, session: valid_session
-      end.to change(Cosa.kept, :count).by(-1)
+      expect { subject }.to change(Cosa.kept, :count).by(-1)
+    end
+
+    it 'setea el discarded_at' do
+      subject
+      expect(cosa.reload.discarded_at).to be_present
     end
 
     it 'redirects to the cosas list' do
-      cosa = create(:cosa)
-      delete :destroy, params: { id: cosa.to_param }, session: valid_session
+      subject
       expect(response).to redirect_to(cosas_url)
     end
   end
