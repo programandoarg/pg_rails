@@ -12,6 +12,9 @@ class <%= class_name %> < <%= parent_class_name.classify %>
   <%- if options[:paranoia] -%>
   acts_as_paranoid without_default_scope: true
   <%- end -%>
+  <%- if options[:discard] -%>
+  include Discard::Model
+  <%- end -%>
   <%- if attributes.any?(&:reference?) -%>
 
     <%- attributes.select(&:reference?).each do |attribute| -%>

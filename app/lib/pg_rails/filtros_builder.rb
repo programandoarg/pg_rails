@@ -193,7 +193,11 @@ module PgRails
       nombre_clase = asociacion.name.to_s.camelize if nombre_clase.nil?
       clase_asociacion = Object.const_get(nombre_clase)
       scope = Pundit.policy_scope!(controller.current_user, clase_asociacion)
+
+      # Filtro soft deleted, y sea con paranoia o con discard
       scope = scope.without_deleted if scope.respond_to?(:without_deleted)
+      scope = scope.kept if scope.respond_to?(:kept)
+
       map = scope.map { |o| [o.to_s, o.id] }
 
       unless @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:include_blank] == false

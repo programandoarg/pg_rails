@@ -21,6 +21,9 @@ class <%= migration_class_name %> < ActiveRecord::Migration[<%= ActiveRecord::Mi
 <% if options[:paranoia] %>
       t.datetime :deleted_at
 <% end -%>
+<% if options[:discard] %>
+      t.datetime :discarded_at
+<% end -%>
 <% if options[:timestamps] %>
       t.timestamps
 <% end -%>
