@@ -4,7 +4,6 @@
   .form-inputs
     = f.input :nombre
     = f.input :tipo
-    = f.asociacion_creable(:categoria_de_cosa, categoria_de_cosas_url, new_categoria_de_cosa_url, crear_asociado: false)
-
+    = f.asociacion_creable(:categoria_de_cosa, categoria_de_cosas_url, new_categoria_de_cosa_url, crear_asociado: true)
   .form-actions
     = f.button :submit

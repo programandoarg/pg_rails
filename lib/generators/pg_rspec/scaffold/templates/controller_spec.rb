@@ -207,7 +207,9 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% else -%>
         delete :destroy, params: { id: <%= file_name %>.to_param }, session: valid_session
 <% end -%>
-<% if options[:paranoia] -%>
+<% if options[:discard] -%>
+      end.to change(<%= class_name %>.kept, :count).by(-1)
+<% elsif options[:paranoia] -%>
       end.to change(<%= class_name %>.without_deleted, :count).by(-1)
 <% else -%>
       end.to change(<%= class_name %>, :count).by(-1)

@@ -103,7 +103,8 @@ module PgRails
       def destroy_model(model)
         @error_message = 'No se pudo eliminar el registro'
         begin
-          return true if model.destroy
+          destroy_method = model.respond_to?(:discard) ? :discard : :destroy
+          return true if model.send(destroy_method)
 
           @error_message = model.errors.full_messages.join(', ')
           false
@@ -149,7 +150,11 @@ module PgRails
           self, clase_modelo, campos
         )
         scope = policy_scope(clase_modelo)
+
+        # Filtro soft deleted, y sea con paranoia o con discard
         scope = scope.without_deleted if scope.respond_to?(:without_deleted)
+        scope = scope.kept if scope.respond_to?(:kept)
+
         @filtros.filtrar(scope)
       end
 

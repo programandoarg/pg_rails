@@ -57,10 +57,9 @@ class <%= controller_class_name %>Controller < ApplicationController
       smart_listing(:<%= plural_name %>, @<%= plural_name %>, '<%= ruta_vistas %>/listing',
                     sort_attributes: [
                       <%- for attribute in attributes -%>
-                      [:<%= attribute.name %>, "<%= attribute.name %>"],
+                      [:<%= attribute.name %>, '<%= attribute.name %>'],
                       <%- end -%>
-                    ]
-      )
+                    ])
     end
 
     def set_<%= singular_name %>
@@ -69,14 +68,14 @@ class <%= controller_class_name %>Controller < ApplicationController
       else
         @<%= singular_name %> = @clase_modelo.find(params[:id])
 
-        @<%= singular_name %>.assign_attributes(<%= "#{singular_name}_params" %>) if action_name.in? %w(update)
+        @<%= singular_name %>.assign_attributes(<%= "#{singular_name}_params" %>) if action_name.in? %w[update]
       end
 
       @<%= singular_name %>.current_user = current_user
 
       authorize @<%= singular_name %>
 
-      @<%= singular_name %> = @<%= singular_name %>.decorate if action_name.in? %w(show new edit)
+      @<%= singular_name %> = @<%= singular_name %>.decorate if action_name.in? %w[show new edit]
     end
 
     def <%= "#{singular_name}_params" %>

@@ -5,7 +5,7 @@
 # Table name: categoria_de_cosas
 #
 #  id                 :bigint           not null, primary key
-#  deleted_at         :datetime
+#  discarded_at       :datetime
 #  fecha              :date
 #  nombre             :string           not null
 #  tiempo             :datetime
@@ -25,10 +25,11 @@
 #  fk_rails_...  (actualizado_por_id => users.id)
 #  fk_rails_...  (creado_por_id => users.id)
 #
+# generado con pg_rails
 
 class CategoriaDeCosa < ApplicationRecord
   audited
-  acts_as_paranoid without_default_scope: true
+  include Discard::Model
 
   belongs_to :creado_por, optional: true, class_name: 'User'
   belongs_to :actualizado_por, optional: true, class_name: 'User'

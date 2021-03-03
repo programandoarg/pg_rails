@@ -33,3 +33,8 @@
         th = t(:deleted_at)
         td = dmy_time @<%= singular_name %>.deleted_at
 <%- end -%>
+<%- if options[:discard] -%>
+      tr
+        th = t(:discarded_at)
+        td = dmy_time @<%= singular_name %>.discarded_at
+<%- end -%>

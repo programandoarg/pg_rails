@@ -5,7 +5,7 @@
 # Table name: categoria_de_cosas
 #
 #  id                 :bigint           not null, primary key
-#  deleted_at         :datetime
+#  discarded_at       :datetime
 #  fecha              :date
 #  nombre             :string           not null
 #  tiempo             :datetime
@@ -31,6 +31,6 @@ FactoryBot.define do
     nombre { Faker::Lorem.sentence }
     tipo { CategoriaDeCosa.tipo.values.sample }
     fecha { Faker::Date.backward }
-    tiempo { '2020-03-14 18:47:19' }
+    tiempo { '2021-03-03 20:04:36' }
   end
 end

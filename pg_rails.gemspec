@@ -39,7 +39,6 @@ Gem::Specification.new do |spec|
   # spec.add_dependency 'font-awesome-rails'
   spec.add_dependency 'jquery-rails'
   spec.add_dependency 'nested_form'
-  spec.add_dependency 'paranoia'
   spec.add_dependency 'pg'
   spec.add_dependency 'pundit'
   spec.add_dependency 'rails', '~> 6.1'

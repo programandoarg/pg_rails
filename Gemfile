@@ -21,10 +21,15 @@ end
 
 gem "best_in_place", git: "https://github.com/bernat/best_in_place"
 
+gem 'paranoia'
+gem 'discard'
+
 group :development, :test do
   gem 'fuubar'
   gem 'spring'
   gem 'spring-commands-rspec'
+
+  gem 'rails-controller-testing'
 
   gem "brakeman", require: false
   gem "bundler-audit", require: false

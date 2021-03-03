@@ -14,16 +14,7 @@ class CategoriaDeCosasController < ApplicationController
   def index
     @categoria_de_cosas = filtros_y_policy %i[nombre tipo fecha tiempo]
 
-    respond_to do |format|
-      format.json { render json: @categoria_de_cosas }
-      format.js { render_smart_listing }
-      format.html { render_smart_listing }
-      format.xlsx do
-        render xlsx: 'download',
-               filename: "#{CategoriaDeCosa.nombre_plural.gsub(' ',
-                                                               '-').downcase}-#{Date.today}.xlsx"
-      end
-    end
+    pg_respond_index(@categoria_de_cosas)
   end
 
   def show
@@ -44,35 +35,15 @@ class CategoriaDeCosasController < ApplicationController
   end
 
   def create
-    respond_to do |format|
-      if @categoria_de_cosa.save
-        format.html do
-          redirect_to @categoria_de_cosa, notice: "#{CategoriaDeCosa.nombre_singular} creadx."
-        end
-        format.json { render json: @categoria_de_cosa.decorate }
-      else
-        format.html { render :new }
-        format.json { render json: @categoria_de_cosa.errors }
-      end
-    end
+    pg_respond_create(@categoria_de_cosa)
   end
 
   def update
-    respond_to do |format|
-      if @categoria_de_cosa.save
-        format.html do
-          redirect_to @categoria_de_cosa, notice: "#{CategoriaDeCosa.nombre_singular} actualizadx."
-        end
-        format.json { render json: @categoria_de_cosa.decorate }
-      else
-        format.html { render :edit }
-        format.json { render json: @categoria_de_cosa.errors }
-      end
-    end
+    pg_respond_update(@categoria_de_cosa)
   end
 
   def destroy
-    destroy_and_respond(@categoria_de_cosa, categoria_de_cosas_url)
+    pg_respond_destroy(@categoria_de_cosa, categoria_de_cosas_url)
   end
 
   private
