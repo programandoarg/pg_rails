@@ -19,15 +19,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   def index
     @<%= plural_name %> = filtros_y_policy %i[<%= atributos_a_filtrar.map(&:name).join(' ') %>]
 
-    respond_to do |format|
-      format.json { render json: @<%= plural_name %> }
-      format.js { render_smart_listing }
-      format.html { render_smart_listing }
-      format.xlsx do
-        render xlsx: 'download',
-               filename: "#{<%= class_name %>.nombre_plural.gsub(' ', '-').downcase}-#{Date.today}.xlsx"
-      end
-    end
+    pg_respond_index(@<%= plural_name %>)
   end
 
   def show
@@ -48,31 +40,15 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def create
-    respond_to do |format|
-      if @<%= orm_instance(singular_name).save %>
-        format.html { redirect_to @<%= singular_name %>, notice: "#{<%= class_name %>.nombre_singular} creadx." }
-        format.json { render json: @<%= singular_name %>.decorate }
-      else
-        format.html { render :new }
-        format.json { render json: @<%= singular_name %>.errors.full_messages }
-      end
-    end
+    pg_respond_create(@<%= singular_name %>)
   end
 
   def update
-    respond_to do |format|
-      if @<%= orm_instance(singular_name).save %>
-        format.html { redirect_to @<%= singular_name %>, notice: "#{<%= class_name %>.nombre_singular} actualizadx." }
-        format.json { render json: @<%= singular_name %>.decorate }
-      else
-        format.html { render :edit }
-        format.json { render json: @<%= singular_name %>.errors }
-      end
-    end
+    pg_respond_update(@<%= singular_name %>)
   end
 
   def destroy
-    destroy_and_respond(@<%= singular_name %>, <%= index_helper %>_url)
+    pg_respond_destroy(@<%= singular_name %>, <%= index_helper %>_url)
   end
 
   private
@@ -94,7 +70,7 @@ class <%= controller_class_name %>Controller < ApplicationController
         @<%= singular_name %> = @clase_modelo.find(params[:id])
 
         
-        @<%= singular_name %>.assign_attributes(<%= "#{singular_name}_params" %>) if if action_name.in? %w(update)
+        @<%= singular_name %>.assign_attributes(<%= "#{singular_name}_params" %>) if action_name.in? %w(update)
       end
 
       @<%= singular_name %>.current_user = current_user
