@@ -69,7 +69,6 @@ class <%= controller_class_name %>Controller < ApplicationController
       else
         @<%= singular_name %> = @clase_modelo.find(params[:id])
 
-        
         @<%= singular_name %>.assign_attributes(<%= "#{singular_name}_params" %>) if action_name.in? %w(update)
       end
 
