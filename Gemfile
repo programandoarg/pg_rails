@@ -29,6 +29,8 @@ group :development, :test do
   gem 'spring'
   gem 'spring-commands-rspec'
 
+  gem 'rails-controller-testing'
+
   gem "brakeman", require: false
   gem "bundler-audit", require: false
 end

@@ -15,6 +15,14 @@ And then execute:
 ```bash
 $ bundle
 ```
+## Uso
+
+### Asociación creable
+
+```
+= pg_form_for(@cosa) do |f|
+  = f.asociacion_creable(:categoria_de_cosa, categoria_de_cosas_url, new_categoria_de_cosa_url, crear_asociado: true)
+```
 
 ## Contributing
 
@@ -46,3 +54,12 @@ create role pgrails password 'pgrails' login superuser;
 6. `foreman start`
 
 Acceder a la app en <http://localhost:3000/>.
+
+### Regenerar modelos dummy
+
+1. `bundle exec rails destroy Cosa`
+2. `bundle exec rails destroy CategoriaDeCosa`
+3. Borrar policies
+4. `rails g pg_scaffold CategoriaDeCosa nombre:string{required} "tipo:integer{enum,required}" fecha:date tiempo:datetime --discard`
+5. `rails g pg_scaffold Cosa nombre:string{required} "tipo:integer{enum,required}" categoria_de_cosa:references{required} --discard`
+6. Setup asociacion creable en cosas/_form

@@ -246,6 +246,10 @@ GEM
     rails-assets-jquery (3.4.1)
     rails-assets-jquery-validation (1.18.0)
       rails-assets-jquery (>= 1.7.2)
+    rails-controller-testing (1.0.5)
+      actionpack (>= 5.0.1.rc1)
+      actionview (>= 5.0.1.rc1)
+      activesupport (>= 5.0.1.rc1)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -377,6 +381,7 @@ DEPENDENCIES
   paranoia
   pg_rails!
   rails-assets-jquery-validation!
+  rails-controller-testing
   rspec-rails (~> 4.0)
   rubocop
   rubocop-rails
