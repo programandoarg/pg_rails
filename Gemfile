@@ -25,4 +25,7 @@ group :development, :test do
   gem 'fuubar'
   gem 'spring'
   gem 'spring-commands-rspec'
+
+  gem "brakeman", require: false
+  gem "bundler-audit", require: false
 end
