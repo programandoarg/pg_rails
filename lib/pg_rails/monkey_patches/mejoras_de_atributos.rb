@@ -102,7 +102,10 @@ module Rails
               options[:null] = false
             end
 
-            options[:foreign_key] = true if reference? && !polymorphic? && !tiene_nombre_de_clase_explicito?
+            if reference? && !polymorphic? && !tiene_nombre_de_clase_explicito?
+              options[:foreign_key] =
+                true
+            end
             # options.delete(:modulo)
             # options.delete(:tabla)
             options.delete(:clase)

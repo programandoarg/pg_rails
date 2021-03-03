@@ -64,7 +64,7 @@ module PgRails
       helpers.content_tag :span, rel: :tooltip, title: 'Exportar' do
         helpers.content_tag :button,
                             class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_export} exportar", data: { url: url } do
-          "#{helpers.content_tag(:span, nil, class: 'fa fa-list')} #{texto}"
+          "#{helpers.content_tag(:span, nil, class: 'fa fa-list')} #{texto}".html_safe
         end
       end
     end

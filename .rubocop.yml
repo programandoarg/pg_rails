@@ -1,3 +1,8 @@
+inherit_from: .rubocop_todo.yml
+inherit_mode:
+  merge:
+    - Exclude
+
 # This is the configuration used to check the rubocop source code.
 
 require: rubocop-rspec
@@ -60,6 +65,7 @@ AllCops:
     - 'Guardfile'
     - 'config/routes.rb'
     - 'db/**/*'
+    - 'spec/dummy/db/**/*'
     - 'bin/**/*'
     - 'spec/dummy/bin/**/*'
     - 'vendor/**/*'

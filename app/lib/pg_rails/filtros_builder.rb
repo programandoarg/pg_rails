@@ -218,7 +218,10 @@ module PgRails
         [I18n.t("#{@clase_modelo.to_s.underscore}.#{campo}.#{key}", default: key.humanize),
          key.value]
       end
-      map.unshift ["Seleccionar #{placeholder.downcase}", nil] unless @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:include_blank] == false
+      unless @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:include_blank] == false
+        map.unshift ["Seleccionar #{placeholder.downcase}",
+                     nil]
+      end
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
       content_tag :div, class: 'filter' do
         select_tag campo, options_for_select(map, default), class: 'form-control pg-input-lg'

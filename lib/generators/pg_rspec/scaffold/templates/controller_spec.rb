@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # generado con pg_rails
 
 require 'rails_helper'
@@ -29,28 +31,27 @@ require 'rails_helper'
 RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:controller) %> do
 <% if mountable_engine? -%>
   routes { <%= mountable_engine? %>::Engine.routes }
-<% end -%>
 
+<% end -%>
+<% referencias_requeridas.each do |atributo| -%>
+  let(:<%= atributo.name %>) { create :<%= atributo.name %> }
+
+<% end -%>
   # This should return the minimal set of attributes required to create a valid
   # <%= class_name %>. As you add validations to <%= class_name %>, be sure to
   # adjust the attributes here as well.
-
-<% referencias_requeridas.each do |atributo| -%>
-  let(:<%= atributo.name %>) { create :<%= atributo.name %> }
-<% end -%>
-
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     attributes_for(:<%= nombre_tabla_completo_singular %>)<%= merge_referencias %>
-  }
+  end
 
 <% if attributes.any? { |at| at.required? } -%>
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     {
 <% attributes.select { |at| at.required? }.each do |atributo| -%>
       <%= "#{atributo.name}: nil,"  %>
 <% end -%>
     }
-  }
+  end
 <% end -%>
 
   # This should return the minimal set of values that should be in the session
@@ -59,14 +60,14 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
   let(:valid_session) { {} }
 
   let(:user) { create :user, :admin }
+
   before do
     sign_in user
   end
 
-
 <% unless options[:singleton] -%>
-  describe "GET #index" do
-    it "returns a success response" do
+  describe 'GET #index' do
+    it 'returns a success response' do
       create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
       get :index, {}, valid_session
@@ -78,20 +79,20 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
   end
 
 <% end -%>
-  describe "GET #show" do
-    it "returns a success response" do
+  describe 'GET #show' do
+    it 'returns a success response' do
       <%= file_name %> = create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
-      get :show, {:id => <%= file_name %>.to_param}, valid_session
+      get :show, { id: <%= file_name %>.to_param }, valid_session
 <% else -%>
-      get :show, params: {id: <%= file_name %>.to_param}, session: valid_session
+      get :show, params: { id: <%= file_name %>.to_param }, session: valid_session
 <% end -%>
       expect(response).to be_successful
     end
   end
 
-  describe "GET #new" do
-    it "returns a success response" do
+  describe 'GET #new' do
+    it 'returns a success response' do
 <% if Rails::VERSION::STRING < '5.0' -%>
       get :new, {}, valid_session
 <% else -%>
@@ -101,47 +102,47 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
     end
   end
 
-  describe "GET #edit" do
-    it "returns a success response" do
+  describe 'GET #edit' do
+    it 'returns a success response' do
       <%= file_name %> = create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
-      get :edit, {:id => <%= file_name %>.to_param}, valid_session
+      get :edit, { id: <%= file_name %>.to_param }, valid_session
 <% else -%>
-      get :edit, params: {id: <%= file_name %>.to_param}, session: valid_session
+      get :edit, params: { id: <%= file_name %>.to_param }, session: valid_session
 <% end -%>
       expect(response).to be_successful
     end
   end
 
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new <%= class_name %>" do
-        expect {
+  describe 'POST #create' do
+    context 'with valid params' do
+      it 'creates a new <%= class_name %>' do
+        expect do
 <% if Rails::VERSION::STRING < '5.0' -%>
-          post :create, {:<%= ns_file_name %> => valid_attributes}, valid_session
+          post :create, { <%= ns_file_name %>: valid_attributes }, valid_session
 <% else -%>
-          post :create, params: {<%= ns_file_name %>: valid_attributes}, session: valid_session
+          post :create, params: { <%= ns_file_name %>: valid_attributes }, session: valid_session
 <% end -%>
-        }.to change(<%= class_name %>, :count).by(1)
+        end.to change(<%= class_name %>, :count).by(1)
       end
 
-      it "redirects to the created <%= ns_file_name %>" do
+      it 'redirects to the created <%= ns_file_name %>' do
 <% if Rails::VERSION::STRING < '5.0' -%>
-        post :create, {:<%= ns_file_name %> => valid_attributes}, valid_session
+        post :create, { <%= ns_file_name %>: valid_attributes }, valid_session
 <% else -%>
-        post :create, params: {<%= ns_file_name %>: valid_attributes}, session: valid_session
+        post :create, params: { <%= ns_file_name %>: valid_attributes }, session: valid_session
 <% end -%>
         expect(response).to redirect_to(<%= class_name %>.last)
       end
     end
 
 <% if attributes.any? { |at| at.required? } -%>
-    context "with invalid params" do
+    context 'with invalid params' do
       it "returns a success response (i.e. to display the 'new' template)" do
 <% if Rails::VERSION::STRING < '5.0' -%>
-        post :create, {:<%= ns_file_name %> => invalid_attributes}, valid_session
+        post :create, { <%= ns_file_name %>: invalid_attributes }, valid_session
 <% else -%>
-        post :create, params: {<%= ns_file_name %>: invalid_attributes}, session: valid_session
+        post :create, params: { <%= ns_file_name %>: invalid_attributes }, session: valid_session
 <% end -%>
         expect(response).to be_successful
       end
@@ -149,18 +150,18 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% end -%>
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
+  describe 'PUT #update' do
+    context 'with valid params' do
+      let(:new_attributes) do
         attributes_for(:<%= nombre_tabla_completo_singular %>)
-      }
+      end
 
-      it "updates the requested <%= ns_file_name %>" do
+      it 'updates the requested <%= ns_file_name %>' do
         <%= file_name %> = create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
-        put :update, {:id => <%= file_name %>.to_param, :<%= ns_file_name %> => new_attributes}, valid_session
+        put :update, { id: <%= file_name %>.to_param, <%= ns_file_name %>: new_attributes }, valid_session
 <% else -%>
-        put :update, params: {id: <%= file_name %>.to_param, <%= ns_file_name %>: new_attributes}, session: valid_session
+        put :update, params: { id: <%= file_name %>.to_param, <%= ns_file_name %>: new_attributes }, session: valid_session
 <% end -%>
         <%= file_name %>.reload
 <% atributo = attributes.find { |at| !at.reference? && at.required? } -%>
@@ -171,25 +172,25 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% end -%>
       end
 
-      it "redirects to the <%= ns_file_name %>" do
+      it 'redirects to the <%= ns_file_name %>' do
         <%= file_name %> = create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
-        put :update, {:id => <%= file_name %>.to_param, :<%= ns_file_name %> => valid_attributes}, valid_session
+        put :update, { id: <%= file_name %>.to_param, <%= ns_file_name %>: valid_attributes }, valid_session
 <% else -%>
-        put :update, params: {id: <%= file_name %>.to_param, <%= ns_file_name %>: valid_attributes}, session: valid_session
+        put :update, params: { id: <%= file_name %>.to_param, <%= ns_file_name %>: valid_attributes }, session: valid_session
 <% end -%>
         expect(response).to redirect_to(<%= file_name %>)
       end
     end
 
 <% if attributes.any? { |at| at.required? } -%>
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'edit' template)" do
+    context 'with invalid params' do
+      it 'returns a success response (i.e. to display the "edit" template)' do
         <%= file_name %> = create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
-        put :update, {:id => <%= file_name %>.to_param, :<%= ns_file_name %> => invalid_attributes}, valid_session
+        put :update, { id: <%= file_name %>.to_param, <%= ns_file_name %>: invalid_attributes }, valid_session
 <% else -%>
-        put :update, params: {id: <%= file_name %>.to_param, <%= ns_file_name %>: invalid_attributes}, session: valid_session
+        put :update, params: { id: <%= file_name %>.to_param, <%= ns_file_name %>: invalid_attributes }, session: valid_session
 <% end -%>
         expect(response).to be_successful
       end
@@ -197,32 +198,31 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% end -%>
   end
 
-  describe "DELETE #destroy" do
-    it "destroys the requested <%= ns_file_name %>" do
+  describe 'DELETE #destroy' do
+    it 'destroys the requested <%= ns_file_name %>' do
       <%= file_name %> = create(:<%= ns_file_name %>)
-      expect {
+      expect do
 <% if Rails::VERSION::STRING < '5.0' -%>
-        delete :destroy, {:id => <%= file_name %>.to_param}, valid_session
+        delete :destroy, { id: <%= file_name %>.to_param }, valid_session
 <% else -%>
-        delete :destroy, params: {id: <%= file_name %>.to_param}, session: valid_session
+        delete :destroy, params: { id: <%= file_name %>.to_param }, session: valid_session
 <% end -%>
 <% if options[:paranoia] -%>
-      }.to change(<%= class_name %>.without_deleted, :count).by(-1)
+      end.to change(<%= class_name %>.without_deleted, :count).by(-1)
 <% else -%>
-      }.to change(<%= class_name %>, :count).by(-1)
+      end.to change(<%= class_name %>, :count).by(-1)
 <% end -%>
     end
 
-    it "redirects to the <%= table_name %> list" do
+    it 'redirects to the <%= table_name %> list' do
       <%= file_name %> = create(:<%= ns_file_name %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
-      delete :destroy, {:id => <%= file_name %>.to_param}, valid_session
+      delete :destroy, { id: <%= file_name %>.to_param }, valid_session
 <% else -%>
-      delete :destroy, params: {id: <%= file_name %>.to_param}, session: valid_session
+      delete :destroy, params: { id: <%= file_name %>.to_param }, session: valid_session
 <% end -%>
       expect(response).to redirect_to(<%= index_helper %>_url)
     end
   end
-
 end
 <% end -%>

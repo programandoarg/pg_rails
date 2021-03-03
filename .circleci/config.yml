@@ -1,75 +1,88 @@
----
 version: 2.1
-# orbs:
-#   codecov: codecov/codecov@1.1.1
-jobs:
-  build:
-    working_directory: ~/pg_rails
+
+executors:
+  ruby:
     docker:
-      - image: circleci/ruby:2.7.2-node
+      - image: circleci/ruby:2.7.2-node-browsers
         environment:
-          PGHOST: localhost
-          PGUSER: pgrails
+          PGHOST: 127.0.0.1
+          PGUSER: postgres
+          PGPASS: postgres
           RAILS_ENV: test
-          BUNDLE_PATH: vendor/bundle
           CC_TEST_REPORTER_ID: 06b784c7df61a8978ec796c2acbbf9c686eb701e336fba3900b997427b06076b
-      - image: postgres:9.5
+      - image: circleci/postgres:12-alpine
         environment:
           POSTGRES_USER: pgrails
           POSTGRES_DB: pg_rails_test
           POSTGRES_PASSWORD: pgrails
-      # - image: circleci/node:10.16.3
+      - image: circleci/redis
+commands:
+  bundle_install:
+    description: Install Ruby dependencies with Bundler
     steps:
-      - checkout
-
-
-
-      # Restore Cached Dependencies
       - restore_cache:
           keys:
-            - pg_rails-1-{{ checksum "Gemfile.lock" }}
-
-
-      # Instalar bundler
-      - run: gem install bundler
-
-      # Bundle install dependencies
-      - run: bundle install
-
-      # Cache Dependencies
+            - bundle-v1-{{ arch }}-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
+            - bundle-v1-{{ arch }}-{{ checksum ".ruby-version" }}-
+      - run: sudo apt-get update && sudo apt-get install -y libmagic-dev # libmagic (requerido por carrierwave-magic)
+      - run:
+          name: Install Ruby Dependencies
+          command: |
+            gem install bundler -v 2.1.4 --conservative --no-document
+            bundle config --local deployment true
+            bundle config --local path vendor/bundle
+            bundle config --local without production
+            bundle check || (bundle install --jobs=4 --retry=3 && bundle clean)
       - save_cache:
-          key: pg_rails-1-{{ checksum "Gemfile.lock" }}
           paths:
-            - vendor/bundle
+            - ./vendor/bundle
+          key: bundle-v1-{{ arch }}-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
+  set_up_database:
+    steps:
+      - run:
+          name: Set Up Database
+          command: |
+            bundle exec rake db:schema:load
 
-      # Wait for DB
-      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
-
-      # Setup the environment
-      # - run: cp .sample.env .env
-
-      # Setup the database
-      - run: bundle exec rake db:schema:load
-
-
-      # name: Setup Code Climate test-reporter
-      # download test reporter as a static binary
+jobs:
+  static_analysis:
+    executor: ruby
+    steps:
+      - checkout
+      - bundle_install
+      - run:
+          name: Run Overcommit
+          command: |
+            gem install overcommit
+            git config --local user.name "Circle CI"
+            git config --local user.email ci@example.com
+            overcommit --sign
+            overcommit --run
+      - run:
+          name: Run Security Audits
+          command: |
+            bundle exec brakeman -q --no-summary
+            bundle exec bundle-audit check --update -v
+  test:
+    executor: ruby
+    steps:
+      - checkout
+      - bundle_install
+      - set_up_database
       - run:
           command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
 
-      # name: Run tests
       - run:
           command: |
             ./cc-test-reporter before-build
             bundle exec rspec
             ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
-
-      # - codecov/upload:
-      #     file: coverage/.resultset.json
-      #     token: 'ecbbd491-7d97-48cd-9f9e-35816ede8e6b'
 workflows:
-  build-test:
+  commit-workflow:
     jobs:
-      - build
+      - static_analysis
+      - test:
+          requires:
+            - static_analysis

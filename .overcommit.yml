@@ -1,0 +1,67 @@
+gemfile: false
+verify_signatures: false
+
+PreCommit:
+  BundleCheck:
+    enabled: true
+
+  # EsLint:
+  #   enabled: true
+  #   required_executable: npx
+  #   command: ["npx", "--no-install", "eslint", "-f", "compact"]
+  #   include:
+  #     - app/assets/**/*.js
+  #     - app/assets/**/*.jsx
+  #     - app/components/**/*.js
+  #     - app/components/**/*.jsx
+  #     - app/javascript/**/*.js
+  #     - app/javascript/**/*.jsx
+
+  FixMe:
+    enabled: true
+    keywords: ["FIXME"]
+    exclude:
+      - .overcommit.yml
+
+  LocalPathsInGemfile:
+    enabled: true
+
+  RailsSchemaUpToDate:
+    enabled: true
+
+  RuboCop:
+    enabled: true
+    required_executable: bundle
+    command: ["bundle", "exec", "rubocop"]
+    on_warn: fail
+
+  Stylelint:
+    enabled: true
+    required_executable: npx
+    command: ["npx", "--no-install", "stylelint"]
+    include:
+      - app/assets/**/*.css
+      - app/assets/**/*.scss
+      - app/components/**/*.css
+      - app/components/**/*.scss
+      - app/javascript/**/*.css
+      - app/javascript/**/*.scss
+
+  TrailingWhitespace:
+    enabled: true
+    exclude:
+      - "**/db/structure.sql"
+      - "**/*.slim"
+      - "vendor/**/*"
+
+  YamlSyntax:
+    enabled: true
+    exclude:
+      - "test/fixtures/**/*.yml"
+
+  # YarnCheck:
+  #   enabled: true
+
+PostCheckout:
+  ALL:
+    quiet: true

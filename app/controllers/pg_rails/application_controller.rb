@@ -20,40 +20,48 @@ module PgRails
 
     protected
 
-      def setear_layout
-        if params[:sin_layout] == 'true'
-          false
-        else
-          'application'
+      def pg_respond_update(object)
+        respond_to do |format|
+          if object.save
+            format.html do
+              redirect_to object, notice: "#{@clase_modelo.nombre_singular} actualizadx."
+            end
+            format.json { render json: object.decorate }
+          else
+            format.html { render :edit }
+            format.json { render json: object.errors }
+          end
         end
       end
 
-      def clase_modelo
-        # agarro la variable o intento con el nombre del controller
-        @clase_modelo ||= self.class.name.singularize.gsub('Controller', '').constantize
+      def pg_respond_create(object)
+        respond_to do |format|
+          if object.save
+            format.html do
+              redirect_to object, notice: "#{@clase_modelo.nombre_singular} creadx."
+            end
+            format.json { render json: object.decorate }
+          else
+            format.html { render :new }
+            format.json { render json: object.errors.full_messages }
+          end
+        end
       end
 
-      def filtros_y_policy(campos)
-        @filtros = PgRails::FiltrosBuilder.new(
-          self, clase_modelo, campos
-        )
-        scope = policy_scope(clase_modelo)
-        scope = scope.without_deleted if scope.respond_to?(:without_deleted)
-        @filtros.filtrar(scope)
+      def pg_respond_index(collection)
+        respond_to do |format|
+          format.json { render json: collection }
+          format.js { render_smart_listing }
+          format.html { render_smart_listing }
+          format.xlsx do
+            render xlsx: 'download',
+                   filename: "#{@clase_modelo.nombre_plural.gsub(' ', '-').downcase}" \
+                             "-#{Date.today}.xlsx"
+          end
+        end
       end
 
-      def smart_listing(smart_listing_key, scope, partial, options = {})
-        options[:default_sort] = { id: :desc } unless options[:default_sort].present?
-        options[:partial] = partial
-        smart_listing_create smart_listing_key, scope, options
-
-        return unless params["#{smart_listing_key}_smart_listing"].present?
-
-        render partial: 'actualizar_smart_listing', locals: { smart_listing_key: smart_listing_key },
-               layout: false, content_type: 'text/javascript'
-      end
-
-      def destroy_and_respond(model, redirect_url = nil)
+      def pg_respond_destroy(model, redirect_url = nil)
         if destroy_model(model)
           respond_to do |format|
             format.html do
@@ -85,6 +93,9 @@ module PgRails
         end
       end
 
+      # destroy_and_respond DEPRECADO
+      alias_method :destroy_and_respond, :pg_respond_destroy
+
       def destroy_error_details_view
         'destroy_error_details'
       end
@@ -106,6 +117,51 @@ module PgRails
           logger.debug e.message
         end
         false
+      end
+
+      def render_smart_listing
+        raise 'implementar en subclase'
+      end
+
+      def default_url_options(options = {})
+        if Rails.env.production?
+          options.merge(protocol: 'https')
+        else
+          options
+        end
+      end
+
+      def setear_layout
+        if params[:sin_layout] == 'true'
+          false
+        else
+          'application'
+        end
+      end
+
+      def clase_modelo
+        # agarro la variable o intento con el nombre del controller
+        @clase_modelo ||= self.class.name.singularize.gsub('Controller', '').constantize
+      end
+
+      def filtros_y_policy(campos)
+        @filtros = PgRails::FiltrosBuilder.new(
+          self, clase_modelo, campos
+        )
+        scope = policy_scope(clase_modelo)
+        scope = scope.without_deleted if scope.respond_to?(:without_deleted)
+        @filtros.filtrar(scope)
+      end
+
+      def smart_listing(smart_listing_key, scope, partial, options = {})
+        options[:default_sort] = { id: :desc } unless options[:default_sort].present?
+        options[:partial] = partial
+        smart_listing_create smart_listing_key, scope, options
+
+        return unless params["#{smart_listing_key}_smart_listing"].present?
+
+        render partial: 'actualizar_smart_listing', locals: { smart_listing_key: smart_listing_key },
+               layout: false, content_type: 'text/javascript'
       end
 
       def fecha_invalida
