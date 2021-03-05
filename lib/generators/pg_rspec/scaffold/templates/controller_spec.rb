@@ -67,15 +67,31 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 
 <% unless options[:singleton] -%>
   describe 'GET #index' do
-    it 'returns a success response' do
-      create(:<%= ns_file_name %>)
+    subject do
 <% if Rails::VERSION::STRING < '5.0' -%>
       get :index, {}, valid_session
 <% else -%>
       get :index, params: {}, session: valid_session
 <% end -%>
+    end
+
+    let!(:<%= ns_file_name %>) { create :<%= ns_file_name %> }
+
+    it 'returns a success response' do
+      subject
       expect(response).to be_successful
     end
+<% if options[:discard] -%>
+
+    context 'si está descartado' do
+      before { <%= ns_file_name %>.discard! }
+
+      it do
+        subject
+        expect(assigns(:<%= table_name %>)).to be_empty
+      end
+    end
+<% end -%>
   end
 
 <% end -%>
@@ -199,30 +215,33 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
   end
 
   describe 'DELETE #destroy' do
-    it 'destroys the requested <%= ns_file_name %>' do
-      <%= file_name %> = create(:<%= ns_file_name %>)
-      expect do
-<% if Rails::VERSION::STRING < '5.0' -%>
-        delete :destroy, { id: <%= file_name %>.to_param }, valid_session
-<% else -%>
-        delete :destroy, params: { id: <%= file_name %>.to_param }, session: valid_session
-<% end -%>
-<% if options[:discard] -%>
-      end.to change(<%= class_name %>.kept, :count).by(-1)
-<% elsif options[:paranoia] -%>
-      end.to change(<%= class_name %>.without_deleted, :count).by(-1)
-<% else -%>
-      end.to change(<%= class_name %>, :count).by(-1)
-<% end -%>
-    end
-
-    it 'redirects to the <%= table_name %> list' do
-      <%= file_name %> = create(:<%= ns_file_name %>)
+    subject do
 <% if Rails::VERSION::STRING < '5.0' -%>
       delete :destroy, { id: <%= file_name %>.to_param }, valid_session
 <% else -%>
       delete :destroy, params: { id: <%= file_name %>.to_param }, session: valid_session
 <% end -%>
+    end
+
+    let!(:<%= ns_file_name %>) { create :<%= ns_file_name %> }
+
+    it 'destroys the requested <%= ns_file_name %>' do
+<% if options[:discard] -%>
+      expect { subject }.to change(<%= class_name %>.kept, :count).by(-1)
+<% elsif options[:paranoia] -%>
+      expect { subject }.to change(<%= class_name %>.without_deleted, :count).by(-1)
+<% else -%>
+      expect { subject }.to change(<%= class_name %>, :count).by(-1)
+<% end -%>
+    end
+
+    it 'setea el discarded_at' do
+      subject
+      expect(<%= ns_file_name %>.reload.discarded_at).to be_present
+    end
+
+    it 'redirects to the <%= table_name %> list' do
+      subject
       expect(response).to redirect_to(<%= index_helper %>_url)
     end
   end

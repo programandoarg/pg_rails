@@ -56,6 +56,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'database_cleaner'
   spec.add_development_dependency 'factory_bot_rails'
   spec.add_development_dependency 'faker'
+  spec.add_development_dependency 'rails-controller-testing'
   spec.add_development_dependency 'rspec-rails', '~> 4.0'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-rails'
