@@ -14,7 +14,7 @@
   <%- for attribute in attributes -%>
             td = <%= singular_name %>.<%= attribute.name %>
   <%- end -%>
-            td
+            td.text-nowrap
               = <%= singular_name %>.show_link
               = <%= singular_name %>.edit_link
               = <%= singular_name %>.destroy_link
