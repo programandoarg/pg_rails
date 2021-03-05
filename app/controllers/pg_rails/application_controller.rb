@@ -20,7 +20,8 @@ module PgRails
 
     protected
 
-      def pg_respond_update(object)
+      def pg_respond_update(object = nil)
+        object ||= instancia_modelo
         respond_to do |format|
           if object.save
             format.html do
@@ -34,7 +35,8 @@ module PgRails
         end
       end
 
-      def pg_respond_create(object)
+      def pg_respond_create(object = nil)
+        object ||= instancia_modelo
         respond_to do |format|
           if object.save
             format.html do
@@ -58,6 +60,13 @@ module PgRails
                    filename: "#{@clase_modelo.nombre_plural.gsub(' ', '-').downcase}" \
                              "-#{Date.today}.xlsx"
           end
+        end
+      end
+
+      def pg_respond_show(object = nil)
+        respond_to do |format|
+          format.json { render json: object || instancia_modelo }
+          format.html
         end
       end
 
@@ -122,6 +131,43 @@ module PgRails
 
       def render_smart_listing
         raise 'implementar en subclase'
+      end
+
+      def set_instancia_modelo
+        if action_name.in? %w[new create]
+          self.instancia_modelo = @clase_modelo.new(modelo_params)
+        else
+          self.instancia_modelo = @clase_modelo.find(params[:id])
+
+          if action_name.in? %w[update]
+            instancia_modelo.assign_attributes(modelo_params)
+          end
+        end
+
+        instancia_modelo.current_user = current_user
+
+        authorize instancia_modelo
+
+        self.instancia_modelo = instancia_modelo.decorate if action_name.in? %w[show new edit]
+      end
+
+      def instancia_modelo=(val)
+        instance_variable_set("@#{nombre_modelo}".to_sym, val)
+      end
+      def instancia_modelo
+        instance_variable_get("@#{nombre_modelo}".to_sym)
+      end
+
+      def modelo_params
+        if action_name == 'new'
+          params.permit(atributos_permitidos)
+        else
+          params.require(nombre_modelo).permit(atributos_permitidos)
+        end
+      end
+
+      def nombre_modelo
+        @clase_modelo.name.underscore
       end
 
       def default_url_options(options = {})

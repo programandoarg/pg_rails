@@ -7,7 +7,7 @@ class CategoriaDeCosasController < ApplicationController
 
   before_action(only: :index) { authorize CategoriaDeCosa }
 
-  before_action :set_categoria_de_cosa, only: %i[new create show edit update destroy]
+  before_action :set_instancia_modelo, only: %i[new create show edit update destroy]
 
   add_breadcrumb CategoriaDeCosa.nombre_plural, :categoria_de_cosas_path
 
@@ -20,10 +20,7 @@ class CategoriaDeCosasController < ApplicationController
   def show
     add_breadcrumb @categoria_de_cosa, @categoria_de_cosa
 
-    respond_to do |format|
-      format.json { render json: @categoria_de_cosa }
-      format.html
-    end
+    pg_respond_show
   end
 
   def new
@@ -35,11 +32,11 @@ class CategoriaDeCosasController < ApplicationController
   end
 
   def create
-    pg_respond_create(@categoria_de_cosa)
+    pg_respond_create
   end
 
   def update
-    pg_respond_update(@categoria_de_cosa)
+    pg_respond_update
   end
 
   def destroy
@@ -56,30 +53,6 @@ class CategoriaDeCosasController < ApplicationController
                       [:fecha, 'fecha'],
                       [:tiempo, 'tiempo']
                     ])
-    end
-
-    def set_categoria_de_cosa
-      if action_name.in? %w[new create]
-        @categoria_de_cosa = @clase_modelo.new(categoria_de_cosa_params)
-      else
-        @categoria_de_cosa = @clase_modelo.find(params[:id])
-
-        @categoria_de_cosa.assign_attributes(categoria_de_cosa_params) if action_name.in? %w[update]
-      end
-
-      @categoria_de_cosa.current_user = current_user
-
-      authorize @categoria_de_cosa
-
-      @categoria_de_cosa = @categoria_de_cosa.decorate if action_name.in? %w[show new edit]
-    end
-
-    def categoria_de_cosa_params
-      if action_name == 'new'
-        params.permit(atributos_permitidos)
-      else
-        params.require(:categoria_de_cosa).permit(atributos_permitidos)
-      end
     end
 
     def atributos_permitidos

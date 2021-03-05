@@ -12,7 +12,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   before_action(only: :index) { authorize <%= class_name %> }
 
-  before_action :set_<%= singular_name %>, only: %i[new create show edit update destroy]
+  before_action :set_instancia_modelo, only: %i[new create show edit update destroy]
 
   add_breadcrumb <%= class_name %>.nombre_plural, :<%= plural_table_name %>_path
 
@@ -25,10 +25,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   def show
     add_breadcrumb @<%= singular_name %>, @<%= singular_name %>
 
-    respond_to do |format|
-      format.json { render json: @<%= singular_name %> }
-      format.html
-    end
+    pg_respond_show
   end
 
   def new
@@ -40,11 +37,11 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def create
-    pg_respond_create(@<%= singular_name %>)
+    pg_respond_create
   end
 
   def update
-    pg_respond_update(@<%= singular_name %>)
+    pg_respond_update
   end
 
   def destroy
@@ -60,34 +57,6 @@ class <%= controller_class_name %>Controller < ApplicationController
                       [:<%= attribute.name %>, '<%= attribute.name %>'],
                       <%- end -%>
                     ])
-    end
-
-    def set_<%= singular_name %>
-      if action_name.in? %w[new create]
-        @<%= singular_name %> = @clase_modelo.new(<%= "#{singular_name}_params" %>)
-      else
-        @<%= singular_name %> = @clase_modelo.find(params[:id])
-
-        @<%= singular_name %>.assign_attributes(<%= "#{singular_name}_params" %>) if action_name.in? %w[update]
-      end
-
-      @<%= singular_name %>.current_user = current_user
-
-      authorize @<%= singular_name %>
-
-      @<%= singular_name %> = @<%= singular_name %>.decorate if action_name.in? %w[show new edit]
-    end
-
-    def <%= "#{singular_name}_params" %>
-      <%- if attributes_names.empty? -%>
-      params.fetch(:<%= singular_table_name %>, {})
-      <%- else -%>
-      if action_name == 'new'
-        params.permit(atributos_permitidos)
-      else
-        params.require(:<%= singular_table_name %>).permit(atributos_permitidos)
-      end
-      <%- end -%>
     end
 
     def atributos_permitidos
