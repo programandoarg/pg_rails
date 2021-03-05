@@ -139,9 +139,7 @@ module PgRails
         else
           self.instancia_modelo = @clase_modelo.find(params[:id])
 
-          if action_name.in? %w[update]
-            instancia_modelo.assign_attributes(modelo_params)
-          end
+          instancia_modelo.assign_attributes(modelo_params) if action_name.in? %w[update]
         end
 
         instancia_modelo.current_user = current_user
@@ -154,6 +152,7 @@ module PgRails
       def instancia_modelo=(val)
         instance_variable_set("@#{nombre_modelo}".to_sym, val)
       end
+
       def instancia_modelo
         instance_variable_get("@#{nombre_modelo}".to_sym)
       end
