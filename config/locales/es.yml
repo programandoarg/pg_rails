@@ -2,6 +2,9 @@ es:
   created_at: Fecha de creación
   updated_at: Fecha de actualización
   deleted_at: Fecha de borrado
+  discarded_at: Fecha de borrado
+  ancestry:
+    exclude_self: No puede ser hijx de si mismx
   simple_form:
     # labels:
     #   user:

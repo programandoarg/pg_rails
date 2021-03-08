@@ -74,7 +74,7 @@ SimpleForm.setup do |config|
     b.optional :min_max
     b.optional :readonly
     b.use :label, class: 'form-control-label'
-    b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :input, class: 'form-control'
     # b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
@@ -168,8 +168,7 @@ SimpleForm.setup do |config|
       b.use :label, class: 'form-control-label'
       b.wrapper tag: 'div', class: 'input-group' do |ba|
         ba.use :hidden_input
-        ba.use :input, class: 'form-control', disabled: true, error_class: 'is-invalid',
-                       valid_class: 'is-valid'
+        ba.use :input, class: 'form-control', disabled: true
         ba.wrapper tag: 'div', class: 'input-group-append' do |append|
           append.use :boton, class: 'btn btn-outline-secondary dropdown-toggle', type: :button,
                              data: { toggle: :dropdown }
