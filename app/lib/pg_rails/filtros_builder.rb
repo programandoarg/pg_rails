@@ -34,6 +34,11 @@ module PgRails
 
     def filtrar(query, parametros = nil)
       parametros = parametros_controller if parametros.nil?
+
+      # Filtro soft deleted, y sea con paranoia o con discard
+      query = query.without_deleted if query.respond_to?(:without_deleted)
+      query = query.kept if query.respond_to?(:kept)
+
       @filtros.each do |campo, _opciones|
         next unless parametros[campo].present?
 

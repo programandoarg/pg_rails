@@ -3,6 +3,8 @@ es:
   updated_at: Fecha de actualización
   deleted_at: Fecha de borrado
   discarded_at: Fecha de borrado
+  actualizado_por: Actualizado por
+  creado_por: Creado por
   ancestry:
     exclude_self: No puede ser hijx de si mismx
   simple_form:

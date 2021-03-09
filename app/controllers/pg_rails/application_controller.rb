@@ -196,10 +196,6 @@ module PgRails
         )
         scope = policy_scope(clase_modelo)
 
-        # Filtro soft deleted, y sea con paranoia o con discard
-        scope = scope.without_deleted if scope.respond_to?(:without_deleted)
-        scope = scope.kept if scope.respond_to?(:kept)
-
         @filtros.filtrar(scope)
       end
 
