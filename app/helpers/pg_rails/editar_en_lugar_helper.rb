@@ -64,10 +64,11 @@ module PgRails
     end
 
     def encabezado(smart_listing, campo, options = {})
+      clase = (options[:clase] || @clase_modelo)
       if options[:ordenable]
-        smart_listing.sortable @clase_modelo.human_attribute_name(campo), campo
+        smart_listing.sortable clase.human_attribute_name(campo), campo
       else
-        @clase_modelo.human_attribute_name(campo)
+        clase.human_attribute_name(campo)
       end
     end
 
