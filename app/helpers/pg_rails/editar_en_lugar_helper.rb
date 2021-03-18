@@ -31,7 +31,8 @@ module PgRails
       options[:param] = objeto.model_name.name
       options[:inner_class] = 'form-control' if options[:inner_class].nil?
       options[:class] = 'editar_en_lugar_v2'
-      # _url = pg_rails.editar_en_lugar_path(objeto) if _url.nil?
+      options[:html_attrs] = { autocomplete: :off }
+      # url = pg_rails.editar_en_lugar_path(objeto) if url.nil?
       if tipo == :checkbox
         options[:collection] = ["No", "Si"]
 
