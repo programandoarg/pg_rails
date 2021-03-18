@@ -36,10 +36,11 @@ module PgRails
         next unless parametros[campo].present?
         if @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:query].present?
           query = @filtros[campo.to_sym][:query].call(query, parametros[campo])
-        elsif tipo(campo).in?([:integer, :float, :decimal])
-          query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo])
         elsif tipo(campo) == :enumerized
           query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo])
+        elsif tipo(campo).in?(%i[integer float decimal])
+          campo_a_comparar = "#{@clase_modelo.table_name}.#{sin_sufijo(campo)}"
+          query = query.where("#{campo_a_comparar} #{comparador(campo)} ?", parametros[campo])
         elsif tipo(campo) == :asociacion
           nombre_campo = sin_sufijo(campo)
           suf = extraer_sufijo(campo)
