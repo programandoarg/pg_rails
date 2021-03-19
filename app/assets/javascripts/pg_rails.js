@@ -57,7 +57,8 @@ window.PgRails = new function() {
         });
       }
     })
-    $(contexto).find('.tooltip').remove();
+    $('.tooltip').remove();
+    $("[rel=tooltip]").tooltip({ boundary: 'window' });
     $(contexto).find("[rel=tooltip]").tooltip();
     $(contexto).find('form.pg-form').each(function(i,e) {
       $(e).validate();
