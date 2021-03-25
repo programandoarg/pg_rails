@@ -78,6 +78,10 @@ module PgRails
       acceso_total?
     end
 
+    def export?
+      acceso_total?
+    end
+
     def acceso_total?
       user.admin?
     end

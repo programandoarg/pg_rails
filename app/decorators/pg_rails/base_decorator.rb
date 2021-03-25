@@ -54,8 +54,9 @@ module PgRails
     def export_link(url, texto = '')
       return unless Pundit.policy!(helpers.current_user, object).export?
       helpers.content_tag :span, rel: :tooltip, title: 'Exportar' do
-        helpers.content_tag :button, class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_export} exportar", data: {url: url} do
-          helpers.content_tag(:span, nil, class: "fa fa-list") + ' ' + texto
+        helpers.content_tag :button,
+                            class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_export} exportar", data: { url: url } do
+          "#{helpers.content_tag(:span, nil, class: 'fa fa-list')} #{texto}".html_safe
         end
       end
     end
@@ -70,15 +71,27 @@ module PgRails
     end
 
     def edit_object_url
-      helpers.url_for([:edit, object])
+      helpers.url_for([:edit, target_object].flatten)
     end
 
     def new_object_url
-      helpers.url_for(object.class) + '/new'
+      helpers.url_for(target_index) + '/new'
     end
 
     def object_url
-      helpers.url_for(object)
+      helpers.url_for(target_object)
+    end
+
+    def target_object
+      default_module.present? ? [default_module, object] : object
+    end
+
+    def target_index
+      default_module.present? ? [default_module, object.class] : object.class
+    end
+
+    def default_module
+      nil
     end
 
     private

@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/bernat/best_in_place
+  revision: a3560e874444af8b2cf78419dc5eef020626c93c
+  specs:
+    best_in_place (3.1.1)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
+
+GIT
   remote: https://github.com/mrosso10/smart_listing.git
   revision: f4ae4db3ba09aaff93b6867669b70bc563c37674
   tag: v2.0.0
@@ -14,7 +22,6 @@ PATH
   specs:
     pg_rails (0.1.4)
       audited (~> 4.7)
-      best_in_place (~> 3.0)
       bootstrap-datepicker-rails
       breadcrumbs_on_rails
       caxlsx_rails
@@ -91,10 +98,7 @@ GEM
     arel (9.0.0)
     audited (4.9.0)
       activerecord (>= 4.2, < 6.1)
-    bcrypt (3.1.13)
-    best_in_place (3.1.1)
-      actionpack (>= 3.2)
-      railties (>= 3.2)
+    bcrypt (3.1.16)
     bootstrap-datepicker-rails (1.9.0.1)
       railties (>= 3.0)
     breadcrumbs_on_rails (4.0.0)
@@ -310,6 +314,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  best_in_place!
   byebug
   database_cleaner
   factory_bot_rails

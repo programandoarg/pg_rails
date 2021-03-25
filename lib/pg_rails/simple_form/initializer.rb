@@ -13,6 +13,7 @@
 # Dir[Rails.root.join('lib/components/**/*.rb')].each { |f| require f }
 
 require 'simple_form'
+require __dir__ + '/../../../app/inputs/pg_rails/fecha_input'
 
 module SimpleForm
   class FormBuilder < ActionView::Helpers::FormBuilder
