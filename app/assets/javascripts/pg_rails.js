@@ -297,11 +297,11 @@ $(document).on('nested:fieldAdded', function(event){
 });
 
 
-// para que no se submiteen los forms al apretar enter
+// para que no se submiteen los forms al apretar enter en inputs que no son de submit
 $(document).ready(function() {
   $(window).keydown(function(event){
     if(event.keyCode == 13) {
-      if( event.target.tagName == 'INPUT' ) {
+      if( event.target.tagName == 'INPUT' && $(event.target).attr('type') != 'submit') {
         event.preventDefault();
         return false;
       }
