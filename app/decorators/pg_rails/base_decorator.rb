@@ -6,6 +6,8 @@ module PgRails
     include PrintHelper
     include Pundit
 
+    attr_accessor :output_buffer
+
     delegate_all
 
     def as_json(_options = {})
