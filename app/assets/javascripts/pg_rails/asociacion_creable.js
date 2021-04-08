@@ -16,6 +16,7 @@ window.AsociacionCreable = new function() {
             $(modal).modal('hide');
             // $(modal).modal('dispose');
             $(modal).remove();
+            $(boton_crear).closest('.asociacion_creable').trigger('change', responseJSON);
             PgRails.showToast('Elemento creado.')
           },
           error: function(response, status, statusText) {
@@ -34,6 +35,7 @@ window.AsociacionCreable = new function() {
       $(this).closest('.form-group').removeClass('completado');
       input_oculto.val(null);
       input_visible.val(null);
+      $(this).closest('.asociacion_creable').trigger('change', null);
     });
     $(contexto).find('.seleccionar_asociado').click(function() {
       var boton_seleccionar = this;
@@ -65,6 +67,7 @@ window.AsociacionCreable = new function() {
             $(modal).modal('hide');
             // $(modal).modal('dispose');
             $(modal).remove();
+            $(boton_seleccionar).closest('.asociacion_creable').trigger('change', response);
           }).fail(function() {
             pg_rails.error_toast("Hubo un error");
           });
