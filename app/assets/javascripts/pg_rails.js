@@ -50,7 +50,11 @@ window.PgRails = new function() {
           dataType: 'json',
           method: 'DELETE',
         }).done(function(response) {
-          res = $(boton).closest('.smart-listing').smart_listing().reload()
+          if($(boton).closest('.smart-listing').length > 0) {
+            $(boton).closest('.smart-listing').smart_listing().reload()
+          } else {
+            window.location.reload();
+          }
           pg_rails.showToast("Elemento borrado");
         }).fail(function(response) {
           pg_rails.error_toast(response.responseJSON.error);
