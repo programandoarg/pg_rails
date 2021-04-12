@@ -39,6 +39,7 @@ module PgRails
       options[:param] = objeto.model_name.name
       options[:inner_class] = 'form-control' if options[:inner_class].nil?
       options[:class] = 'editar_en_lugar_v2'
+      options[:html_attrs] = { autocomplete: :off }
       # url = pg_rails.editar_en_lugar_path(objeto) if url.nil?
       if tipo == :checkbox
         options[:collection] = %w[No Si]
@@ -64,10 +65,11 @@ module PgRails
     end
 
     def encabezado(smart_listing, campo, options = {})
+      clase = (options[:clase] || @clase_modelo)
       if options[:ordenable]
-        smart_listing.sortable @clase_modelo.human_attribute_name(campo), campo
+        smart_listing.sortable clase.human_attribute_name(campo), campo
       else
-        @clase_modelo.human_attribute_name(campo)
+        clase.human_attribute_name(campo)
       end
     end
 

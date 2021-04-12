@@ -50,14 +50,19 @@ window.PgRails = new function() {
           dataType: 'json',
           method: 'DELETE',
         }).done(function(response) {
-          res = $(boton).closest('.smart-listing').smart_listing().reload()
+          if($(boton).closest('.smart-listing').length > 0) {
+            $(boton).closest('.smart-listing').smart_listing().reload()
+          } else {
+            window.location.reload();
+          }
           pg_rails.showToast("Elemento borrado");
         }).fail(function(response) {
           pg_rails.error_toast(response.responseJSON.error);
         });
       }
     })
-    $(contexto).find('.tooltip').remove();
+    $('.tooltip').remove();
+    $("[rel=tooltip]").tooltip({ boundary: 'window' });
     $(contexto).find("[rel=tooltip]").tooltip();
     $(contexto).find('form.pg-form').each(function(i,e) {
       $(e).validate();
@@ -302,11 +307,11 @@ $(document).on('nested:fieldAdded', function(event){
 });
 
 
-// para que no se submiteen los forms al apretar enter
+// para que no se submiteen los forms al apretar enter en inputs que no son de submit
 $(document).ready(function() {
   $(window).keydown(function(event){
     if(event.keyCode == 13) {
-      if( event.target.tagName == 'INPUT' ) {
+      if( event.target.tagName == 'INPUT' && $(event.target).attr('type') != 'submit') {
         event.preventDefault();
         return false;
       }

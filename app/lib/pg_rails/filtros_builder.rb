@@ -34,14 +34,21 @@ module PgRails
 
     def filtrar(query, parametros = nil)
       parametros = parametros_controller if parametros.nil?
+
+      # Filtro soft deleted, y sea con paranoia o con discard
+      query = query.without_deleted if query.respond_to?(:without_deleted)
+      query = query.kept if query.respond_to?(:kept)
+
       @filtros.each do |campo, _opciones|
         next unless parametros[campo].present?
 
         if @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:query].present?
           query = @filtros[campo.to_sym][:query].call(query, parametros[campo])
-        elsif tipo(campo).in?(%i[integer float decimal]) ||
-              tipo(campo) == :enumerized
+        elsif tipo(campo) == :enumerized
           query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo])
+        elsif tipo(campo).in?(%i[integer float decimal])
+          campo_a_comparar = "#{@clase_modelo.table_name}.#{sin_sufijo(campo)}"
+          query = query.where("#{campo_a_comparar} #{comparador(campo)} ?", parametros[campo])
         elsif tipo(campo) == :asociacion
           nombre_campo = sin_sufijo(campo)
           suf = extraer_sufijo(campo)
@@ -58,8 +65,9 @@ module PgRails
         elsif tipo(campo).in?(%i[string text])
           match_vector = parametros[campo].split.map { |a| "#{a}:*" }.join(' & ')
           match_like = "%#{parametros[campo]}%"
-          condicion = "to_tsvector(coalesce(unaccent(#{campo}), '')) @@ to_tsquery( unaccent(?) )"
-          condicion += " OR unaccent(CONCAT(#{campo})) ILIKE unaccent(?)"
+          campo_tabla = "#{@clase_modelo.table_name}.#{campo}"
+          condicion = "to_tsvector(coalesce(unaccent(#{campo_tabla}), '')) @@ to_tsquery( unaccent(?) )"
+          condicion += " OR unaccent(CONCAT(#{campo_tabla})) ILIKE unaccent(?)"
           query = query.where(condicion, I18n.transliterate(match_vector).to_s,
                               I18n.transliterate(match_like).to_s)
         elsif tipo(campo) == :date || tipo(campo) == :datetime

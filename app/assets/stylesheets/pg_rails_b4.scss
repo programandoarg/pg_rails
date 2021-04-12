@@ -3,6 +3,8 @@
 @import "bootstrap-4.4.1/bootstrap";
 @import 'pg_rails/pg_rails';
 
+.tooltip { pointer-events: none; }
+
 .form-group.asociacion_creable {
   button {
     font-size: 11px;

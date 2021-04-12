@@ -20,6 +20,14 @@ $ bundle
 ### Asociación creable
 
 ```
+f.asociacion_creable(campo, index_url, new_url, opciones)
+```
+
+Opciones:
+- label: Texto para la label o false para que no haya label
+
+Ejemplo:
+```
 = pg_form_for(@cosa) do |f|
   = f.asociacion_creable(:categoria_de_cosa, categoria_de_cosas_url, new_categoria_de_cosa_url, crear_asociado: true)
 ```

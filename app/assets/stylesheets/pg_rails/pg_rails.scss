@@ -135,6 +135,16 @@
   opacity: 1;
 }
 
+.editar_en_lugar_v2 form {
+  display: inline-block!important;
+}
+.editar_en_lugar_v2 input {
+  display: inline-block;
+}
+.editar_en_lugar_v2 input[type=submit] {
+  margin-left: 10px;
+}
+
 .pg_ajax_link {
   cursor: pointer;
   color: #337ab7;
