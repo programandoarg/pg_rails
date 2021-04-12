@@ -134,3 +134,13 @@
 .editar_en_lugar_v2:hover::after {
   opacity: 1;
 }
+
+.pg_ajax_link {
+  cursor: pointer;
+  color: #337ab7;
+  text-decoration: none;
+}
+.pg_ajax_link:hover {
+  color: #23527c;
+  text-decoration: underline;
+}

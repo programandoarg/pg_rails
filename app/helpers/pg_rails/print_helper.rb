@@ -5,13 +5,28 @@ module PgRails
     class FechaInvalidaError < StandardError
     end
 
-    def mostrar_con_link(objeto)
-      return unless objeto.present?
+    # Genera un falso link que al clickear carga la url por ajax
+    # Es igual a los links con remote: true, pero evita que abran el link en otra
+    # pestaña. Movido de probella
+    def pg_ajax_link(url, options = {})
+      content_tag :span, class: 'pg_ajax_link', data: options.merge(url: url) do
+        block_given? ? yield : ''
+      end
+    end
 
-      if policy(objeto).show?
-        link_to truncate_title(block_given? ? yield : objeto), objeto
-      else
-        truncate_title(block_given? ? yield : objeto)
+    def mostrar_con_link(objeto, options = {})
+      if objeto.present?
+        if policy(objeto).show?
+          content = truncate_title(block_given? ? yield : objeto)
+          if options[:new_tab]
+            content += "&nbsp;<i class='fa fa-external-link'>".html_safe
+            link_to content.html_safe, objeto, target: :_blank
+          else
+            link_to content.html_safe, objeto
+          end
+        else
+          truncate_title(block_given? ? yield : objeto)
+        end
       end
     end
 

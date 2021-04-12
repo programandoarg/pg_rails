@@ -112,6 +112,12 @@ window.PgRails = new function() {
       var url_get = $(this).data('url') + "?"+filtros;
       window.location.href = url_get;
     })
+    contexto.find('.pg_ajax_link:not(.bindeado)').each(function(i, elem) {
+      $(this).addClass('bindeado');
+      $(this).click(function() {
+        $.get($(this).data('url'))
+      })
+    });
   }
 
   pg_rails.insert_options = function(element, options, default_option, template_id, atributo_nombre) {
