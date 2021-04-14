@@ -10,3 +10,4 @@
 //= require jquery.form.min.js
 //= require handlebars-4.7.6.min
 //= require chosen
+//= require pg_rails/best_in_place_datepicker
