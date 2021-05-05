@@ -20,11 +20,10 @@ module PgRails
 
     protected
 
-      # TODO: actualizar otros proyectos
       def pg_respond_update(object: nil, extra_js: nil)
         object ||= instancia_modelo
         respond_to do |format|
-          if @saved = object.save
+          if (@saved = object.save)
             format.html do
               redirect_to object.decorate.target_object, notice: "#{@clase_modelo.nombre_singular} actualizadx."
             end
@@ -41,11 +40,10 @@ module PgRails
         end
       end
 
-        # TODO: actualizar otros proyectos
       def pg_respond_create(object: nil, extra_js: nil)
         object ||= instancia_modelo
         respond_to do |format|
-          if @saved = object.save
+          if (@saved = object.save)
             format.html do
               redirect_to object.decorate.target_object, notice: "#{@clase_modelo.nombre_singular} creadx."
             end

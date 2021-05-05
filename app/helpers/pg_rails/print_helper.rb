@@ -15,18 +15,18 @@ module PgRails
     end
 
     def mostrar_con_link(objeto, options = {})
-      if objeto.present?
-        if policy(objeto).show?
-          content = truncate_title(block_given? ? yield : objeto)
-          if options[:new_tab]
-            content += "&nbsp;<i class='fa fa-external-link'>".html_safe
-            link_to content.html_safe, objeto, target: :_blank
-          else
-            link_to content.html_safe, objeto
-          end
+      return unless objeto.present?
+
+      if policy(objeto).show?
+        content = truncate_title(block_given? ? yield : objeto)
+        if options[:new_tab]
+          content += "&nbsp;<i class='fa fa-external-link'>".html_safe
+          link_to content.html_safe, objeto, target: :_blank
         else
-          truncate_title(block_given? ? yield : objeto)
+          link_to content.html_safe, objeto
         end
+      else
+        truncate_title(block_given? ? yield : objeto)
       end
     end
 
