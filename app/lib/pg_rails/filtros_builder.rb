@@ -242,7 +242,7 @@ module PgRails
 
     def filtro_texto(campo, placeholder = '')
       content_tag :div, class: 'filter' do
-        content_tag :div, class: 'input-group', style: 'width:230px' do
+        content_tag :div, class: 'input-group' do
           text_field_tag(
             campo, parametros_controller[campo], class: 'form-control', placeholder: placeholder, autocomplete: 'off'
           ) + content_tag(:div, class: 'input-group-append input-group-btn') do
@@ -256,7 +256,7 @@ module PgRails
 
     def filtro_checkbox(campo)
       content_tag :div, class: 'filter' do
-        content_tag :div, class: 'input-group', style: 'width:230px' do
+        content_tag :div, class: 'input-group' do
           check_box_tag(
             campo, parametros_controller[campo], false, class: 'form-control'
           )
@@ -266,7 +266,7 @@ module PgRails
 
     def filtro_fecha(campo, placeholder = '')
       content_tag :div, class: 'filter' do
-        content_tag :div, class: 'input-group', style: 'width:230px' do
+        content_tag :div, class: 'input-group' do
           text_field_tag(
             campo, parametros_controller[campo], class: 'form-control datefield', placeholder: placeholder, autocomplete: 'off'
           ) + content_tag(:div, class: 'input-group-append input-group-btn') do
