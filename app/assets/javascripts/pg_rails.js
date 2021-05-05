@@ -103,8 +103,12 @@ window.PgRails = new function() {
       $(contexto).find('select[multiple=multiple]').selectize();
     }
     if( typeof($.fn.chosen) == 'function' ) {
-      $(contexto).find(".chosen-select").chosen('destroy');
-      $(contexto).find(".chosen-select").chosen();
+      $(contexto).find(".chosen-select:visible").chosen('destroy');
+      $(contexto).find(".chosen-select:visible").chosen();
+      contexto.on('shown.bs.collapse', function() {
+        // Cuando hay un chosen en un collapse, lo inicializo al mostrarse
+        contexto.find('.chosen-select:visible').chosen();
+      })
     }
     $(contexto).find('form').dependent_fields();
     $(contexto).find('.exportar').click(function() {
