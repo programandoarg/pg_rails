@@ -30,7 +30,7 @@ module PgRails
             format.json { render json: object.decorate }
           else
             format.html { render :edit }
-            format.json { render json: object.errors }
+            format.json { render json: object.errors, status: :unprocessable_entity }
           end
         end
       end
