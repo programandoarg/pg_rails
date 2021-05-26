@@ -1,5 +1,11 @@
 @import 'pg_rails/pg_chosen';
 
+// Google Maps Places API
+// Para que funcione en los modales
+.pac-container {
+  z-index: 1051 !important;
+}
+
 .simple_form {
   .ocultar {
     input, select, textarea {

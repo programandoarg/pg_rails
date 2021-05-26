@@ -1,0 +1,7 @@
+var options = {
+  dataType: 'script',
+  beforeSubmit: function(arr, form, options) {
+    return form.valid();
+  }
+}
+$('.modal').find('form').ajaxForm(options);

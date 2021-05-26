@@ -20,10 +20,11 @@ module PgRails
 
     protected
 
-      def pg_respond_update(object = nil)
+      # TODO: actualizar otros proyectos
+      def pg_respond_update(object: nil, extra_js: nil)
         object ||= instancia_modelo
         respond_to do |format|
-          if object.save
+          if @saved = object.save
             format.html do
               redirect_to object.decorate.target_object, notice: "#{@clase_modelo.nombre_singular} actualizadx."
             end
@@ -32,13 +33,19 @@ module PgRails
             format.html { render :edit }
             format.json { render json: object.errors, status: :unprocessable_entity }
           end
+          format.js do
+            render '_cerrar_modal', locals: {
+              contenido: 'form', extra_js: ['modal_ajax_form', extra_js]
+            }
+          end
         end
       end
 
-      def pg_respond_create(object = nil)
+        # TODO: actualizar otros proyectos
+      def pg_respond_create(object: nil, extra_js: nil)
         object ||= instancia_modelo
         respond_to do |format|
-          if object.save
+          if @saved = object.save
             format.html do
               redirect_to object.decorate.target_object, notice: "#{@clase_modelo.nombre_singular} creadx."
             end
@@ -46,6 +53,11 @@ module PgRails
           else
             format.html { render :new }
             format.json { render json: object.errors.full_messages, status: :unprocessable_entity }
+          end
+          format.js do
+            render '_cerrar_modal', locals: {
+              contenido: 'form', extra_js: ['modal_ajax_form', extra_js]
+            }
           end
         end
       end
