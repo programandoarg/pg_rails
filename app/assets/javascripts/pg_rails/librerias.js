@@ -9,4 +9,4 @@
 //= require jquery_nested_form
 //= require jquery.form.min.js
 //= require handlebars-4.7.6.min
-//= require chosen
+//= require chosen-jquery
