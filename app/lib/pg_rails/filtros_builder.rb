@@ -96,8 +96,12 @@ module PgRails
       else
         columna = @clase_modelo.columns.find { |c| c.name == nombre_campo.to_s }
         if columna.nil?
-          Rails.logger.warn("no existe el campo: #{nombre_campo}")
-          return
+          if campo.match(/fecha/)
+            return :date
+          else
+            Rails.logger.warn("no existe el campo: #{nombre_campo}")
+            return
+          end
         end
         columna.type
       end
