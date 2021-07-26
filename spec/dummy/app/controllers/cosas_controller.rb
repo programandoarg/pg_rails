@@ -12,7 +12,16 @@ class CosasController < ApplicationController
   add_breadcrumb Cosa.nombre_plural, :cosas_path
 
   def index
-    @cosas = filtros_y_policy %i[nombre tipo categoria_de_cosa]
+    @filtros = PgRails::FiltrosBuilder.new(
+      self, clase_modelo, %i[nombre tipo categoria_de_cosa]
+    )
+    scope = policy_scope(clase_modelo)
+
+    @filtros.scope_asociacion(:categoria_de_cosa) do |scope|
+      scope.limit(3)
+    end
+
+    @cosas = @filtros.filtrar(scope)
 
     pg_respond_index(@cosas)
   end

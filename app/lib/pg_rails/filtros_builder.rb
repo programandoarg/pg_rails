@@ -28,6 +28,11 @@ module PgRails
       @filtros[campo][:query] = block
     end
 
+    def scope_asociacion(campo, &block)
+      @filtros[campo] = {} if @filtros[campo].nil?
+      @filtros[campo][:scope_asociacion] = block
+    end
+
     def algun_filtro_presente?
       @campos.any? { |campo| parametros_controller[campo].present? }
     end
@@ -209,6 +214,10 @@ module PgRails
       # Filtro soft deleted, y sea con paranoia o con discard
       scope = scope.without_deleted if scope.respond_to?(:without_deleted)
       scope = scope.kept if scope.respond_to?(:kept)
+
+      if @filtros[campo.to_sym][:scope_asociacion].present?
+        scope = @filtros[campo.to_sym][:scope_asociacion].call(scope)
+      end
 
       map = scope.map { |o| [o.to_s, o.id] }
 
