@@ -3,7 +3,7 @@ window.AsociacionCreable = new function() {
   asociacion_creable.bindear = function(contexto) {
     $(contexto).find('.crear_asociado').off('click').click(function() {
       var boton_crear = this;
-      $.get($(this).data('url') + ".js").done(function(response) {
+      $.get($(this).data('url') + "?sin_layout=true").done(function(response) {
         var modal = pg_rails.abrir_modal(response);
         PgRails.bindear(modal);
         modal.find('form').on('ajax:before', function(e) {
