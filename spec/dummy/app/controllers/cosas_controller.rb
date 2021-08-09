@@ -17,8 +17,8 @@ class CosasController < ApplicationController
     )
     scope = policy_scope(clase_modelo)
 
-    @filtros.scope_asociacion(:categoria_de_cosa) do |scope|
-      scope.limit(3)
+    @filtros.scope_asociacion(:categoria_de_cosa) do |query|
+      query.limit(3)
     end
 
     @cosas = @filtros.filtrar(scope)
