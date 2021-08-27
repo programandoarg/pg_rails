@@ -24,7 +24,7 @@ commands:
           keys:
             - bundle-v1-{{ arch }}-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
             - bundle-v1-{{ arch }}-{{ checksum ".ruby-version" }}-
-      - run: sudo apt-get update && sudo apt-get install -y libmagic-dev # libmagic (requerido por carrierwave-magic)
+      - run: sudo apt-get --allow-releaseinfo-change update && sudo apt-get install -y libmagic-dev
       - run:
           name: Install Ruby Dependencies
           command: |
