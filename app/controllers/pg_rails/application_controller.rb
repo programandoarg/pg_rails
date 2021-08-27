@@ -143,15 +143,19 @@ module PgRails
         raise 'implementar en subclase'
       end
 
+      def buscar_instancia
+        if Object.const_defined?('FriendlyId') && @clase_modelo.is_a?(FriendlyId)
+          @clase_modelo.friendly.find(params[:id])
+        else
+          @clase_modelo.find(params[:id])
+        end
+      end
+
       def set_instancia_modelo
         if action_name.in? %w[new create]
           self.instancia_modelo = @clase_modelo.new(modelo_params)
         else
-          self.instancia_modelo = if @clase_modelo.is_a?(FriendlyId)
-                                    @clase_modelo.friendly.find(params[:id])
-                                  else
-                                    @clase_modelo.find(params[:id])
-                                  end
+          self.instancia_modelo = buscar_instancia
 
           instancia_modelo.assign_attributes(modelo_params) if action_name.in? %w[update]
         end
