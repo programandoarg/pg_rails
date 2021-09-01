@@ -94,6 +94,10 @@ module PgRails
       number_with_precision(number, delimiter: ',', separator: '.', precision: 2)
     end
 
+    def print_number_coma(number)
+      number_with_precision(number, delimiter: '.', separator: ',', precision: 2)
+    end
+
     def print_boolean(boolean)
       return if boolean.nil?
       return 'Si' if boolean
