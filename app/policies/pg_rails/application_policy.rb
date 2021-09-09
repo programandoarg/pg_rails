@@ -91,9 +91,13 @@ module PgRails
     end
 
     def objeto_borrado?
-      return false unless record.respond_to?(:deleted?)
-
-      record.deleted?
+      if record.respond_to?(:deleted?)
+        record.deleted?
+      elsif record.respond_to?(:discarded?)
+        record.discarded?
+      else
+        false
+      end
     end
   end
 end
