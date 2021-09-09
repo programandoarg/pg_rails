@@ -75,6 +75,20 @@ module PgRails
           condicion += " OR unaccent(CONCAT(#{campo_tabla})) ILIKE unaccent(?)"
           query = query.where(condicion, I18n.transliterate(match_vector).to_s,
                               I18n.transliterate(match_like).to_s)
+        elsif tipo(campo) == :boolean
+          if campo.to_s == 'discarded'
+            # Si el nombre del campo es 'discarded' entonces no es un campo
+            # real sino filtro booleano por presencia de discarded_at
+            case parametros[campo]
+            when 'si'
+              query = query.unscope(where: :discarded_at).where("#{@clase_modelo.table_name}.discarded_at IS NOT NULL")
+            when 'no'
+              query = query.unscope(where: :discarded_at).where("#{@clase_modelo.table_name}.discarded_at IS NULL")
+            end
+          else
+            # Si no simplemente hago la query por booleano
+            query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo] == 'si')
+          end
         elsif tipo(campo) == :date || tipo(campo) == :datetime
           begin
             fecha = Date.parse(parametros[campo])
@@ -102,6 +116,10 @@ module PgRails
         columna = @clase_modelo.columns.find { |c| c.name == nombre_campo.to_s }
         if columna.nil?
           return :date if campo.match(/fecha/)
+
+          # Si el nombre del campo es 'discarded' entonces no es un campo
+          # real sino filtro booleano por presencia de discarded_at
+          return :boolean if campo.to_s == 'discarded'
 
           Rails.logger.warn("no existe el campo: #{nombre_campo}")
           return
@@ -172,7 +190,7 @@ module PgRails
                when :date, :datetime
                  filtro_fecha(campo, placeholder_campo(campo))
                when :boolean
-                 filtro_checkbox(campo)
+                 filtro_boolean(campo, placeholder_campo(campo))
                else
                  filtro_texto(campo, placeholder_campo(campo))
                end
@@ -265,13 +283,15 @@ module PgRails
       end
     end
 
-    def filtro_checkbox(campo)
+    def filtro_boolean(campo, placeholder = '')
+      map = [%w[Si si], %w[No no]]
+      unless @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:include_blank] == false
+        map.unshift ["¿#{placeholder.titleize}?",
+                     nil]
+      end
+      default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
       content_tag :div, class: 'filter' do
-        content_tag :div, class: 'input-group' do
-          check_box_tag(
-            campo, parametros_controller[campo], false, class: 'form-control'
-          )
-        end
+        select_tag campo, options_for_select(map, default), class: 'form-control pg-input-lg'
       end
     end
 
