@@ -41,7 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'nested_form'
   spec.add_dependency 'pg'
   spec.add_dependency 'pundit'
-  spec.add_dependency 'rails', '~> 6.1'
+  spec.add_dependency 'rails', '~> 6.1.4'
   spec.add_dependency 'rails-assets-chosen'
   spec.add_dependency 'rails-i18n'
   spec.add_dependency 'rainbow'
