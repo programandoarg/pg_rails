@@ -8,8 +8,8 @@ GIT
 
 GIT
   remote: https://github.com/mrosso10/smart_listing.git
-  revision: 7230bb4c2dc38a9ee88b5d7ce922daf4450713bc
-  ref: 7230bb4c2dc38a9ee88b5d7ce922daf4450713bc
+  revision: 152972758263f7d8688ade59ccc68beb7fca1c20
+  ref: 152972758263f7d8688ade59ccc68beb7fca1c20
   specs:
     smart_listing (1.2.3)
       coffee-rails
@@ -164,7 +164,7 @@ GEM
     enumerize (2.4.0)
       activesupport (>= 3.2)
     erubi (1.10.0)
-    execjs (2.7.0)
+    execjs (2.8.1)
     factory_bot (6.1.0)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.1.0)

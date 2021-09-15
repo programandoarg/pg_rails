@@ -13,8 +13,9 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
-# gem 'smart_listing', git: 'https://github.com/mrosso10/smart_listing.git', ref: '2f2e94da0b057ae003d9ffec66e9bde2a985f39f'
-gem 'smart_listing', git: 'https://github.com/mrosso10/smart_listing.git', ref: '7230bb4c2dc38a9ee88b5d7ce922daf4450713bc'
+gem 'smart_listing', git: 'https://github.com/mrosso10/smart_listing.git', ref: '152972758263f7d8688ade59ccc68beb7fca1c20'
+# gem 'smart_listing', path: '/proyectos/tmp/smart_listing'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-jquery-validation'
 end
