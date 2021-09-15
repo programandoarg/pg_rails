@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/mrosso10/smart_listing.git
-  revision: f4ae4db3ba09aaff93b6867669b70bc563c37674
-  tag: v2.0.0
+  revision: 152972758263f7d8688ade59ccc68beb7fca1c20
+  ref: 152972758263f7d8688ade59ccc68beb7fca1c20
   specs:
     smart_listing (1.2.3)
       coffee-rails
