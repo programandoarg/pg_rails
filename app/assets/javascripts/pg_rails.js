@@ -301,7 +301,8 @@ $(document).on('nested:fieldAdded', function(event){
 $(document).ready(function() {
   $(window).keydown(function(event){
     if(event.keyCode == 13) {
-      if( event.target.tagName == 'INPUT' ) {
+      if( event.target.tagName == 'INPUT' && $(event.target).attr('type') != 'submit' &&
+          !$(event.target).hasClass('allow-enter-submit')) {
         event.preventDefault();
         return false;
       }
