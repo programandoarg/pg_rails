@@ -3,8 +3,8 @@
 module PgRails
   class ApplicationController < ActionController::Base
     include Pundit
-    include SmartListing::Helper::ControllerExtensions
-    helper  SmartListing::Helper
+    # include SmartListing::Helper::ControllerExtensions
+    # helper  SmartListing::Helper
     include PrintHelper
     include PostgresHelper
 
@@ -85,9 +85,10 @@ module PgRails
           respond_to do |format|
             format.html do
               if redirect_url.present?
-                redirect_to redirect_url, notice: 'Elemento borrado.'
+                # redirect_to redirect_url, notice: 'Elemento borrado.', status: 303
+                redirect_back(fallback_location: root_path, notice: 'Elemento borrado.', status: 303)
               else
-                redirect_back(fallback_location: root_path, notice: 'Elemento borrado.')
+                redirect_back(fallback_location: root_path, notice: 'Elemento borrado.', status: 303)
               end
             end
             format.json { head :no_content }
@@ -100,11 +101,11 @@ module PgRails
                 render destroy_error_details_view
               else
                 flash[:error] = @error_message
-                if redirect_url.present?
-                  redirect_to redirect_url
-                else
-                  redirect_back(fallback_location: root_path)
-                end
+                # if redirect_url.present?
+                #   redirect_to redirect_url
+                # else
+                redirect_back(fallback_location: root_path, status: 303)
+                # end
               end
             end
             format.json { render json: { error: @error_message }, status: :unprocessable_entity }
@@ -160,7 +161,7 @@ module PgRails
           instancia_modelo.assign_attributes(modelo_params) if action_name.in? %w[update]
         end
 
-        instancia_modelo.current_user = current_user
+        instancia_modelo.current_user = current_usuario
 
         authorize instancia_modelo
 

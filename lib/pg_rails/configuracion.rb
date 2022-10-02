@@ -6,17 +6,17 @@ module PgRails
                   :boton_show, :boton_light, :icono_destroy, :icono_edit, :icono_show, :boton_export, :bootstrap_version
 
     def initialize
-      @sistema_iconos = 'fa'
+      @sistema_iconos = 'bi'
       @clase_botones_chicos = 'btn-sm'
-      @boton_destroy = 'danger'
+      @boton_destroy = 'light'
       @boton_export = 'warning'
-      @boton_edit = 'info'
-      @boton_show = 'primary'
+      @boton_edit = 'light'
+      @boton_show = 'light'
       @boton_light = 'light'
-      @icono_destroy = 'trash'
-      @icono_edit = 'edit'
-      @icono_show = 'eye'
-      @bootstrap_version = 4
+      @icono_destroy = 'trash-fill'
+      @icono_edit = 'pencil'
+      @icono_show = 'eye-fill'
+      @bootstrap_version = 5
     end
   end
 end
