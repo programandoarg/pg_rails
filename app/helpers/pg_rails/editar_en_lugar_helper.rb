@@ -64,10 +64,10 @@ module PgRails
       best_in_place objeto, atributo, options
     end
 
-    def encabezado(smart_listing, campo, options = {})
+    def encabezado(campo, options = {})
       clase = (options[:clase] || @clase_modelo)
       if options[:ordenable]
-        smart_listing.sortable clase.human_attribute_name(campo), campo
+        clase.human_attribute_name(campo)
       else
         clase.human_attribute_name(campo)
       end

@@ -2,12 +2,38 @@
 - content_for :actions do
   = @clase_modelo.new.decorate.new_link
   = @clase_modelo.new.decorate.export_link(<%= plural_table_name %>_path(format: 'xlsx'))
-.form-wrapper
-  = smart_listing_controls_for(:<%= plural_name %>) do |c|
-    = @filtros.filtros_html
 
-  .card.float-e-margins
-    .card-header
-      h5 Listado de #{@clase_modelo.nombre_plural.downcase}
-    .card-body
-      = smart_listing_render(:<%= plural_name %>, data: { href: <%= plural_table_name %>_path })
+/ = smart_listing_controls_for(:<%= plural_name %>) do |c|
+  = @filtros.filtros_html
+
+h5 Listado de #{@clase_modelo.nombre_plural.downcase}
+
+- if @<%= plural_name %>.any?
+  .table-responsive
+    table.table.table-striped.table-sm.listado.pg-revert-width
+      thead
+        tr
+  <%- for attribute in attributes -%>
+          th = encabezado :<%= attribute.name %>, ordenable: true
+  <%- end -%>
+          th
+      tbody
+        - @<%= plural_name %>.each do |<%= singular_name %>|
+          - <%= singular_name %> = <%= singular_name %>.decorate
+          tr id="#{dom_id(<%= singular_name %>)}"
+  <%- for attribute in attributes -%>
+            td = <%= singular_name %>.<%= attribute.name %>
+  <%- end -%>
+            td.text-nowrap.text-end.ps-5
+              = <%= singular_name %>.show_link
+              = <%= singular_name %>.edit_link
+              = <%= singular_name %>.destroy_link
+- else
+  p No hay #{@clase_modelo.nombre_plural.downcase} que mostrar
+
+= paginate(@<%= plural_name %>)
+.text-center
+  = page_entries_info @<%= plural_name %>
+
+= render_turbo_stream_title
+= render_turbo_stream_flash_messages

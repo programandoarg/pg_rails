@@ -35,6 +35,15 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
 
   invoke :pg_pundit
 
+  def print_output
+    puts "
+!!! Agregar al locale: es.yml:
+#{singular_table_name}:
+  one: #{singular_table_name.titleize}
+  other: #{plural_table_name.titleize}
+"
+  end
+
   private
 
     def atributos_a_filtrar

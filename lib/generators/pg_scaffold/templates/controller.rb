@@ -33,7 +33,8 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def edit
-    add_breadcrumb @<%= singular_name %>
+    add_breadcrumb @<%= singular_name %>, @<%= singular_name %>
+    add_breadcrumb "Editando"
   end
 
   def create
@@ -51,12 +52,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   private
 
     def render_smart_listing
-      smart_listing(:<%= plural_name %>, @<%= plural_name %>, '<%= ruta_vistas %>/listing',
-                    sort_attributes: [
-                      <%- for attribute in attributes -%>
-                      [:<%= attribute.name %>, '<%= attribute.name %>'],
-                      <%- end -%>
-                    ])
+      @<%= plural_name %> = @<%= plural_name %>.page(params[:page]).per(20)
     end
 
     def atributos_permitidos
