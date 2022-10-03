@@ -18,6 +18,13 @@ module PgRails
       klass.helper :all
     end
 
+    helper_method :mobile_device?
+
+    def mobile_device?
+      request.user_agent =~ /Mobile|webOS/
+    end
+
+
     protected
 
       def pg_respond_update(object: nil, extra_js: nil)

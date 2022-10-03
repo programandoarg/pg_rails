@@ -39,6 +39,11 @@
   background-color: lightgrey;
 }
 
+.listado {
+  td, th {
+    padding: 0.25rem 1rem;
+  }
+}
 .listado .btn-xs {
   margin-right: 4px;
 }
@@ -101,7 +106,7 @@
 .filter {
   display: inline-block;
   margin-right: 10px;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   vertical-align: top;
   min-width: 200px;
 
@@ -187,3 +192,4 @@
 .pg-revert-width {
   width: revert;
 }
+

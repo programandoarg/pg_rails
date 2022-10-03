@@ -246,10 +246,10 @@ module PgRails
       content_tag :div, class: 'filter' do
         if multiple
           select_tag campo, options_for_select(map, default), multiple: true,
-                                                              class: 'form-select selectize pg-input-lg'
+                                                              class: 'form-select form-select-sm selectize pg-input-lg'
         else
           select_tag campo, options_for_select(map, default),
-                     class: 'form-select chosen-select pg-input-lg'
+                     class: 'form-select form-select-sm chosen-select pg-input-lg'
         end
       end
     end
@@ -265,14 +265,14 @@ module PgRails
       end
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
       content_tag :div, class: 'filter' do
-        select_tag campo, options_for_select(map, default), class: 'form-select pg-input-lg'
+        select_tag campo, options_for_select(map, default), class: 'form-select form-select-sm pg-input-lg'
       end
     end
 
     def filtro_texto(campo, placeholder = '')
-      content_tag :div, class: 'filter' do
+      content_tag :div, class: 'filter mb-2' do
         text_field_tag(
-          campo, parametros_controller[campo], class: 'form-control allow-enter-submit', placeholder: placeholder, autocomplete: 'off'
+          campo, parametros_controller[campo], class: 'form-control form-control-sm allow-enter-submit', placeholder: placeholder, autocomplete: 'off'
         )
       end
     end
@@ -285,7 +285,7 @@ module PgRails
       end
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
       content_tag :div, class: 'filter' do
-        select_tag campo, options_for_select(map, default), class: 'form-select pg-input-lg'
+        select_tag campo, options_for_select(map, default), class: 'form-select form-select-sm pg-input-lg'
       end
     end
 

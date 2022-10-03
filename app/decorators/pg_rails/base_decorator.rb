@@ -77,7 +77,7 @@ module PgRails
       helpers.content_tag :span, rel: :tooltip, title: 'Crear' do
         helpers.link_to new_object_url, class: "btn #{_config.clase_botones_chicos} btn-primary", remote: options[:remote] do
           helpers.content_tag(:span, nil,
-                              class: clase_icono('plus').to_s) + " Crear #{object.class.nombre_singular.downcase}"
+                              class: clase_icono('plus').to_s) + "<span class='d-none d-sm-inline'> Crear #{object.class.nombre_singular.downcase}</span>".html_safe
         end
       end
     end

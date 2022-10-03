@@ -6,16 +6,17 @@
 
 = form_tag nil, method: :get do
   = @filtros.filtros_html
-  = button_tag class: 'btn btn-primary' do
+  = button_tag class: 'btn btn-sm btn-primary' do
     span.bi.bi-search
-  = link_to empleados_path, class: 'btn btn-secondary ms-1' do
+  = link_to <%= plural_name %>_path, class: 'btn btn-sm btn-secondary ms-1' do
     | Limpiar
 
-h5 Listado de #{@clase_modelo.nombre_plural.downcase}
+/ h5 Listado de #{@clase_modelo.nombre_plural.downcase}
 
 - if @<%= plural_name %>.any?
   .table-responsive
     table.table.table-striped.table-sm.listado.pg-revert-width
+      caption = page_entries_info @<%= plural_name %>
       thead
         tr
   <%- for attribute in attributes -%>
@@ -37,8 +38,6 @@ h5 Listado de #{@clase_modelo.nombre_plural.downcase}
   p No hay #{@clase_modelo.nombre_plural.downcase} que mostrar
 
 = paginate(@<%= plural_name %>)
-.text-center
-  = page_entries_info @<%= plural_name %>
 
 = render_turbo_stream_title
 = render_turbo_stream_flash_messages
