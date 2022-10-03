@@ -1,43 +1,47 @@
 - content_for(:title, @clase_modelo.nombre_plural)
 - content_for :actions do
+  button.btn.btn-sm.btn-primary type="button" data-bs-toggle="collapse" data-bs-target="#filtros" aria-expanded="false" aria-controls="filtros"
+    span.bi.bi-funnel-fill
+    span.d-none.d-sm-inline  Filtrar
+  .ms-1
   = @clase_modelo.new.decorate.new_link
   .ms-1
   = @clase_modelo.new.decorate.export_link(<%= plural_table_name %>_path(format: 'xlsx'))
+.collapse.p-2.border-bottom#filtros
+  .d-flex.align-items-center
+    .px-2.d-none.d-sm-inline-block
+      span.bi.bi-funnel-fill
+    = form_tag nil, class: '', method: :get, data: { turbo_frame: :<%= plural_name %> } do
+      = @filtros.filtros_html
+      = button_tag class: 'btn btn-sm btn-primary mb-2' do
+        span.bi.bi-search
+      = link_to <%= plural_name %>_path, class: 'btn btn-sm btn-secondary ms-1 mb-2' do
+        | Limpiar
 
-= form_tag nil, method: :get do
-  = @filtros.filtros_html
-  = button_tag class: 'btn btn-sm btn-primary' do
-    span.bi.bi-search
-  = link_to <%= plural_name %>_path, class: 'btn btn-sm btn-secondary ms-1' do
-    | Limpiar
+= turbo_frame_tag :<%= plural_name %>
+  - if @<%= plural_name %>.any?
+    .table-responsive
+      table.table.table-sm.listado.xpg-revert-width
+        caption.ps-3 = page_entries_info @<%= plural_name %>
+        thead.table-light
+          tr
+    <%- for attribute in attributes -%>
+            th = encabezado :<%= attribute.name %>, ordenable: true
+    <%- end -%>
+            th
+        tbody
+          - @<%= plural_name %>.each do |<%= singular_name %>|
+            - <%= singular_name %> = <%= singular_name %>.decorate
+            tr id="#{dom_id(<%= singular_name %>)}"
+    <%- for attribute in attributes -%>
+              td = <%= singular_name %>.<%= attribute.name %>
+    <%- end -%>
+              td.text-nowrap.text-end.ps-5
+                = <%= singular_name %>.show_link
+                = <%= singular_name %>.edit_link
+                = <%= singular_name %>.destroy_link
 
-/ h5 Listado de #{@clase_modelo.nombre_plural.downcase}
-
-- if @<%= plural_name %>.any?
-  .table-responsive
-    table.table.table-striped.table-sm.listado.pg-revert-width
-      caption = page_entries_info @<%= plural_name %>
-      thead
-        tr
-  <%- for attribute in attributes -%>
-          th = encabezado :<%= attribute.name %>, ordenable: true
-  <%- end -%>
-          th
-      tbody
-        - @<%= plural_name %>.each do |<%= singular_name %>|
-          - <%= singular_name %> = <%= singular_name %>.decorate
-          tr id="#{dom_id(<%= singular_name %>)}"
-  <%- for attribute in attributes -%>
-            td = <%= singular_name %>.<%= attribute.name %>
-  <%- end -%>
-            td.text-nowrap.text-end.ps-5
-              = <%= singular_name %>.show_link
-              = <%= singular_name %>.edit_link
-              = <%= singular_name %>.destroy_link
-- else
-  p No hay #{@clase_modelo.nombre_plural.downcase} que mostrar
-
-= paginate(@<%= plural_name %>)
-
-= render_turbo_stream_title
-= render_turbo_stream_flash_messages
+    .ps-3.justify-content-center
+      = paginate(@<%= plural_name %>)
+  - else
+    p.m-3 No hay #{@clase_modelo.nombre_plural.downcase} que mostrar
