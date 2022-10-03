@@ -45,7 +45,12 @@ module PgRails
         respond_to do |format|
           if (@saved = object.save)
             format.html do
-              redirect_to object.decorate.target_object, notice: "#{@clase_modelo.nombre_singular} creado."
+              if params[:save_and_next] == 'true'
+                new_path = url_for(@clase_modelo) + "/new"
+                redirect_to new_path, notice: "#{@clase_modelo.nombre_singular} creado."
+              else
+                redirect_to object.decorate.target_object, notice: "#{@clase_modelo.nombre_singular} creado."
+              end
             end
             format.json { render json: object.decorate }
           else
