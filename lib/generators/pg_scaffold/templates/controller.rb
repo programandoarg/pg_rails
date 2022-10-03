@@ -52,7 +52,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   private
 
     def render_smart_listing
-      @<%= plural_name %> = @<%= plural_name %>.page(params[:page]).per(20)
+      @<%= plural_name %> = @<%= plural_name %>.page(params[:page]).per(10)
     end
 
     def atributos_permitidos

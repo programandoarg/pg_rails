@@ -7,18 +7,18 @@
   = @clase_modelo.new.decorate.new_link
   .ms-1
   = @clase_modelo.new.decorate.export_link(<%= plural_table_name %>_path(format: 'xlsx'))
-.collapse.p-2.border-bottom#filtros
+.collapse.p-2.border-bottom#filtros class="#{ 'show' if any_filter? }"
   .d-flex.align-items-center
     .px-2.d-none.d-sm-inline-block
       span.bi.bi-funnel-fill
-    = form_tag nil, class: '', method: :get, data: { turbo_frame: :<%= plural_name %> } do
+    = form_tag nil, class: '', method: :get do
       = @filtros.filtros_html
       = button_tag class: 'btn btn-sm btn-primary mb-2' do
         span.bi.bi-search
       = link_to <%= plural_name %>_path, class: 'btn btn-sm btn-secondary ms-1 mb-2' do
         | Limpiar
 
-= turbo_frame_tag :<%= plural_name %>
+div
   - if @<%= plural_name %>.any?
     .table-responsive
       table.table.table-sm.listado.xpg-revert-width.xborder-end

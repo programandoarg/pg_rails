@@ -24,6 +24,11 @@ module PgRails
       request.user_agent =~ /Mobile|webOS/
     end
 
+    helper_method :any_filter?
+
+    def any_filter?
+      params.keys.reject { |a| a.in? ["controller", "action"] }.any?
+    end
 
     protected
 
@@ -96,9 +101,8 @@ module PgRails
         if destroy_model(model)
           respond_to do |format|
             format.html do
-              if redirect_url.present?
-                # redirect_to redirect_url, notice: 'Elemento borrado.', status: 303
-                redirect_back(fallback_location: root_path, notice: 'Elemento borrado.', status: 303)
+              if request.referer == url_for(model) && redirect_url.present?
+                redirect_to redirect_url, notice: 'Elemento borrado.', status: 303
               else
                 redirect_back(fallback_location: root_path, notice: 'Elemento borrado.', status: 303)
               end
