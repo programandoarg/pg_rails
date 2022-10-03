@@ -42,7 +42,7 @@ module PgRails
       return unless Pundit.policy!(helpers.current_usuario, object).edit?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Editar' do
-        helpers.link_to edit_object_url,
+        helpers.link_to edit_object_url, data: { turbo_frame: :main },
                         class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_edit}" do
           helpers.content_tag(:span, nil, class: clase_icono(_config.icono_edit).to_s) + texto
         end
@@ -53,7 +53,7 @@ module PgRails
       return unless Pundit.policy!(helpers.current_usuario, object).show?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Ver' do
-        helpers.link_to object_url,
+        helpers.link_to object_url, data: { turbo_frame: :main },
                         class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_show}" do
           helpers.content_tag(:span, nil, class: clase_icono(_config.icono_show).to_s) + texto
         end

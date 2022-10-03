@@ -66,7 +66,7 @@ window.PgRails = new function() {
     // $("[rel=tooltip]").tooltip({ boundary: 'window' });
     // $(contexto).find("[rel=tooltip]").tooltip();
     $(contexto).find('form.pg-form').each(function(i,e) {
-      $(e).validate();
+      // $(e).validate();
     });
     if( typeof $.fn.best_in_place == 'function' ) {
       $(contexto).find('table:has(.best_in_place)').css('table-layout', 'fixed');
