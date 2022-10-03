@@ -1,6 +1,7 @@
 //= require pg_rails/validaciones
 //= require pg_rails/asociacion_creable
 
+document.addEventListener("DOMContentLoaded", function(event) { 
 window.PgRails = new function() {
   pg_rails = this
   pg_rails.campo_dependiente_hacer = function(principal, dependiente, valor) {
@@ -61,9 +62,9 @@ window.PgRails = new function() {
         });
       }
     })
-    $('.tooltip').remove();
-    $("[rel=tooltip]").tooltip({ boundary: 'window' });
-    $(contexto).find("[rel=tooltip]").tooltip();
+    // $('.tooltip').remove();
+    // $("[rel=tooltip]").tooltip({ boundary: 'window' });
+    // $(contexto).find("[rel=tooltip]").tooltip();
     $(contexto).find('form.pg-form').each(function(i,e) {
       $(e).validate();
     });
@@ -322,4 +323,6 @@ $(document).ready(function() {
       }
     }
   });
+});
+
 });

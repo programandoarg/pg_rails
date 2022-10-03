@@ -1,10 +1,15 @@
 - content_for(:title, @clase_modelo.nombre_plural)
 - content_for :actions do
   = @clase_modelo.new.decorate.new_link
+  .ms-1
   = @clase_modelo.new.decorate.export_link(<%= plural_table_name %>_path(format: 'xlsx'))
 
-/ = smart_listing_controls_for(:<%= plural_name %>) do |c|
+= form_tag nil, method: :get do
   = @filtros.filtros_html
+  = button_tag class: 'btn btn-primary' do
+    span.bi.bi-search
+  = link_to empleados_path, class: 'btn btn-secondary ms-1' do
+    | Limpiar
 
 h5 Listado de #{@clase_modelo.nombre_plural.downcase}
 

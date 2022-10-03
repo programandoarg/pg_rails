@@ -225,7 +225,7 @@ module PgRails
       nombre_clase = asociacion.options[:class_name]
       nombre_clase = asociacion.name.to_s.camelize if nombre_clase.nil?
       clase_asociacion = Object.const_get(nombre_clase)
-      scope = Pundit.policy_scope!(controller.current_user, clase_asociacion)
+      scope = Pundit.policy_scope!(controller.current_usuario, clase_asociacion)
 
       # Filtro soft deleted, y sea con paranoia o con discard
       scope = scope.without_deleted if scope.respond_to?(:without_deleted)
@@ -246,10 +246,10 @@ module PgRails
       content_tag :div, class: 'filter' do
         if multiple
           select_tag campo, options_for_select(map, default), multiple: true,
-                                                              class: 'form-control selectize pg-input-lg'
+                                                              class: 'form-select selectize pg-input-lg'
         else
           select_tag campo, options_for_select(map, default),
-                     class: 'form-control chosen-select pg-input-lg'
+                     class: 'form-select chosen-select pg-input-lg'
         end
       end
     end
@@ -265,21 +265,15 @@ module PgRails
       end
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
       content_tag :div, class: 'filter' do
-        select_tag campo, options_for_select(map, default), class: 'form-control pg-input-lg'
+        select_tag campo, options_for_select(map, default), class: 'form-select pg-input-lg'
       end
     end
 
     def filtro_texto(campo, placeholder = '')
       content_tag :div, class: 'filter' do
-        content_tag :div, class: 'input-group' do
-          text_field_tag(
-            campo, parametros_controller[campo], class: 'form-control', placeholder: placeholder, autocomplete: 'off'
-          ) + content_tag(:div, class: 'input-group-append input-group-btn') do
-            button_tag class: 'btn btn-outline-secondary disabled', type: :button do
-              content_tag :span, nil, class: 'fa fa-search'
-            end
-          end
-        end
+        text_field_tag(
+          campo, parametros_controller[campo], class: 'form-control allow-enter-submit', placeholder: placeholder, autocomplete: 'off'
+        )
       end
     end
 
@@ -291,21 +285,15 @@ module PgRails
       end
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
       content_tag :div, class: 'filter' do
-        select_tag campo, options_for_select(map, default), class: 'form-control pg-input-lg'
+        select_tag campo, options_for_select(map, default), class: 'form-select pg-input-lg'
       end
     end
 
     def filtro_fecha(campo, placeholder = '')
       content_tag :div, class: 'filter' do
-        content_tag :div, class: 'input-group' do
-          text_field_tag(
-            campo, parametros_controller[campo], class: 'form-control datefield', placeholder: placeholder, autocomplete: 'off'
-          ) + content_tag(:div, class: 'input-group-append input-group-btn') do
-            button_tag class: 'btn btn-outline-secondary disabled', type: :button do
-              content_tag :span, nil, class: 'fa fa-search'
-            end
-          end
-        end
+        text_field_tag(
+          campo, parametros_controller[campo], class: 'form-control datefield', placeholder: placeholder, autocomplete: 'off'
+        )
       end
     end
 

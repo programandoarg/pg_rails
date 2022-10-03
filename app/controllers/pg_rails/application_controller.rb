@@ -25,7 +25,7 @@ module PgRails
         respond_to do |format|
           if (@saved = object.save)
             format.html do
-              redirect_to object.decorate.target_object, notice: "#{@clase_modelo.nombre_singular} actualizadx."
+              redirect_to object.decorate.target_object, notice: "#{@clase_modelo.nombre_singular} actualizado."
             end
             format.json { render json: object.decorate }
           else
@@ -45,7 +45,7 @@ module PgRails
         respond_to do |format|
           if (@saved = object.save)
             format.html do
-              redirect_to object.decorate.target_object, notice: "#{@clase_modelo.nombre_singular} creadx."
+              redirect_to object.decorate.target_object, notice: "#{@clase_modelo.nombre_singular} creado."
             end
             format.json { render json: object.decorate }
           else
