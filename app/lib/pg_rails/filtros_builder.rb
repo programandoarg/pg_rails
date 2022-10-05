@@ -270,10 +270,12 @@ module PgRails
     end
 
     def filtro_texto(campo, placeholder = '')
-      content_tag :div, class: 'filter mb-2' do
-        text_field_tag(
-          campo, parametros_controller[campo], class: 'form-control form-control-sm allow-enter-submit', placeholder: placeholder, autocomplete: 'off'
-        )
+      content_tag :div, class: 'col-auto' do
+        content_tag :div, class: 'filter' do
+          text_field_tag(
+            campo, parametros_controller[campo], class: 'form-control form-control-sm allow-enter-submit', placeholder: placeholder, autocomplete: 'off'
+          )
+        end
       end
     end
 
