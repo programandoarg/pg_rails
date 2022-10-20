@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class PgFormBuilder < NestedForm::SimpleBuilder
+# TODO: fix hackeo
+# class PgFormBuilder < NestedForm::SimpleBuilder
+class PgFormBuilder < SimpleForm::SimpleBuilder
   def mensajes_de_error
     return unless object.errors.present?
 
