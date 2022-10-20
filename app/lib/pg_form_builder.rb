@@ -2,7 +2,7 @@
 
 # TODO: fix hackeo
 # class PgFormBuilder < NestedForm::SimpleBuilder
-class PgFormBuilder < SimpleForm::SimpleBuilder
+class PgFormBuilder < SimpleForm::FormBuilder
   def mensajes_de_error
     return unless object.errors.present?
 
