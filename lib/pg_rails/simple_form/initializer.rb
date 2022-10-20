@@ -160,6 +160,17 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
 
+  # vertical multi select
+  config.wrappers :select_7, tag: 'div', class: 'form-group',
+                                  error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.use :label, class: 'form-control-label'
+    b.use :input, class: 'form-select'
+    # b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+    # b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
   if PgRails.config.bootstrap_version >= 4
     config.wrappers :asociacion_creable, tag: 'div', class: 'asociacion_creable form-group',
                                          error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
@@ -169,9 +180,9 @@ SimpleForm.setup do |config|
       b.wrapper tag: 'div', class: 'input-group' do |ba|
         ba.use :hidden_input
         ba.use :input, class: 'form-control', disabled: true
-        ba.wrapper tag: 'div', class: 'input-group-append' do |append|
+        ba.wrapper tag: 'div', class: 'input-group-append dropdown' do |append|
           append.use :boton, class: 'btn btn-outline-secondary dropdown-toggle', type: :button,
-                             data: { toggle: :dropdown }
+                             data: { bs_toggle: :dropdown }
           append.wrapper class: 'dropdown-menu' do |dropdown|
             dropdown.use :seleccionar_asociado
             dropdown.optional :crear_asociado

@@ -243,13 +243,15 @@ module PgRails
       end
 
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
-      content_tag :div, class: 'filter' do
-        if multiple
-          select_tag campo, options_for_select(map, default), multiple: true,
-                                                              class: 'form-select form-select-sm selectize pg-input-lg'
-        else
-          select_tag campo, options_for_select(map, default),
-                     class: 'form-select form-select-sm chosen-select pg-input-lg'
+      content_tag :div, class: 'col-auto' do
+        content_tag :div, class: 'filter' do
+          if multiple
+            select_tag campo, options_for_select(map, default), multiple: true,
+                                                                class: 'form-select form-select-sm selectize pg-input-lg'
+          else
+            select_tag campo, options_for_select(map, default),
+                       class: 'form-select form-select-sm chosen-select pg-input-lg'
+          end
         end
       end
     end
@@ -264,8 +266,10 @@ module PgRails
                      nil]
       end
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
-      content_tag :div, class: 'filter' do
-        select_tag campo, options_for_select(map, default), class: 'form-select form-select-sm pg-input-lg'
+      content_tag :div, class: 'col-auto' do
+        content_tag :div, class: 'filter' do
+          select_tag campo, options_for_select(map, default), class: 'form-select form-select-sm pg-input-lg'
+        end
       end
     end
 
@@ -292,10 +296,12 @@ module PgRails
     end
 
     def filtro_fecha(campo, placeholder = '')
-      content_tag :div, class: 'filter' do
-        text_field_tag(
-          campo, parametros_controller[campo], class: 'form-control datefield', placeholder: placeholder, autocomplete: 'off'
-        )
+      content_tag :div, class: 'col-auto' do
+        content_tag :div, class: 'filter' do
+          text_field_tag(
+            campo, parametros_controller[campo], class: 'form-control datefield', placeholder: placeholder, autocomplete: 'off'
+          )
+        end
       end
     end
 

@@ -27,7 +27,7 @@ module PgRails
     helper_method :any_filter?
 
     def any_filter?
-      params.keys.reject { |a| a.in? ["controller", "action"] }.any?
+      params.keys.reject { |a| a.in? ["controller", "action", "page"] }.any?
     end
 
     protected
@@ -41,7 +41,7 @@ module PgRails
             end
             format.json { render json: object.decorate }
           else
-            format.html { render :edit }
+            format.html { render :edit, status: :unprocessable_entity }
             format.json { render json: object.errors, status: :unprocessable_entity }
           end
           format.js do
@@ -66,7 +66,7 @@ module PgRails
             end
             format.json { render json: object.decorate }
           else
-            format.html { render :new }
+            format.html { render :new, status: :unprocessable_entity }
             format.json { render json: object.errors.full_messages, status: :unprocessable_entity }
           end
           format.js do

@@ -12,11 +12,12 @@
     .px-2.d-none.d-sm-inline-block
       span.bi.bi-funnel-fill
     = form_tag nil, class: '', method: :get do
-      = @filtros.filtros_html
-      = button_tag class: 'btn btn-sm btn-primary mb-2' do
-        span.bi.bi-search
-      = link_to <%= plural_name %>_path, class: 'btn btn-sm btn-secondary ms-1 mb-2' do
-        | Limpiar
+      .row.g-1
+        = @filtros.filtros_html
+        = button_tag class: 'btn btn-sm btn-primary col-auto' do
+          span.bi.bi-search
+        = link_to <%= plural_name %>_path, class: 'btn btn-sm btn-secondary col-auto' do
+          | Limpiar
 
 div
   - if @<%= plural_name %>.any?
