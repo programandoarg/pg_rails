@@ -290,16 +290,19 @@ module PgRails
                      nil]
       end
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
-      content_tag :div, class: 'filter' do
-        select_tag campo, options_for_select(map, default), class: 'form-select form-select-sm pg-input-lg'
+      content_tag :div, class: 'col-auto' do
+        content_tag :div, class: 'filter' do
+          select_tag campo, options_for_select(map, default), class: 'form-select form-select-sm pg-input-lg'
+        end
       end
     end
 
     def filtro_fecha(campo, placeholder = '')
       content_tag :div, class: 'col-auto' do
         content_tag :div, class: 'filter' do
-          text_field_tag(
-            campo, parametros_controller[campo], class: 'form-control datefield', placeholder: placeholder, autocomplete: 'off'
+          label_tag(nil, placeholder, class: 'text-muted') + \
+          date_field_tag(
+            campo, parametros_controller[campo], class: 'form-control form-control-sm d-inline-block w-auto ms-1', placeholder: placeholder, autocomplete: 'off'
           )
         end
       end

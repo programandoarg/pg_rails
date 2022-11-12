@@ -113,6 +113,8 @@ module PgRails
     end
 
     def print_currency2(number, moneda = 'pesos')
+      return unless number.present?
+
       "#{simbolo_moneda(moneda)} #{number_with_precision(number, delimiter: '.', separator: ',',
                                                                  precision: 2)}"
     end
