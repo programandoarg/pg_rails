@@ -27,7 +27,7 @@ module PgRails
     helper_method :any_filter?
 
     def any_filter?
-      params.keys.reject { |a| a.in? ["controller", "action", "page"] }.any?
+      params.keys.reject { |a| a.in? ["controller", "action", "page", "page_size"] }.any?
     end
 
     protected
@@ -37,7 +37,7 @@ module PgRails
         respond_to do |format|
           if (@saved = object.save)
             format.html do
-              redirect_to object.decorate.target_object, notice: "#{@clase_modelo.nombre_singular} actualizado."
+              redirect_to object.decorate.target_object
             end
             format.json { render json: object.decorate }
           else
@@ -61,7 +61,7 @@ module PgRails
                 new_path = url_for(@clase_modelo) + "/new"
                 redirect_to new_path, notice: "#{@clase_modelo.nombre_singular} creado."
               else
-                redirect_to object.decorate.target_object, notice: "#{@clase_modelo.nombre_singular} creado."
+                redirect_to object.decorate.target_object
               end
             end
             format.json { render json: object.decorate }

@@ -545,7 +545,7 @@ SimpleForm.setup do |config|
   config.wrapper_mappings.merge!({
                                    boolean: :vertical_boolean,
                                    check_boxes: :vertical_collection,
-                                   date: :vertical_multi_select,
+                                   date: :vertical_form,
                                    datetime: :vertical_multi_select,
                                    file: :vertical_file,
                                    radio_buttons: :vertical_collection,
