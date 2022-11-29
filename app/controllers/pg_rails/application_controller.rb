@@ -181,7 +181,7 @@ module PgRails
 
         authorize instancia_modelo
 
-        self.instancia_modelo = instancia_modelo.decorate if action_name.in? %w[show new edit]
+        self.instancia_modelo = instancia_modelo.decorate if action_name.in? %w[show]
       end
 
       def instancia_modelo=(val)
