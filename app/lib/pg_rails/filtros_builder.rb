@@ -183,6 +183,8 @@ module PgRails
         end
 
         res += case tipo(campo)
+               when :select_custom
+                 filtro_select_custom(campo, placeholder_campo(campo))
                when :enumerized
                  filtro_select(campo, placeholder_campo(campo))
                when :asociacion
@@ -261,6 +263,20 @@ module PgRails
         [I18n.t("#{@clase_modelo.to_s.underscore}.#{campo}.#{key}", default: key.humanize),
          key.value]
       end
+      unless @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:include_blank] == false
+        map.unshift ["Seleccionar #{placeholder.downcase}",
+                     nil]
+      end
+      default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
+      content_tag :div, class: 'col-auto' do
+        content_tag :div, class: 'filter' do
+          select_tag campo, options_for_select(map, default), class: 'form-select form-select-sm pg-input-lg'
+        end
+      end
+    end
+
+    def filtro_select_custom(campo, placeholder = '')
+      map = @filtros[campo.to_sym][:opciones]
       unless @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:include_blank] == false
         map.unshift ["Seleccionar #{placeholder.downcase}",
                      nil]
