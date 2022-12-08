@@ -14,18 +14,18 @@ module PgRails
       object.as_json.tap { |o| o[:to_s] = to_s }
     end
 
-    def method_missing(method_name, *args, &block) # rubocop:disable Style/MissingRespondToMissing
-      valor = object.attributes[method_name.to_s]
-      return super unless valor.present?
+    # def method_missing(method_name, *args, &block) # rubocop:disable Style/MissingRespondToMissing
+    #   valor = object.attributes[method_name.to_s]
+    #   return super unless valor.present?
 
-      if valor.instance_of?(Date)
-        dmy(valor)
-      # elsif valor.class == ActiveSupport::TimeWithZone
-      #   dmy_time(valor)
-      else
-        super
-      end
-    end
+    #   if valor.instance_of?(Date)
+    #     dmy(valor)
+    #   # elsif valor.class == ActiveSupport::TimeWithZone
+    #   #   dmy_time(valor)
+    #   else
+    #     super
+    #   end
+    # end
 
     def destroy_link(message = '¿Estás seguro?')
       return unless Pundit.policy!(helpers.current_usuario, object).destroy?
