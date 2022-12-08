@@ -41,6 +41,10 @@ module PgRails
             end
             format.json { render json: object.decorate }
           else
+            format.turbo_stream do
+              flash.now[:error] = object.errors.full_messages.join(', ')
+              render turbo_stream: render_turbo_stream_flash_messages
+            end
             format.html { render :edit, status: :unprocessable_entity }
             format.json { render json: object.errors, status: :unprocessable_entity }
           end
@@ -66,6 +70,10 @@ module PgRails
             end
             format.json { render json: object.decorate }
           else
+            format.turbo_stream do
+              flash.now[:error] = object.errors.full_messages.join(', ')
+              render turbo_stream: render_turbo_stream_flash_messages
+            end
             format.html { render :new, status: :unprocessable_entity }
             format.json { render json: object.errors.full_messages, status: :unprocessable_entity }
           end
