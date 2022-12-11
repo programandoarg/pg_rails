@@ -2,7 +2,7 @@
 
 module PgRails
   class ApplicationController < ActionController::Base
-    include Pundit
+    include Pundit::Authorization
     # include SmartListing::Helper::ControllerExtensions
     # helper  SmartListing::Helper
     include PrintHelper

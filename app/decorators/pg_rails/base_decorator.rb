@@ -4,7 +4,7 @@ module PgRails
   class BaseDecorator < Draper::Decorator
     include ActionView::Helpers
     include PrintHelper
-    include Pundit
+    include Pundit::Authorization
 
     attr_accessor :output_buffer
 
