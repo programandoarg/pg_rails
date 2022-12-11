@@ -109,7 +109,7 @@ module PgRails
         if destroy_model(model)
           respond_to do |format|
             format.html do
-              if request.referer == url_for(model) && redirect_url.present?
+              if redirect_url.present?
                 redirect_to redirect_url, notice: 'Elemento borrado.', status: 303
               else
                 redirect_back(fallback_location: root_path, notice: 'Elemento borrado.', status: 303)
