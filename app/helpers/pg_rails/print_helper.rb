@@ -2,6 +2,8 @@
 
 module PgRails
   module PrintHelper
+    include ActionView::Helpers::NumberHelper
+
     class FechaInvalidaError < StandardError
     end
 
