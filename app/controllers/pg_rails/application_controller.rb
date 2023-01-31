@@ -2,6 +2,7 @@
 
 module PgRails
   class ApplicationController < ActionController::Base
+    include ApplicationHelper
     include Pundit::Authorization
     # include SmartListing::Helper::ControllerExtensions
     # helper  SmartListing::Helper
@@ -185,7 +186,7 @@ module PgRails
           instancia_modelo.assign_attributes(modelo_params) if action_name.in? %w[update]
         end
 
-        instancia_modelo.current_user = current_usuario
+        instancia_modelo.current_user = send(PgRails.configuracion.current_user_method)
 
         authorize instancia_modelo
 

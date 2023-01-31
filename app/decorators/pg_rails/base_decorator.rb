@@ -28,7 +28,7 @@ module PgRails
     # end
 
     def destroy_link(message = '¿Estás seguro?')
-      return unless Pundit.policy!(helpers.current_usuario, object).destroy?
+      return unless Pundit.policy!(helpers.send(PgRails.configuracion.current_user_method), object).destroy?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Eliminar' do
         helpers.link_to object_url, data: { 'turbo-confirm': message, 'turbo-method': :delete },
@@ -39,7 +39,7 @@ module PgRails
     end
 
     def edit_link(texto = '')
-      return unless Pundit.policy!(helpers.current_usuario, object).edit?
+      return unless Pundit.policy!(helpers.send(PgRails.configuracion.current_user_method), object).edit?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Editar' do
         helpers.link_to edit_object_url, data: { turbo_frame: :main },
@@ -50,7 +50,7 @@ module PgRails
     end
 
     def show_link(texto = '')
-      return unless Pundit.policy!(helpers.current_usuario, object).show?
+      return unless Pundit.policy!(helpers.send(PgRails.configuracion.current_user_method), object).show?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Ver' do
         helpers.link_to object_url, data: { turbo_frame: :main },
@@ -61,7 +61,7 @@ module PgRails
     end
 
     def export_link(url, texto = '')
-      return unless Pundit.policy!(helpers.current_usuario, object).export?
+      return unless Pundit.policy!(helpers.send(PgRails.configuracion.current_user_method), object).export?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Exportar' do
         helpers.content_tag :button,
@@ -72,7 +72,7 @@ module PgRails
     end
 
     def new_link(options = {})
-      return unless Pundit.policy!(helpers.current_usuario, object).new?
+      return unless Pundit.policy!(helpers.send(PgRails.configuracion.current_user_method), object).new?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Crear' do
         helpers.link_to new_object_url, class: "btn #{_config.clase_botones_chicos} btn-primary", remote: options[:remote] do
