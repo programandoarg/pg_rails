@@ -1,4 +1,4 @@
-= pg_form_for(@<%= singular_name %>) do |f|
+= pg_form_for(@<%= singular_name %>.target_object) do |f|
   = f.mensajes_de_error
 
 <%- attributes.each do |attribute| -%>

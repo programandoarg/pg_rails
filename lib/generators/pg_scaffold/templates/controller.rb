@@ -23,7 +23,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def show
-    add_breadcrumb @<%= singular_name %>, @<%= singular_name %>
+    add_breadcrumb @<%= singular_name %>, @<%= singular_name %>.target_object
 
     pg_respond_show
   end
@@ -33,7 +33,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   def edit
-    add_breadcrumb @<%= singular_name %>, @<%= singular_name %>
+    add_breadcrumb @<%= singular_name %>, @<%= singular_name %>.target_object
     add_breadcrumb "Editando"
   end
 
