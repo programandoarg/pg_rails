@@ -72,10 +72,5 @@ module PgRails
         clase.human_attribute_name(campo)
       end
     end
-
-    # deprecado
-    def ordenable(smart_listing, campo)
-      smart_listing.sortable @clase_modelo.human_attribute_name(campo), campo
-    end
   end
 end
