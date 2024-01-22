@@ -31,6 +31,23 @@ module PgRails
       params.keys.reject { |a| a.in? ["controller", "action", "page", "page_size"] }.any?
     end
 
+
+    helper_method :current_page_size
+
+    def current_page_size
+      if params[:page_size].present?
+        session[:page_size] = params[:page_size]
+        params[:page_size].to_i
+      else
+        default_page_size
+      end
+    end
+
+    def default_page_size
+      session[:page_size].present? ? session[:page_size].to_i : 10
+    end
+
+
     protected
 
       def pg_respond_update(object: nil, extra_js: nil)
@@ -190,7 +207,7 @@ module PgRails
 
         authorize instancia_modelo
 
-        self.instancia_modelo = instancia_modelo.decorate if action_name.in? %w[show]
+        self.instancia_modelo = instancia_modelo.decorate if action_name.in? %w[show edit new]
       end
 
       def instancia_modelo=(val)
@@ -241,17 +258,6 @@ module PgRails
         scope = policy_scope(clase_modelo)
 
         @filtros.filtrar(scope)
-      end
-
-      def smart_listing(smart_listing_key, scope, partial, options = {})
-        options[:default_sort] = { id: :desc } unless options[:default_sort].present?
-        options[:partial] = partial
-        smart_listing_create smart_listing_key, scope, options
-
-        return unless params["#{smart_listing_key}_smart_listing"].present?
-
-        render partial: 'actualizar_smart_listing', locals: { smart_listing_key: smart_listing_key },
-               layout: false, content_type: 'text/javascript'
       end
 
       def fecha_invalida
