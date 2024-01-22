@@ -1,8 +1,0 @@
-= pg_form_for(@<%= singular_name %>.target_object) do |f|
-  = f.mensajes_de_error
-
-<%- attributes.each do |attribute| -%>
-  = f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %>
-<%- end -%>
-  .mt-2
-  = f.button :submit
