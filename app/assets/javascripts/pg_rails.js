@@ -112,16 +112,6 @@ window.PgRails = new function() {
       })
     }
     $(contexto).find('form').dependent_fields();
-    $(contexto).find('.exportar').click(function() {
-      filtros = ''
-      $('.filter').each(function(i, elem) {
-        var input = $(elem).find('input,select');
-        filtros += input.attr('name') + '=' + input.val() + '&'
-      });
-
-      var url_get = $(this).data('url') + "?"+filtros;
-      window.location.href = url_get;
-    })
     contexto.find('.pg_ajax_link:not(.bindeado)').each(function(i, elem) {
       $(this).addClass('bindeado');
       $(this).click(function() {
