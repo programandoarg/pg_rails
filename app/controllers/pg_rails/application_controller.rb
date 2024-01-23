@@ -111,7 +111,7 @@ module PgRails
           format.xlsx do
             render xlsx: 'download',
                    filename: "#{@clase_modelo.nombre_plural.gsub(' ', '-').downcase}" \
-                             "-#{Date.today}.xlsx"
+                             "-#{Time.zone.now.strftime("%Y-%m-%d-%H.%M.%S")}.xlsx"
           end
         end
       end
