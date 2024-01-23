@@ -4,6 +4,7 @@ module PgRails
   class BaseDecorator < Draper::Decorator
     include ActionView::Helpers
     include PrintHelper
+    include FormHelper
     include Pundit::Authorization
 
     attr_accessor :output_buffer
@@ -64,8 +65,8 @@ module PgRails
       return unless Pundit.policy!(helpers.send(PgRails.configuracion.current_user_method), object).export?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Exportar' do
-        helpers.content_tag :button,
-                            class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_export} exportar", data: { url: url } do
+        helpers.content_tag :a, target: '_blank',
+                            class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_export}", href: url_change_format(url) do
           "#{helpers.content_tag(:span, nil, class: clase_icono('file-earmark-excel-fill'))} #{texto}".html_safe
         end
       end

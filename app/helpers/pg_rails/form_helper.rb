@@ -13,7 +13,13 @@ module PgRails
                                  'pg-form'
                                end
 
-      simple_nested_form_for(object, *(args << options), &block)
+      simple_form_for(object, *(args << options), &block)
+    end
+
+    def url_change_format(url)
+      uri = URI.parse(url)
+      uri.path = "#{uri.path}.xlsx"
+      uri.to_s
     end
   end
 end
