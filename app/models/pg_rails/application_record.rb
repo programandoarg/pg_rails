@@ -25,7 +25,11 @@ module PgRails
       %i[nombre name].each do |campo|
         return send(campo) if try(campo).present?
       end
-      super
+      if id.present?
+        "#{self.class.nombre_singular} ##{id}"
+      else
+        super
+      end
     end
 
     private
