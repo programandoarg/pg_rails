@@ -50,7 +50,12 @@ module PgRails
         if @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:query].present?
           query = @filtros[campo.to_sym][:query].call(query, parametros[campo])
         elsif tipo(campo) == :enumerized
-          query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo])
+          columna = @clase_modelo.columns.find { |c| c.name == campo.to_s }
+          if columna.array
+            query = query.where("? = any(#{@clase_modelo.table_name}.#{campo})", parametros[campo])
+          else
+            query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo])
+          end
         elsif tipo(campo).in?(%i[integer float decimal])
           campo_a_comparar = "#{@clase_modelo.table_name}.#{sin_sufijo(campo)}"
           query = query.where("#{campo_a_comparar} #{comparador(campo)} ?", parametros[campo])
