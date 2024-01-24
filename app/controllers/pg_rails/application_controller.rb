@@ -10,6 +10,7 @@ module PgRails
     include PostgresHelper
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
+    rescue_from Pundit::NotAuthorizedError, with: :not_authorized
 
     layout :setear_layout
 
@@ -268,6 +269,21 @@ module PgRails
           format.js { render inline: 'showToast("error", "Formato de fecha inválido")' }
           format.html { go_back('Formato de fecha inválido') }
         end
+      end
+
+      def not_authorized
+        respond_to do |format|
+          format.json do
+            render json: { error: 'Not authorized' }, status: :unprocessable_entity
+          end
+          # format.js { render inline: 'showToast("error", "Formato de fecha inválido")' }
+          format.html { go_back('Not authorized') }
+        end
+      end
+
+      def go_back(message)
+        flash[:error] = message
+        redirect_back fallback_location: root_path
       end
   end
 end
