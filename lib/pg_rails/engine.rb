@@ -30,6 +30,8 @@
 # require 'kaminari'
 # require 'kaminari-i18n'
 
+require 'pg_rails/utils/logueador'
+
 module PgRails
   class Engine < ::Rails::Engine
     isolate_namespace PgRails

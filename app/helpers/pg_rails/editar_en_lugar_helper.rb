@@ -67,7 +67,34 @@ module PgRails
     def encabezado(campo, options = {})
       clase = (options[:clase] || @clase_modelo)
       if options[:ordenable]
-        clase.human_attribute_name(campo)
+        uri = URI.parse(request.url)
+        if uri.query.present?
+          cgi = CGI.parse(uri.query)
+        else
+          cgi = {}
+        end
+        cgi["order_by"] = campo
+        cgi["order_direction"] =
+          if params[:order_direction] == 'asc'
+            'desc'
+          else
+            'asc'
+          end
+
+        if params[:order_by] == campo.to_s
+          symbol = 
+            if params[:order_direction] == 'asc'
+              '<i class="bi bi-sort-down-alt" />'
+            elsif params[:order_direction] == 'desc'
+              '<i class="bi bi-sort-up" />'
+            end
+        else
+          symbol = ''
+        end
+
+        uri.query = cgi.map {|a,b| [a, (b.length == 1 ? b.first : b)]}.to_h.to_query
+
+        link_to(clase.human_attribute_name(campo), uri.to_s) + " #{symbol}".html_safe
       else
         clase.human_attribute_name(campo)
       end

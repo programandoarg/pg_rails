@@ -29,7 +29,7 @@ module PgRails
     helper_method :any_filter?
 
     def any_filter?
-      params.keys.reject { |a| a.in? ["controller", "action", "page", "page_size"] }.any?
+      params.keys.reject { |a| a.in? ["controller", "action", "page", "page_size", "order_by", "order_direction"] }.any?
     end
 
 
@@ -259,6 +259,18 @@ module PgRails
         scope = policy_scope(clase_modelo)
 
         @filtros.filtrar(scope)
+      end
+
+      def sort_collection(scope)
+        if params[:order_by].present?
+          direction = params[:order_direction]
+          scope = scope.order(params[:order_by] => direction)
+        else
+          scope
+        end
+      rescue ArgumentError => e
+        Utils::Logueador.warning(e.to_s)
+        scope
       end
 
       def fecha_invalida
