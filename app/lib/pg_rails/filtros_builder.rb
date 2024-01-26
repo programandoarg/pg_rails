@@ -202,6 +202,8 @@ module PgRails
                  filtro_texto(campo, placeholder_campo(campo))
                end
       end
+      res +=  hidden_field_tag('order_by', parametros_controller['order_by'])
+      res +=  hidden_field_tag('order_direction', parametros_controller['order_direction'])
       res.html_safe
     end
 
