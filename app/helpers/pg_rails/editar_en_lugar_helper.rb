@@ -67,6 +67,8 @@ module PgRails
     def encabezado(campo, options = {})
       clase = (options[:clase] || @clase_modelo)
       if options[:ordenable]
+        field = controller.instance_variable_get(:"@field")
+        direction = controller.instance_variable_get(:"@direction")
         uri = URI.parse(request.url)
         if uri.query.present?
           cgi = CGI.parse(uri.query)
@@ -75,17 +77,17 @@ module PgRails
         end
         cgi["order_by"] = campo
         cgi["order_direction"] =
-          if params[:order_direction] == 'asc'
+          if field.to_s == campo.to_s && direction.to_s == 'asc'
             'desc'
           else
             'asc'
           end
 
-        if params[:order_by] == campo.to_s
-          symbol = 
-            if params[:order_direction] == 'asc'
+        if field.to_s == campo.to_s
+          symbol =
+            if direction.to_s == 'asc'
               '<i class="bi bi-sort-down-alt" />'
-            elsif params[:order_direction] == 'desc'
+            elsif direction.to_s == 'desc'
               '<i class="bi bi-sort-up" />'
             end
         else

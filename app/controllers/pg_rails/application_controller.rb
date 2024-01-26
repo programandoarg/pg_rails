@@ -261,16 +261,31 @@ module PgRails
         @filtros.filtrar(scope)
       end
 
-      def sort_collection(scope)
-        if params[:order_by].present?
-          direction = params[:order_direction]
-          scope = scope.order(params[:order_by] => direction)
-        else
-          scope
+      def do_sort(scope, field, direction)
+        unless scope.model.column_names.include? field.to_s
+          return scope
         end
+        scope = scope.order(field => direction)
+        instance_variable_set(:"@field", field)
+        instance_variable_set(:"@direction", direction)
+        scope
       rescue ArgumentError => e
         Utils::Logueador.warning(e.to_s)
         scope
+      end
+
+      def sort_collection(scope, options = {})
+        if params[:order_by].present?
+          field = params[:order_by]
+          direction = params[:order_direction]
+          do_sort(scope, field, direction)
+        elsif options[:default].present?
+          field = options[:default].first[0]
+          direction = options[:default].first[1]
+          do_sort(scope, field, direction)
+        else
+          scope
+        end
       end
 
       def fecha_invalida
