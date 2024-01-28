@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.version               = PgRails::VERSION
   spec.authors               = ['Martín Rosso']
   spec.email                 = ['mrosso10@gmail.com']
-  spec.homepage              = ''
+  spec.homepage              = 'https://github.com/programandoarg/pg_rails'
   spec.summary               = 'Rails goodies'
   spec.description           = 'Rails goodies.'
   spec.license               = 'MIT'
