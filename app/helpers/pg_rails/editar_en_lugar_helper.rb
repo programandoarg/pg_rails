@@ -64,6 +64,7 @@ module PgRails
       best_in_place objeto, atributo, options
     end
 
+    # TODO: mover a otro helper
     def encabezado(campo, options = {})
       clase = (options[:clase] || @clase_modelo)
       if options[:ordenable]
