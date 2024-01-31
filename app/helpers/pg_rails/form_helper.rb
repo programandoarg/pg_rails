@@ -3,6 +3,14 @@
 module PgRails
   module FormHelper
     def pg_form_for(object, *args, &block)
+      if object.is_a? PgRails::BaseDecorator
+        object = object.target_object
+      elsif object.is_a?(PgRails::ApplicationRecord) &&
+            object.decorator_class.present? &&
+            object.decorator_class < PgRails::BaseDecorator
+        object = object.decorate.target_object
+      end
+      # byebug
       options = args.extract_options!
 
       options[:builder] = PgFormBuilder
@@ -12,6 +20,7 @@ module PgRails
                                else
                                  'pg-form'
                                end
+
 
       simple_form_for(object, *(args << options), &block)
     end
