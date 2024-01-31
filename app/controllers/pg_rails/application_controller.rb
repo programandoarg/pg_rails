@@ -143,7 +143,7 @@ module PgRails
                 @model = model
                 render destroy_error_details_view
               else
-                flash[:error] = @error_message
+                flash[:alert] = @error_message
                 # if redirect_url.present?
                 #   redirect_to redirect_url
                 # else
@@ -208,6 +208,7 @@ module PgRails
 
         authorize instancia_modelo
 
+        # TODO: problema en create y update cuando falla la validacion
         self.instancia_modelo = instancia_modelo.decorate if action_name.in? %w[show edit new]
       end
 
@@ -239,6 +240,7 @@ module PgRails
         end
       end
 
+      # TODO: Ahora con turbo ya no iría más
       def setear_layout
         if params[:sin_layout] == 'true'
           false
@@ -263,6 +265,7 @@ module PgRails
 
       def do_sort(scope, field, direction)
         unless scope.model.column_names.include? field.to_s
+          Utils::Logueador.warning("No existe el campo \"#{field}\"")
           return scope
         end
         scope = scope.order(field => direction)
@@ -309,7 +312,7 @@ module PgRails
       end
 
       def go_back(message)
-        flash[:error] = message
+        flash[:alert] = message
         redirect_back fallback_location: root_path
       end
   end
