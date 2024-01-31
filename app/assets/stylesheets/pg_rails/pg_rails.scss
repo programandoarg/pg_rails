@@ -13,18 +13,6 @@
     }
   }
 }
-.form-group.asociacion_creable {
-  input.oculto {
-    visibility: hidden;
-    position: absolute;
-  }
-
-  &:not(.completado) {
-    .borrar_seleccion {
-      display: none;
-    }
-  }
-}
 // oculto la columna de actions
 .modal-seleccionar-asociado .listado th:last-child,
   .modal-seleccionar-asociado .listado td:last-child {

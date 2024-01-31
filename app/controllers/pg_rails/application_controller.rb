@@ -8,6 +8,7 @@ module PgRails
     # helper  SmartListing::Helper
     include PrintHelper
     include PostgresHelper
+    include PgAssociable::Helpers
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
@@ -51,34 +52,32 @@ module PgRails
 
     protected
 
-      def pg_respond_update(object: nil, extra_js: nil)
+      def pg_respond_update(object: nil)
         object ||= instancia_modelo
         respond_to do |format|
           if (@saved = object.save)
-            format.html do
-              redirect_to object.decorate.target_object
-            end
+            format.html { redirect_to object.decorate.target_object }
             format.json { render json: object.decorate }
           else
-            format.turbo_stream do
-              flash.now[:error] = object.errors.full_messages.join(', ')
-              render turbo_stream: render_turbo_stream_flash_messages
-            end
             format.html { render :edit, status: :unprocessable_entity }
             format.json { render json: object.errors, status: :unprocessable_entity }
-          end
-          format.js do
-            render '_cerrar_modal', locals: {
-              contenido: 'form', extra_js: ['modal_ajax_form', extra_js]
-            }
           end
         end
       end
 
-      def pg_respond_create(object: nil, extra_js: nil)
+      def pg_respond_create(object: nil)
         object ||= instancia_modelo
         respond_to do |format|
           if (@saved = object.save)
+            if params[:asociable]
+              format.turbo_stream do
+                render turbo_stream:
+                  turbo_stream.update('pg-associable-form', <<~HTML
+                    <div data-modal-target="response" data-response='#{object.decorate.to_json}'></div>
+                    HTML
+                  )
+              end
+            end
             format.html do
               if params[:save_and_next] == 'true'
                 new_path = url_for(@clase_modelo) + "/new"
@@ -89,17 +88,14 @@ module PgRails
             end
             format.json { render json: object.decorate }
           else
-            format.turbo_stream do
-              flash.now[:error] = object.errors.full_messages.join(', ')
-              render turbo_stream: render_turbo_stream_flash_messages
+            if params[:asociable]
+              format.turbo_stream do
+                render turbo_stream:
+                  turbo_stream.update('pg-associable-form', partial: 'form', locals: { asociable: true })
+              end
             end
             format.html { render :new, status: :unprocessable_entity }
             format.json { render json: object.errors.full_messages, status: :unprocessable_entity }
-          end
-          format.js do
-            render '_cerrar_modal', locals: {
-              contenido: 'form', extra_js: ['modal_ajax_form', extra_js]
-            }
           end
         end
       end
