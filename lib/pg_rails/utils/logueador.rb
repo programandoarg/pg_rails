@@ -6,6 +6,13 @@ module PgRails
   module Utils
     class Logueador
       class << self
+        def deprecated(mensaje)
+          titulo = Rainbow("  WARNING en #{caller[1]}").yellow.bold
+          detalles = Rainbow("  #{mensaje}").yellow
+          Rails.logger.warn("#{titulo}\n#{detalles}")
+          Rollbar.warning("#{mensaje}\n\n#{caller.join("\n")}")
+        end
+
         def excepcion(exception)
           titulo = Rainbow("  EXCEPCION #{exception.class} en #{caller.first}").red.bold
           detalles = Rainbow("  #{exception.message}").red
