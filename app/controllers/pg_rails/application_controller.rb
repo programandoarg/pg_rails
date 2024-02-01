@@ -2,24 +2,16 @@
 
 module PgRails
   class ApplicationController < ActionController::Base
-    include ApplicationHelper
     include Pundit::Authorization
-    # include SmartListing::Helper::ControllerExtensions
-    # helper  SmartListing::Helper
     include PrintHelper
     include PostgresHelper
+    include FlashHelper
     include PgAssociable::Helpers
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
 
     layout :setear_layout
-
-    def self.inherited(klass)
-      super
-      # incluyo los helpers de /app/helpers de la main_app
-      klass.helper :all
-    end
 
     helper_method :mobile_device?
 
