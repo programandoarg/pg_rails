@@ -28,7 +28,12 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
-  # spec.add_dependency 'audited', '~> 5.0'
+  # TODO: add pg_associable
+  # spec.add_dependency 'pg_associable', '~> 5.0'
+  # spec.add_dependency 'rainbow'
+  # spec.add_dependency 'discard'
+
+
   # # spec.add_dependency 'bootstrap', '~> 4.3.1'
   # # spec.add_dependency 'bootstrap-datepicker-rails'
   # spec.add_dependency 'breadcrumbs_on_rails'

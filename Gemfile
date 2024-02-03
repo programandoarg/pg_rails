@@ -13,23 +13,3 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
-
-source 'https://rails-assets.org' do
-  gem 'rails-assets-jquery-validation'
-end
-
-gem "best_in_place", git: "https://github.com/bernat/best_in_place"
-
-gem 'paranoia'
-gem 'discard'
-
-group :development, :test do
-  gem 'fuubar'
-  gem 'spring'
-  gem 'spring-commands-rspec'
-
-  gem 'rails-controller-testing'
-
-  gem "brakeman", require: false
-  gem "bundler-audit", require: false
-end
