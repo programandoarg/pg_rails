@@ -11,8 +11,6 @@ module PgRails
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
 
-    layout :setear_layout
-
     helper_method :mobile_device?
 
     def mobile_device?
@@ -225,15 +223,6 @@ module PgRails
           options.merge(protocol: 'https')
         else
           options
-        end
-      end
-
-      # TODO: Ahora con turbo ya no iría más
-      def setear_layout
-        if params[:sin_layout] == 'true'
-          false
-        else
-          'application'
         end
       end
 
