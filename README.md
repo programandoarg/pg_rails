@@ -65,6 +65,8 @@ Acceder a la app en <http://localhost:3000/>.
 
 ### Regenerar modelos dummy
 
+  cd spec/dummy
+
 1. `bundle exec rails destroy Cosa`
 2. `bundle exec rails destroy CategoriaDeCosa`
 3. Borrar policies

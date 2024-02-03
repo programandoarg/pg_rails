@@ -1,2 +1,2 @@
-class ApplicationController < ActionController::Base
+class ApplicationController < PgRails::ApplicationController
 end

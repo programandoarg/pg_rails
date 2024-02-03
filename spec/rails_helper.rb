@@ -27,6 +27,7 @@ require 'rspec/rails'
 # If you are not using ActiveRecord, you can remove these lines.
 require 'factory_bot_rails'
 require 'devise'
+# require 'enumerize'
 
 begin
   ActiveRecord::Migration.maintain_test_schema!

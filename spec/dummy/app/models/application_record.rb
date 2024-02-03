@@ -1,3 +1,3 @@
-class ApplicationRecord < ActiveRecord::Base
+class ApplicationRecord < PgRails::ApplicationRecord
   primary_abstract_class
 end
