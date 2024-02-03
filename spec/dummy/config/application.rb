@@ -11,7 +11,7 @@ module Dummy
     config.load_defaults Rails::VERSION::STRING.to_f
 
     # For compatibility with applications that use this config
-    config.action_controller.include_all_helpers = false
+    config.action_controller.include_all_helpers = true
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
