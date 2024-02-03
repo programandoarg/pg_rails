@@ -1,8 +1,0 @@
-$(function() {
-  $('.modal').modal('hide');
-  <% if @saved %>
-    $('.smart-listing').smart_listing().reload();
-  <% else %>
-    <%= render partial: 'abrir_modal', locals: { contenido: contenido, extra_js: extra_js } %>
-  <% end %>
-});

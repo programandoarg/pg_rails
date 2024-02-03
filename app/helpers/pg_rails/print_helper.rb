@@ -7,15 +7,6 @@ module PgRails
     class FechaInvalidaError < StandardError
     end
 
-    # Genera un falso link que al clickear carga la url por ajax
-    # Es igual a los links con remote: true, pero evita que abran el link en otra
-    # pestaña. Movido de probella
-    def pg_ajax_link(url, options = {})
-      content_tag :span, class: 'pg_ajax_link', data: options.merge(url: url) do
-        block_given? ? yield : ''
-      end
-    end
-
     def mostrar_con_link(objeto, options = {})
       return unless objeto.present?
 
@@ -108,13 +99,6 @@ module PgRails
     end
 
     def print_currency(number, moneda = 'pesos')
-      return unless number.present?
-
-      "<span class='currency #{moneda}'>#{number_with_precision(number, delimiter: '.',
-                                                                        separator: ',', precision: 2)}</span>".html_safe
-    end
-
-    def print_currency2(number, moneda = 'pesos')
       return unless number.present?
 
       "#{simbolo_moneda(moneda)} #{number_with_precision(number, delimiter: '.', separator: ',',

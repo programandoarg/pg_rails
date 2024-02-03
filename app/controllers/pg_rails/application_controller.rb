@@ -23,7 +23,6 @@ module PgRails
       params.keys.reject { |a| a.in? ["controller", "action", "page", "page_size", "order_by", "order_direction"] }.any?
     end
 
-
     helper_method :current_page_size
 
     def current_page_size
@@ -93,7 +92,6 @@ module PgRails
       def pg_respond_index(collection)
         respond_to do |format|
           format.json { render json: collection }
-          format.js { render_listing }
           format.html { render_listing }
           format.xlsx do
             render xlsx: 'download',
@@ -142,9 +140,7 @@ module PgRails
         end
       end
 
-      # destroy_and_respond DEPRECADO
-      alias_method :destroy_and_respond, :pg_respond_destroy
-
+      # TODO: crear esta vista en pg_rails
       def destroy_error_details_view
         'destroy_error_details'
       end
@@ -271,9 +267,9 @@ module PgRails
       def fecha_invalida
         respond_to do |format|
           format.json do
-            render json: { error: 'Formato de fecha inválido' }, status: :unprocessable_entity
+            render json: { error: 'Formato de fecha inválido' },
+                   status: :unprocessable_entity
           end
-          format.js { render inline: 'showToast("error", "Formato de fecha inválido")' }
           format.html { go_back('Formato de fecha inválido') }
         end
       end
@@ -281,9 +277,9 @@ module PgRails
       def not_authorized
         respond_to do |format|
           format.json do
-            render json: { error: 'Not authorized' }, status: :unprocessable_entity
+            render json: { error: 'Not authorized' },
+                   status: :unprocessable_entity
           end
-          # format.js { render inline: 'showToast("error", "Formato de fecha inválido")' }
           format.html { go_back('Not authorized') }
         end
       end
