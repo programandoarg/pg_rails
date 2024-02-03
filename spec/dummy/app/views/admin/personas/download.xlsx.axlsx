@@ -1,0 +1,16 @@
+# frozen_string_literal: true
+
+wb = xlsx_package.workbook
+wb.add_worksheet(name: 'Persona') do |sheet|
+  sheet.add_row [
+    @clase_modelo.human_attribute_name(:nombre),
+    @clase_modelo.human_attribute_name(:apellido)
+  ]
+
+  @personas.decorate.each do |persona|
+    sheet.add_row [
+      persona.nombre,
+      persona.apellido
+    ]
+  end
+end

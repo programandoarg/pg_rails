@@ -1,0 +1,8 @@
+/ # locals: (object: nil, asociable: false)
+
+= pg_form_for(@persona || object) do |f|
+  = hidden_field_tag :asociable, true if asociable
+  = f.input :nombre
+  = f.input :apellido
+  .mt-2
+  = f.button :submit

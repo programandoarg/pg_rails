@@ -1,0 +1,20 @@
+- content_for :title do
+  = @persona.to_s
+- content_for :actions do
+  = @persona.destroy_link
+  .ms-1
+  = @persona.edit_link
+
+table.table.table-borderless.table-sm.w-auto.mb-0.m-3
+  tr
+    th = @clase_modelo.human_attribute_name(:nombre)
+    td = @persona.nombre
+  tr
+    th = @clase_modelo.human_attribute_name(:apellido)
+    td = @persona.apellido
+  tr
+    th = I18n.t(:created_at)
+    td = dmy_time @persona.created_at
+  tr
+    th = I18n.t(:updated_at)
+    td = dmy_time @persona.updated_at
