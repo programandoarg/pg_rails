@@ -6,7 +6,7 @@ module PgRails
     include PrintHelper
     include PostgresHelper
     include FlashHelper
-    # include PgAssociable::Helpers
+    include PgAssociable::Helpers
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
