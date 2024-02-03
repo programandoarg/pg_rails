@@ -66,7 +66,7 @@ module PgRails
 
       helpers.content_tag :span, rel: :tooltip, title: 'Exportar' do
         helpers.content_tag :a, target: '_blank',
-                            class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_export}", href: url_change_format(url) do
+                            class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_export}", href: url_change_format(url, 'xlsx') do
           "#{helpers.content_tag(:span, nil, class: clase_icono('file-earmark-excel-fill'))} #{texto}".html_safe
         end
       end

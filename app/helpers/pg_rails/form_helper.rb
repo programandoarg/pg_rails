@@ -25,9 +25,9 @@ module PgRails
       simple_form_for(object, *(args << options), &block)
     end
 
-    def url_change_format(url)
+    def url_change_format(url, formato)
       uri = URI.parse(url)
-      uri.path = "#{uri.path}.xlsx"
+      uri.path = "#{uri.path}.#{formato}"
       uri.to_s
     end
   end
