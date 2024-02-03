@@ -1,7 +1,5 @@
 @use 'sass:color';
 
-@import 'pg_rails/pg_rails';
-
 // FORMS
 .pg-form {
   max-width: 300px;
@@ -20,7 +18,7 @@
     border-radius: 3px;
 
     &.is-invalid {
-      border-color: red;
+      border-color: red; /* TODO: check color */
       background-image: none!important; /* override bootstrap forms */
       padding-right: 0; /* override bootstrap forms */
     }
@@ -34,5 +32,33 @@
   }
   .form-control:focus {
     box-shadow: none!important; /* override bootstrap forms */
+  }
+
+  input[type=date] {
+    max-width: 140px;
+  }
+}
+
+// LISTADOS
+.listado {
+  td, th {
+    padding: 0.25rem 1rem;
+  }
+}
+.listado .btn-sm {
+  min-width: 25px;
+  height: 25px;
+  padding: 1px;
+  margin-right: 4px;
+}
+
+// FILTROS
+.filter {
+  display: inline-block;
+  vertical-align: top;
+  min-width: 200px;
+
+  .input-group {
+    width: 230px;
   }
 }
