@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_03_230552) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_03_234554) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
+
+  create_table "cosas", force: :cascade do |t|
+    t.string "nombre"
+    t.string "apellido"
+    t.bigint "persona_id"
+    t.bigint "creado_por_id"
+    t.bigint "actualizado_por_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actualizado_por_id"], name: "index_cosas_on_actualizado_por_id"
+    t.index ["creado_por_id"], name: "index_cosas_on_creado_por_id"
+    t.index ["persona_id"], name: "index_cosas_on_persona_id"
+  end
 
   create_table "personas", force: :cascade do |t|
     t.string "nombre"
@@ -34,4 +47,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_03_230552) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "cosas", "personas"
+  add_foreign_key "cosas", "users", column: "actualizado_por_id"
+  add_foreign_key "cosas", "users", column: "creado_por_id"
 end

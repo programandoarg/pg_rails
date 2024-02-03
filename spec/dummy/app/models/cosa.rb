@@ -3,7 +3,6 @@
 # generado con pg_rails
 
 class Cosa < ApplicationRecord
-  audited
 
   belongs_to :persona, optional: true
 
