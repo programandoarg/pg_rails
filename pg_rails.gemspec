@@ -30,45 +30,82 @@ Gem::Specification.new do |spec|
 
   # TODO: add pg_associable
   # spec.add_dependency 'pg_associable', '~> 5.0'
-  # spec.add_dependency 'rainbow'
-  # spec.add_dependency 'discard'
+
+  spec.add_dependency 'caxlsx_rails'
+
+  spec.add_dependency 'draper'
+
+  spec.add_dependency 'pg', '~> 1.1'
+
+  spec.add_dependency "rails", "~> 7.1.3"
+
+  spec.add_dependency 'rainbow'
+
+  spec.add_dependency 'simple_form'
+
+  # User manamement
+  spec.add_dependency 'devise'
+  spec.add_dependency 'devise-i18n'
+
+  # Rails internationalization
+  spec.add_dependency 'rails-i18n'
+
+  # Slim template
+  spec.add_dependency 'slim-rails'
+
+  # Better enums
+  spec.add_dependency 'enumerize'
+
+  # XML parsing
+  spec.add_dependency 'nokogiri'
+
+  # Pagination
+  spec.add_dependency 'kaminari'
+  spec.add_dependency 'kaminari-i18n'
+
+  # Breadcrumbs
+  spec.add_dependency 'breadcrumbs_on_rails'
+
+  # Soft deletion
+  spec.add_dependency 'discard'
+
+  # DB Audition
+  spec.add_dependency "audited", "~> 5.0"
+
+  # Access policies
+  spec.add_dependency 'pundit'
 
 
-  # # spec.add_dependency 'bootstrap', '~> 4.3.1'
-  # # spec.add_dependency 'bootstrap-datepicker-rails'
-  # spec.add_dependency 'breadcrumbs_on_rails'
-  # spec.add_dependency 'caxlsx_rails'
-  # spec.add_dependency 'devise'
-  # spec.add_dependency 'devise-i18n'
-  # spec.add_dependency 'draper'
-  # spec.add_dependency 'enumerize'
-  # # spec.add_dependency 'font-awesome-rails'
-  # spec.add_dependency 'jquery-rails'
-  # spec.add_dependency 'nested_form'
-  # spec.add_dependency 'nokogiri', '~> 1.13'
-  # spec.add_dependency 'pg', '~> 1.1'
-  # spec.add_dependency 'pundit'
-  # spec.add_dependency 'rails', '~> 7.0'
-  # # spec.add_dependency 'rails-assets-chosen'
-  # spec.add_dependency 'rails-i18n'
-  # spec.add_dependency 'rainbow'
-  # # spec.add_dependency 'rollbar'
-  # # spec.add_dependency 'sass-rails', '~> 5.0'
-  # spec.add_dependency 'selectize-rails'
-  # spec.add_dependency 'simple_form'
-  # spec.add_dependency 'slim-rails'
-  # spec.add_dependency 'kaminari'
-  # spec.add_dependency 'kaminari-i18n'
 
-  # spec.add_development_dependency 'annotate'
-  # spec.add_development_dependency 'byebug'
-  # spec.add_development_dependency 'database_cleaner'
-  # spec.add_development_dependency 'factory_bot_rails'
-  # spec.add_development_dependency 'faker'
-  # spec.add_development_dependency 'rails-controller-testing'
-  # spec.add_development_dependency 'rspec-rails', '~> 4.0'
-  # spec.add_development_dependency 'rubocop'
-  # spec.add_development_dependency 'rubocop-rails'
-  # spec.add_development_dependency 'rubocop-rspec'
-  # spec.add_development_dependency 'simplecov', '~> 0.17.1'
+
+
+  # Simplecov
+  spec.add_development_dependency 'simplecov', '~> 0.17.1'
+
+  # Spring
+  spec.add_development_dependency 'spring'
+  spec.add_development_dependency 'spring-commands-rspec'
+
+  # Rspec
+  spec.add_development_dependency 'rspec-rails', '~> 6.0.0'
+  spec.add_development_dependency 'factory_bot_rails'
+  spec.add_development_dependency 'rails-controller-testing'
+  spec.add_development_dependency 'fuubar'
+  spec.add_development_dependency 'faker'
+
+  # # VCR
+  # spec.add_development_dependency 'vcr'
+  # spec.add_development_dependency 'webmock'
+
+  # # Capybara
+  # spec.add_development_dependency 'capybara'
+  # spec.add_development_dependency 'selenium-webdriver'
+
+  # Bullet
+  spec.add_development_dependency 'bullet'
+
+  # Linters
+  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rubocop-rails'
+  spec.add_development_dependency 'rubocop-rspec'
 end
