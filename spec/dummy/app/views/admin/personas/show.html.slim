@@ -13,8 +13,8 @@ table.table.table-borderless.table-sm.w-auto.mb-0.m-3
     th = @clase_modelo.human_attribute_name(:apellido)
     td = @persona.apellido
   tr
-    th = I18n.t(:created_at)
+    th = I18n.t('attributes.created_at')
     td = dmy_time @persona.created_at
   tr
-    th = I18n.t(:updated_at)
+    th = I18n.t('attributes.updated_at')
     td = dmy_time @persona.updated_at

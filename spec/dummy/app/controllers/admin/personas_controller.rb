@@ -55,7 +55,7 @@ module Admin
 
     private
 
-    def render_smart_listing
+    def render_listing
       @personas = @personas.page(params[:page]).per(current_page_size)
     end
 
