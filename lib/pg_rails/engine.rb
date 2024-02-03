@@ -26,7 +26,6 @@
 # # require 'selectize-rails'
 # require 'simple_form'
 # require 'slim'
-# # require 'smart_listing'
 # require 'kaminari'
 # require 'kaminari-i18n'
 

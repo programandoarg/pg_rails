@@ -95,8 +95,8 @@ module PgRails
       def pg_respond_index(collection)
         respond_to do |format|
           format.json { render json: collection }
-          format.js { render_smart_listing }
-          format.html { render_smart_listing }
+          format.js { render_listing }
+          format.html { render_listing }
           format.xlsx do
             render xlsx: 'download',
                    filename: "#{@clase_modelo.nombre_plural.gsub(' ', '-').downcase}" \
@@ -171,7 +171,7 @@ module PgRails
         false
       end
 
-      def render_smart_listing
+      def render_listing
         raise 'implementar en subclase'
       end
 
