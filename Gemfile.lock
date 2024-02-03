@@ -22,6 +22,12 @@ PATH
       slim-rails
 
 PATH
+  remote: /media/deposito/proyectos/actuales/pg_associable
+  specs:
+    pg_associable (0.1.0)
+      rails (>= 7.1.3)
+
+PATH
   remote: /media/deposito/proyectos/actuales/pg_scaffold
   specs:
     pg_scaffold (0.1.0)
@@ -176,6 +182,8 @@ GEM
     irb (1.11.1)
       rdoc
       reline (>= 0.4.2)
+    jsbundling-rails (1.3.0)
+      railties (>= 6.0.0)
     json (2.7.1)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -225,6 +233,8 @@ GEM
     pg (1.5.4)
     psych (5.1.2)
       stringio
+    puma (6.4.2)
+      nio4r (~> 2.0)
     pundit (2.3.1)
       activesupport (>= 3.0.0)
     racc (1.7.3)
@@ -349,6 +359,13 @@ GEM
     spring (4.1.3)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
+    sprockets (4.2.1)
+      concurrent-ruby (~> 1.0)
+      rack (>= 2.2.4, < 4)
+    sprockets-rails (3.4.2)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
+      sprockets (>= 3.0.0)
     stringio (3.1.0)
     temple (0.10.3)
     thor (1.3.0)
@@ -374,8 +391,11 @@ DEPENDENCIES
   factory_bot_rails
   faker
   fuubar
+  jsbundling-rails (~> 1.3)
+  pg_associable!
   pg_rails!
   pg_scaffold!
+  puma
   rails-controller-testing
   rspec-rails (~> 6.0.0)
   rubocop
@@ -384,6 +404,7 @@ DEPENDENCIES
   simplecov (~> 0.17.1)
   spring
   spring-commands-rspec
+  sprockets-rails
 
 BUNDLED WITH
    2.4.22

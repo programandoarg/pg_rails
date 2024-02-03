@@ -21,3 +21,10 @@ group :development do
 end
 
 gem 'pg_associable', path: '/media/deposito/proyectos/actuales/pg_associable'
+
+
+gem "puma"
+
+gem "sprockets-rails"
+
+gem "jsbundling-rails", "~> 1.3"
