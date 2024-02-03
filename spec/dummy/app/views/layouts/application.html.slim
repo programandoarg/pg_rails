@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title Facturabien
+    meta name="viewport" content="width=device-width,initial-scale=1"
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module'
+
+  body
+    .with-sidebar
+      / = render partial: 'layouts/sidebar'
+      div
+        / = render partial: 'layouts/navbar'
+        div
+          / .text-center
+            #flash.flash.d-inline-block
+              = render partial: 'layouts/flash'
+          - if user_signed_in?
+            .d-flex.px-3.align-items-center.justify-content-between.d-print-none
+              div
+                / <!-- <h1 class="h3 mb-0 text-gray-800"><%= content_for(:title) %></h1> -->
+                nav aria-label="breadcrumb"
+                  = render_breadcrumbs
+                / = render_breadcrumbs builder: ::Bootstrap4BreadcrumbsBuilder
+              .btn-toolbar.py-2
+                = yield(:actions)
+            hr.my-0
+          = yield
