@@ -28,7 +28,7 @@ commands:
       - run:
           name: Install Ruby Dependencies
           command: |
-            gem install bundler -v 2.1.4 --conservative --no-document
+            gem install bundler -v 2.4.22 --conservative --no-document
             bundle config --local deployment true
             bundle config --local path vendor/bundle
             bundle config --local without production
