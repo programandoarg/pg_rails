@@ -1,1 +1,38 @@
+@use 'sass:color';
+
 @import 'pg_rails/pg_rails';
+
+// FORMS
+.pg-form {
+  max-width: 300px;
+
+  input[disabled] {
+    background-color: #e9e9ed;
+    color: black;
+  }
+
+  input[type=text],
+  input[type=number],
+  select {
+    width: 100%;
+    height: 35px;
+    border: 1px solid #a7b7bb;
+    border-radius: 3px;
+
+    &.is-invalid {
+      border-color: red;
+      background-image: none!important; /* override bootstrap forms */
+      padding-right: 0; /* override bootstrap forms */
+    }
+
+    &:focus, &:focus-visible {
+      outline: 1px solid color.adjust(#a7b7bb, $saturation: +30%);
+    }
+  }
+  select[multiple] {
+    height: inherit;
+  }
+  .form-control:focus {
+    box-shadow: none!important; /* override bootstrap forms */
+  }
+}
