@@ -28,3 +28,5 @@ gem "puma"
 gem "sprockets-rails"
 
 gem "jsbundling-rails", "~> 1.3"
+
+gem "turbo-rails", "~> 1.5"
