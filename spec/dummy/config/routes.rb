@@ -1,9 +1,3 @@
-# frozen_string_literal: true
-
 Rails.application.routes.draw do
-  resources :cosas
-  resources :categoria_de_cosas
-  mount PgRails::Engine => '/pg_rails'
-  devise_for :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  mount PgTemplate7::Engine => "/pg_template_7"
 end

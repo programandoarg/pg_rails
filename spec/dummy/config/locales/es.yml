@@ -1,7 +1,0 @@
-es:
-  activerecord:
-    attributes:
-    models:
-      cosa:
-        one: Cosa
-        other: Cosas

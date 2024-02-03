@@ -2,40 +2,14 @@
 <html>
   <head>
     <title>Dummy</title>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag "application" %>
   </head>
 
   <body>
-    <div class="container">
-      <div>
-        <b>Navegación:</b>
-        <ul>
-          <li><%#= link_to 'Cosas', cosas_path %></li>
-        </ul>
-      </div>
-      <div id="flash-container">
-        <%= flash.to_json.html_safe %>
-      </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <%= content_for(:title) %>
-        </div>
-        <div class="col-sm-6">
-          <%= content_for(:actions) %>
-        </div>
-      </div>
-      <br>
-      <br>
-      <br>
-      <%= yield %>
-    </div>
+    <%= yield %>
   </body>
 </html>
