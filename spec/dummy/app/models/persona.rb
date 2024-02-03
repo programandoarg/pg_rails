@@ -5,5 +5,5 @@
 class Persona < ApplicationRecord
   # audited
 
-  scope :query, ->(param) { param.present? ? where(id: param) : all } # TODO: completar
+  scope :query, ->(param) { all } # TODO: completar
 end
