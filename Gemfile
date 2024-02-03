@@ -19,3 +19,5 @@ group :development do
   gem 'pg_scaffold', path: '/media/deposito/proyectos/actuales/pg_scaffold'
   # gem 'pg_scaffold'
 end
+
+gem 'pg_associable', path: '/media/deposito/proyectos/actuales/pg_associable'

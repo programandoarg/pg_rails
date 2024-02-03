@@ -28,6 +28,7 @@ require 'simple_form'
 require 'slim'
 require 'kaminari'
 require 'kaminari-i18n'
+require 'pg_associable'
 
 require 'pg_rails/utils/logueador'
 
