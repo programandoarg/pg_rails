@@ -8,5 +8,6 @@ Rails.application.routes.draw do
       end
     end
   end
+  root "admin/personas#index"
   mount PgRails::Engine => "/pg_rails"
 end
