@@ -70,6 +70,6 @@ Acceder a la app en <http://localhost:3000/>.
 1. `bundle exec rails destroy Cosa`
 2. `bundle exec rails destroy CategoriaDeCosa`
 3. Borrar policies
-4. `rails g pg_scaffold CategoriaDeCosa nombre:string{required} "tipo:integer{enum,required}" fecha:date tiempo:datetime --discard`
-5. `rails g pg_scaffold Cosa nombre:string{required} "tipo:integer{enum,required}" categoria_de_cosa:references{required} --discard`
+4. `be rails g pg_scaffold Admin/CategoriaDeCosa nombre:string{required} "tipo:integer{enum,required}" fecha:date tiempo:datetime --model-name=CategoriaDeCosa --discard`
+5. `be rails g pg_scaffold Admin/Cosa  nombre:string{required} "tipo:integer{enum,required}" categoria_de_cosa:references{required}  --model-name=Cosa --discard`
 6. Setup asociacion creable en cosas/_form
