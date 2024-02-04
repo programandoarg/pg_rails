@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+# generado con pg_rails
+
+FactoryBot.define do
+  factory :<%= singular_table_name %> do<% factory_attributes.each do |a| %>
+    <%= a %><% end %><% los_traits.each do |trait| %>
+
+    trait :<%= trait[:atributo_name] %>_existente do
+      <%= trait[:atributo_name] %> { nil }
+      <%= trait[:atributo_name] %>_id { <%= trait[:clase] %>.pluck(:id).sample }
+    end<% end %>
+  end
+end

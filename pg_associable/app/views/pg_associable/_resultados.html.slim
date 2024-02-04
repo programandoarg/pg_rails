@@ -1,0 +1,9 @@
+.resultados tabindex="-1"
+  - if collection.any?
+    div.list-group.list-group-flush
+      / = link_to 'Ninguno', 'javascript:void(0)', class: 'list-group-item', data: { 'action': 'asociable_inline#selectItem' }
+      - collection.each do |object|
+        = link_to object.to_s, 'javascript:void(0)', class: 'list-group-item', data: { 'action': 'modal#selectItem', id: object.id }
+  - else
+    ul.list-group.list-group-flush
+      li.list-group-item No hay resultados para "#{params[:query]}"

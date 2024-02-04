@@ -1,0 +1,46 @@
+# generado con pg_rails
+
+class <%= migration_class_name %> < ActiveRecord::Migration[<%= ActiveRecord::Migration.current_version %>]
+  def change
+    create_table :<%= table_name %><%= primary_key_type %> do |t|
+<% attributes.each do |attribute| -%>
+<% if attribute.password_digest? -%>
+      t.string :password_digest<%= attribute.inject_options %>
+<% elsif attribute.token? -%>
+      t.string :<%= attribute.name %><%= attribute.inject_options %>
+<% else -%>
+      t.<%= attribute.type %> :<%= attribute.name %><%= attribute.inject_options %>
+<% end -%>
+<% end -%>
+
+<% if options[:trackeo_de_usuarios] %>
+      t.references :creado_por, index: true
+      t.references :actualizado_por, index: true
+
+<% end -%>
+<% if options[:paranoia] %>
+      t.datetime :deleted_at
+<% end -%>
+<% if options[:discard] %>
+      t.datetime :discarded_at
+<% end -%>
+<% if options[:timestamps] %>
+      t.timestamps
+<% end -%>
+    end
+<% attributes.select(&:token?).each do |attribute| -%>
+    add_index :<%= table_name %>, :<%= attribute.index_name %><%= attribute.inject_index_options %>, unique: true
+<% end -%>
+<% attributes_with_index.each do |attribute| -%>
+    add_index :<%= table_name %>, :<%= attribute.index_name %><%= attribute.inject_index_options %>
+<% end -%>
+<% attributes.select(&:tiene_nombre_de_clase_explicito?).each do |attribute| -%>
+    add_foreign_key :<%= table_name %>, :<%= attribute.tabla_referenciada %>, column: '<%= attribute.name %>_id'
+<% end -%>
+
+<% if options[:trackeo_de_usuarios] %>
+    add_foreign_key :<%= table_name %>, :users, column: 'creado_por_id'
+    add_foreign_key :<%= table_name %>, :users, column: 'actualizado_por_id'
+<% end -%>
+  end
+end

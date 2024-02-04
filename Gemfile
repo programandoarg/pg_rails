@@ -14,15 +14,6 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
-group :development do
-  # PgScaffold
-  gem 'pg_scaffold', path: '/media/deposito/proyectos/actuales/pg_scaffold'
-  # gem 'pg_scaffold'
-end
-
-gem 'pg_associable', path: '/media/deposito/proyectos/actuales/pg_associable'
-
-
 gem "puma"
 
 gem "sprockets-rails"

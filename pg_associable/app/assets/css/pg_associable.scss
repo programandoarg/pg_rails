@@ -1,0 +1,99 @@
+@use 'sass:color';
+
+[data-state=select-item] .show-on-new-item {
+  display: none;
+}
+[data-state=new-item] .show-on-select-item {
+  display: none;
+}
+.pg-form {
+  .pg_associable_inline, .pg_associable {
+    .limpiar {
+      display: none;
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      i {
+        color: #6f7071;
+      }
+    }
+    .pencil {
+      position: absolute;
+      top: 6px;
+      right: 9px;
+      color: #6f7071;
+      cursor: pointer;
+    }
+    &.focus .pencil {
+      display: none;
+    }
+    input[type=text] {
+      background-color: white;
+    }
+    &.filled {
+      .pencil {
+        display: none;
+      }
+      .limpiar {
+        display: inline-block;
+      }
+      input, input:focus {
+        background-color: color.adjust(#a7b7bb, $saturation: +10%, $lightness: +20%);
+      }
+    }
+    .resultados-wrapper {
+      display: none;
+      position: relative;
+    }
+    &:focus-within {
+      .search-box {
+        // outline: 1px solid color.adjust(#a7b7bb, $saturation: +30%);
+        // border-radius: 3px;
+      }
+
+      &:has(.resultados) {
+        input[type=text] {
+          border-bottom-left-radius: 0!important;
+          border-bottom-right-radius: 0!important;
+          &:focus, &:focus-visible {
+            outline: none!important;
+          }
+        }
+      }
+      .resultados-wrapper {
+        display: block;
+      }
+    }
+    .resultados {
+      position: absolute;
+      // top: 30px;
+      background-color: white;
+      border: 1px solid #a7b7bb;
+      border-top: none;
+      border-radius: 4px;
+      padding: 5px 11px;
+      width: 100%;
+
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+}
+.modal-asociable {
+  input[type=text] {
+    max-width: 180px;
+  }
+  .resultados {
+    margin-top: 16px;
+    border: 1px solid #c8c8c8;
+  }
+}
+.resultados {
+  .list-group-item:hover {
+    background-color: color.adjust(#a7b7bb, $saturation: +10%, $lightness: +20%);
+  }
+}
+
+.modal-asociable .modal-footer {
+  justify-content: space-between;
+}
