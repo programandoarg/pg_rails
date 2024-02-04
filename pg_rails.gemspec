@@ -117,5 +117,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "jsbundling-rails", "~> 1.3"
 
   spec.add_development_dependency "turbo-rails", "~> 1.5"
+  spec.add_development_dependency "annotate"
 
 end
