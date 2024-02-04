@@ -3,7 +3,7 @@ import "@hotwired/turbo-rails"
 import './controllers'
 import * as bootstrap from 'bootstrap'
 
-
+import './../../../../pg_associable'
 
 // Bootstrap's toasts
 document.addEventListener('turbo:load', function () {
