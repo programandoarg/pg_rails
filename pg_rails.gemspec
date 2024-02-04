@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 $LOAD_PATH.push File.expand_path('pg_engine/lib', __dir__)
+$LOAD_PATH.push File.expand_path('pg_associable/lib', __dir__)
+$LOAD_PATH.push File.expand_path('pg_scaffold/lib', __dir__)
 
 # Maintain your gem's version:
 require 'pg_rails/version'
