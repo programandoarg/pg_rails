@@ -113,6 +113,7 @@ Gem::Specification.new do |spec|
 
 
   spec.add_development_dependency "puma"
+  spec.add_development_dependency "rollbar"
 
   spec.add_development_dependency "sprockets-rails"
 
