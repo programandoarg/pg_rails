@@ -3,10 +3,10 @@
 // ./bin/rails generate stimulus controllerName
 
 import { application } from './application'
-import AsociableInlineController from 'pg_associable/app/assets/js/asociable_inline_controller'
-import AsociableController from 'pg_associable/app/assets/js/asociable_controller'
-import ModalController from 'pg_associable/app/assets/js/modal_controller'
+import AsociableInlineController from './../../../../../pg_associable/app/assets/js/asociable_inline_controller'
+import AsociableController from './../../../../../pg_associable/app/assets/js/asociable_controller'
+import ModalController from './../../../../../pg_associable/app/assets/js/modal_controller'
 
-application.register('asociable', AsociableController)
 application.register('asociable_inline', AsociableInlineController)
+application.register('asociable', AsociableController)
 application.register('modal', ModalController)
