@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users
   namespace :admin do
+    resources :categoria_de_cosas do
+      collection do
+        get :abrir_modal
+        post :buscar
+      end
+    end
     resources :cosas do
       collection do
         get :abrir_modal
