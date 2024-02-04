@@ -13,11 +13,3 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
-
-gem "puma"
-
-gem "sprockets-rails"
-
-gem "jsbundling-rails", "~> 1.3"
-
-gem "turbo-rails", "~> 1.5"

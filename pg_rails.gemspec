@@ -29,51 +29,51 @@ Gem::Specification.new do |spec|
   spec.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
   # TODO: add pg_associable
-  # spec.add_dependency 'pg_associable', '~> 5.0'
+  # spec.add_development_dependency 'pg_associable', '~> 5.0'
 
-  spec.add_dependency 'caxlsx_rails'
+  spec.add_development_dependency 'caxlsx_rails'
 
-  spec.add_dependency 'draper'
+  spec.add_development_dependency 'draper'
 
-  spec.add_dependency 'pg', '~> 1.1'
+  spec.add_development_dependency 'pg', '~> 1.1'
 
-  spec.add_dependency "rails", "~> 7.1.3"
+  spec.add_development_dependency "rails", "~> 7.1.3"
 
-  spec.add_dependency 'rainbow'
+  spec.add_development_dependency 'rainbow'
 
-  spec.add_dependency 'simple_form'
+  spec.add_development_dependency 'simple_form'
 
   # User manamement
-  spec.add_dependency 'devise'
-  spec.add_dependency 'devise-i18n'
+  spec.add_development_dependency 'devise'
+  spec.add_development_dependency 'devise-i18n'
 
   # Rails internationalization
-  spec.add_dependency 'rails-i18n'
+  spec.add_development_dependency 'rails-i18n'
 
   # Slim template
-  spec.add_dependency 'slim-rails'
+  spec.add_development_dependency 'slim-rails'
 
   # Better enums
-  spec.add_dependency 'enumerize'
+  spec.add_development_dependency 'enumerize'
 
   # XML parsing
-  spec.add_dependency 'nokogiri'
+  spec.add_development_dependency 'nokogiri'
 
   # Pagination
-  spec.add_dependency 'kaminari'
-  spec.add_dependency 'kaminari-i18n'
+  spec.add_development_dependency 'kaminari'
+  spec.add_development_dependency 'kaminari-i18n'
 
   # Breadcrumbs
-  spec.add_dependency 'breadcrumbs_on_rails'
+  spec.add_development_dependency 'breadcrumbs_on_rails'
 
   # Soft deletion
-  spec.add_dependency 'discard'
+  spec.add_development_dependency 'discard'
 
   # DB Audition
-  spec.add_dependency "audited", "~> 5.0"
+  spec.add_development_dependency "audited", "~> 5.0"
 
   # Access policies
-  spec.add_dependency 'pundit'
+  spec.add_development_dependency 'pundit'
 
 
 
@@ -108,4 +108,14 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-rails'
   spec.add_development_dependency 'rubocop-rspec'
+
+
+  spec.add_development_dependency "puma"
+
+  spec.add_development_dependency "sprockets-rails"
+
+  spec.add_development_dependency "jsbundling-rails", "~> 1.3"
+
+  spec.add_development_dependency "turbo-rails", "~> 1.5"
+
 end
