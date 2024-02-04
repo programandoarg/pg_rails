@@ -14,7 +14,7 @@
             p No hay #{@clase_modelo.nombre_plural.downcase} aún
             = link_to "Crear el primer #{@clase_modelo.nombre_singular.downcase}", 'javascript:void(0)', data: { action: 'modal#toggleCrearElegir' }
           - else
-            = form_tag polymorphic_url([:buscar, :admin, @clase_modelo], only_path: true), method: :post, class: 'pg-form' do
+            = form_tag polymorphic_url([:buscar, :admin, @clase_modelo], only_path: true), method: :post, class: 'pg-form buscar' do
               = hidden_field_tag :id, params[:id]
               = text_field_tag :query, '', placeholder: 'Escribí algo para buscar', autocomplete: 'off'
               / = button_tag 'Buscar'
