@@ -3,6 +3,8 @@
 require 'pg_rails/engine'
 require 'pg_rails/core_ext'
 require 'pg_rails/configuracion'
+require 'pg_rails/utils/logueador'
+require 'pg_associable'
 
 module PgRails
   class << self
