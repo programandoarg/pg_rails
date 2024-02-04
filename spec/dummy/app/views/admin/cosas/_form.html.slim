@@ -4,6 +4,7 @@
   = hidden_field_tag :asociable, true if asociable
   = f.input :nombre
   = f.input :apellido
-  = f.pg_associable_inline :persona
+  / = f.pg_associable_inline :persona
+  = f.pg_associable :persona
   .mt-2
   = f.button :submit
