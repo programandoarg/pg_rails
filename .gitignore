@@ -16,3 +16,5 @@ spec/dummy/tmp/
 .byebug_history
 
 spec/dummy/app/assets/builds/*
+
+node_modules/
