@@ -1,75 +1,37 @@
-inherit_from: .rubocop_todo.yml
-inherit_mode:
-  merge:
-    - Exclude
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-capybara
+  - rubocop-factory_bot
 
-# This is the configuration used to check the rubocop source code.
-
-require: rubocop-rspec
-
-Layout/LineLength:
-  Max: 100
-
-Layout/IndentationConsistency:
-  EnforcedStyle: indented_internal_methods
-
-Metrics/AbcSize:
-  Max: 30
-Metrics/BlockLength:
-  Max: 30
-  Exclude:
-    - 'spec/**/*'
-    - '*.gemspec'
-    - 'lib/pg_rails/simple_form/initializer.rb'
-Metrics/MethodLength:
-  Max: 30
-Metrics/ModuleLength:
-  Max: 150
-Metrics/ClassLength:
-  Max: 210
-
-RSpec/MultipleMemoizedHelpers:
-  Enabled: false
-RSpec/NamedSubject:
-  Enabled: false
-RSpec/ContextWording:
-  Enabled: false
-RSpec/NestedGroups:
-  Max: 7
-RSpec/MultipleExpectations:
-  Max: 5
-RSpec/ExampleLength:
-  Max: 8
-RSpec/AnyInstance:
-  Enabled: false
-RSpec/DescribeClass:
-  Exclude:
-    - 'spec/features/*'
-
-Lint/AmbiguousBlockAssociation:
-  Enabled: false
-
-Style/Semicolon:
-  Enabled: false
-Style/AsciiComments:
-  Enabled: false
 Style/Documentation:
   Enabled: false
 
+RSpec/NamedSubject:
+  Enabled: false
+
+FactoryBot/ConsistentParenthesesStyle:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
 
 AllCops:
   # DisabledByDefault: true
   NewCops: enable
   Exclude:
     - 'Gemfile'
+    - 'Capfile'
+    - 'Rakefile'
+    - 'config.ru'
     - 'Guardfile'
     - 'config/routes.rb'
     - 'db/**/*'
-    - 'spec/dummy/db/**/*'
     - 'bin/**/*'
-    - 'spec/dummy/bin/**/*'
     - 'vendor/**/*'
     - 'scripts/**/*'
     - 'node_modules/**/*'
     - 'config/**/*'
-    - 'lib/generators/**/templates/*'
+    - 'lib/tasks/**/*'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
