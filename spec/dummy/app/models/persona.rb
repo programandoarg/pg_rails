@@ -12,7 +12,7 @@
 #
 
 class Persona < ApplicationRecord
-  # audited
+  audited
 
   scope :query, ->(param) { all } # TODO: completar
 end
