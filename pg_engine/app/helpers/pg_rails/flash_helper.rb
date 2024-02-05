@@ -8,7 +8,6 @@ module PgRails
       turbo_stream.update 'title', "#{breadcrumbs.last&.name} - #{Rails.application.class.module_parent_name}"
     end
 
-    # rubocop:disable Metrics/MethodLength
     def flash_type_to_class(flash_type)
       case flash_type
       when 'notice'
@@ -23,6 +22,5 @@ module PgRails
         flash_type
       end
     end
-    # rubocop:enable Metrics/MethodLength
   end
 end
