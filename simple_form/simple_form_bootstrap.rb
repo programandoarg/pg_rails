@@ -1,5 +1,3 @@
-puts "simple_form 2"
-
 # frozen_string_literal: true
 
 # These defaults are defined and maintained by the community at
