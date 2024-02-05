@@ -38,4 +38,8 @@ class CategoriaDeCosa < ApplicationRecord
   scope :query, ->(param) { param.present? ? where(id: param) : all } # TODO: completar
 
   validates :nombre, :tipo, :tiempo, presence: true
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["actualizado_por_id", "creado_por_id", "created_at", "discarded_at", "fecha", "id", "id_value", "nombre", "tiempo", "tipo", "updated_at"]
+  end
 end
