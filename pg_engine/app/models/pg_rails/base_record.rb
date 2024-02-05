@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PgRails
-  class ApplicationRecord < ActiveRecord::Base
+  class BaseRecord < ActiveRecord::Base
     extend Enumerize
     include PrintHelper
     include PostgresHelper
@@ -12,6 +12,10 @@ module PgRails
 
     before_create :setear_creado_y_actualizado_por
     before_update :setear_actualizado_por
+
+    def self.ransackable_attributes(auth_object = nil)
+      columns.map(&:name)
+    end
 
     def self.nombre_plural
       model_name.human(count: 2)
