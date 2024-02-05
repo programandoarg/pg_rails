@@ -53,7 +53,7 @@ RSpec.describe Admin::CategoriaDeCosasController do
       get :index, params: {}
     end
 
-    before { create :categoria_de_cosa }
+    let(:categoria_de_cosa) { create :categoria_de_cosa }
 
     it 'returns a success response' do
       subject
@@ -70,7 +70,9 @@ RSpec.describe Admin::CategoriaDeCosasController do
     end
 
     context 'when está descartado' do
-      before { categoria_de_cosa.discard! }
+      before do
+        categoria_de_cosa.discard!
+      end
 
       it do
         subject

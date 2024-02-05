@@ -70,7 +70,7 @@ RSpec.describe <%= controller_class_name %>Controller do
 <% end -%>
     end
 
-    before { create :<%= nombre_tabla_completo_singular %> }
+    let(::<%= nombre_tabla_completo_singular %>) { create :<%= nombre_tabla_completo_singular %> }
 
     it 'returns a success response' do
       subject

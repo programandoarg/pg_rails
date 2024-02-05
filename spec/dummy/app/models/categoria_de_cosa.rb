@@ -37,5 +37,5 @@ class CategoriaDeCosa < ApplicationRecord
 
   scope :query, ->(param) { param.present? ? where(id: param) : all } # TODO: completar
 
-  validates :nombre, :tipo, :tiempo, presence: true
+  validates :nombre, :tipo, presence: true
 end
