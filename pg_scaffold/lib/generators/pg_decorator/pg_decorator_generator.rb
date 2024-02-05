@@ -26,6 +26,6 @@ class PgDecoratorGenerator < Rails::Generators::DecoratorGenerator
   end
 
   def parent_class_name
-    'PgRails::BaseDecorator'
+    'PgEngine::BaseDecorator'
   end
 end

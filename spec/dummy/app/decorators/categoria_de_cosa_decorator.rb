@@ -2,7 +2,7 @@
 
 # generado con pg_rails
 
-class CategoriaDeCosaDecorator < PgRails::BaseDecorator
+class CategoriaDeCosaDecorator < PgEngine::BaseDecorator
   delegate_all
 
   def default_module

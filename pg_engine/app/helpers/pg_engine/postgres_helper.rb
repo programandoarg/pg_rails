@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PgRails
+module PgEngine
   module PostgresHelper
     # Le pone la timezone
     def add_timezone(field)

@@ -1,4 +1,4 @@
-class ApplicationPolicy < PgRails::ApplicationPolicy
-  class Scope < PgRails::ApplicationPolicy::Scope
+class ApplicationPolicy < PgEngine::ApplicationPolicy
+  class Scope < PgEngine::ApplicationPolicy::Scope
   end
 end

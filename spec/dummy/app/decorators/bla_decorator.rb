@@ -2,7 +2,7 @@
 
 # generado con pg_rails
 
-class BlaDecorator < PgRails::BaseDecorator
+class BlaDecorator < PgEngine::BaseDecorator
   delegate_all
 
   def default_module

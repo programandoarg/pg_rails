@@ -11,8 +11,8 @@ class PgFormBuilder < SimpleForm::FormBuilder
     "<div class='alert alert-danger'>#{errors}</div>".html_safe
   end
 
-  map_type :date, to: PgRails::FechaInput
-  # map_type :datetime, to: PgRails::FechaInput
+  map_type :date, to: PgEngine::FechaInput
+  # map_type :datetime, to: PgEngine::FechaInput
 
   def submit_button(*args, &)
     options = args.extract_options!.dup

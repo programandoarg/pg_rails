@@ -2,7 +2,7 @@
 
 require 'rainbow'
 
-module PgRails
+module PgEngine
   module Utils
     class Logueador
       class << self

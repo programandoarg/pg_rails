@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PgRails
+module PgEngine
   # rubocop:disable Rails/ApplicationController
   class BaseController < ActionController::Base
     # rubocop:enable Rails/ApplicationController
@@ -203,7 +203,7 @@ module PgRails
         instancia_modelo.assign_attributes(modelo_params) if action_name.in? %w[update]
       end
 
-      instancia_modelo.current_user = send(PgRails.configuracion.current_user_method)
+      instancia_modelo.current_user = send(PgEngine.configuracion.current_user_method)
 
       authorize instancia_modelo
 
@@ -245,7 +245,7 @@ module PgRails
     end
 
     def filtros_y_policy(campos)
-      @filtros = PgRails::FiltrosBuilder.new(
+      @filtros = PgEngine::FiltrosBuilder.new(
         self, clase_modelo, campos
       )
       scope = policy_scope(clase_modelo)

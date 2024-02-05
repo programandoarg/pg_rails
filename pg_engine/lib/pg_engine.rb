@@ -5,7 +5,7 @@ require 'pg_engine/core_ext'
 require 'pg_engine/configuracion'
 require 'pg_engine/utils/logueador'
 
-module PgRails
+module PgEngine
   class << self
     attr_writer :configuracion
 

@@ -2,7 +2,7 @@
 
 # generado con pg_rails
 
-class PersonaDecorator < PgRails::BaseDecorator
+class PersonaDecorator < PgEngine::BaseDecorator
   delegate_all
 
   def default_module

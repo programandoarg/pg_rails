@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-module PgRails
+# TODO: mover a pg_scaffold
+
+module PgEngine
   class Configuracion
     attr_accessor :sistema_iconos, :clase_botones_chicos, :boton_destroy, :boton_edit,
                   :boton_show, :boton_light, :icono_destroy, :icono_edit, :icono_show, :boton_export, :bootstrap_version,

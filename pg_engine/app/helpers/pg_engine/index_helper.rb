@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PgRails
+module PgEngine
   module IndexHelper
     def encabezado(campo, options = {})
       clase = options[:clase] || @clase_modelo

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PgRails
+module PgEngine
   class ApplicationPolicy
     attr_reader :user, :record
 

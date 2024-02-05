@@ -17,7 +17,7 @@ RSpec.describe "<%= ruta_vistas %>/index", <%= type_metatag(:view) %> do
     @clase_modelo = assign(:clase_modelo, <%= nombre_clase_completo %>)
     smart_listing_create :<%= plural_name %>, <%= nombre_clase_completo %>.all, partial: '<%= ruta_vistas %>/listing'
 
-    assign(:filtros, PgRails::FiltrosBuilder.new(
+    assign(:filtros, PgEngine::FiltrosBuilder.new(
       self, <%= nombre_clase_completo %>, []))
   end
 

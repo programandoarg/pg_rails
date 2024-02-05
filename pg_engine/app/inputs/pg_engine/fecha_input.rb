@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PgRails
+module PgEngine
   class FechaInput < SimpleForm::Inputs::StringInput
     def input(wrapper_options = nil)
       # esto es porque si no Rails llama a value_before_type_cast

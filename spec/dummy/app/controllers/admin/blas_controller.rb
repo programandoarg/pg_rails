@@ -3,7 +3,7 @@
 # generado con pg_rails
 
 module Admin
-  class BlasController < PgRails::SignedInController
+  class BlasController < PgEngine::SignedInController
     before_action { @clase_modelo = Bla }
 
     before_action(only: :index) { authorize Bla }

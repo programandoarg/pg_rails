@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module PgRails
+module PgEngine
   module FormHelper
     def pg_form_for(object, *args, &)
-      if object.is_a? PgRails::BaseDecorator
+      if object.is_a? PgEngine::BaseDecorator
         object = object.target_object
-      elsif object.is_a?(PgRails::BaseRecord) &&
+      elsif object.is_a?(PgEngine::BaseRecord) &&
             object.decorator_class.present? &&
-            object.decorator_class < PgRails::BaseDecorator
+            object.decorator_class < PgEngine::BaseDecorator
         object = object.decorate.target_object
       end
       # byebug

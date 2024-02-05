@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module PgRails
+module PgEngine
   class SignedInController < BaseController
     before_action :authenticate_user!
   end

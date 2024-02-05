@@ -4,7 +4,7 @@ require 'rails_helper'
 
 <% output_attributes = attributes.reject{|attribute| [:datetime, :timestamp, :time, :date].index(attribute.type) } -%>
 RSpec.describe "<%= ruta_vistas %>/new", <%= type_metatag(:view) %> do
-  PgRails::ConfiguradorRSpec.helpers(self)
+  PgEngine::ConfiguradorRSpec.helpers(self)
 <% if mountable_engine? -%>
   helper <%= mountable_engine? %>::Engine.routes.url_helpers
 <% end -%>

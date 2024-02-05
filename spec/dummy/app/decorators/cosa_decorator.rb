@@ -2,7 +2,7 @@
 
 # generado con pg_rails
 
-class CosaDecorator < PgRails::BaseDecorator
+class CosaDecorator < PgEngine::BaseDecorator
   delegate_all
 
   def default_module
