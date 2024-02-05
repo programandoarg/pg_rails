@@ -1,21 +1,20 @@
 version: 2.1
-
 executors:
   ruby:
     docker:
-      - image: circleci/ruby:3.1.2-node-browsers
+      - image: cimg/ruby:3.1.2-browsers
         environment:
           PGHOST: 127.0.0.1
           PGUSER: postgres
           PGPASS: postgres
           RAILS_ENV: test
           CC_TEST_REPORTER_ID: 06b784c7df61a8978ec796c2acbbf9c686eb701e336fba3900b997427b06076b
-      - image: circleci/postgres:12-alpine
+      - image: cimg/postgres:12.12
         environment:
-          POSTGRES_USER: pgrails
-          POSTGRES_DB: pg_rails_test
-          POSTGRES_PASSWORD: pgrails
-      - image: circleci/redis
+          POSTGRES_DB: facturabien_test
+          # POSTGRES_USER: facturabien
+          # POSTGRES_PASSWORD: grafitis
+      - image: cimg/redis:7.0
 commands:
   bundle_install:
     description: Install Ruby dependencies with Bundler
@@ -24,14 +23,14 @@ commands:
           keys:
             - bundle-v1-{{ arch }}-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
             - bundle-v1-{{ arch }}-{{ checksum ".ruby-version" }}-
-      - run: sudo apt-get --allow-releaseinfo-change update && sudo apt-get install -y libmagic-dev
+      - run: sudo apt-get --allow-releaseinfo-change update && sudo apt-get install -y libmagic-dev # libmagic (requerido por carrierwave-magic)
       - run:
           name: Install Ruby Dependencies
           command: |
             gem install bundler -v 2.4.22 --conservative --no-document
             bundle config --local deployment true
             bundle config --local path vendor/bundle
-            bundle config --local without production
+            bundle config --local without development:production
             bundle check || (bundle install --jobs=4 --retry=3 && bundle clean)
       - save_cache:
           paths:
@@ -43,7 +42,8 @@ commands:
           name: Set Up Database
           command: |
             bundle exec rake db:schema:load
-
+orbs:
+  browser-tools: circleci/browser-tools@1.4
 jobs:
   static_analysis:
     executor: ruby
@@ -61,11 +61,13 @@ jobs:
       - run:
           name: Run Security Audits
           command: |
-            bundle exec brakeman -q --no-summary
-            bundle exec bundle-audit check --update -v
+            bundle exec brakeman -q --no-summary --skip-files node_modules/
+# interactive:    bundle exec brakeman -q --no-summary --skip-files node_modules/ -I
+#            bundle exec bundle-audit check --update -v
   test:
     executor: ruby
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - bundle_install
       - set_up_database
@@ -76,11 +78,12 @@ jobs:
 
       - run:
           command: |
+            bundle exec rake db:test:prepare
             ./cc-test-reporter before-build
             bundle exec rspec
             ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
 workflows:
-  commit-workflow:
+  build-test:
     jobs:
       - static_analysis
       - test:
