@@ -55,7 +55,7 @@ RSpec.describe Admin::BlasController do
       get :index, params: {}
     end
 
-    let(::bla) { create :bla }
+    let(:bla) { create :bla }
 
     it 'returns a success response' do
       subject
