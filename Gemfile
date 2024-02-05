@@ -17,3 +17,4 @@ gemspec
 gem 'byebug'
 
 gem 'activeadmin'
+gem 'sassc'
