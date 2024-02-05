@@ -6,9 +6,10 @@ class PgFormBuilder < SimpleForm::FormBuilder
   include PgAssociable::FormBuilderMethods
 
   def mensajes_de_error
-    return unless object.errors.present?
+    errors_to_show = object.errors[:base]
+    return unless errors_to_show.present?
 
-    errors = object.errors[:base].map { |m| "<li>#{m}</li>" }.join
+    errors = errors_to_show.map { |m| "<li>#{m}</li>" }.join
     "<div class='alert alert-danger'>#{errors}</div>".html_safe
   end
 
