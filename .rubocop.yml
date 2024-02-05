@@ -43,4 +43,4 @@ AllCops:
     - 'lib/tasks/**/*'
     - 'spec/spec_helper.rb'
     - 'spec/rails_helper.rb'
-    - 
+    - '**/version.rb'
