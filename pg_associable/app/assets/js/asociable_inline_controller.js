@@ -129,6 +129,9 @@ export default class extends Controller {
   completarCampo (id, text) {
     const textField = this.element.querySelector('input[type=text]')
     const hiddenField = this.element.querySelector('input[type=hidden]')
+    if( id === undefined ) {
+      id = null
+    }
     hiddenField.value = id
     if (id) {
       textField.value = text
