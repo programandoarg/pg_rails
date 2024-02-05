@@ -88,7 +88,7 @@ module PgRails
     end
 
     def acceso_total?
-      user.admin?
+      user&.admin?
     end
 
     def objeto_borrado?

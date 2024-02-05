@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PgRails
-  class ApplicationController < ActionController::Base
+  class BaseController < ActionController::Base
     include Pundit::Authorization
     include PrintHelper
     include PostgresHelper
@@ -12,6 +12,10 @@ module PgRails
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
 
     helper_method :mobile_device?
+
+    # Los flash_types resultantes serían:
+    # [:alert, :notice, :warning, :success]
+    add_flash_types :warning, :success
 
     def mobile_device?
       request.user_agent =~ /Mobile|webOS/
@@ -280,7 +284,13 @@ module PgRails
             render json: { error: 'Not authorized' },
                    status: :unprocessable_entity
           end
-          format.html { go_back('Not authorized') }
+          format.html do
+            if request.path == root_path
+              render plain: 'Not authorized'
+            else
+              go_back('Not authorized')
+            end
+          end
         end
       end
 
