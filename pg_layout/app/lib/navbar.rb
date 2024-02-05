@@ -5,13 +5,14 @@ class Navbar
     @user = user
   end
 
+  # FIXME: 
   def sidebar
     [
       { title: 'Home', path: root_path, show: true },
-      { title: 'Categorias', path: admin_categoria_de_cosas_path, show: policy(CategoriaDeCosa).index? },
-      { title: 'Personas', path: admin_personas_path, show: policy(CategoriaDeCosa).index? },
-      { title: 'blas', path: admin_blas_path, show: policy(CategoriaDeCosa).index? },
-      { title: 'ActiveAdmin', path: active_admin_root_path, show: policy(CategoriaDeCosa).index? }
+      # { title: 'Categorias', path: admin_categoria_de_cosas_path, show: policy(CategoriaDeCosa).index? },
+      # { title: 'Personas', path: admin_personas_path, show: policy(CategoriaDeCosa).index? },
+      # { title: 'blas', path: admin_blas_path, show: policy(CategoriaDeCosa).index? },
+      # { title: 'ActiveAdmin', path: active_admin_root_path, show: policy(CategoriaDeCosa).index? }
       # { title: 'Inicio', children: [
       # { title: 'Turnos', path: turnos_path, show: true },
       # { title: 'Second', path: second_path, show: true },
