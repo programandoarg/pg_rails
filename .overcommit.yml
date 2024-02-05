@@ -5,17 +5,17 @@ PreCommit:
   BundleCheck:
     enabled: true
 
-  # EsLint:
-  #   enabled: true
-  #   required_executable: npx
-  #   command: ["npx", "--no-install", "eslint", "-f", "compact"]
-  #   include:
-  #     - app/assets/**/*.js
-  #     - app/assets/**/*.jsx
-  #     - app/components/**/*.js
-  #     - app/components/**/*.jsx
-  #     - app/javascript/**/*.js
-  #     - app/javascript/**/*.jsx
+  EsLint:
+    enabled: true
+    required_executable: npx
+    command: ["npx", "--no-install", "eslint", "-f", "compact"]
+    include:
+      - app/assets/**/*.js
+      - app/assets/**/*.jsx
+      - app/components/**/*.js
+      - app/components/**/*.jsx
+      - app/javascript/**/*.js
+      - app/javascript/**/*.jsx
 
   FixMe:
     enabled: true
@@ -28,6 +28,21 @@ PreCommit:
 
   RailsSchemaUpToDate:
     enabled: true
+
+  RubySyntax:
+    enabled: true
+
+  RubyLint:
+    enabled: true
+
+  SlimLint:
+    enabled: true
+
+  FixMe:
+    enabled: true
+    keywords: ["FIXME"]
+    exclude:
+      - .overcommit.yml
 
   RuboCop:
     enabled: true
@@ -59,9 +74,9 @@ PreCommit:
     exclude:
       - "test/fixtures/**/*.yml"
 
-  # YarnCheck:
-  #   enabled: true
+  YarnCheck:
+    enabled: true
 
-PostCheckout:
-  ALL:
-    quiet: true
+# PostCheckout:
+#   ALL:
+#     quiet: true
