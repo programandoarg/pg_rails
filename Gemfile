@@ -15,3 +15,5 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 
 gem 'byebug'
+
+gem 'activeadmin'
