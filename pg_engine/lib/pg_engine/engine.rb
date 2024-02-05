@@ -9,8 +9,8 @@ module PgEngine
 
     initializer 'configurar_pg_rails' do
       # SimpleForm
-      require "#{PgEngine::Engine.root}/../simple_form/simple_form"
-      require "#{PgEngine::Engine.root}/../simple_form/simple_form_bootstrap"
+      require "#{PgEngine::Engine.root}/config/simple_form/simple_form"
+      require "#{PgEngine::Engine.root}/config/simple_form/simple_form_bootstrap"
 
       # Rainbow
       Rainbow.enabled = true

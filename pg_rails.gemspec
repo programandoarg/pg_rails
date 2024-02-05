@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Maintain your gem's version:
-require_relative "lib/version"
+require_relative "pg_rails/lib/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.license               = 'MIT'
   spec.required_ruby_version = '~> 3.0'
 
-  # spec.require_paths = ['lib', 'pg_engine/lib', 'pg_associable/lib', 'pg_scaffold/lib', 'pg_layout/lib']
+  spec.require_paths = ['pg_rails/lib']
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   # if spec.respond_to?(:metadata)
