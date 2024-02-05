@@ -7,11 +7,13 @@ class PgDecoratorGenerator < Rails::Generators::DecoratorGenerator
 
   remove_hook_for :test_framework
 
-  def namespace # :doc:
+  # :doc:
+  def namespace
     nil
   end
 
-  def class_path # :doc:
+  # :doc:
+  def class_path
     []
   end
 

@@ -17,14 +17,14 @@ module Rails
           when /(string|text|binary|float|integer|date|datetime)\{(.+)\}/
             type = Regexp.last_match(1)
             provided_options = Regexp.last_match(2).split(/[,.-]/)
-            options = provided_options.map { |opt| [opt.to_sym, true] }.to_h
+            options = provided_options.to_h { |opt| [opt.to_sym, true] }
             [type, options]
           when /decimal\{(\d+)[,.-](\d+)\}/
             [:decimal, { precision: Regexp.last_match(1).to_i, scale: Regexp.last_match(2).to_i }]
           when /(references|belongs_to)\{(.+)\}/
             type = Regexp.last_match(1)
             provided_options = Regexp.last_match(2).split(/[,.-]/)
-            options = provided_options.map { |opt| parsear_opcion(opt) }.to_h
+            options = provided_options.to_h { |opt| parsear_opcion(opt) }
 
             # si es referencia le mando índice siempre
             options[:index] = true

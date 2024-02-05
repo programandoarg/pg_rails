@@ -1,5 +1,5 @@
-require __dir__ + '/../../app/helpers/pg_associable/helpers'
-require __dir__ + '/../../app/helpers/pg_associable/form_builder_methods'
+require "#{__dir__}/../../app/helpers/pg_associable/helpers"
+require "#{__dir__}/../../app/helpers/pg_associable/form_builder_methods"
 
 module PgAssociable
   class Engine < ::Rails::Engine

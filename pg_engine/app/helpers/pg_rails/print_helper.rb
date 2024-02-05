@@ -8,7 +8,7 @@ module PgRails
     end
 
     def mostrar_con_link(objeto, options = {})
-      return unless objeto.present?
+      return if objeto.blank?
 
       if policy(objeto).show?
         content = truncate_title(block_given? ? yield : objeto)
@@ -35,7 +35,7 @@ module PgRails
     end
 
     def print_cuit(cuit_number)
-      return '' unless cuit_number.present?
+      return '' if cuit_number.blank?
 
       str = cuit_number.to_s
       "#{str[0..1]}-#{str[2..9]}-#{str[10]}"
@@ -43,42 +43,42 @@ module PgRails
 
     def dmy_time(date)
       date = parsear_tiempo(date) if date.is_a? String
-      return unless date.present?
+      return if date.blank?
 
       date.strftime('%d/%m/%Y %H:%M')
     end
 
     def dmy(date)
       date = parsear_fecha(date) if date.is_a? String
-      return unless date.present?
+      return if date.blank?
 
       date.strftime('%d/%m/%Y')
     end
 
     def ymd(date)
       date = parsear_fecha(date) if date.is_a? String
-      return unless date.present?
+      return if date.blank?
 
       date.strftime('%Y/%m/%d')
     end
 
     def dmyg(date)
       date = parsear_fecha(date) if date.is_a? String
-      return unless date.present?
+      return if date.blank?
 
       date.strftime('%d-%m-%Y')
     end
 
     def ymdg(date)
       date = parsear_fecha(date) if date.is_a? String
-      return unless date.present?
+      return if date.blank?
 
       date.strftime('%Y-%m-%d')
     end
 
     def myg(date)
       date = parsear_fecha(date) if date.is_a? String
-      return unless date.present?
+      return if date.blank?
 
       date.strftime('%m-%Y')
     end
@@ -99,7 +99,7 @@ module PgRails
     end
 
     def print_currency(number, moneda = 'pesos')
-      return unless number.present?
+      return if number.blank?
 
       "#{simbolo_moneda(moneda)} #{number_with_precision(number, delimiter: '.', separator: ',',
                                                                  precision: 2)}"
@@ -136,7 +136,7 @@ module PgRails
     end
 
     def parsear_tiempo(datetime)
-      return nil unless datetime.present?
+      return nil if datetime.blank?
 
       DateTime.parse(datetime)
     rescue ArgumentError
@@ -144,7 +144,7 @@ module PgRails
     end
 
     def parsear_fecha(date)
-      return nil unless date.present?
+      return nil if date.blank?
 
       Date.parse(date)
     rescue ArgumentError
@@ -152,7 +152,7 @@ module PgRails
     end
 
     def show_percentage(value)
-      return unless value.present?
+      return if value.blank?
 
       "#{value.round(2)} %"
     end

@@ -14,11 +14,13 @@ module PgRspec
 
       invoke 'pg_factory_bot:model'
 
-      def namespace # Esto quizas no es necesario
+      # Esto quizas no es necesario
+      def namespace
         nil
       end
 
-      def class_path # :doc:
+      # :doc:
+      def class_path
         []
       end
 

@@ -44,8 +44,8 @@ module PgRails
       query = query.without_deleted if query.respond_to?(:without_deleted)
       query = query.kept if query.respond_to?(:kept)
 
-      @filtros.each do |campo, _opciones|
-        next unless parametros[campo].present?
+      @filtros.each_key do |campo|
+        next if parametros[campo].blank?
 
         if @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:query].present?
           query = @filtros[campo.to_sym][:query].call(query, parametros[campo])
@@ -183,7 +183,7 @@ module PgRails
       @filtros.each do |campo, opciones|
         if opciones[:oculto] ||
            (options[:except].present? && options[:except].include?(campo.to_sym)) ||
-           (options[:only].present? && !options[:only].include?(campo.to_sym))
+           (options[:only].present? && options[:only].exclude?(campo.to_sym))
           next
         end
 

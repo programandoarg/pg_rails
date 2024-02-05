@@ -40,5 +40,5 @@ class Bla < ApplicationRecord
 
   scope :query, ->(param) { param.present? ? where(id: param) : all } # TODO: completar
 
-  validates :nombre, :tipo, :categoria_de_cosa, presence: true
+  validates :nombre, :tipo, presence: true
 end

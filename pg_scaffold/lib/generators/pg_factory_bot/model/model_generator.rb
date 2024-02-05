@@ -30,11 +30,13 @@ module PgFactoryBot
       # Los modelos nunca tienen modulo
       def explicit_class_option; end
 
-      def namespace # :doc:
+      # :doc:
+      def namespace
         nil
       end
 
-      def class_path # :doc:
+      # :doc:
+      def class_path
         []
       end
 
@@ -52,7 +54,7 @@ module PgFactoryBot
       end
 
       def los_traits
-        ret = attributes.select(&:reference?).map do |atributo|
+        attributes.select(&:reference?).map do |atributo|
           {
             clase: atributo.clase_con_modulo,
             atributo_name: atributo.name

@@ -33,7 +33,7 @@ module PgRspec
       end
 
       def merge_referencias
-        return unless referencias_requeridas.present?
+        return if referencias_requeridas.blank?
 
         asd = referencias_requeridas.map { |r| "#{r.name}_id: #{r.name}.id" }
         ".merge(#{asd.join(', ')})"

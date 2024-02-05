@@ -31,7 +31,7 @@ module PgRails
                    ''
                  end
 
-        uri.query = cgi.map { |a, b| [a, (b.length == 1 ? b.first : b)] }.to_h.to_query
+        uri.query = cgi.transform_values { |b| (b.length == 1 ? b.first : b) }.to_query
 
         link_to(clase.human_attribute_name(campo), uri.to_s) + " #{symbol}".html_safe
       else

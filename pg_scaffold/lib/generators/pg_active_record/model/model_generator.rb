@@ -11,11 +11,13 @@ module PgActiveRecord
     class_option :trackeo_de_usuarios, type: :boolean, default: true,
                                        desc: 'Genera campos creado_por y actualizado_por.'
 
-    def namespace # :doc:
+    # :doc:
+    def namespace
       nil
     end
 
-    def class_path # :doc:
+    # :doc:
+    def class_path
       []
     end
 

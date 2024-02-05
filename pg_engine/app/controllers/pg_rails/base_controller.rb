@@ -84,7 +84,7 @@ module PgRails
           end
           format.html do
             if params[:save_and_next] == 'true'
-              new_path = url_for(@clase_modelo) + '/new'
+              new_path = "#{url_for(@clase_modelo)}/new"
               redirect_to new_path, notice: "#{@clase_modelo.nombre_singular} creado."
             else
               redirect_to object.decorate.target_object

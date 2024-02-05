@@ -53,13 +53,15 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
     attributes
   end
 
-  def module_namespacing_2(&) # :doc:
+  # :doc:
+  def module_namespacing_2(&)
     content = capture(&)
     content = wrap_with_namespace_2(content)
     concat(content)
   end
 
-  def wrap_with_namespace_2(content) # :doc:
+  # :doc:
+  def wrap_with_namespace_2(content)
     content = indent(content).chomp
     "module #{controller_class_name.split('::').first}\n#{content}\nend\n"
   end

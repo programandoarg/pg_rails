@@ -17,7 +17,7 @@ if Rails.env.development?
   )
 
   # Annotate models
-  task :annotate do
+  task annotate: :environment do
     puts 'Annotating models...'
     system 'bundle exec annotate'
   end
