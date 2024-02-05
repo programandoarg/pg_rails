@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'pg_engine/engine'
-require 'pg_engine/core_ext'
-require 'pg_engine/configuracion'
-require 'pg_engine/utils/logueador'
+require_relative 'pg_engine/engine'
+require_relative 'pg_engine/core_ext'
+require_relative 'pg_engine/configuracion'
+require_relative 'pg_engine/utils/logueador'
 
 module PgEngine
   class << self

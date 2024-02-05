@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Maintain your gem's version:
-require_relative "pg_engine/lib/pg_rails/version"
+require_relative "lib/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|

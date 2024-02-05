@@ -1,4 +1,4 @@
-require 'pg_scaffold/railtie'
+require_relative 'pg_scaffold/railtie'
 
 module PgScaffold
 end
