@@ -1,0 +1,42 @@
+<div id="sidebar" class="<%= @navbar_opened_class %> flex-shrink-0 bg-gradient d-none d-<%= @breakpoint_navbar_expand %>-block">
+  <% if user_signed_in? %>
+    <div class="sidebar--large-items" style="position:fixed">
+      <hr>
+      <div class="sidebar--small-items">
+        <ul class="list-unstyled ps-0">
+          <li class="mb-1 text-center">
+            <a href="javascript:void(0)" class="nav-link" data-bs-toggle="tooltip" data-bs-title="Agenda">
+              <i class="bi bi-calendar"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar--large-items">
+        <ul class="list-unstyled ps-0">
+          <% @navbar.sidebar.each do |entry| %>
+            <% next if @navbar.hide_entry?(entry) %>
+            <% random_id = rand(99999).to_s %>
+            <li class="mb-1">
+              <% if entry[:children].present? %>
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#<%= 'collapse-' + random_id %>" aria-expanded="true">
+                  <%= entry[:title] %>
+                </button>
+                <div class="collapse <%= @navbar.any_children_active?(entry, request) ? 'show' : '' %>" id="<%= 'collapse-' + random_id %>">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <% entry[:children].each do |child| %>
+                      <% next if @navbar.hide_entry?(child) %>
+                      <li><a href="<%= child[:path] %>" class="<%= @navbar.active_entry?(child, request) ? 'active' : '' %> d-inline-flex text-decoration-none rounded"><%= child[:title] %></a></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% else %>
+                <a href="<%= entry[:path] %>" class="<%= @navbar.active_entry?(entry, request) ? 'active' : '' %> d-inline-flex text-decoration-none ms-4"><%= entry[:title] %></a>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+        <hr>
+      </div>
+    </div>
+  <% end %>
+</div>

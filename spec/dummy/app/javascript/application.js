@@ -3,7 +3,9 @@ import "@hotwired/turbo-rails"
 import './controllers'
 import * as bootstrap from 'bootstrap'
 
+// TODO: unificar un pg_rails.js
 import './../../../../pg_associable'
+import './../../../../pg_layout'
 
 // Bootstrap's toasts
 document.addEventListener('turbo:load', function () {

@@ -5,4 +5,5 @@ class ApplicationController < PgRails::SignedInController
     load "#{PgRails::Engine.root}/../simple_form/simple_form_bootstrap.rb"
   end
 
+  layout 'pg_layout/layout'
 end

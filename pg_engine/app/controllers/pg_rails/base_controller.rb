@@ -17,6 +17,16 @@ module PgRails
     # [:alert, :notice, :warning, :success]
     add_flash_types :warning, :success
 
+    before_action do
+      @breakpoint_navbar_expand = 'md'
+      @navbar_opened_class = if cookies[:navbar_expand] == 'false' || !user_signed_in?
+                               ''
+                             else
+                               'opened'
+                             end
+      @navbar = Navbar.new(current_user)
+    end
+
     def mobile_device?
       request.user_agent =~ /Mobile|webOS/
     end
