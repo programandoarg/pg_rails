@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module PgRails
+  # rubocop:disable Rails/ApplicationController
   class BaseController < ActionController::Base
+    # rubocop:enable Rails/ApplicationController
     include Pundit::Authorization
     include PrintHelper
     include PostgresHelper

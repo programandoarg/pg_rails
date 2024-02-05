@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module PgRails
+  # rubocop:disable Rails/ApplicationRecord
   class BaseRecord < ActiveRecord::Base
+    # rubocop:enable Rails/ApplicationRecord
     extend Enumerize
     include PrintHelper
     include PostgresHelper
