@@ -31,6 +31,8 @@ PreCommit:
 
   RubySyntax:
     enabled: true
+    exclude:
+      - pg_scaffold/lib/generators/**/templates/**/*
 
   RubyLint:
     enabled: true
