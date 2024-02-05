@@ -1,10 +1,15 @@
 / # locals: (object: nil, asociable: false)
 
-= pg_form_for(@categoria_de_cosa || object) do |f|
-  = hidden_field_tag :asociable, true if asociable
-  = f.input :nombre
-  = f.input :tipo
-  = f.input :fecha
-  = f.input :tiempo
-  .mt-2
-  = f.button :submit
+div style="max-width: 500px"
+  = pg_form_for(@categoria_de_cosa || object) do |f|
+    = f.mensajes_de_error
+
+    = hidden_field_tag :asociable, true if asociable
+    = f.input :nombre
+    = f.input :tipo
+    = f.input :fecha
+    = f.input :tiempo, html5: true, required: true
+    / = f.datetime_select :tiempo
+    / = f.datetime_field :tiempo
+    .mt-2
+    = f.button :submit

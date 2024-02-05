@@ -28,7 +28,7 @@
 # generado con pg_rails
 
 class CategoriaDeCosa < ApplicationRecord
-  audited
+  # audited
   include Discard::Model
 
   belongs_to :creado_por, optional: true, class_name: 'User'
@@ -38,5 +38,9 @@ class CategoriaDeCosa < ApplicationRecord
 
   scope :query, ->(param) { param.present? ? where(id: param) : all } # TODO: completar
 
-  validates :nombre, :tipo, presence: true
+  validates :nombre, :tipo, :tiempo, presence: true
+
+  validate do
+    errors.add(:base, 'cosas')
+  end
 end
