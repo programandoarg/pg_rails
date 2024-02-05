@@ -10,7 +10,7 @@
 # Configuration parameters: AllowComments, AllowNil.
 Lint/SuppressedException:
   Exclude:
-    - 'pg_engine/app/lib/pg_rails/filtros_builder.rb'
+    - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
 
 # Offense count: 24
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
@@ -18,12 +18,12 @@ Metrics/AbcSize:
   Exclude:
     - 'pg_associable/app/helpers/pg_associable/form_builder_methods.rb'
     - 'pg_associable/app/inputs/pg_associable/pg_associable_inline_input.rb'
-    - 'pg_engine/app/controllers/pg_rails/base_controller.rb'
-    - 'pg_engine/app/decorators/pg_rails/base_decorator.rb'
-    - 'pg_engine/app/helpers/pg_rails/form_helper.rb'
-    - 'pg_engine/app/helpers/pg_rails/index_helper.rb'
-    - 'pg_engine/app/helpers/pg_rails/print_helper.rb'
-    - 'pg_engine/app/lib/pg_rails/filtros_builder.rb'
+    - 'pg_engine/app/controllers/pg_engine/base_controller.rb'
+    - 'pg_engine/app/decorators/pg_engine/base_decorator.rb'
+    - 'pg_engine/app/helpers/pg_engine/form_helper.rb'
+    - 'pg_engine/app/helpers/pg_engine/index_helper.rb'
+    - 'pg_engine/app/helpers/pg_engine/print_helper.rb'
+    - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
     - 'pg_scaffold/lib/pg_scaffold/monkey_patches/mejoras_de_atributos.rb'
 
 # Offense count: 4
@@ -32,35 +32,35 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   Exclude:
     - 'pg_associable/lib/pg_associable/simple_form_initializer.rb'
-    - 'pg_engine/app/controllers/pg_rails/base_controller.rb'
-    - 'pg_engine/app/lib/pg_rails/filtros_builder.rb'
+    - 'pg_engine/app/controllers/pg_engine/base_controller.rb'
+    - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
     - 'simple_form/simple_form_bootstrap.rb'
 
 # Offense count: 2
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:
   Exclude:
-    - 'pg_engine/app/controllers/pg_rails/base_controller.rb'
-    - 'pg_engine/app/lib/pg_rails/filtros_builder.rb'
+    - 'pg_engine/app/controllers/pg_engine/base_controller.rb'
+    - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
 
 # Offense count: 5
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/CyclomaticComplexity:
   Exclude:
-    - 'pg_engine/app/helpers/pg_rails/index_helper.rb'
-    - 'pg_engine/app/lib/pg_rails/filtros_builder.rb'
+    - 'pg_engine/app/helpers/pg_engine/index_helper.rb'
+    - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
 
 # Offense count: 23
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns.
 Metrics/MethodLength:
   Exclude:
-    - 'pg_engine/app/controllers/pg_rails/base_controller.rb'
-    - 'pg_engine/app/helpers/pg_rails/flash_helper.rb'
-    - 'pg_engine/app/helpers/pg_rails/form_helper.rb'
-    - 'pg_engine/app/helpers/pg_rails/index_helper.rb'
-    - 'pg_engine/app/helpers/pg_rails/print_helper.rb'
-    - 'pg_engine/app/lib/pg_rails/filtros_builder.rb'
-    - 'pg_engine/lib/pg_rails/configuracion.rb'
+    - 'pg_engine/app/controllers/pg_engine/base_controller.rb'
+    - 'pg_engine/app/helpers/pg_engine/flash_helper.rb'
+    - 'pg_engine/app/helpers/pg_engine/form_helper.rb'
+    - 'pg_engine/app/helpers/pg_engine/index_helper.rb'
+    - 'pg_engine/app/helpers/pg_engine/print_helper.rb'
+    - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
+    - 'pg_engine/lib/pg_engine/configuracion.rb'
     - 'pg_scaffold/lib/generators/pg_factory_bot/model/model_generator.rb'
     - 'pg_scaffold/lib/pg_scaffold/monkey_patches/mejoras_de_atributos.rb'
 
@@ -68,15 +68,15 @@ Metrics/MethodLength:
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:
   Exclude:
-    - 'pg_engine/app/helpers/pg_rails/print_helper.rb'
+    - 'pg_engine/app/helpers/pg_engine/print_helper.rb'
 
 # Offense count: 6
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/PerceivedComplexity:
   Exclude:
-    - 'pg_engine/app/helpers/pg_rails/form_helper.rb'
-    - 'pg_engine/app/helpers/pg_rails/index_helper.rb'
-    - 'pg_engine/app/lib/pg_rails/filtros_builder.rb'
+    - 'pg_engine/app/helpers/pg_engine/form_helper.rb'
+    - 'pg_engine/app/helpers/pg_engine/index_helper.rb'
+    - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
 
 # Offense count: 2
 # Configuration parameters: EnforcedStyle, CheckMethodNames, CheckSymbols, AllowedIdentifiers, AllowedPatterns.
@@ -89,17 +89,17 @@ Naming/VariableNumber:
 # Offense count: 2
 Rails/I18nLocaleTexts:
   Exclude:
-    - 'pg_engine/app/controllers/pg_rails/base_controller.rb'
+    - 'pg_engine/app/controllers/pg_engine/base_controller.rb'
 
 # Offense count: 8
 Rails/OutputSafety:
   Exclude:
     - 'pg_associable/app/inputs/pg_associable/pg_associable_input.rb'
-    - 'pg_engine/app/decorators/pg_rails/base_decorator.rb'
-    - 'pg_engine/app/helpers/pg_rails/index_helper.rb'
-    - 'pg_engine/app/helpers/pg_rails/print_helper.rb'
+    - 'pg_engine/app/decorators/pg_engine/base_decorator.rb'
+    - 'pg_engine/app/helpers/pg_engine/index_helper.rb'
+    - 'pg_engine/app/helpers/pg_engine/print_helper.rb'
     - 'pg_engine/app/lib/pg_form_builder.rb'
-    - 'pg_engine/app/lib/pg_rails/filtros_builder.rb'
+    - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
 
 # Offense count: 14
 # This cop supports safe autocorrection (--autocorrect).
@@ -109,9 +109,9 @@ Layout/LineLength:
   Exclude:
     - 'pg_associable/app/inputs/pg_associable/pg_associable_input.rb'
     - 'pg_associable/lib/pg_associable/simple_form_initializer.rb'
-    - 'pg_engine/app/decorators/pg_rails/base_decorator.rb'
-    - 'pg_engine/app/lib/pg_rails/filtros_builder.rb'
-    - 'pg_engine/lib/pg_rails/configuracion.rb'
+    - 'pg_engine/app/decorators/pg_engine/base_decorator.rb'
+    - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
+    - 'pg_engine/lib/pg_engine/configuracion.rb'
     - 'simple_form/simple_form.rb'
     - 'simple_form/simple_form_bootstrap.rb'
     - 'spec/dummy/app/admin/audits.rb'

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'pg_rails/engine'
-require 'pg_rails/core_ext'
-require 'pg_rails/configuracion'
-require 'pg_rails/utils/logueador'
+require 'pg_engine/engine'
+require 'pg_engine/core_ext'
+require 'pg_engine/configuracion'
+require 'pg_engine/utils/logueador'
 
 module PgRails
   class << self
