@@ -13,7 +13,7 @@ module PgRails
     before_create :setear_creado_y_actualizado_por
     before_update :setear_actualizado_por
 
-    def self.ransackable_attributes(auth_object = nil)
+    def self.ransackable_attributes(_auth_object = nil)
       columns.map(&:name)
     end
 
@@ -38,18 +38,18 @@ module PgRails
 
     private
 
-      def setear_creado_y_actualizado_por
-        setear_si_existe :creado_por, current_user
-        setear_si_existe :actualizado_por, current_user
-      end
+    def setear_creado_y_actualizado_por
+      setear_si_existe :creado_por, current_user
+      setear_si_existe :actualizado_por, current_user
+    end
 
-      def setear_actualizado_por
-        setear_si_existe :actualizado_por, current_user
-      end
+    def setear_actualizado_por
+      setear_si_existe :actualizado_por, current_user
+    end
 
-      def setear_si_existe(campo, valor)
-        metodo = "#{campo}="
-        send(metodo, valor) if respond_to?(metodo) && valor.present?
-      end
+    def setear_si_existe(campo, valor)
+      metodo = "#{campo}="
+      send(metodo, valor) if respond_to?(metodo) && valor.present?
+    end
   end
 end

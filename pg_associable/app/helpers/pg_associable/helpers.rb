@@ -13,8 +13,7 @@ module PgAssociable
       collection = @clase_modelo.query(params[:query]).limit(6)
       render turbo_stream:
         turbo_stream.update("resultados-#{params[:id]}",
-                            partial: partial, locals: { collection: collection })
+                            partial:, locals: { collection: })
     end
-
   end
 end

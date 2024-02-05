@@ -23,13 +23,18 @@ module PgAssociable
       text_field_tag(nil, object.send(reflection.name).to_s, merged_input_options)
     end
 
-    def modal_link(wrapper_options = nil)
+    def modal_link(_wrapper_options = nil)
       "<a href=\"#{options[:url_modal]}\" class=\"modal-link d-inline-block\" data-turbo-stream style=\"position:absolute; left:0; right:0; top:0; bottom:0;\"></a>".html_safe
     end
-    def limpiar(wrapper_options = nil)
-      content_tag('a', href: 'javascript:void(0)', class: 'limpiar', title: 'Limpiar', tabindex: '0', data: { action: 'asociable#selectItem' }) { '<i class="bi bi-x-lg"></i>'.html_safe }
+
+    def limpiar(_wrapper_options = nil)
+      content_tag('a', href: 'javascript:void(0)', class: 'limpiar', title: 'Limpiar', tabindex: '0',
+                       data: { action: 'asociable#selectItem' }) do
+        '<i class="bi bi-x-lg"></i>'.html_safe
+      end
     end
-    def pencil(wrapper_options = nil)
+
+    def pencil(_wrapper_options = nil)
       '<i tabindex="-1" class="bi bi-pencil pencil"></i>'.html_safe
     end
   end

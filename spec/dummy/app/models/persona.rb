@@ -14,5 +14,5 @@
 class Persona < ApplicationRecord
   audited
 
-  scope :query, ->(param) { all } # TODO: completar
+  scope :query, ->(_param) { all } # TODO: completar
 end

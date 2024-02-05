@@ -25,12 +25,15 @@ module PgAssociable
       text_field_tag(nil, object.send(reflection.name).to_s, merged_input_options)
     end
 
-    def limpiar(wrapper_options = nil)
-      content_tag('a', href: 'javascript:void(0)', class: 'limpiar', title: 'Limpiar', tabindex: '0', data: { action: 'asociable_inline#selectItem' }) { '<i class="bi bi-x-lg"></i>'.html_safe }
-    end
-    def pencil(wrapper_options = nil)
-      '<i tabindex="-1" class="bi bi-pencil pencil"></i>'.html_safe
+    def limpiar(_wrapper_options = nil)
+      content_tag('a', href: 'javascript:void(0)', class: 'limpiar', title: 'Limpiar', tabindex: '0',
+                       data: { action: 'asociable_inline#selectItem' }) do
+        '<i class="bi bi-x-lg"></i>'.html_safe
+      end
     end
 
+    def pencil(_wrapper_options = nil)
+      '<i tabindex="-1" class="bi bi-pencil pencil"></i>'.html_safe
+    end
   end
 end

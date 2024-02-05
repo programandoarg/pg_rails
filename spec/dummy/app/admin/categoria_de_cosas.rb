@@ -1,8 +1,9 @@
 ActiveAdmin.register CategoriaDeCosa do
-  permit_params :discarded_at, :fecha, :nombre, :tiempo, :tipo, :created_at, :updated_at, :actualizado_por_id, :creado_por_id
+  permit_params :discarded_at, :fecha, :nombre, :tiempo, :tipo, :created_at, :updated_at, :actualizado_por_id,
+                :creado_por_id
 
-# :id
-# :discarded_at, :fecha, :nombre, :tiempo, :tipo, :created_at, :updated_at, :actualizado_por_id, :creado_por_id
+  # :id
+  # :discarded_at, :fecha, :nombre, :tiempo, :tipo, :created_at, :updated_at, :actualizado_por_id, :creado_por_id
   index do
     selectable_column
     id_column
@@ -32,5 +33,4 @@ ActiveAdmin.register CategoriaDeCosa do
     end
     f.actions
   end
-
 end

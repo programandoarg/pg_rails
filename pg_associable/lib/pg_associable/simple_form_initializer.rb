@@ -1,12 +1,13 @@
 SimpleForm.setup do |config|
   config.wrappers :pg_associable, tag: 'div', class: 'pg_associable mb-3', html: { data: { controller: 'asociable', 'asociable-modal-outlet': '.modal' } },
-                                       error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+                                  error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'form-control-label'
     b.use :hidden_input
     b.wrapper tag: 'div', class: 'position-relative' do |ba|
-      ba.use :input, class: 'form-control', disabled: true, placeholder: 'Clic para seleccionar...', error_class: 'is-invalid'
+      ba.use :input, class: 'form-control', disabled: true, placeholder: 'Clic para seleccionar...',
+                     error_class: 'is-invalid'
       ba.use :pencil
       ba.use :modal_link
       ba.use :limpiar
@@ -16,7 +17,7 @@ SimpleForm.setup do |config|
   end
 
   config.wrappers :pg_associable_inline, tag: 'div', class: 'pg_associable_inline mb-3', html: { data: { controller: 'asociable_inline' } },
-                                       error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+                                         error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'form-control-label'

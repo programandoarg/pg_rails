@@ -27,7 +27,6 @@
 #
 
 class Cosa < ApplicationRecord
-
   belongs_to :persona, optional: true
 
   belongs_to :creado_por, optional: true, class_name: 'User'

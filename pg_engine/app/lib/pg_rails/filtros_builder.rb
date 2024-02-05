@@ -51,11 +51,11 @@ module PgRails
           query = @filtros[campo.to_sym][:query].call(query, parametros[campo])
         elsif tipo(campo) == :enumerized
           columna = @clase_modelo.columns.find { |c| c.name == campo.to_s }
-          if columna.array
-            query = query.where("? = any(#{@clase_modelo.table_name}.#{campo})", parametros[campo])
-          else
-            query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo])
-          end
+          query = if columna.array
+                    query.where("? = any(#{@clase_modelo.table_name}.#{campo})", parametros[campo])
+                  else
+                    query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo])
+                  end
         elsif tipo(campo).in?(%i[integer float decimal])
           campo_a_comparar = "#{@clase_modelo.table_name}.#{sin_sufijo(campo)}"
           query = query.where("#{campo_a_comparar} #{comparador(campo)} ?", parametros[campo])
@@ -300,7 +300,7 @@ module PgRails
       content_tag :div, class: 'col-auto' do
         content_tag :div, class: 'filter' do
           text_field_tag(
-            campo, parametros_controller[campo], class: 'form-control form-control-sm allow-enter-submit', placeholder: placeholder, autocomplete: 'off'
+            campo, parametros_controller[campo], class: 'form-control form-control-sm allow-enter-submit', placeholder:, autocomplete: 'off'
           )
         end
       end
@@ -324,9 +324,9 @@ module PgRails
       content_tag :div, class: 'col-auto' do
         content_tag :div, class: 'filter' do
           label_tag(nil, placeholder, class: 'text-muted') + \
-          date_field_tag(
-            campo, parametros_controller[campo], class: 'form-control form-control-sm d-inline-block w-auto ms-1', placeholder: placeholder, autocomplete: 'off'
-          )
+            date_field_tag(
+              campo, parametros_controller[campo], class: 'form-control form-control-sm d-inline-block w-auto ms-1', placeholder:, autocomplete: 'off'
+            )
         end
       end
     end

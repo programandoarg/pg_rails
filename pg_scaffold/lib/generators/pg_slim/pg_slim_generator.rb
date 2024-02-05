@@ -17,7 +17,7 @@ class PgSlimGenerator < Slim::Generators::ScaffoldGenerator
 
   protected
 
-    def available_views
-      %w[index edit show new _form]
-    end
+  def available_views
+    %w[index edit show new _form]
+  end
 end

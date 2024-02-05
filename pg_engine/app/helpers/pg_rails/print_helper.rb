@@ -14,7 +14,7 @@ module PgRails
         content = truncate_title(block_given? ? yield : objeto)
         if options[:new_tab]
           content += "&nbsp;<i class='fa fa-external-link'>".html_safe
-          link_to content.html_safe, objeto, target: :_blank
+          link_to content.html_safe, objeto, target: :_blank, rel: :noopener
         else
           link_to content.html_safe, objeto
         end
@@ -27,7 +27,7 @@ module PgRails
       string = input.to_s
       if string.length > length
         content_tag :span, title: input, rel: :tooltip do
-          truncate string, length: length
+          truncate string, length:
         end
       else
         string

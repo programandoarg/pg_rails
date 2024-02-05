@@ -17,11 +17,12 @@ module PgRspec
       def namespace # Esto quizas no es necesario
         nil
       end
+
       def class_path # :doc:
         []
       end
-      def create_module_file
-      end
+
+      def create_module_file; end
     end
   end
 end

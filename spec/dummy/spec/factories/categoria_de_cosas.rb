@@ -31,6 +31,6 @@ FactoryBot.define do
     nombre { Faker::Lorem.sentence }
     tipo { CategoriaDeCosa.tipo.values.sample }
     fecha { Faker::Date.backward }
-    tiempo { "2024-02-04 01:17:40" }
+    tiempo { '2024-02-04 01:17:40' }
   end
 end

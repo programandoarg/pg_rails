@@ -10,8 +10,8 @@ module PgRails
 
     private
 
-      def clase_aplicacion
-        'cosa'
-      end
+    def clase_aplicacion
+      'cosa'
+    end
   end
 end

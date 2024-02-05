@@ -24,14 +24,14 @@ module Rails
 
       private
 
-        # Deprecado?
-        def ruta_vistas
-          if namespaced?
-            namespaced_class_path.dup.push(plural_name).join('/')
-          else
-            regular_class_path.dup.push(plural_name).join('/')
-          end
+      # Deprecado?
+      def ruta_vistas
+        if namespaced?
+          namespaced_class_path.dup.push(plural_name).join('/')
+        else
+          regular_class_path.dup.push(plural_name).join('/')
         end
+      end
     end
   end
 end

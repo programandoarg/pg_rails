@@ -14,17 +14,16 @@ class PgDecoratorGenerator < Rails::Generators::DecoratorGenerator
   def class_path # :doc:
     []
   end
-  def create_module_file
-  end
+
+  def create_module_file; end
 
   private
 
-    def class_path_original
-      @class_path.first
-    end
+  def class_path_original
+    @class_path.first
+  end
 
-
-    def parent_class_name
-      'PgRails::BaseDecorator'
-    end
+  def parent_class_name
+    'PgRails::BaseDecorator'
+  end
 end

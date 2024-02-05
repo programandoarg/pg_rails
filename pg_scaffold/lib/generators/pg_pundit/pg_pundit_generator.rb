@@ -10,9 +10,10 @@ class PgPunditGenerator < Pundit::Generators::PolicyGenerator
   def namespace # :doc:
     nil
   end
+
   def class_path # :doc:
     []
   end
-  def create_module_file
-  end
+
+  def create_module_file; end
 end

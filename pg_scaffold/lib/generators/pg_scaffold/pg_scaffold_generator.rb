@@ -49,18 +49,18 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
 
   private
 
-    def atributos_a_filtrar
-      attributes
-    end
+  def atributos_a_filtrar
+    attributes
+  end
 
-    def module_namespacing_2(&block) # :doc:
-      content = capture(&block)
-      content = wrap_with_namespace_2(content)
-      concat(content)
-    end
+  def module_namespacing_2(&) # :doc:
+    content = capture(&)
+    content = wrap_with_namespace_2(content)
+    concat(content)
+  end
 
-    def wrap_with_namespace_2(content) # :doc:
-      content = indent(content).chomp
-      "module #{controller_class_name.split('::').first}\n#{content}\nend\n"
-    end
+  def wrap_with_namespace_2(content) # :doc:
+    content = indent(content).chomp
+    "module #{controller_class_name.split('::').first}\n#{content}\nend\n"
+  end
 end

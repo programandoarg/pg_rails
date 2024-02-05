@@ -6,7 +6,7 @@ module PgAssociable
 
     # TODO: no depender de :admin
     def pg_associable(atributo, options = {})
-      asociacion = object.class.reflect_on_all_associations.find {|a| a.name == atributo.to_sym }
+      asociacion = object.class.reflect_on_all_associations.find { |a| a.name == atributo.to_sym }
       nombre_clase = asociacion.options[:class_name]
       nombre_clase = asociacion.name.to_s.camelize if nombre_clase.nil?
       clase_asociacion = Object.const_get(nombre_clase)
@@ -18,7 +18,7 @@ module PgAssociable
     end
 
     def pg_associable_inline(atributo, options = {})
-      asociacion = object.class.reflect_on_all_associations.find {|a| a.name == atributo.to_sym }
+      asociacion = object.class.reflect_on_all_associations.find { |a| a.name == atributo.to_sym }
       nombre_clase = asociacion.options[:class_name]
       nombre_clase = asociacion.name.to_s.camelize if nombre_clase.nil?
       clase_asociacion = Object.const_get(nombre_clase)

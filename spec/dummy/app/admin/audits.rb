@@ -1,8 +1,8 @@
 ActiveAdmin.register Audited::Audit do
   # permit_params :discarded_at, :fecha, :nombre, :tiempo, :tipo, :created_at, :updated_at, :actualizado_por_id, :creado_por_id
 
-# :id
-# :discarded_at, :fecha, :nombre, :tiempo, :tipo, :created_at, :updated_at, :actualizado_por_id, :creado_por_id
+  # :id
+  # :discarded_at, :fecha, :nombre, :tiempo, :tipo, :created_at, :updated_at, :actualizado_por_id, :creado_por_id
 
   index do
     selectable_column
@@ -38,5 +38,4 @@ ActiveAdmin.register Audited::Audit do
   #   end
   #   f.actions
   # end
-
 end
