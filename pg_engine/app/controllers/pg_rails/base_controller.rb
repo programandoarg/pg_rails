@@ -13,6 +13,8 @@ module PgRails
 
     helper_method :mobile_device?
 
+    layout 'pg_layout/layout'
+
     # Los flash_types resultantes serían:
     # [:alert, :notice, :warning, :success]
     add_flash_types :warning, :success
