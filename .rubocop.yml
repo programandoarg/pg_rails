@@ -20,6 +20,7 @@ AllCops:
   # DisabledByDefault: true
   NewCops: enable
   Exclude:
+    - '**/templates/**/*'
     - 'Gemfile'
     - '*.gemspec'
     - 'Capfile'
