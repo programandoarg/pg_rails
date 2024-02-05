@@ -107,6 +107,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-rails'
   spec.add_development_dependency 'rubocop-rspec'
+  spec.add_development_dependency "slim_lint"
+  spec.add_development_dependency 'ruby-lint'
 
 
   spec.add_development_dependency "puma"
@@ -118,5 +120,4 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "turbo-rails", "~> 1.5"
   spec.add_development_dependency "annotate"
-
 end
