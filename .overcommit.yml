@@ -39,6 +39,8 @@ PreCommit:
 
   SlimLint:
     enabled: true
+    exclude:
+      - pg_scaffold/lib/generators/**/templates/**/*
 
   FixMe:
     enabled: true
