@@ -21,18 +21,20 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'Gemfile'
+    - '*.gemspec'
     - 'Capfile'
     - 'Rakefile'
-    - 'config.ru'
     - 'Guardfile'
     - 'db/**/*'
     - 'bin/**/*'
     - 'config/**/*'
+    - 'config.ru'
     - 'node_modules/**/*'
     - 'tmp/**/*'
     - 'spec/dummy/db/**/*'
     - 'spec/dummy/bin/**/*'
     - 'spec/dummy/config/**/*'
+    - 'spec/dummy/config.ru'
     - 'spec/dummy/node_modules/**/*'
     - 'spec/dummy/tmp/**/*'
     - 'vendor/**/*'
@@ -40,3 +42,4 @@ AllCops:
     - 'lib/tasks/**/*'
     - 'spec/spec_helper.rb'
     - 'spec/rails_helper.rb'
+    - 
