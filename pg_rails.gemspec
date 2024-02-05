@@ -15,7 +15,8 @@ Gem::Specification.new do |spec|
   spec.license               = 'MIT'
   spec.required_ruby_version = '~> 3.0'
 
-  spec.require_paths = ['pg_rails/lib']
+  spec.require_paths = ['pg_rails/lib', 'pg_associable/lib', 'pg_engine/lib', 'pg_layout/lib', 'pg_scaffold/lib']
+
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   # if spec.respond_to?(:metadata)
