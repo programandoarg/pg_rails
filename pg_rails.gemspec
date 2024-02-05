@@ -120,4 +120,9 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "turbo-rails", "~> 1.5"
   spec.add_development_dependency "annotate"
+
+  spec.add_development_dependency 'byebug'
+
+  spec.add_development_dependency 'activeadmin'
+  spec.add_development_dependency 'sassc'
 end

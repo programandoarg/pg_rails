@@ -14,7 +14,118 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+
+gem 'caxlsx_rails'
+
+gem 'draper'
+
+gem 'pg', '~> 1.1'
+
+gem "rails", "~> 7.1.3"
+
+gem 'rainbow'
+
+gem 'simple_form'
+
+  # User manamement
+gem 'devise'
+gem 'devise-i18n'
+
+  # Rails internationalization
+gem 'rails-i18n'
+
+  # Slim template
+gem 'slim-rails'
+
+  # Better enums
+gem 'enumerize'
+
+  # XML parsing
+gem 'nokogiri'
+
+  # Pagination
+gem 'kaminari'
+gem 'kaminari-i18n'
+
+  # Breadcrumbs
+gem 'breadcrumbs_on_rails'
+
+  # Soft deletion
+gem 'discard'
+
+  # DB Audition
+gem "audited", "~> 5.0"
+
+  # Access policies
+
+gem 'pundit'
+
+
+
+
+
+
+
+
+  # Simplecov
+gem 'simplecov', '~> 0.17.1'
+
+
+  # Spring
+
+gem 'spring'
+gem 'spring-commands-rspec'
+
+
+  # Rspec
+
+gem 'rspec-rails', '~> 6.0.0'
+gem 'factory_bot_rails'
+gem 'rails-controller-testing'
+
+gem 'fuubar'
+gem 'faker'
+
+
+  # # VCR
+# gem 'vcr'
+# gem 'webmock'
+
+
+  # # Capybara
+gem 'capybara'
+gem 'selenium-webdriver'
+
+  # Bullet
+
+gem 'bullet'
+
+
+  # Linters
+gem 'rubocop'
+
+gem 'rubocop-rails'
+gem 'rubocop-rspec'
+gem "slim_lint"
+
+gem 'ruby-lint'
+
+
+
+gem "puma"
+gem "rollbar"
+
+
+gem "sprockets-rails"
+
+gem "jsbundling-rails", "~> 1.3"
+
+gem "turbo-rails", "~> 1.5"
+gem "annotate"
+
+
 gem 'byebug'
 
 gem 'activeadmin'
+
 gem 'sassc'
