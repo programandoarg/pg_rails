@@ -15,13 +15,13 @@ module PgRails
       # Rainbow
       Rainbow.enabled = true
 
-      # Audited for ActiveAdmin
-      require 'audited/audit'
-      Audited::Audit.class_eval do
-        def self.ransackable_attributes(auth_object = nil)
-          columns.map(&:name)
-        end
-      end
+      # Audited for ActiveAdmin (pone validaciones raras)
+      # require 'audited/audit'
+      # Audited::Audit.class_eval do
+      #   def self.ransackable_attributes(auth_object = nil)
+      #     columns.map(&:name)
+      #   end
+      # end
 
       if Rails.env.development?
         # Byebug
