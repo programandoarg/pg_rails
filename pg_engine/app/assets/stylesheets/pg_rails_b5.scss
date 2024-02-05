@@ -1,24 +1,29 @@
 @use 'sass:color';
 
+:root,
+[data-bs-theme=light] {
+  --bs-form-invalid-color: #b50000;
+  --bs-form-invalid-border-color: #b50000;
+}
+
+
 // FORMS
-.pg-form {
-  max-width: 300px;
+// .pg-form {
+  // max-width: 300px;
 
   input[disabled] {
     background-color: #e9e9ed;
     color: black;
   }
 
-  input[type=text],
-  input[type=number],
-  select {
+  .form-control,
+  .form-select {
     width: 100%;
     height: 35px;
     border: 1px solid #a7b7bb;
     border-radius: 3px;
 
     &.is-invalid {
-      border-color: red; /* TODO: check color */
       background-image: none!important; /* override bootstrap forms */
       padding-right: 0; /* override bootstrap forms */
     }
@@ -35,9 +40,9 @@
   }
 
   input[type=date] {
-    max-width: 140px;
+    max-width: 170px;
   }
-}
+// }
 
 // LISTADOS
 .listado {
