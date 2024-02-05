@@ -10,7 +10,6 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-# generado con pg_rails
 
 class Persona < ApplicationRecord
   # audited

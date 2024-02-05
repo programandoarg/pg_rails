@@ -25,7 +25,6 @@
 #  fk_rails_...  (creado_por_id => users.id)
 #  fk_rails_...  (persona_id => personas.id)
 #
-# generado con pg_rails
 
 class Cosa < ApplicationRecord
 
