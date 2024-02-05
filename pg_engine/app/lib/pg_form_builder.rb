@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: fix hackeo
-# class PgFormBuilder < NestedForm::SimpleBuilder
 class PgFormBuilder < SimpleForm::FormBuilder
   include PgAssociable::FormBuilderMethods
 
