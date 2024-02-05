@@ -7,7 +7,6 @@
         .modal-title.show-on-select-item
           h3 Buscar #{@clase_modelo.nombre_singular.downcase}
         a.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]
-          i.bi.bi-x-lg
       .modal-body
         .show-on-select-item
           - if @clase_modelo.count.zero?
@@ -16,7 +15,7 @@
           - else
             = form_tag polymorphic_url([:buscar, :admin, @clase_modelo], only_path: true), method: :post, class: 'pg-form buscar' do
               = hidden_field_tag :id, params[:id]
-              = text_field_tag :query, '', placeholder: 'Escribí algo para buscar', autocomplete: 'off'
+              = text_field_tag :query, '', class: 'form-control', placeholder: 'Escribí algo para buscar', autocomplete: 'off'
               / = button_tag 'Buscar'
             .resultados-wrapper id="resultados-#{params[:id]}" data-modal-target="result"
         #pg-associable-form.show-on-new-item
