@@ -39,12 +39,12 @@ FactoryBot.define do
   factory :user do
     email { Faker::Internet.email }
     password { "password#{rand(99_999)}" }
-    # confirmed_at { Faker::Date.backward }
+    confirmed_at { Faker::Date.backward }
 
-    # profiles { [User.profiles.values.sample] }
+    profiles { [User.profiles.values.sample] }
 
     trait :admin do
-      # profiles { [:admin] }
+      profiles { [:admin] }
     end
   end
 end
