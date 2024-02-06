@@ -6,11 +6,10 @@
   = @<%= singular_name %>.edit_link
 
 table.table.table-borderless.table-sm.w-auto.mb-0.m-3
-<%- for attribute in attributes -%>
-  tr
-    th = @clase_modelo.human_attribute_name(:<%= attribute.name %>)
-    td = @<%= singular_name %>.<%= attribute.name %>
-<%- end -%>
+  - atributos_para_mostrar.each do |att|
+    tr
+      th = @clase_modelo.human_attribute_name(att)
+      td = @<%= singular_name %>.send(att)
 <%- if options[:trackeo_de_usuarios] -%>
   tr
     th = t('attributes.creado_por')
