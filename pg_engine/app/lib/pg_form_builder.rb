@@ -5,11 +5,9 @@ class PgFormBuilder < SimpleForm::FormBuilder
 
   def mensajes_de_error
     errors_to_show = object.errors[:base]
-    message = if errors_to_show.present?
-                errors_to_show.map { |m| "#{m}" }.join('<br>')
-              end
+    message = (errors_to_show.map(&:to_s).join('<br>') if errors_to_show.present?)
 
-    error_notification(message: message)
+    error_notification(message:)
   end
 
   map_type :date, to: PgEngine::FechaInput
