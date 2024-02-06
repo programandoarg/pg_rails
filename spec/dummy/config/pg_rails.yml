@@ -8,3 +8,6 @@ sidebar:
   -
     name: Categorias
     path: admin_categoria_de_cosas_path
+  -
+    name: Cosas
+    path: admin_cosas_path
