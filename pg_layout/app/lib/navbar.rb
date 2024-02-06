@@ -6,7 +6,7 @@ class Navbar
   end
 
   def sidebar
-    yaml_data = YAML.load_file('config/pg_rails.yml')
+    yaml_data = YAML.load_file("#{Rails.application.root}/config/pg_rails.yml")
     sidebar = ActiveSupport::HashWithIndifferentAccess.new(yaml_data)['sidebar']
     sidebar.map do |item|
       {
