@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :frontend do
     PgEngine.resource_route(self, :cosas)
+    PgEngine.resource_route(self, :categoria_de_cosas)
   end
   namespace :admin do
     PgEngine.resource_route(self, :cosas)
