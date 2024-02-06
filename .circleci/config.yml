@@ -81,6 +81,7 @@ jobs:
           command: |
             bundle exec rails db:test:prepare
             cd spec/dummy
+            yarn install
             yarn build
             yarn build:css
             cd ../..
