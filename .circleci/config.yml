@@ -62,8 +62,8 @@ jobs:
       - run:
           name: Run Security Audits
           command: |
-            bundle exec brakeman -q --no-summary --skip-files node_modules/
-# interactive:    bundle exec brakeman -q --no-summary --skip-files node_modules/ -I
+            bundle exec brakeman -q --no-summary --skip-files node_modules/ --force
+# interactive:    bundle exec brakeman -q --no-summary --skip-files node_modules/ -I --force
 #            bundle exec bundle-audit check --update -v
   test:
     executor: ruby

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# TODO: protect from forgery
 module PgEngine
   # rubocop:disable Rails/ApplicationController
   class BaseController < ActionController::Base
