@@ -26,14 +26,15 @@ export default class extends Controller {
         }, wait);
       };
     }
-    const doSearchBounce = debounce(() => {
-      this.doSearch()
+    const doSearchBounce = debounce((force) => {
+      this.doSearch(force)
     }, 200)
     this.input.onkeyup = (e) => {
-      doSearchBounce()
-      // if(this.input.value.length == 0) {
-      //   this.escribiAlgo()
-      // }
+      if(e.keyCode == 13) {
+        doSearchBounce(true)
+      } else {
+        doSearchBounce()
+      }
     }
   }
 
@@ -46,11 +47,11 @@ export default class extends Controller {
 </ul>
 `
   }
-  doSearch() {
-    if(this.input.value.length < 3) {
+  doSearch(force = false) {
+    if(!force && this.input.value.length < 3) {
       return
     }
-    if(this.input.value == this.lastValue) {
+    if(!force && this.input.value == this.lastValue) {
       return
     }
     this.lastValue = this.input.value

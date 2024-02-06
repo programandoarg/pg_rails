@@ -41,8 +41,8 @@ export default class extends Controller {
         }, wait);
       };
     }
-    const doSearchBounce = debounce(() => {
-      that.doSearch()
+    const doSearchBounce = debounce((force) => {
+      that.doSearch(force)
     }, 200)
 
     this.input.addEventListener('blur', (e) => {
@@ -61,14 +61,17 @@ export default class extends Controller {
       // this.showResults()
     }
     this.input.onkeyup = (e) => {
-      doSearchBounce()
       if(this.input.value.length == 0) {
         this.escribiAlgo()
+      }
+      if(e.keyCode == 13) {
+        doSearchBounce(true)
+      } else {
+        doSearchBounce()
       }
     }
     this.input.onkeydown = (e) => {
       if(e.keyCode == 13) {
-        doSearchBounce()
         e.preventDefault();
         return false;
       }
@@ -91,11 +94,11 @@ export default class extends Controller {
     this.input.placeholder = "Escribí algo para buscar"
   }
 
-  doSearch() {
-    if(this.input.value.length < 3) {
+  doSearch(force = false) {
+    if(!force && this.input.value.length < 3) {
       return
     }
-    if(this.input.value == this.lastValue) {
+    if(!force && this.input.value == this.lastValue) {
       return
     }
     this.lastValue = this.input.value
