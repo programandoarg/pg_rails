@@ -10,6 +10,14 @@ module PgActiveRecord
     class_option :discard, type: :boolean, default: false, desc: 'Discard y discarded_at.'
     class_option :trackeo_de_usuarios, type: :boolean, default: true,
                                        desc: 'Genera campos creado_por y actualizado_por.'
+    class_option :activeadmin, type: :boolean, default: false, desc: 'ActiveAdmin file'
+
+    def create_activeadmin_file
+      if options[:activeadmin]
+        template 'admin.rb',
+                 File.join('app/admin', "#{table_name}.rb")
+      end
+    end
 
     # :doc:
     def namespace
