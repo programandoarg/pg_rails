@@ -97,7 +97,7 @@ RSpec.describe <%= controller_class_name %>Controller do
     end
 <% end -%>
 
-    context 'cuando se pide el excel' do
+    context 'when se pide el excel' do
       subject do
         get :index, params: {}, format: 'xlsx'
       end

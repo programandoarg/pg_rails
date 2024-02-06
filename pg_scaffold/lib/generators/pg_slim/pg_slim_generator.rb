@@ -13,10 +13,10 @@ class PgSlimGenerator < Slim::Generators::ScaffoldGenerator
   class_option :index_file, type: :boolean, default: false, desc: 'Archivo de index'
 
   def copiar_download
-    if options[:download_file]
-      template 'download.xlsx.axlsx',
-               File.join('app', 'views', controller_file_path, 'download.xlsx.axlsx')
-    end
+    return unless options[:download_file]
+
+    template 'download.xlsx.axlsx',
+             File.join('app', 'views', controller_file_path, 'download.xlsx.axlsx')
   end
 
   protected

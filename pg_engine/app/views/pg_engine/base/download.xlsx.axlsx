@@ -2,8 +2,7 @@
 
 wb = xlsx_package.workbook
 wb.add_worksheet(name: @clase_modelo.nombre_plural) do |sheet|
-
-  sheet.add_row atributos_para_listar.map { |a| @clase_modelo.human_attribute_name(a) }
+  sheet.add_row(atributos_para_listar.map { |a| @clase_modelo.human_attribute_name(a) })
 
   @collection.decorate.each do |object|
     array = []
