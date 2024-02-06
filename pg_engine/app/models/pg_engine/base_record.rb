@@ -29,7 +29,7 @@ module PgEngine
 
     def to_s
       %i[nombre name].each do |campo|
-        return send(campo) if try(campo).present?
+        return "#{send(campo)} ##{id}" if try(campo).present?
       end
       if id.present?
         "#{self.class.nombre_singular} ##{id}"
