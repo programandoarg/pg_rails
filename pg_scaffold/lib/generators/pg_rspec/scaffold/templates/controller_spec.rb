@@ -92,7 +92,7 @@ RSpec.describe <%= controller_class_name %>Controller do
 
       it do
         subject
-        expect(assigns(:<%= table_name %>)).to be_empty
+        expect(assigns(:collection)).to be_empty
       end
     end
 <% end -%>

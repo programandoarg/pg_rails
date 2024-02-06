@@ -31,6 +31,45 @@ module PgEngine
       @navbar = Navbar.new(current_user)
     end
 
+    # Public endpoints
+    def abrir_modal
+      pg_respond_abrir_modal
+    end
+
+    def buscar
+      pg_respond_buscar
+    end
+
+    def index
+      @collection = filtros_y_policy atributos_para_buscar
+      @collection = sort_collection(@collection)
+      pg_respond_index(@collection)
+    end
+
+    def show
+      add_breadcrumb instancia_modelo, instancia_modelo.target_object
+
+      pg_respond_show
+    end
+
+    def new
+      add_breadcrumb "Crear #{@clase_modelo.nombre_singular.downcase}"
+    end
+
+    def edit
+      add_breadcrumb instancia_modelo, instancia_modelo.target_object
+      add_breadcrumb 'Editando'
+    end
+
+    def create
+      pg_respond_create
+    end
+
+    def update
+      pg_respond_update
+    end
+    # End public endpoints
+
     def mobile_device?
       request.user_agent =~ /Mobile|webOS/
     end

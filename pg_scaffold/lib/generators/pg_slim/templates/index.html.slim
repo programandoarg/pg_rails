@@ -25,10 +25,10 @@
             | Limpiar
 
 div
-  - if @<%= plural_name %>.any?
+  - if @collection.any?
     .table-responsive
       table.table.table-sm.listado.xpg-revert-width.xborder-end
-        caption.ps-3 = page_entries_info @<%= plural_name %>
+        caption.ps-3 = page_entries_info @collection
         thead.table-light
           tr
     <%- for attribute in attributes -%>
@@ -36,7 +36,7 @@ div
     <%- end -%>
             th
         tbody
-          - @<%= plural_name %>.each do |<%= singular_name %>|
+          - @collection.each do |<%= singular_name %>|
             - <%= singular_name %> = <%= singular_name %>.decorate
             tr id="#{dom_id(<%= singular_name %>)}"
     <%- for attribute in attributes -%>
@@ -48,6 +48,6 @@ div
                 = <%= singular_name %>.destroy_link
 
     .ps-3.justify-content-center
-      = paginate(@<%= plural_name %>)
+      = paginate(@collection)
   - else
     p.m-3 No hay #{@clase_modelo.nombre_plural.downcase} que mostrar
