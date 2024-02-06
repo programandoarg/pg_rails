@@ -10,6 +10,7 @@ class PgSlimGenerator < Slim::Generators::ScaffoldGenerator
   class_option :trackeo_de_usuarios, type: :boolean, default: true,
                                      desc: 'Genera campos creado_por y actualizado_por.'
   class_option :download_file, type: :boolean, default: false, desc: 'Archivo de download'
+  class_option :index_file, type: :boolean, default: false, desc: 'Archivo de index'
 
   def copiar_download
     if options[:download_file]
@@ -21,6 +22,10 @@ class PgSlimGenerator < Slim::Generators::ScaffoldGenerator
   protected
 
   def available_views
-    %w[index edit show new _form]
+    if options[:index_file]
+      %w[index edit show new _form]
+    else
+      %w[edit show new _form]
+    end
   end
 end
