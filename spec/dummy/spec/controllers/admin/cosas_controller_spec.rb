@@ -55,7 +55,7 @@ RSpec.describe Admin::CosasController do
       get :index, params: {}
     end
 
-    let(:cosa) { create :cosa }
+    let!(:cosa) { create :cosa }
 
     it 'returns a success response' do
       subject
