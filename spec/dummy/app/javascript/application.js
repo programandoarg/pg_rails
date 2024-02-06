@@ -4,4 +4,4 @@ import './controllers'
 
 // import * as bootstrap from 'bootstrap'
 
-import './../../../../../pg_rails'
+import './../../../../'
