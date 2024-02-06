@@ -82,13 +82,16 @@ jobs:
             chmod +x ./cc-test-reporter
 
       - run:
+          name: Prepare tests
           command: |
-            bundle exec rails db:test:prepare
             cd spec/dummy
+            bundle exec rails db:test:prepare
             yarn install
             yarn build
             yarn build:css
-            cd ../..
+      - run:
+          name: Run tests
+          command: |
             ./cc-test-reporter before-build
             bundle exec rspec
             ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
