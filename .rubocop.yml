@@ -1,28 +1,22 @@
-inherit_from: .rubocop_todo.yml
+inherit_from:
+  - config/.rubocop.base.yml
+  - .rubocop_todo.yml
 
-require:
-  - rubocop-rails
-  - rubocop-rspec
-  - rubocop-capybara
-  - rubocop-factory_bot
-
-Style/Documentation:
-  Enabled: false
-
-RSpec/NamedSubject:
-  Enabled: false
-
-FactoryBot/ConsistentParenthesesStyle:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
+# AllCops:
+#   Exclude:
+#     - '**/templates/**/*'
+#     - 'spec/dummy/Rakefile'
+#     - 'spec/dummy/db/**/*'
+#     - 'spec/dummy/bin/**/*'
+#     - 'spec/dummy/config/**/*'
+#     - 'spec/dummy/config.ru'
+#     - 'spec/dummy/node_modules/**/*'
+#     - 'spec/dummy/tmp/**/*'
+#     - '**/version.rb'
 
 AllCops:
-  # DisabledByDefault: true
   NewCops: enable
   Exclude:
-    - '**/templates/**/*'
     - 'Gemfile'
     - '*.gemspec'
     - 'Capfile'
@@ -34,6 +28,11 @@ AllCops:
     - 'config.ru'
     - 'node_modules/**/*'
     - 'tmp/**/*'
+    - 'vendor/**/*'
+    - 'lib/tasks/**/*'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+    - '**/templates/**/*'
     - 'spec/dummy/Rakefile'
     - 'spec/dummy/db/**/*'
     - 'spec/dummy/bin/**/*'
@@ -41,9 +40,4 @@ AllCops:
     - 'spec/dummy/config.ru'
     - 'spec/dummy/node_modules/**/*'
     - 'spec/dummy/tmp/**/*'
-    - 'vendor/**/*'
-    - 'scripts/**/*'
-    - 'lib/tasks/**/*'
-    - 'spec/spec_helper.rb'
-    - 'spec/rails_helper.rb'
     - '**/version.rb'
