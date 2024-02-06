@@ -80,6 +80,10 @@ jobs:
       - run:
           command: |
             bundle exec rails db:test:prepare
+            cd spec/dummy
+            yarn build
+            yarn build:css
+            cd ../..
             ./cc-test-reporter before-build
             bundle exec rspec
             ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
