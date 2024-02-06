@@ -107,10 +107,8 @@ gem 'rubocop'
 gem 'rubocop-rails'
 gem 'rubocop-rspec'
 gem "slim_lint"
-
 gem 'ruby-lint'
-
-
+gem 'brakeman'
 
 gem "puma"
 gem "rollbar"

@@ -108,6 +108,8 @@ GEM
     base64 (0.2.0)
     bcrypt (3.1.20)
     bigdecimal (3.1.6)
+    brakeman (6.1.2)
+      racc
     breadcrumbs_on_rails (4.1.0)
       railties (>= 5.0)
     builder (3.2.4)
@@ -436,6 +438,7 @@ DEPENDENCIES
   activeadmin
   annotate
   audited (~> 5.0)
+  brakeman
   breadcrumbs_on_rails
   bullet
   byebug
