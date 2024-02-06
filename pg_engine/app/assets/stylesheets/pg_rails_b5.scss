@@ -23,6 +23,11 @@
     border: 1px solid #a7b7bb;
     border-radius: 3px;
 
+    &.form-control-sm,
+    &.form-select-sm {
+      height: 29px;
+    }
+
     &.is-invalid {
       background-image: none!important; /* override bootstrap forms */
       padding-right: 0; /* override bootstrap forms */
