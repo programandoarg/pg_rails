@@ -67,9 +67,9 @@ Acceder a la app en <http://localhost:3000/>.
 
   cd spec/dummy
 
-1. `bundle exec rails destroy Cosa`
-2. `bundle exec rails destroy CategoriaDeCosa`
+1. `bundle exec rails d pg_scaffold Admin/Cosa`
+2. `bundle exec rails d pg_scaffold Admin/CategoriaDeCosa`
 3. Borrar policies
-4. `be rails g pg_scaffold Admin/CategoriaDeCosa nombre:string{required} "tipo:integer{enum,required}" fecha:date tiempo:datetime --model-name=CategoriaDeCosa --discard`
-5. `be rails g pg_scaffold Admin/Cosa  nombre:string{required} "tipo:integer{enum,required}" categoria_de_cosa:references{required}  --model-name=Cosa --discard`
+4. `bundle exec rails g pg_scaffold Admin/CategoriaDeCosa nombre:string{required} "tipo:integer{enum,required}" fecha:date tiempo:datetime --model-name=CategoriaDeCosa --discard --activeadmin`
+5. `bundle exec rails g pg_scaffold Admin/Cosa  nombre:string{required} "tipo:integer{enum,required}" categoria_de_cosa:references{required}  --model-name=Cosa --discard --activeadmin`
 6. Setup asociacion creable en cosas/_form
