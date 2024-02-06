@@ -8,10 +8,10 @@ class Navbar
   def sidebar
     yaml_data = YAML.load_file('config/pg_rails.yml')
     sidebar = ActiveSupport::HashWithIndifferentAccess.new(yaml_data)['sidebar']
-    sidebar.map do |key, hash|
+    sidebar.map do |item|
       {
-        title: hash['name'],
-        path: eval(hash['path']),
+        title: item['name'],
+        path: eval(item['path']),
         show: true
       }
     end
