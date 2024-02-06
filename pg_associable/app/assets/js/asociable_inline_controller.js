@@ -25,12 +25,6 @@ export default class extends Controller {
     if(this.input.value) {
       this.element.classList.add('filled')
     }
-    // const button = this.element.querySelector('button')
-
-    // button.onclick = () => {
-    //   // crear form, submitear y borrar
-
-    // }
 
     let debounce = function(callback, wait) {
       let timerId;
@@ -47,18 +41,12 @@ export default class extends Controller {
 
     this.input.addEventListener('blur', (e) => {
       this.input.placeholder = ""
-      // this.element.classList.remove('focus')
-      // setTimeout(() => {
-      //   that.hideResults()
-      // }, 100)
     })
     this.input.onfocus = (e) => {
-      // this.element.classList.add('focus')
       this.input.select()
       if(this.input.value.length == 0) {
         this.escribiAlgo()
       }
-      // this.showResults()
     }
     this.input.onkeyup = (e) => {
       if(this.input.value.length == 0) {
@@ -77,12 +65,6 @@ export default class extends Controller {
       }
     }
   }
-  // showResults() {
-  //   this.result.style.display = 'block'
-  // }
-  // hideResults() {
-  //   this.result.style.display = 'none'
-  // }
   buscando() {
     this.result.innerHTML = `
 <div class="resultados" tabindex="-1">

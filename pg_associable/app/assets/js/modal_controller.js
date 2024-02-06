@@ -29,6 +29,12 @@ export default class extends Controller {
     const doSearchBounce = debounce((force) => {
       this.doSearch(force)
     }, 200)
+    this.input.onkeydown = (e) => {
+      if(e.keyCode == 13) {
+        e.preventDefault();
+        return false;
+      }
+    }
     this.input.onkeyup = (e) => {
       if(e.keyCode == 13) {
         doSearchBounce(true)
