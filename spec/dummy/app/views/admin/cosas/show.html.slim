@@ -1,0 +1,27 @@
+- content_for :title do
+  = @cosa.to_s
+- content_for :actions do
+  = @cosa.destroy_link
+  .ms-1
+  = @cosa.edit_link
+
+table.table.table-borderless.table-sm.w-auto.mb-0.m-3
+  - atributos_para_mostrar.each do |att|
+    tr
+      th = @clase_modelo.human_attribute_name(att)
+      td = @cosa.send(att)
+  tr
+    th = t('attributes.creado_por')
+    td = @cosa.creado_por
+  tr
+    th = t('attributes.created_at')
+    td = dmy_time @cosa.created_at
+  tr
+    th = t('attributes.actualizado_por')
+    td = @cosa.actualizado_por
+  tr
+    th = t('attributes.updated_at')
+    td = dmy_time @cosa.updated_at
+  tr
+    th = t('attributes.discarded_at')
+    td = dmy_time @cosa.discarded_at

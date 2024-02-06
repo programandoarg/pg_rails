@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   namespace :admin do
-    end
+    PgEngine.resource_route(self, :cosas)
+    PgEngine.resource_route(self, :categoria_de_cosas)
+  end
   devise_for :users
   ActiveAdmin.routes(self)
   root "admin/categoria_de_cosas#index"
