@@ -13,10 +13,10 @@ module PgActiveRecord
     class_option :activeadmin, type: :boolean, default: false, desc: 'ActiveAdmin file'
 
     def create_activeadmin_file
-      if options[:activeadmin]
-        template 'admin.rb',
-                 File.join('app/admin', "#{table_name}.rb")
-      end
+      return unless options[:activeadmin]
+
+      template 'admin.rb',
+               File.join('app/admin', "#{table_name}.rb")
     end
 
     # :doc:

@@ -21,9 +21,7 @@ ActiveAdmin.register User do
         # f.input :password_confirmation
       else
         f.input :email
-        if !f.object.persisted?
-          f.input :password
-        end
+        f.input :password unless f.object.persisted?
         f.input :profiles, as: :select
       end
       # f.input :password_confirmation
@@ -31,23 +29,19 @@ ActiveAdmin.register User do
     f.actions
   end
 
-  before_update do |user|
-    user.skip_reconfirmation!
-  end
+  before_update(&:skip_reconfirmation!)
   after_build do |user|
-    if action_name == 'create'
-      user.skip_confirmation!
-    end
+    user.skip_confirmation! if action_name == 'create'
   end
 
   member_action :discard, method: :put do
     resource.discard!
-    redirect_to resource_path, notice: "Discarded!"
+    redirect_to resource_path, notice: 'Discarded!'
   end
 
   member_action :restore, method: :put do
     resource.undiscard!
-    redirect_to resource_path, notice: "Restored!"
+    redirect_to resource_path, notice: 'Restored!'
   end
 
   action_item :view, only: :show do

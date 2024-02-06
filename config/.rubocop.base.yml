@@ -7,6 +7,9 @@ require:
 Style/Documentation:
   Enabled: false
 
+Rails/I18nLocaleTexts:
+  Enabled: false
+
 RSpec/NamedSubject:
   Enabled: false
 

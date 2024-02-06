@@ -8,6 +8,7 @@ class Navbar
   def sidebar
     yaml_data = YAML.load_file("#{Rails.application.root}/config/pg_rails.yml")
     sidebar = ActiveSupport::HashWithIndifferentAccess.new(yaml_data)['sidebar']
+    # rubocop:disable Security/Eval
     sidebar.map do |item|
       {
         title: item['name'],
@@ -15,6 +16,7 @@ class Navbar
         show: true
       }
     end
+    # rubocop:enable Security/Eval
   end
 
   def all_children_hidden?(entry)

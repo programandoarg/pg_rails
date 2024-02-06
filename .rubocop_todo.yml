@@ -34,7 +34,7 @@ Metrics/BlockLength:
     - 'pg_associable/lib/pg_associable/simple_form_initializer.rb'
     - 'pg_engine/app/controllers/pg_engine/base_controller.rb'
     - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
-    - 'simple_form/simple_form_bootstrap.rb'
+    - 'pg_engine/config/simple_form/simple_form_bootstrap.rb'
 
 # Offense count: 2
 # Configuration parameters: CountComments, Max, CountAsOne.
@@ -112,6 +112,6 @@ Layout/LineLength:
     - 'pg_engine/app/decorators/pg_engine/base_decorator.rb'
     - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
     - 'pg_engine/lib/pg_engine/configuracion.rb'
-    - 'simple_form/simple_form.rb'
-    - 'simple_form/simple_form_bootstrap.rb'
+    - 'pg_engine/config/simple_form/simple_form.rb'
+    - 'pg_engine/config/simple_form/simple_form_bootstrap.rb'
     - 'spec/dummy/app/admin/audits.rb'
