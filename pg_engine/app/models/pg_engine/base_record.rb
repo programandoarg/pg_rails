@@ -17,8 +17,12 @@ module PgEngine
 
     scope :query, ->(param) { param.present? ? where(id: param) : all }
 
+    def self.ransackable_associations(_auth_object = nil)
+      authorizable_ransackable_associations
+    end
+
     def self.ransackable_attributes(_auth_object = nil)
-      columns.map(&:name)
+      authorizable_ransackable_attributes
     end
 
     def self.nombre_plural

@@ -19,8 +19,12 @@ module PgEngine
       require 'audited'
       ActiveSupport.on_load :active_record do
         Audited::Audit.class_eval do
+          def self.ransackable_associations(_auth_object = nil)
+            authorizable_ransackable_associations
+          end
+
           def self.ransackable_attributes(_auth_object = nil)
-            columns.map(&:name)
+            authorizable_ransackable_attributes
           end
         end
       end
