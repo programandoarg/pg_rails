@@ -185,4 +185,26 @@ RSpec.describe Admin::CategoriaDeCosasController do
       expect(response).to redirect_to(admin_categoria_de_cosas_url)
     end
   end
+
+  describe 'GET #abrir_modal' do
+    subject do
+      get :abrir_modal, params: { id: categoria_de_cosa.to_param }
+    end
+
+    it 'returns a success response' do
+      get :new, params: {}
+      expect(response).to be_successful
+    end
+  end
+
+  describe 'GET #buscar' do
+    subject do
+      get :buscar, params: { id: categoria_de_cosa.to_param }
+    end
+
+    it 'returns a success response' do
+      get :new, params: {}
+      expect(response).to be_successful
+    end
+  end
 end
