@@ -35,7 +35,7 @@ class CategoriaDeCosa < ApplicationRecord
 
   enumerize :tipo, in: { completar: 0, los: 1, valores: 2 }
 
-  scope :query, ->(param) { param.present? ? where(id: param) : all } # TODO: completar
+  scope :query, ->(param) { param.present? ? where(id: param) : all }
 
   validates :nombre, :tipo, presence: true
 end
