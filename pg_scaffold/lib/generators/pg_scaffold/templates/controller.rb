@@ -7,7 +7,7 @@ require_dependency "<%= namespaced_path %>/application_controller"
 
 <% end -%>
 <% module_namespacing_2 do -%>
-class <%= controller_class_name.split('::').last %>Controller < PgEngine::SignedInController
+class <%= controller_class_name.split('::').last %>Controller < <%= parent_controller %>
   before_action { @clase_modelo = <%= class_name %> }
 
   before_action(only: :index) { authorize <%= class_name %> }

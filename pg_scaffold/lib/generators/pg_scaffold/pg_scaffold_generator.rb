@@ -49,6 +49,25 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
 
   private
 
+  def get_class(class_name)
+    Module.const_get(class_name)
+  rescue NameError
+    nil
+  end
+
+  def parent_controller
+    parts = controller_class_name.split('::')
+    if parts.length > 1
+      if get_class "#{parts.first}Controller"
+        "#{parts.first}Controller"
+      else
+        'PgEngine::SignedInController'
+      end
+    else
+      'PgEngine::SignedInController'
+    end
+  end
+
   def atributos_a_filtrar
     attributes
   end
