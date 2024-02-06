@@ -70,28 +70,6 @@
       "note": ""
     },
     {
-      "warning_type": "Cross-Site Request Forgery",
-      "warning_code": 7,
-      "fingerprint": "637a21d2157e61c670844c76025afac6fc6a9fd8a9ee10348ed77302b43950c3",
-      "check_name": "ForgerySetting",
-      "message": "`protect_from_forgery` should be called in `PgEngine::BaseController`",
-      "file": "pg_engine/app/controllers/pg_engine/base_controller.rb",
-      "line": 5,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross-site_request_forgery/",
-      "code": null,
-      "render_path": null,
-      "location": {
-        "type": "controller",
-        "controller": "PgEngine::BaseController"
-      },
-      "user_input": null,
-      "confidence": "High",
-      "cwe_id": [
-        352
-      ],
-      "note": ""
-    },
-    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "843a3a01fece0468955cad020534e4c67d1609fe7ce7de05f2577b4940dc7f27",
@@ -207,6 +185,6 @@
       "note": ""
     }
   ],
-  "updated": "2024-02-06 19:13:02 -0300",
+  "updated": "2024-02-06 20:50:03 -0300",
   "brakeman_version": "6.1.2"
 }

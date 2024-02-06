@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# TODO: protect from forgery
 module PgEngine
   # rubocop:disable Rails/ApplicationController
   class BaseController < ActionController::Base
@@ -11,6 +10,8 @@ module PgEngine
     include FlashHelper
     include RouteHelper
     include PgAssociable::Helpers
+
+    protect_from_forgery with: :exception
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
