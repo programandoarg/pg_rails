@@ -129,3 +129,5 @@ gem 'byebug'
 gem 'activeadmin'
 
 gem 'sassc'
+
+gem 'letter_opener'
