@@ -1,1 +1,1 @@
-load "#{PgEngine::Engine.root}/app/admin/users.rb"
+load "#{PgEngine::Engine.root}/lib/templates/activeadmin/users.rb"
