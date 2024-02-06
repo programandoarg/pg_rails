@@ -5,6 +5,7 @@ module PgEngine
     include ActionView::Helpers
     include PrintHelper
     include FormHelper
+    include RouteHelper
     include Pundit::Authorization
 
     attr_accessor :output_buffer
@@ -97,15 +98,11 @@ module PgEngine
     end
 
     def target_object
-      default_module.present? ? [default_module, object] : object
+      pg_namespace.present? ? [pg_namespace, object] : object
     end
 
     def target_index
-      default_module.present? ? [default_module, object.class] : object.class
-    end
-
-    def default_module
-      nil
+      pg_namespace.present? ? [pg_namespace, object.class] : object.class
     end
 
     private

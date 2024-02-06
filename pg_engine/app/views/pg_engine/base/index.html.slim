@@ -20,7 +20,7 @@
           = button_tag class: 'btn btn-sm btn-primary col-auto' do
             span.bi.bi-search
         .col-auto
-          = link_to polymorphic_url([:admin, @clase_modelo], only_path: true),
+          = link_to namespaced_path(@clase_modelo),
                     class: 'btn btn-sm btn-secondary col-auto' do
             | Limpiar
 

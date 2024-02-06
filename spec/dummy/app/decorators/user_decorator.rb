@@ -5,10 +5,6 @@
 class UserDecorator < PgEngine::BaseDecorator
   delegate_all
 
-  def default_module
-    :admin
-  end
-
   def profiles
     object.profiles.values.join(', ')
   end

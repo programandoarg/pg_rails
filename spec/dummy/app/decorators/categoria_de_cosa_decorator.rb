@@ -5,10 +5,6 @@
 class CategoriaDeCosaDecorator < PgEngine::BaseDecorator
   delegate_all
 
-  def default_module
-    :admin
-  end
-
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #

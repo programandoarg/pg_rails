@@ -8,6 +8,7 @@ module PgEngine
     include PrintHelper
     include PostgresHelper
     include FlashHelper
+    include RouteHelper
     include PgAssociable::Helpers
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
@@ -72,7 +73,7 @@ module PgEngine
     end
 
     def destroy
-      url = polymorphic_url([:admin, @clase_modelo])
+      url = namespaced_path(@clase_modelo)
       pg_respond_destroy(instancia_modelo, url)
     end
 
