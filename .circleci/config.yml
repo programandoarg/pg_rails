@@ -42,7 +42,7 @@ commands:
       - run:
           name: Set Up Database
           command: |
-            bundle exec rake db:schema:load
+            bundle exec rails db:schema:load
 orbs:
   browser-tools: circleci/browser-tools@1.4
 jobs:
@@ -79,7 +79,7 @@ jobs:
 
       - run:
           command: |
-            bundle exec rake db:test:prepare
+            bundle exec rails db:test:prepare
             ./cc-test-reporter before-build
             bundle exec rspec
             ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
