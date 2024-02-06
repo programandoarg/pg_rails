@@ -39,7 +39,25 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
 
+  audited
+  include Discard::Model
+
+  enumerize :profiles, in: {
+    admin: 1,
+    dueño: 2,
+    invitado: 3
+  }, multiple: true
+
+  # validates :email, :password, :profiles, presence: true
+
+  scope :query, ->(param) { where('email ILIKE ?', "%#{param}%") }
+
   def admin?
+    profiles.include?(:admin)
     true
+  end
+
+  def to_s
+    email
   end
 end
