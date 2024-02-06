@@ -14,6 +14,8 @@ module PgEngine
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
 
     helper_method :mobile_device?
+    helper_method :atributos_para_listar
+    helper_method :atributos_para_mostrar
 
     layout 'pg_layout/layout'
 
@@ -43,7 +45,7 @@ module PgEngine
     def index
       @collection = filtros_y_policy atributos_para_buscar
       @collection = sort_collection(@collection)
-      pg_respond_index(@collection)
+      pg_respond_index
     end
 
     def show
@@ -68,6 +70,12 @@ module PgEngine
     def update
       pg_respond_update
     end
+
+    def destroy
+      url = polymorphic_url([:admin, @clase_modelo])
+      pg_respond_destroy(instancia_modelo, url)
+    end
+
     # End public endpoints
 
     def mobile_device?
@@ -145,9 +153,9 @@ module PgEngine
       end
     end
 
-    def pg_respond_index(collection)
+    def pg_respond_index
       respond_to do |format|
-        format.json { render json: collection }
+        format.json { render json: @collection }
         format.html { render_listing }
         format.xlsx do
           render xlsx: 'download',
@@ -222,7 +230,7 @@ module PgEngine
     end
 
     def render_listing
-      raise 'implementar en subclase'
+      @collection = @collection.page(params[:page]).per(current_page_size)
     end
 
     def buscar_instancia

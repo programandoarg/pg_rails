@@ -16,21 +16,21 @@ class <%= controller_class_name.split('::').last %>Controller < PgEngine::Signed
 
   add_breadcrumb <%= class_name %>.nombre_plural, :<%= plural_route_name %>_path
 
-  def destroy
-    pg_respond_destroy(@<%= singular_name %>, <%= index_helper %>_url)
-  end
-
   private
-
-  def render_listing
-    @collection = @collection.page(params[:page]).per(current_page_size)
-  end
 
   def atributos_permitidos
     %i[<%= attributes_names.join(' ') %>]
   end
 
   def atributos_para_buscar
+    %i[<%= atributos_a_filtrar.map(&:name).join(' ') %>]
+  end
+
+  def atributos_para_listar
+    %i[<%= atributos_a_filtrar.map(&:name).join(' ') %>]
+  end
+
+  def atributos_para_mostrar
     %i[<%= atributos_a_filtrar.map(&:name).join(' ') %>]
   end
 end
