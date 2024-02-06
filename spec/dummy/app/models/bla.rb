@@ -31,7 +31,7 @@ class Bla < ApplicationRecord
   audited
   include Discard::Model
 
-  belongs_to :categoria_de_cosa
+  belongs_to :categoria_de_cosa, optional: true
 
   belongs_to :creado_por, optional: true, class_name: 'User'
   belongs_to :actualizado_por, optional: true, class_name: 'User'
@@ -40,5 +40,5 @@ class Bla < ApplicationRecord
 
   scope :query, ->(param) { param.present? ? where(id: param) : all } # TODO: completar
 
-  validates :nombre, :tipo, presence: true
+  validates :nombre, :tipo, :categoria_de_cosa, presence: true
 end

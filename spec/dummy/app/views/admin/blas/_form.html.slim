@@ -7,6 +7,6 @@ div style="max-width: 300px"
     = hidden_field_tag :asociable, true if asociable
     = f.input :nombre
     = f.input :tipo
-    = f.pg_associable :categoria_de_cosa
+    = f.pg_associable_inline :categoria_de_cosa
     .mt-2
     = f.button :submit

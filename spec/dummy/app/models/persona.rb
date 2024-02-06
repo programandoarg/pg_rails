@@ -14,5 +14,10 @@
 class Persona < ApplicationRecord
   audited
 
-  scope :query, ->(_param) { all } # TODO: completar
+  # scope :query, ->(_param) { all } # TODO: completar
+
+  def self.ransackable_attributes(_auth_object = nil)
+    ['nombre']
+  end
+
 end
