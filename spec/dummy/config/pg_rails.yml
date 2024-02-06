@@ -11,3 +11,6 @@ sidebar:
   -
     name: Cosas
     path: admin_cosas_path
+  -
+    name: Cosas front
+    path: frontend_cosas_path
