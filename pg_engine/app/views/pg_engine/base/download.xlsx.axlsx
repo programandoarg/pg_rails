@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+wb = xlsx_package.workbook
+wb.add_worksheet(name: @clase_modelo.nombre_plural) do |sheet|
+
+  sheet.add_row atributos_para_listar.map { |a| @clase_modelo.human_attribute_name(a) }
+
+  @collection.decorate.each do |object|
+    array = []
+    atributos_para_listar.each do |att|
+      array.push object.send(att)
+    end
+    sheet.add_row array
+  end
+end

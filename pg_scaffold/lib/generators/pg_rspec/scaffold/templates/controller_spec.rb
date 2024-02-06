@@ -96,6 +96,17 @@ RSpec.describe <%= controller_class_name %>Controller do
       end
     end
 <% end -%>
+
+    context 'cuando se pide el excel' do
+      subject do
+        get :index, params: {}, format: 'xlsx'
+      end
+
+      it 'returns a success response' do
+        subject
+        expect(response).to be_successful
+      end
+    end
   end
 
 <% end -%>

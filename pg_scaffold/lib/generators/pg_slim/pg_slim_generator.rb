@@ -9,10 +9,13 @@ class PgSlimGenerator < Slim::Generators::ScaffoldGenerator
   class_option :discard, type: :boolean, default: false, desc: 'Discard y discarded_at.'
   class_option :trackeo_de_usuarios, type: :boolean, default: true,
                                      desc: 'Genera campos creado_por y actualizado_por.'
+  class_option :download_file, type: :boolean, default: false, desc: 'Archivo de download'
 
   def copiar_download
-    template 'download.xlsx.axlsx',
-             File.join('app', 'views', controller_file_path, 'download.xlsx.axlsx')
+    if options[:download_file]
+      template 'download.xlsx.axlsx',
+               File.join('app', 'views', controller_file_path, 'download.xlsx.axlsx')
+    end
   end
 
   protected
