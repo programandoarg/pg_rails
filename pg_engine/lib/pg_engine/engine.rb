@@ -28,7 +28,9 @@ module PgEngine
           end
         end
       end
+    end
 
+    initializer 'byebug_bullet' do
       if Rails.env.development?
         # Byebug
         require 'byebug/core'
