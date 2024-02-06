@@ -84,11 +84,13 @@ jobs:
       - run:
           name: Prepare tests
           command: |
+            yarn install
             cd spec/dummy
             bundle exec rails db:test:prepare
             yarn install
             yarn build
             yarn build:css
+            cd ../..
       - run:
           name: Run tests
           command: |
