@@ -12,21 +12,24 @@ module Admin
 
     add_breadcrumb CategoriaDeCosa.nombre_plural, :admin_categoria_de_cosas_path
 
-    def destroy
-      pg_respond_destroy(@categoria_de_cosa, admin_categoria_de_cosas_url)
-    end
+    helper_method :atributos_para_listar
+    helper_method :atributos_para_mostrar
 
     private
-
-    def render_listing
-      @collection = @collection.page(params[:page]).per(current_page_size)
-    end
 
     def atributos_permitidos
       %i[nombre tipo fecha tiempo]
     end
 
     def atributos_para_buscar
+      %i[nombre tipo fecha tiempo]
+    end
+
+    def atributos_para_listar
+      %i[nombre tipo fecha tiempo]
+    end
+
+    def atributos_para_mostrar
       %i[nombre tipo fecha tiempo]
     end
   end

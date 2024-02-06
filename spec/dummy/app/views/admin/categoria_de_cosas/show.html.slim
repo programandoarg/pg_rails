@@ -6,18 +6,10 @@
   = @categoria_de_cosa.edit_link
 
 table.table.table-borderless.table-sm.w-auto.mb-0.m-3
-  tr
-    th = @clase_modelo.human_attribute_name(:nombre)
-    td = @categoria_de_cosa.nombre
-  tr
-    th = @clase_modelo.human_attribute_name(:tipo)
-    td = @categoria_de_cosa.tipo
-  tr
-    th = @clase_modelo.human_attribute_name(:fecha)
-    td = @categoria_de_cosa.fecha
-  tr
-    th = @clase_modelo.human_attribute_name(:tiempo)
-    td = @categoria_de_cosa.tiempo
+  - atributos_para_mostrar.each do |att|
+    tr
+      th = @clase_modelo.human_attribute_name(att)
+      td = @categoria_de_cosa.send(att)
   tr
     th = t('attributes.creado_por')
     td = @categoria_de_cosa.creado_por
