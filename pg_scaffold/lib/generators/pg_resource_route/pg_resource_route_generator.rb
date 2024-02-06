@@ -20,12 +20,7 @@ class PgResourceRouteGenerator < Rails::Generators::NamedBase
     return if options[:actions].present?
 
     route_s = <<~RUBY
-      resources :#{file_name.pluralize} do
-        collection do
-          get :abrir_modal
-          post :buscar
-        end
-      end
+      PgEngine.resource_route(self, :#{file_name.pluralize})
     RUBY
     route route_s, namespace: regular_class_path
   end
