@@ -15,13 +15,15 @@ module PgEngine
       # Rainbow
       Rainbow.enabled = true
 
-      # Audited for ActiveAdmin (pone validaciones raras)
-      # require 'audited/audit'
-      # Audited::Audit.class_eval do
-      #   def self.ransackable_attributes(auth_object = nil)
-      #     columns.map(&:name)
-      #   end
-      # end
+      # Audited for ActiveAdmin
+      require 'audited'
+      ActiveSupport.on_load :active_record do
+        Audited::Audit.class_eval do
+          def self.ransackable_attributes(auth_object = nil)
+            columns.map(&:name)
+          end
+        end
+      end
 
       if Rails.env.development?
         # Byebug
