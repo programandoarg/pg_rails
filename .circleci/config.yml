@@ -45,6 +45,7 @@ commands:
             bundle exec rails db:schema:load
 orbs:
   browser-tools: circleci/browser-tools@1.4
+  node: circleci/node@5.2.0
 jobs:
   static_analysis:
     executor: ruby
@@ -68,6 +69,9 @@ jobs:
   test:
     executor: ruby
     steps:
+      - node/install:
+          install-yarn: true
+          node-version: '20.11.0'
       - browser-tools/install-browser-tools
       - checkout
       - bundle_install
