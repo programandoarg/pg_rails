@@ -26,7 +26,7 @@ es:
       # When using html, text and mark won't be used.
       # html: '<abbr title="required">*</abbr>'
     error_notification:
-      default_message: "Please review the problems below:"
+      default_message: "Por favor, revisá los errores debajo:"
     # Examples
     # labels:
     #   defaults:
