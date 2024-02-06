@@ -39,7 +39,5 @@ class Cosa < ApplicationRecord
 
   enumerize :tipo, in: { completar: 0, los: 1, valores: 2 }
 
-  scope :query, ->(param) { param.present? ? where(id: param) : all } # TODO: completar
-
   validates :nombre, :tipo, presence: true
 end
