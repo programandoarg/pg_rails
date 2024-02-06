@@ -33,7 +33,6 @@ class <%= class_name %> < <%= parent_class_name.classify %>
     <%- end -%>
   <%- end -%>
 
-  scope :query, ->(param) { param.present? ? where(id: param) : all } # TODO: completar
   <%- if attributes.any?(&:required?) -%>
 
   validates <%= attributes.select(&:required?).map { |at| ":#{at.name}" }.join(', ') %>, presence: true

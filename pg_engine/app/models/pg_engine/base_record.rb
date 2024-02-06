@@ -15,6 +15,8 @@ module PgEngine
     before_create :setear_creado_y_actualizado_por
     before_update :setear_actualizado_por
 
+    scope :query, ->(param) { param.present? ? where(id: param) : all }
+
     def self.ransackable_attributes(_auth_object = nil)
       columns.map(&:name)
     end
