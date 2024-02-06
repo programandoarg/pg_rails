@@ -3,7 +3,7 @@
 # generado con pg_rails
 
 module Frontend
-  class CategoriaDeCosasController < PgEngine::SignedInController
+  class CategoriaDeCosasController < FrontendController
     before_action { @clase_modelo = CategoriaDeCosa }
 
     before_action(only: :index) { authorize CategoriaDeCosa }
