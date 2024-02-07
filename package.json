@@ -1,6 +1,5 @@
 {
   "name": "pg_rails",
-  "private": "true",
   "version": "7.0.2",
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
@@ -8,15 +7,20 @@
     "@popperjs/core": "^2.11.8",
     "autoprefixer": "^10.4.17",
     "bootstrap": "^5.3.2",
-    "bootstrap-icons": "^1.11.3",
-    "esbuild": "^0.20.0",
-    "eslint": "^8.0.1",
-    "nodemon": "^3.0.3",
-    "postcss": "^8.4.33",
-    "postcss-cli": "^11.0.0",
-    "sass": "^1.70.0"
+    "bootstrap-icons": "^1.11.3"
   },
   "module": "pg_rails/js/index.js",
+  "files": [
+    "pg_rails/js",
+    "pg_rails/scss",
+    "pg_layout/index.js",
+    "pg_layout/app/javascript",
+    "pg_layout/app/assets",
+    "pg_engine/app/assets",
+    "pg_associable/index.js",
+    "pg_associable/app/assets"
+
+  ],
   "browserslist": [
     "defaults"
   ],
@@ -26,6 +30,13 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
-    "typescript": "*"
+    "typescript": "*",
+    "esbuild": "^0.20.0",
+    "eslint": "^8.0.1",
+    "nodemon": "^3.0.3",
+    "postcss": "^8.4.33",
+    "postcss-cli": "^11.0.0",
+    "sass": "^1.70.0"
   }
 }
+

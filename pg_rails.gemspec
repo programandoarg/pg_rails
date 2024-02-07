@@ -26,5 +26,5 @@ Gem::Specification.new do |spec|
   #     'public gem pushes.'
   # end
 
-  spec.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
+  spec.files = Dir['{pg_associable,pg_engine,pg_layout,pg_scaffold,pg_rails}/**/*', 'MIT-LICENSE', 'README.md']
 end
