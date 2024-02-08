@@ -2,6 +2,8 @@ require "bundler/setup"
 
 require "bundler/gem_tasks"
 
+task default: :test_spring
+
 task :hola do
   puts 'holaaa'
 end
@@ -33,4 +35,19 @@ task :rspec do
   system "bundle exec rspec #{PATHS_TO_TEST}"
 end
 
-task default: :test_spring
+desc "Static analysis"
+task :static_analysis do
+  system "overcommit --run"
+  system "bundle exec brakeman -q --no-summary --skip-files node_modules/ --force"
+end
+
+desc "Brakeman interactive mode"
+task :brakeman do
+  system "bundle exec brakeman -q --no-summary --skip-files node_modules/ -I --force"
+end
+
+desc 'Pre push tasks'
+task :prepush do
+  Rake::Task['static_analysis'].invoke
+  Rake::Task['test'].invoke
+end

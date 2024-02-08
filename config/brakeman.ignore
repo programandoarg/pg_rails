@@ -95,6 +95,29 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
+      "fingerprint": "8eab6c02ff47e8e94e87c86a70320d6a67db3ba7b9b0d7bcb1c620d3aa2d1f18",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "pg_engine/app/helpers/pg_engine/flash_helper.rb",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "turbo_stream.update_all(\"title\", \"#{breadcrumbs.last.name} - #{Rails.application.class.module_parent_name}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "PgEngine::FlashHelper",
+        "method": "render_turbo_stream_title"
+      },
+      "user_input": "breadcrumbs.last.name",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
       "fingerprint": "b4b3cb9e9381799e4ad1077b80ae3887462bc8b8e498d443a2688fc52b4ff86e",
       "check_name": "SQL",
       "message": "Possible SQL injection",
@@ -185,6 +208,6 @@
       "note": ""
     }
   ],
-  "updated": "2024-02-06 20:50:03 -0300",
+  "updated": "2024-02-08 17:07:58 -0300",
   "brakeman_version": "6.1.2"
 }
