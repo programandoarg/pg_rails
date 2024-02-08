@@ -3,7 +3,7 @@
 # generado con pg_rails
 
 module Admin
-  class CategoriaDeCosasController < PgEngine::SignedInController
+  class CategoriaDeCosasController < AdminController
     before_action { @clase_modelo = CategoriaDeCosa }
 
     before_action(only: :index) { authorize CategoriaDeCosa }

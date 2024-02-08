@@ -61,10 +61,10 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
       if get_class "#{parts.first}Controller"
         "#{parts.first}Controller"
       else
-        'PgEngine::SignedInController'
+        'PgEngine::BaseController'
       end
     else
-      'PgEngine::SignedInController'
+      'PgEngine::BaseController'
     end
   end
 
