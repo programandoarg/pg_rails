@@ -10,7 +10,7 @@ export default class extends Controller {
   connect (e) {
     this.modalPuntero = new bootstrap.Modal(this.element)
     this.modalPuntero.show()
-    document.addEventListener("turbo:before-cache", () => {
+    document.addEventListener('turbo:before-cache', () => {
       this.element.remove()
     }, { once: true })
   }
