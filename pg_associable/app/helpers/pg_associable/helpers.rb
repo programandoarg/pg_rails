@@ -8,13 +8,12 @@ module PgAssociable
       end
     end
 
-    # FIXME: policy scope, tal vez en query?
     def pg_respond_buscar
       partial = params[:partial] || 'pg_associable/resultados'
-      collection = @clase_modelo.query(params[:query]).limit(6)
+      @collection = policy_scope(@clase_modelo).query(params[:query]).limit(6)
       render turbo_stream:
         turbo_stream.update("resultados-#{params[:id]}",
-                            partial:, locals: { collection: })
+                            partial:, locals: { collection: @collection })
     end
   end
 end
