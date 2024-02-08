@@ -23,6 +23,8 @@ module PgEngine
         return unless parts.length > 1
 
         parts.first.to_sym
+      rescue ActionController::RoutingError => e
+        nil
       end
     end
 

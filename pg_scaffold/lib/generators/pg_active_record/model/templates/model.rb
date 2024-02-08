@@ -32,7 +32,6 @@ class <%= class_name %> < <%= parent_class_name.classify %>
   enumerize :<%= attribute.name %>, in: { completar: 0, los: 1, valores: 2 }
     <%- end -%>
   <%- end -%>
-
   <%- if attributes.any?(&:required?) -%>
 
   validates <%= attributes.select(&:required?).map { |at| ":#{at.name}" }.join(', ') %>, presence: true

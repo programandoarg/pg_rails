@@ -8,6 +8,7 @@ module PgAssociable
       end
     end
 
+    # FIXME: policy scope, tal vez en query?
     def pg_respond_buscar
       partial = params[:partial] || 'pg_associable/resultados'
       collection = @clase_modelo.query(params[:query]).limit(6)

@@ -1,4 +1,5 @@
 ActiveAdmin.register <%= class_name %> do
+  # FIXME: referencias con _id
   permit_params <%= attributes.map { |a| ":#{a.name}" }.join(', ') %>
 
   index do
