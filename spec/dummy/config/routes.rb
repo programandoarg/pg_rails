@@ -1,11 +1,13 @@
+include PgEngine::RouteHelpers
+
 Rails.application.routes.draw do
   namespace :frontend do
-    PgEngine.resource_route(self, :cosas)
-    PgEngine.resource_route(self, :categoria_de_cosas)
+    pg_resource(:cosas)
+    pg_resource(:categoria_de_cosas)
   end
   namespace :admin do
-    PgEngine.resource_route(self, :cosas)
-    PgEngine.resource_route(self, :categoria_de_cosas)
+    pg_resource(:cosas)
+    pg_resource(:categoria_de_cosas)
   end
   devise_for :users
   ActiveAdmin.routes(self)
