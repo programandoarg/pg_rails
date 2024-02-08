@@ -31,13 +31,13 @@ module PgEngine
     end
 
     initializer 'byebug_bullet' do
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         # Byebug
         require 'byebug/core'
         begin
           Byebug.start_server 'localhost', ENV.fetch('BYEBUG_SERVER_PORT', 8989).to_i
           if ENV.fetch('SLEEP_AFTER_BYEBUG', false)
-            puts "waiting 3 secs after starting byebug server for connections"
+            puts 'waiting 3 secs after starting byebug server for connections'
             sleep 3
           end
         rescue Errno::EADDRINUSE

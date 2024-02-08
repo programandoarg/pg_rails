@@ -71,7 +71,6 @@ module PgEngine
       session[:page_size].present? ? session[:page_size].to_i : 10
     end
 
-
     def pg_respond_update(object: nil)
       object ||= instancia_modelo
       respond_to do |format|
@@ -244,7 +243,6 @@ module PgEngine
     def nombre_modelo
       @clase_modelo.name.underscore
     end
-
 
     def clase_modelo
       # agarro la variable o intento con el nombre del controller

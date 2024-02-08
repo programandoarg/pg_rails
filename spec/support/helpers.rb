@@ -1,4 +1,4 @@
-def my_assert_file(relative, *contents)
+def my_assert_file(relative)
   absolute = File.expand_path(relative, destination_root)
   assert File.exist?(absolute), "Expected file #{relative.inspect} to exist, but does not"
 

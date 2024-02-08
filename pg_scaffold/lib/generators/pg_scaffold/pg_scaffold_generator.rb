@@ -57,11 +57,7 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
 
   def parent_controller
     parts = controller_class_name.split('::')
-    if parts.length > 1
-      if get_class "#{parts.first}Controller"
-        return "#{parts.first}Controller"
-      end
-    end
+    return "#{parts.first}Controller" if parts.length > 1 && (get_class "#{parts.first}Controller")
 
     raise "#{parts.first}Controller not exists"
   end
