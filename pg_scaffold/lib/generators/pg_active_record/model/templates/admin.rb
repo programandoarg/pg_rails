@@ -1,6 +1,5 @@
 ActiveAdmin.register <%= class_name %> do
-  # FIXME: referencias con _id
-  permit_params <%= attributes.map { |a| ":#{a.name}" }.join(', ') %>
+  permit_params <%= attributes_names.map { |a| ":#{a}" }.join(', ') %>
 
   index do
     selectable_column
