@@ -18,20 +18,15 @@ end
 
 module PgEngine
   class PgLogger
+    # Generalmente en local queremos que se lancen los errores, salvo
+    # cuando estamos testeando casos de error puntuales.
+    @raise_errors = Rails.env.local?
+
     class << self
-      # DEPRECATED
-      # Muestro el caller[1] para saber dónde se llamó a la función deprecada
-      # def deprecated(mensaje)
-      #   titulo = Rainbow("  WARNING en #{caller[1]}").yellow.bold
-      #   detalles = Rainbow("  #{mensaje}").yellow
-      #   Rails.logger.warn("#{titulo}\n#{detalles}")
-      #   Rollbar.warning("#{mensaje}\n\n#{caller.join("\n")}")
-      # end
+      attr_accessor :raise_errors
 
       def error(obj)
-        # TODO: arreglar
-        # Si es dev o test lanzo el error y si no, lo logueo para que no le salte al usuario
-        # raise obj if Rails.env.local? && ENV.fetch('RAISE_ERRORS', nil).present?
+        raise obj if raise_errors
 
         mensaje = if obj.is_a?(Exception) && obj.backtrace.present?
                     "#{obj.inspect}\nBacktrace:\n#{cleaner.clean(obj.backtrace).join("\n")}"
@@ -93,3 +88,12 @@ module PgEngine
     end
   end
 end
+
+# DEPRECATED
+# Muestro el caller[1] para saber dónde se llamó a la función deprecada
+# def deprecated(mensaje)
+#   titulo = Rainbow("  WARNING en #{caller[1]}").yellow.bold
+#   detalles = Rainbow("  #{mensaje}").yellow
+#   Rails.logger.warn("#{titulo}\n#{detalles}")
+#   Rollbar.warning("#{mensaje}\n\n#{caller.join("\n")}")
+# end
