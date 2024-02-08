@@ -117,6 +117,7 @@ gem "rollbar"
 gem "sprockets-rails"
 
 gem "jsbundling-rails", "~> 1.3"
+gem "cssbundling-rails", "~> 1.3"
 
 gem "turbo-rails", "~> 1.5"
 gem "annotate"
@@ -129,3 +130,7 @@ gem 'activeadmin'
 gem 'sassc'
 
 gem 'letter_opener'
+
+# TODO: agrupar gemas de development y test
+
+gem 'overcommit'

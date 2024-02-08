@@ -1,3 +1,7 @@
+html, body {
+  height: 100%;
+}
+
 .navbar {
   --#{$prefix}navbar-toggler-border-color: #{$primary};
 }

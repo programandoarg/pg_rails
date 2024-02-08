@@ -15,6 +15,12 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
 
+require "rails/generators"
+require "rails/generators/testing/behavior"
+require "rails/generators/testing/setup_and_teardown"
+require "rails/generators/testing/assertions"
+require "fileutils"
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -28,7 +34,7 @@ require 'capybara/rspec'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('..', '..', 'spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -78,4 +84,10 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Warden::Test::Helpers
   config.include ActiveSupport::Testing::TimeHelpers
+
+
+  config.include Rails::Generators::Testing::Behavior
+  config.include Rails::Generators::Testing::SetupAndTeardown
+  config.include Rails::Generators::Testing::Assertions
+  config.include FileUtils
 end

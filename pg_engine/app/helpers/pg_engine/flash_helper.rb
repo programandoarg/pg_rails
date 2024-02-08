@@ -5,7 +5,9 @@ module PgEngine
     end
 
     def render_turbo_stream_title
-      turbo_stream.update 'title', "#{breadcrumbs.last&.name} - #{Rails.application.class.module_parent_name}"
+      # rubocop:disable Rails/SkipsModelValidations
+      turbo_stream.update_all 'title', "#{breadcrumbs.last&.name} - #{Rails.application.class.module_parent_name}"
+      # rubocop:enable Rails/SkipsModelValidations
     end
 
     def flash_type_to_class(flash_type)

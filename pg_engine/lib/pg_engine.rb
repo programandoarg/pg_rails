@@ -3,7 +3,8 @@
 require_relative 'pg_engine/engine'
 require_relative 'pg_engine/core_ext'
 require_relative 'pg_engine/configuracion'
-require_relative 'pg_engine/utils/logueador'
+require_relative 'pg_engine/route_helpers'
+require_relative 'pg_engine/utils/pg_logger'
 
 module PgEngine
   class << self
@@ -19,17 +20,6 @@ module PgEngine
 
     def configurar
       yield(configuracion)
-    end
-
-    def resource_route(rails_router, key)
-      rails_router.instance_eval do
-        resources(key) do
-          collection do
-            get :abrir_modal
-            post :buscar
-          end
-        end
-      end
     end
   end
 end

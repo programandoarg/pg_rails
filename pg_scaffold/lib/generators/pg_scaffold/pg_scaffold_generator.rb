@@ -57,15 +57,9 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
 
   def parent_controller
     parts = controller_class_name.split('::')
-    if parts.length > 1
-      if get_class "#{parts.first}Controller"
-        "#{parts.first}Controller"
-      else
-        'PgEngine::SignedInController'
-      end
-    else
-      'PgEngine::SignedInController'
-    end
+    return "#{parts.first}Controller" if parts.length > 1 && (get_class "#{parts.first}Controller")
+
+    raise "#{parts.first}Controller not exists"
   end
 
   def atributos_a_filtrar

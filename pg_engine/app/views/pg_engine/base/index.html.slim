@@ -39,7 +39,7 @@ div
             - object = object.decorate
             tr id="#{dom_id(object)}"
               - atributos_para_listar.each do |att|
-                th = object.send(att)
+                td = object.send(att)
               td.text-nowrap.text-end.ps-5
                 = object.show_link
                 = object.edit_link

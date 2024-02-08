@@ -3,7 +3,7 @@
 # generado con pg_rails
 
 module Admin
-  class CosasController < PgEngine::SignedInController
+  class CosasController < AdminController
     before_action { @clase_modelo = Cosa }
 
     before_action(only: :index) { authorize Cosa }

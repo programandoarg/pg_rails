@@ -50,6 +50,13 @@ RSpec.describe Admin::CosasController do
     sign_in user if user.present?
   end
 
+  describe 'routing' do
+    it 'routes GET index correctly' do
+      route = { get: '/admin/cosas' }
+      expect(route).to route_to(controller: 'admin/cosas', action: 'index')
+    end
+  end
+
   describe 'GET #index' do
     subject do
       get :index, params: {}
