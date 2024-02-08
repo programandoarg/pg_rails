@@ -27,4 +27,10 @@ task :test do
   system "bundle exec rspec #{PATHS_TO_TEST}"
 end
 
+desc "Testear sin spring"
+task :rspec do
+  require_relative "spec/dummy/config/application"
+  system "bundle exec rspec #{PATHS_TO_TEST}"
+end
+
 task default: :test_spring
