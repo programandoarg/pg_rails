@@ -60,6 +60,13 @@ RSpec.describe <%= controller_class_name %>Controller do
     sign_in user if user.present?
   end
 
+  describe 'routing' do
+    it 'routes GET index correctly' do
+      route = { get: '/<%= controller_file_path %>' }
+      expect(route).to route_to(controller: '<%= controller_file_path %>', action: 'index')
+    end
+  end
+
 <% unless options[:singleton] -%>
   describe 'GET #index' do
     subject do

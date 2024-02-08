@@ -51,7 +51,7 @@ RSpec.describe Admin::CosasController do
   end
 
   describe 'routing' do
-    it 'routes GET /version to VersionsController#show' do
+    it 'routes GET index correctly' do
       route = { get: '/admin/cosas' }
       expect(route).to route_to(controller: 'admin/cosas', action: 'index')
     end
