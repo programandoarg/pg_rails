@@ -3,7 +3,7 @@
 require_relative 'pg_engine/engine'
 require_relative 'pg_engine/core_ext'
 require_relative 'pg_engine/configuracion'
-require_relative 'pg_engine/utils/logueador'
+require_relative 'pg_engine/utils/pg_logger'
 
 module PgEngine
   class << self

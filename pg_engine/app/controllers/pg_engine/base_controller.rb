@@ -305,7 +305,7 @@ module PgEngine
 
     def do_sort(scope, field, direction)
       unless scope.model.column_names.include? field.to_s
-        Utils::Logueador.warning("No existe el campo \"#{field}\"")
+        PgLogger.warning("No existe el campo \"#{field}\"")
         return scope
       end
       scope = scope.order(field => direction)
@@ -313,7 +313,7 @@ module PgEngine
       instance_variable_set(:@direction, direction)
       scope
     rescue ArgumentError => e
-      Utils::Logueador.warning(e.to_s)
+      PgLogger.warning(e.to_s)
       scope
     end
 
