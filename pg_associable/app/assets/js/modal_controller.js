@@ -3,10 +3,9 @@ import * as bootstrap from 'bootstrap'
 
 export default class extends Controller {
   static outlets = ['asociable']
-  static targets = ['response', 'result']
+  static targets = ['response', 'result', 'searchInput', 'searchForm']
 
   modalPuntero = null
-  input = null
   lastValue = ''
 
   connect (e) {
@@ -14,8 +13,6 @@ export default class extends Controller {
     const modal = this.targets.element
     this.modalPuntero = new bootstrap.Modal(modal)
     this.modalPuntero.show()
-
-    this.input = this.element.querySelector('input[type=text]')
 
     let debounce = function(callback, wait) {
       let timerId;
@@ -26,20 +23,26 @@ export default class extends Controller {
         }, wait);
       };
     }
-    const doSearchBounce = debounce((force) => {
-      this.doSearch(force)
-    }, 200)
-    this.input.onkeydown = (e) => {
-      if(e.keyCode == 13) {
-        e.preventDefault();
-        return false;
+    this.bindSearchInput()
+  }
+
+  bindSearchInput() {
+    if(this.searchInputTargets.length > 0) {
+      const doSearchBounce = debounce((force) => {
+        this.doSearch(force)
+      }, 200)
+      this.searchInputTarget.onkeydown = (e) => {
+        if(e.keyCode == 13) {
+          e.preventDefault();
+          return false;
+        }
       }
-    }
-    this.input.onkeyup = (e) => {
-      if(e.keyCode == 13) {
-        doSearchBounce(true)
-      } else {
-        doSearchBounce()
+      this.searchInputTarget.onkeyup = (e) => {
+        if(e.keyCode == 13) {
+          doSearchBounce(true)
+        } else {
+          doSearchBounce()
+        }
       }
     }
   }
@@ -54,13 +57,13 @@ export default class extends Controller {
 `
   }
   doSearch(force = false) {
-    if(!force && this.input.value.length < 3) {
+    if(!force && this.searchInputTarget.value.length < 3) {
       return
     }
-    if(!force && this.input.value == this.lastValue) {
+    if(!force && this.searchInputTarget.value == this.lastValue) {
       return
     }
-    this.lastValue = this.input.value
+    this.lastValue = this.searchInputTarget.value
 
     let timerId = setTimeout(() => {
       this.buscando()
@@ -68,25 +71,7 @@ export default class extends Controller {
     document.addEventListener("turbo:before-stream-render", function(e) {
       clearTimeout(timerId)
     })
-    this.element.querySelector('form').requestSubmit()
-    // let url = `${this.input.dataset.url}?id=${this.elemId}`
-    // const form = document.createElement('form')
-    // form.setAttribute('method', 'post')
-    // form.setAttribute('action', url)
-    // form.setAttribute('data-turbo-stream', true)
-    // let partial = document.createElement('input')
-    // partial.setAttribute('type', 'hidden')
-    // partial.setAttribute('name', 'partial')
-    // partial.setAttribute('value', 'pg_associable/resultados_inline')
-    // form.appendChild(partial)
-    // let query = document.createElement('input')
-    // query.setAttribute('type', 'hidden')
-    // query.setAttribute('name', 'query')
-    // query.setAttribute('value', this.input.value)
-    // form.appendChild(query)
-    // document.body.prepend(form)
-    // form.requestSubmit()
-    // form.remove()
+    this.searchFormTarget.requestSubmit()
   }
 
   selectItem (e) {

@@ -17,11 +17,13 @@
                       'javascript:void(0)', data: { action: 'modal#toggleCrearElegir' }
           - else
             = form_tag namespaced_path(@clase_modelo, prefix: :buscar),
+                       data: { 'modal-target': 'searchForm' },
                        method: :post, class: 'pg-form buscar' do
               = hidden_field_tag :id, params[:id]
               = text_field_tag :query, '', class: 'form-control',
                                            placeholder: 'Escribí algo para buscar',
-                                           autocomplete: 'off'
+                                           autocomplete: 'off',
+                                           data: { 'modal-target': 'searchInput' }
               / = button_tag 'Buscar'
             .resultados-wrapper id="resultados-#{params[:id]}" data-modal-target="result"
         #pg-associable-form.show-on-new-item
