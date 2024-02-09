@@ -19,6 +19,13 @@ FactoryBot/ConsistentParenthesesStyle:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Metrics/BlockLength:
+  Exclude:
+    - app/admin/*
+
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
 AllCops:
   NewCops: enable
   Exclude:
