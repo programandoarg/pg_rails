@@ -1,6 +1,6 @@
 {
   "name": "pg_rails",
-  "version": "7.0.3",
+  "version": "7.0.4",
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^7.3.0",
