@@ -2,19 +2,20 @@
 
 # generado con pg_rails
 
-<% if namespaced? -%>
+<% if false && namespaced? -%>
 require_dependency "<%= namespaced_path %>/application_controller"
 
 <% end -%>
+<% module_namespacing do -%>
 <% module_namespacing_2 do -%>
 class <%= controller_class_name.split('::').last %>Controller < <%= parent_controller %>
-  before_action { @clase_modelo = <%= class_name %> }
+  before_action { @clase_modelo = <%= class_name.split('::').last %> }
 
-  before_action(only: :index) { authorize <%= class_name %> }
+  before_action(only: :index) { authorize <%= class_name.split('::').last %> }
 
   before_action :set_instancia_modelo, only: %i[new create show edit update destroy]
 
-  add_breadcrumb <%= class_name %>.nombre_plural, :<%= plural_route_name %>_path
+  add_breadcrumb <%= class_name.split('::').last %>.nombre_plural, :<%= plural_route_name %>_path
 
   private
 
@@ -34,4 +35,5 @@ class <%= controller_class_name.split('::').last %>Controller < <%= parent_contr
     %i[<%= atributos_a_filtrar.map(&:name).join(' ') %>]
   end
 end
+<% end -%>
 <% end -%>
