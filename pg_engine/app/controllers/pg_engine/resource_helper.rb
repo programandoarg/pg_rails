@@ -30,7 +30,7 @@ module PgEngine
     end
 
     def new
-      add_breadcrumb "Crear #{@clase_modelo.nombre_singular.downcase}"
+      add_breadcrumb "Crear"
     end
 
     def edit
