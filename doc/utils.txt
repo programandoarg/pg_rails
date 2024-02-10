@@ -1,3 +1,8 @@
 Show view paths:
 
 controller.view_paths.map(&:to_s).join('<br>').html_safe
+
+Drop table from console:
+  ActiveRecord::Base.connection.drop_table('facturas')
+  And later:
+  be rails db:schema:dump
