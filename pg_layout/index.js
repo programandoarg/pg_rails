@@ -1,9 +1,10 @@
 // Controllers
 import NavbarController from './app/javascript/navbar_controller'
-window.Stimulus.register('navbar', NavbarController)
-
 // Bootstrap's toasts
 import * as bootstrap from 'bootstrap'
+
+window.Stimulus.register('navbar', NavbarController)
+
 document.addEventListener('turbo:load', function () {
   const toastElList = document.querySelectorAll('.toast:not(.hide):not(.show)')
   Array.from(toastElList).map(toastEl => new bootstrap.Toast(toastEl).show())

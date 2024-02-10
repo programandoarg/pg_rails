@@ -3,4 +3,3 @@ coverage/
 tmp/
 spec/dummy/node_modules/
 node_modules/
-.eslintrc.js

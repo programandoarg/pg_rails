@@ -26,21 +26,20 @@ export default class extends Controller {
       }
     }
     const input = this.element.querySelector('input[type=text]')
-    if(input.value) {
+    if (input.value) {
       this.element.classList.add('filled')
     }
-
   }
-
 
   selectItem (e) {
     // TODO: text en data
     this.completarCampo(e.target.dataset.id, e.target.text)
   }
+
   completarCampo (id, text) {
     const textField = this.element.querySelector('input[type=text]')
     const hiddenField = this.element.querySelector('input[type=hidden]')
-    if( id === undefined ) {
+    if (id === undefined) {
       id = null
     }
     hiddenField.value = id

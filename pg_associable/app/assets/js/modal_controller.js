@@ -14,31 +14,31 @@ export default class extends Controller {
     this.modalPuntero = new bootstrap.Modal(modal)
     this.modalPuntero.show()
 
-    let debounce = function(callback, wait) {
-      let timerId;
-      return (...args) => {
-        clearTimeout(timerId);
-        timerId = setTimeout(() => {
-          callback(...args);
-        }, wait);
-      };
-    }
     this.bindSearchInput()
   }
 
-  bindSearchInput() {
-    if(this.searchInputTargets.length > 0) {
+  bindSearchInput () {
+    const debounce = function (callback, wait) {
+      let timerId
+      return (...args) => {
+        clearTimeout(timerId)
+        timerId = setTimeout(() => {
+          callback(...args)
+        }, wait)
+      }
+    }
+    if (this.searchInputTargets.length > 0) {
       const doSearchBounce = debounce((force) => {
         this.doSearch(force)
       }, 200)
       this.searchInputTarget.onkeydown = (e) => {
-        if(e.keyCode == 13) {
-          e.preventDefault();
-          return false;
+        if (e.keyCode === 13) {
+          e.preventDefault()
+          return false
         }
       }
       this.searchInputTarget.onkeyup = (e) => {
-        if(e.keyCode == 13) {
+        if (e.keyCode === 13) {
           doSearchBounce(true)
         } else {
           doSearchBounce()
@@ -47,7 +47,7 @@ export default class extends Controller {
     }
   }
 
-  buscando() {
+  buscando () {
     this.resultTarget.innerHTML = `
 <ul class="resultados list-group list-group-flush" tabindex="-1">
   <li class="list-group-item">
@@ -56,19 +56,20 @@ export default class extends Controller {
 </ul>
 `
   }
-  doSearch(force = false) {
-    if(!force && this.searchInputTarget.value.length < 3) {
+
+  doSearch (force = false) {
+    if (!force && this.searchInputTarget.value.length < 3) {
       return
     }
-    if(!force && this.searchInputTarget.value == this.lastValue) {
+    if (!force && this.searchInputTarget.value === this.lastValue) {
       return
     }
     this.lastValue = this.searchInputTarget.value
 
-    let timerId = setTimeout(() => {
+    const timerId = setTimeout(() => {
       this.buscando()
     }, 200)
-    document.addEventListener("turbo:before-stream-render", function(e) {
+    document.addEventListener('turbo:before-stream-render', function (e) {
       clearTimeout(timerId)
     })
     this.searchFormTarget.requestSubmit()
