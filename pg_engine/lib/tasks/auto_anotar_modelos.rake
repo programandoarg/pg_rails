@@ -35,7 +35,7 @@ if Rails.env.development?
       'exclude_sti_subclasses'      => 'false',
       'ignore_model_sub_dir'        => 'false',
       'ignore_columns'              => nil,
-      'ignore_routes'               => nil,
+      'ignore_routes'               => 'rails|active_admin',
       'ignore_unknown_models'       => 'false',
       # 'hide_limit_column_types'     => '<%= AnnotateModels::NO_LIMIT_COL_TYPES.join(",") %>',
       # 'hide_default_column_types'   => '<%= AnnotateModels::NO_DEFAULT_COL_TYPES.join(",") %>',
