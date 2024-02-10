@@ -17,7 +17,7 @@ table.table.table-borderless.table-sm.w-auto.mb-0.m-3
 <%- end -%>
   tr
     th = t('attributes.created_at')
-    td = dmy_time @<%= singular_name %>.created_at
+    td = @<%= singular_name %>.created_at
 <%- if options[:trackeo_de_usuarios] -%>
   tr
     th = t('attributes.actualizado_por')
@@ -25,14 +25,14 @@ table.table.table-borderless.table-sm.w-auto.mb-0.m-3
 <%- end -%>
   tr
     th = t('attributes.updated_at')
-    td = dmy_time @<%= singular_name %>.updated_at
+    td = @<%= singular_name %>.updated_at
 <%- if options[:paranoia] -%>
   tr
     th = t('attributes.deleted_at')
-    td = dmy_time @<%= singular_name %>.deleted_at
+    td = @<%= singular_name %>.deleted_at
 <%- end -%>
 <%- if options[:discard] -%>
   tr
     th = t('attributes.discarded_at')
-    td = dmy_time @<%= singular_name %>.discarded_at
+    td = @<%= singular_name %>.discarded_at
 <%- end -%>
