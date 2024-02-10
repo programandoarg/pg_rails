@@ -20,7 +20,7 @@ class PgResourceRouteGenerator < Rails::Generators::NamedBase
     return if options[:actions].present?
 
     route_s = <<~RUBY
-      PgEngine.resource_route(self, :#{file_name.pluralize})
+      pg_resource(:#{file_name.pluralize})
     RUBY
     route route_s, namespace: regular_class_path
   end

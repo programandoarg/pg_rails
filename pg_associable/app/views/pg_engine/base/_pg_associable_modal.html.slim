@@ -11,17 +11,19 @@
         a.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]
       .modal-body
         .show-on-select-item
-          - if @clase_modelo.count.zero?
+          - if policy_scope(@clase_modelo).kept.count.zero?
             p No hay #{@clase_modelo.nombre_plural.downcase} aún
             = link_to "Crear el primer #{@clase_modelo.nombre_singular.downcase}",
                       'javascript:void(0)', data: { action: 'modal#toggleCrearElegir' }
           - else
             = form_tag namespaced_path(@clase_modelo, prefix: :buscar),
+                       data: { 'modal-target': 'searchForm' },
                        method: :post, class: 'pg-form buscar' do
               = hidden_field_tag :id, params[:id]
               = text_field_tag :query, '', class: 'form-control',
                                            placeholder: 'Escribí algo para buscar',
-                                           autocomplete: 'off'
+                                           autocomplete: 'off',
+                                           data: { 'modal-target': 'searchInput' }
               / = button_tag 'Buscar'
             .resultados-wrapper id="resultados-#{params[:id]}" data-modal-target="result"
         #pg-associable-form.show-on-new-item

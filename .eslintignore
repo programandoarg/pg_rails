@@ -1,0 +1,5 @@
+spec/dummy/app/assets/builds/*
+coverage/
+tmp/
+spec/dummy/node_modules/
+node_modules/

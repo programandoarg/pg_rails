@@ -50,8 +50,12 @@ jobs:
   static_analysis:
     executor: ruby
     steps:
+      - node/install:
+          install-yarn: true
+          node-version: '20.11.0'
       - checkout
       - bundle_install
+      - run: yarn install
       - run:
           name: Run Overcommit
           command: |
