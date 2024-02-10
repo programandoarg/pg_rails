@@ -8,14 +8,7 @@ PreCommit:
   EsLint:
     enabled: true
     required_executable: npx
-    command: ["npx", "--no-install", "eslint", "-f", "compact"]
-    include:
-      - app/assets/**/*.js
-      - app/assets/**/*.jsx
-      - app/components/**/*.js
-      - app/components/**/*.jsx
-      - app/javascript/**/*.js
-      - app/javascript/**/*.jsx
+    command: ["npx", "--no-install", "eslint", "-f", "compact", "."]
 
   FixMe:
     enabled: true
