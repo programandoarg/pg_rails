@@ -12,9 +12,9 @@ module Rails
 
         def parse_type_and_options(type)
           case type
-          when /(string|text|binary|integer)\{(\d+)\}/
+          when /(string|text|binary|integer|decimal)\{(\d+)\}/
             [Regexp.last_match(1), { limit: Regexp.last_match(2).to_i }]
-          when /(string|text|binary|float|integer|date|datetime)\{(.+)\}/
+          when /(string|text|binary|float|integer|date|datetime|boolean|json|decimal)\{(.+)\}/
             type = Regexp.last_match(1)
             provided_options = Regexp.last_match(2).split(/[,.-]/)
             options = provided_options.to_h { |opt| [opt.to_sym, true] }

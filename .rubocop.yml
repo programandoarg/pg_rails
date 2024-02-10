@@ -41,3 +41,4 @@ AllCops:
     - 'spec/dummy/node_modules/**/*'
     - 'spec/dummy/tmp/**/*'
     - '**/version.rb'
+    - 'pg_engine/lib/tasks/auto_anotar_modelos.rake'

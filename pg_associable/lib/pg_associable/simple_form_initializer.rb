@@ -3,7 +3,7 @@ SimpleForm.setup do |config|
                                   error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :label, class: 'form-control-label'
+    b.use :label, class: 'form-label'
     b.use :hidden_input
     b.wrapper tag: 'div', class: 'position-relative' do |ba|
       ba.use :input, class: 'form-control', disabled: true, placeholder: 'Clic para seleccionar...',
@@ -20,7 +20,7 @@ SimpleForm.setup do |config|
                                          error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :label, class: 'form-control-label'
+    b.use :label, class: 'form-label'
     b.use :hidden_input
     b.wrapper tag: 'div', class: 'search-box position-relative' do |ba|
       ba.use :search_form, error_class: 'is-invalid'

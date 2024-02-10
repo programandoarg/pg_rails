@@ -12,13 +12,11 @@ PATHS_TO_TEST='spec pg_scaffold/spec pg_associable/spec'
 
 desc "Testear rápido"
 task :test_spring do
-  require_relative "spec/dummy/config/application"
   system "bundle exec spring rspec #{PATHS_TO_TEST}"
 end
 
 desc "Preparar y testear"
 task :test do
-  require_relative "spec/dummy/config/application"
   system "yarn install"
   FileUtils.chdir "spec/dummy"
   system "bundle exec rails db:test:prepare"
@@ -31,7 +29,6 @@ end
 
 desc "Testear sin spring"
 task :rspec do
-  require_relative "spec/dummy/config/application"
   system "bundle exec rspec #{PATHS_TO_TEST}"
 end
 

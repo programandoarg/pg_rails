@@ -16,18 +16,20 @@ module PgEngine
       object.as_json.tap { |o| o[:to_s] = to_s }
     end
 
-    # def method_missing(method_name, *args, &block)
-    #   valor = object.attributes[method_name.to_s]
-    #   return super unless valor.present?
+    # rubocop:disable Style/MissingRespondToMissing
+    def method_missing(method_name, *args, &)
+      valor = object.attributes[method_name.to_s]
+      return super if valor.blank?
 
-    #   if valor.instance_of?(Date)
-    #     dmy(valor)
-    #   # elsif valor.class == ActiveSupport::TimeWithZone
-    #   #   dmy_time(valor)
-    #   else
-    #     super
-    #   end
-    # end
+      if valor.instance_of?(Date)
+        dmy(valor)
+      elsif valor.instance_of?(ActiveSupport::TimeWithZone)
+        dmy_time(valor)
+      else
+        super
+      end
+    end
+    # rubocop:enable Style/MissingRespondToMissing
 
     def destroy_link(message = '¿Estás seguro?')
       return unless Pundit.policy!(helpers.send(PgEngine.configuracion.current_user_method), object).destroy?
