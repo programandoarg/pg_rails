@@ -14,35 +14,36 @@ export default class extends Controller {
     this.modalPuntero = new bootstrap.Modal(modal)
     this.modalPuntero.show()
 
-    this.bindSearchInput()
+    if (this.searchInputTargets.length > 0) {
+      this.bindSearchInput()
+    }
+  }
+
+  debounce (callback, wait) {
+    let timerId
+    return (...args) => {
+      clearTimeout(timerId)
+      timerId = setTimeout(() => {
+        callback(...args)
+      }, wait)
+    }
   }
 
   bindSearchInput () {
-    const debounce = function (callback, wait) {
-      let timerId
-      return (...args) => {
-        clearTimeout(timerId)
-        timerId = setTimeout(() => {
-          callback(...args)
-        }, wait)
+    const doSearchBounce = this.debounce((force) => {
+      this.doSearch(force)
+    }, 200)
+    this.searchInputTarget.onkeydown = (e) => {
+      if (e.keyCode === 13) {
+        e.preventDefault()
+        return false
       }
     }
-    if (this.searchInputTargets.length > 0) {
-      const doSearchBounce = debounce((force) => {
-        this.doSearch(force)
-      }, 200)
-      this.searchInputTarget.onkeydown = (e) => {
-        if (e.keyCode === 13) {
-          e.preventDefault()
-          return false
-        }
-      }
-      this.searchInputTarget.onkeyup = (e) => {
-        if (e.keyCode === 13) {
-          doSearchBounce(true)
-        } else {
-          doSearchBounce()
-        }
+    this.searchInputTarget.onkeyup = (e) => {
+      if (e.keyCode === 13) {
+        doSearchBounce(true)
+      } else {
+        doSearchBounce()
       }
     }
   }
