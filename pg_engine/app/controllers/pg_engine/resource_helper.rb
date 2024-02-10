@@ -71,21 +71,23 @@ module PgEngine
       session[:page_size].present? ? session[:page_size].to_i : 10
     end
 
-    def pg_respond_update(object: nil)
-      object ||= instancia_modelo
+    def pg_respond_update
+      object = instancia_modelo
       respond_to do |format|
         if (@saved = object.save)
           format.html { redirect_to object.decorate.target_object }
           format.json { render json: object.decorate }
         else
+          # TODO: esto solucionaría el problema?
+          # self.instancia_modelo = instancia_modelo.decorate
           format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: object.errors, status: :unprocessable_entity }
         end
       end
     end
 
-    def pg_respond_create(object: nil)
-      object ||= instancia_modelo
+    def pg_respond_create
+      object = instancia_modelo
       respond_to do |format|
         if (@saved = object.save)
           if params[:asociable]
@@ -107,6 +109,8 @@ module PgEngine
           end
           format.json { render json: object.decorate }
         else
+          # TODO: esto solucionaría el problema?
+          # self.instancia_modelo = instancia_modelo.decorate
           if params[:asociable]
             format.turbo_stream do
               render turbo_stream:
