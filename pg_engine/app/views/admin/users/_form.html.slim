@@ -1,9 +1,12 @@
-/ <%# locals: (object: nil, asociable: false) -%>
+/ # locals: (object: nil, asociable: false)
 
-= pg_form_for(@user || object) do |f|
-  = hidden_field_tag :asociable, true if asociable
-  = f.input :email
-  = f.input :password, hint: 'Si se deja en blanco no se cambia'
-  = f.input :profiles
-  .mt-2
-  = f.button :submit
+div style="max-width: 300px"
+  = pg_form_for(@user || object) do |f|
+    = f.mensajes_de_error
+
+    = hidden_field_tag :asociable, true if asociable
+    = f.input :email
+    = f.input :password, required: false, hint: 'Si se deja en blanco no se cambia'
+    = f.input :developer
+    .mt-2
+    = f.button :submit

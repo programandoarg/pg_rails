@@ -8,6 +8,7 @@
 #  confirmed_at           :datetime
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string
+#  developer              :boolean          default(FALSE), not null
 #  discarded_at           :datetime
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
@@ -15,7 +16,6 @@
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string
 #  locked_at              :datetime
-#  profiles               :integer          default([]), not null, is an Array
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -44,15 +44,9 @@ class User < ApplicationRecord
   audited
   include Discard::Model
 
-  validates :email, :password, presence: true
+  validates :email, presence: true
 
   scope :query, ->(param) { where('email ILIKE ?', "%#{param}%") }
-
-  def admin?
-    # profiles.include?(:admin)
-    # TODO: fix
-    true
-  end
 
   def to_s
     email

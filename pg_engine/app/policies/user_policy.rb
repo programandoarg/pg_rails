@@ -26,6 +26,6 @@ class UserPolicy < ApplicationPolicy
   # end
 
   # def acceso_total?
-  #   user.admin?
+  #   user.developer?
   # end
 end

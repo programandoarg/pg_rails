@@ -16,35 +16,6 @@ module Admin
 
     add_breadcrumb User.nombre_plural, :admin_users_path
 
-    def index
-      @users = filtros_y_policy %i[email profiles]
-      @users = sort_collection(@users, default: { created_at: :desc })
-      pg_respond_index(@users)
-    end
-
-    def abrir_modal
-      pg_respond_abrir_modal
-    end
-
-    def buscar
-      pg_respond_buscar
-    end
-
-    def show
-      add_breadcrumb @user, @user.target_object
-
-      pg_respond_show
-    end
-
-    def new
-      add_breadcrumb "Crear #{User.nombre_singular.downcase}"
-    end
-
-    def edit
-      add_breadcrumb @user, @user.target_object
-      add_breadcrumb 'Editando'
-    end
-
     def create
       @user.skip_confirmation!
       pg_respond_create
@@ -55,19 +26,22 @@ module Admin
       pg_respond_update
     end
 
-    def destroy
-      pg_respond_destroy(@user, admin_users_url)
-    end
-
     private
 
-    def render_listing
-      @users = @users.page(params[:page]).per(current_page_size)
+    def atributos_permitidos
+      %i[email password developer]
     end
 
-    def atributos_permitidos
-      # %i[email password profiles]
-      [:email, :password, { profiles: [] }]
+    def atributos_para_buscar
+      %i[email developer]
+    end
+
+    def atributos_para_listar
+      %i[email developer]
+    end
+
+    def atributos_para_mostrar
+      %i[email developer]
     end
   end
 end

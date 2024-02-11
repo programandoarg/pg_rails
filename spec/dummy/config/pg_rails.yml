@@ -6,6 +6,9 @@ sidebar:
     name: ActiveAdmin
     path: active_admin_root_path
   -
+    name: Users
+    path: admin_users_path
+  -
     name: Categorias
     path: admin_categoria_de_cosas_path
   -

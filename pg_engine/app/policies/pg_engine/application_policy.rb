@@ -88,7 +88,7 @@ module PgEngine
     end
 
     def acceso_total?
-      user&.admin?
+      user&.developer?
     end
 
     def objeto_borrado?

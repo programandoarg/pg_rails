@@ -1,6 +1,6 @@
 ActiveAdmin.register User do
   decorate_with UserDecorator
-  permit_params :email, :password, :password_confirmation, :confirmed_at, profiles: []
+  permit_params :email, :password, :password_confirmation, :confirmed_at
 
   index do
     selectable_column
@@ -19,7 +19,6 @@ ActiveAdmin.register User do
       else
         f.input :email
         f.input :password unless f.object.persisted?
-        f.input :profiles, as: :select
       end
     end
     f.actions

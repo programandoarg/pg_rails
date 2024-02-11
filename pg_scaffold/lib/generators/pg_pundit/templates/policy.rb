@@ -31,7 +31,7 @@ class <%= class_name %>Policy < ApplicationPolicy
   # end
 
   # def acceso_total?
-  #   user.admin?
+  #   user.developer?
   # end
 end
 <% end -%>
