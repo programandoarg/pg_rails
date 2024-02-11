@@ -225,6 +225,7 @@ module PgEngine
       authorize instancia_modelo
 
       # TODO: problema en create y update cuando falla la validacion
+      # Reproducir el error antes de arreglarlo
       self.instancia_modelo = instancia_modelo.decorate if action_name.in? %w[show edit new]
     end
 

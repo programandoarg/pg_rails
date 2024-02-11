@@ -52,9 +52,11 @@ class User < ApplicationRecord
     email
   end
 
-  # TODO: decorate this from pg_contable
-  has_many :accounts, inverse_of: :owner
-  has_many :contribuyentes, through: :accounts
+  # TODO: scaffold accounts y UserAccount
+  # has_many :accounts, inverse_of: :owner
+
+  # TODO: decorate this en pg_contable
+  # has_many :contribuyentes, through: :accounts
 
   def current_account
     accounts.first
