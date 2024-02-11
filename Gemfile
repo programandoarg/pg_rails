@@ -134,3 +134,5 @@ gem 'letter_opener'
 # TODO: agrupar gemas de development y test
 
 gem 'overcommit'
+
+gem 'database_cleaner-active_record'

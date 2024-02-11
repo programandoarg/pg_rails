@@ -1,1 +1,1 @@
-load "#{PgEngine::Engine.root}/db/seeds.rb"
+PgEngine::Engine.load_seed
