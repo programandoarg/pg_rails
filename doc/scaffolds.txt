@@ -1,0 +1,17 @@
+be rails g pg_scaffold \
+  Admin/Account \
+  "plan:integer{enum,required}" \
+  "nombre:string{required}" \
+  hashid:string \
+  --model-name=Account \
+  --discard \
+  --activeadmin
+
+
+be rails g pg_scaffold \
+  Admin/UserAccount \
+  "user:references{required}" \
+  "account:references{required}" \
+  "profiles:integer{enum,array}" \
+  --model-name=UserAccount \
+  --activeadmin

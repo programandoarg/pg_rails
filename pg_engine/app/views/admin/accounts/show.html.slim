@@ -1,0 +1,27 @@
+- content_for :title do
+  = @account.to_s
+- content_for :actions do
+  = @account.destroy_link
+  .ms-1
+  = @account.edit_link
+
+table.table.table-borderless.table-sm.w-auto.mb-0.m-3
+  - atributos_para_mostrar.each do |att|
+    tr
+      th = @clase_modelo.human_attribute_name(att)
+      td = @account.send(att)
+  tr
+    th = t('attributes.creado_por')
+    td = @account.creado_por
+  tr
+    th = t('attributes.created_at')
+    td = @account.created_at
+  tr
+    th = t('attributes.actualizado_por')
+    td = @account.actualizado_por
+  tr
+    th = t('attributes.updated_at')
+    td = @account.updated_at
+  tr
+    th = t('attributes.discarded_at')
+    td = @account.discarded_at

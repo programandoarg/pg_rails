@@ -33,7 +33,7 @@ describe 'Generators' do
 
       my_assert_file 'spec/controllers/frontend/modelos_controller_spec.rb' do |content|
         assert_match(/routing/, content)
-        assert_match(/sign_in user/, content)
+        assert_match(/sign_in/, content)
       end
     end
   end

@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_11_191547) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_11_191549) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer "plan", null: false
+    t.string "nombre", null: false
+    t.string "hashid"
+    t.bigint "creado_por_id"
+    t.bigint "actualizado_por_id"
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actualizado_por_id"], name: "index_accounts_on_actualizado_por_id"
+    t.index ["creado_por_id"], name: "index_accounts_on_creado_por_id"
+  end
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -79,6 +92,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_11_191547) do
     t.index ["creado_por_id"], name: "index_cosas_on_creado_por_id"
   end
 
+  create_table "user_accounts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "account_id", null: false
+    t.integer "profiles", default: [], null: false, array: true
+    t.bigint "creado_por_id"
+    t.bigint "actualizado_por_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_user_accounts_on_account_id"
+    t.index ["actualizado_por_id"], name: "index_user_accounts_on_actualizado_por_id"
+    t.index ["creado_por_id"], name: "index_user_accounts_on_creado_por_id"
+    t.index ["user_id"], name: "index_user_accounts_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -107,9 +134,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_11_191547) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "accounts", "users", column: "actualizado_por_id"
+  add_foreign_key "accounts", "users", column: "creado_por_id"
   add_foreign_key "categoria_de_cosas", "users", column: "actualizado_por_id"
   add_foreign_key "categoria_de_cosas", "users", column: "creado_por_id"
   add_foreign_key "cosas", "categoria_de_cosas"
   add_foreign_key "cosas", "users", column: "actualizado_por_id"
   add_foreign_key "cosas", "users", column: "creado_por_id"
+  add_foreign_key "user_accounts", "accounts"
+  add_foreign_key "user_accounts", "users"
+  add_foreign_key "user_accounts", "users", column: "actualizado_por_id"
+  add_foreign_key "user_accounts", "users", column: "creado_por_id"
 end
