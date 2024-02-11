@@ -44,6 +44,9 @@ class User < ApplicationRecord
   audited
   include Discard::Model
 
+  has_many :user_accounts
+  has_many :accounts, through: :user_accounts
+
   validates :email, presence: true
 
   scope :query, ->(param) { where('email ILIKE ?', "%#{param}%") }
@@ -52,17 +55,7 @@ class User < ApplicationRecord
     email
   end
 
-  # TODO: scaffold accounts y UserAccount
-  # has_many :accounts, inverse_of: :owner
-
-  # TODO: decorate this en pg_contable
-  # has_many :contribuyentes, through: :accounts
-
   def current_account
     accounts.first
-  end
-
-  def current_contribuyente
-    contribuyentes.first
   end
 end

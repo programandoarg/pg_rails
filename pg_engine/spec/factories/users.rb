@@ -48,5 +48,10 @@ FactoryBot.define do
     trait :developer do
       developer { true }
     end
+
+    after(:create) do |user, _context|
+      account = create :account
+      create :user_account, user:, account:
+    end
   end
 end
