@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -32,32 +34,19 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
-class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :confirmable, :lockable, :timeoutable, :trackable
 
-  audited
-  include Discard::Model
+FactoryBot.define do
+  factory :user do
+    email { Faker::Internet.email }
+    password { "password#{rand(99_999)}" }
+    confirmed_at { Faker::Date.backward }
 
-  enumerize :profiles, in: {
-    admin: 1,
-    dueño: 2,
-    invitado: 3
-  }, multiple: true
+    trait :admin do
+      developer { true }
+    end
 
-  # validates :email, :password, :profiles, presence: true
-
-  scope :query, ->(param) { where('email ILIKE ?', "%#{param}%") }
-
-  def admin?
-    profiles.include?(:admin)
-    true
-  end
-
-  def to_s
-    email
+    trait :developer do
+      developer { true }
+    end
   end
 end

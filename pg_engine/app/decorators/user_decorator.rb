@@ -5,8 +5,8 @@
 class UserDecorator < PgEngine::BaseDecorator
   delegate_all
 
-  def profiles
-    object.profiles.values.join(', ')
+  def default_module
+    :admin
   end
 
   # Define presentation-specific methods here. Helpers are accessed through

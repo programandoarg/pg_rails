@@ -26,7 +26,6 @@
 #  fk_rails_...  (categoria_de_cosa_id => categoria_de_cosas.id)
 #  fk_rails_...  (creado_por_id => users.id)
 #
-# generado con pg_rails
 
 class Cosa < ApplicationRecord
   audited

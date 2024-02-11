@@ -2,7 +2,7 @@
 
 # generado con pg_rails
 
-class CosaPolicy < ApplicationPolicy
+class UserPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     # def resolve
     #   if policy.acceso_total?

@@ -1,5 +1,10 @@
 require "bundler/setup"
 
+APP_RAKEFILE = File.expand_path("spec/dummy/Rakefile", __dir__)
+load "rails/tasks/engine.rake"
+
+load "rails/tasks/statistics.rake"
+
 require "bundler/gem_tasks"
 
 task default: :test_spring
@@ -8,7 +13,7 @@ task :hola do
   puts 'holaaa'
 end
 
-PATHS_TO_TEST='spec pg_scaffold/spec pg_associable/spec'
+PATHS_TO_TEST='spec pg_scaffold/spec pg_associable/spec pg_engine/spec'
 
 desc "Testear rápido"
 task :test_spring do
@@ -18,24 +23,23 @@ end
 desc "Preparar y testear"
 task :test do
   system "yarn install"
-  FileUtils.chdir "spec/dummy"
-  system "bundle exec rails db:test:prepare"
-  system "yarn install"
-  system "yarn build"
-  system "yarn build:css"
-  FileUtils.chdir "../.."
-  system "bundle exec rspec #{PATHS_TO_TEST}"
+  system "bundle exec rake db:test:prepare"
+  # system "yarn build"
+  # system "yarn build:css"
+  system "yarn dummy:build"
+  system "yarn dummy:build:css"
+  Rake::Task['rspec'].invoke
 end
 
 desc "Testear sin spring"
 task :rspec do
-  system "bundle exec rspec #{PATHS_TO_TEST}"
+  abort unless system "CI=true bundle exec rspec #{PATHS_TO_TEST}"
 end
 
 desc "Static analysis"
 task :static_analysis do
-  system "overcommit --run"
-  system "bundle exec brakeman -q --no-summary --skip-files node_modules/ --force"
+  abort unless system("overcommit --run") &&
+               system("bundle exec brakeman -q --no-summary --skip-files node_modules/ --force")
 end
 
 desc "Brakeman interactive mode"

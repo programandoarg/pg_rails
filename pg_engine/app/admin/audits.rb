@@ -1,7 +1,7 @@
 ActiveAdmin.register Audited::Audit do
-  permit_params [:auditable_id, :auditable_type, :associated_id, :associated_type, :user_id,
-                 :user_type, :username, :action, :audited_changes, :version, :comment,
-                 :remote_address, :request_uuid, :created_at]
+  permit_params %i[auditable_id auditable_type associated_id associated_type user_id
+                   user_type username action audited_changes version comment
+                   remote_address request_uuid created_at]
 
   # :id
   # :discarded_at, :fecha, :nombre, :tiempo, :tipo, :created_at, :updated_at, :actualizado_por_id, :creado_por_id

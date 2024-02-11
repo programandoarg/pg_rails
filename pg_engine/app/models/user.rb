@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -10,6 +8,7 @@
 #  confirmed_at           :datetime
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string
+#  developer              :boolean          default(FALSE), not null
 #  discarded_at           :datetime
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
@@ -17,7 +16,6 @@
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string
 #  locked_at              :datetime
-#  profiles               :integer          default([]), not null, is an Array
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -34,17 +32,37 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
+class User < ApplicationRecord
+  # ApplicationRecord should be defined on Application
 
-FactoryBot.define do
-  factory :user do
-    email { Faker::Internet.email }
-    password { "password#{rand(99_999)}" }
-    confirmed_at { Faker::Date.backward }
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :confirmable, :lockable, :timeoutable, :trackable
 
-    profiles { [User.profiles.values.sample] }
+  audited
+  include Discard::Model
 
-    trait :admin do
-      profiles { [:admin] }
-    end
+  validates :email, presence: true
+
+  scope :query, ->(param) { where('email ILIKE ?', "%#{param}%") }
+
+  def to_s
+    email
+  end
+
+  # TODO: scaffold accounts y UserAccount
+  # has_many :accounts, inverse_of: :owner
+
+  # TODO: decorate this en pg_contable
+  # has_many :contribuyentes, through: :accounts
+
+  def current_account
+    accounts.first
+  end
+
+  def current_contribuyente
+    contribuyentes.first
   end
 end

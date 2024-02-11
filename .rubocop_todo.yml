@@ -34,6 +34,7 @@ Metrics/BlockLength:
     - 'pg_engine/app/controllers/pg_engine/resource_helper.rb'
     - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
     - 'pg_engine/config/simple_form/simple_form_bootstrap.rb'
+    - 'pg_engine/app/admin/*'
 
 # Offense count: 1
 # Configuration parameters: CountComments, Max, CountAsOne.

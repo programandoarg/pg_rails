@@ -38,5 +38,13 @@
     "postcss-cli": "^11.0.0",
     "sass": "^1.70.0"
   },
+  "scripts": {
+    "dummy:build": "esbuild spec/dummy/app/javascript/*.* --bundle --sourcemap --format=esm --outdir=spec/dummy/app/assets/builds --public-path=/assets",
+    "dummy:build:css:compile": "sass ./spec/dummy/app/assets/stylesheets/application.bootstrap.scss:./spec/dummy/app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "dummy:build:css:prefix": "postcss ./spec/dummy/app/assets/builds/application.css --use=autoprefixer --output=./spec/dummy/app/assets/builds/application.css",
+    "dummy:build:css": "yarn dummy:build:css:compile && yarn dummy:build:css:prefix",
+    "watch:css": "nodemon --watch ./app/assets/stylesheets/ --ext scss --exec \"yarn build:css\"",
+    "dummy:watch:css": "nodemon --watch ./ --ext scss --exec \"yarn dummy:build:css\""
+  },
   "license": "MIT"
 }

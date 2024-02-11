@@ -2,10 +2,16 @@
 
 module PgEngine
   class Engine < ::Rails::Engine
-    isolate_namespace PgEngine
-
     config.i18n.default_locale = :es
     config.time_zone = 'America/Argentina/Buenos_Aires'
+
+    if Rails.env.local?
+      initializer 'configurar_factories', after: 'factory_bot.set_factory_paths' do
+        # Para que tome las factories de pg_contable/spec/factories
+        # además de las de dummy/spec/factories
+        FactoryBot.definition_file_paths << "#{root}/spec/factories"
+      end
+    end
 
     initializer 'configurar_pg_rails' do
       # SimpleForm
