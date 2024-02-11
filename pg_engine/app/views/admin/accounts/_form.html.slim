@@ -1,0 +1,12 @@
+/ # locals: (object: nil, asociable: false)
+
+div style="max-width: 300px"
+  = pg_form_for(@account || object) do |f|
+    = f.mensajes_de_error
+
+    = hidden_field_tag :asociable, true if asociable
+    = f.input :plan
+    = f.input :nombre
+    = f.input :hashid
+    .mt-2
+    = f.button :submit
