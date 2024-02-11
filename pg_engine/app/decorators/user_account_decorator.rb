@@ -5,6 +5,9 @@
 class UserAccountDecorator < PgEngine::BaseDecorator
   delegate_all
 
+  def profiles
+    object.profiles.join(', ')
+  end
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #

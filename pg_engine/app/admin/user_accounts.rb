@@ -1,5 +1,6 @@
 ActiveAdmin.register UserAccount do
-  permit_params :user_id, :account_id, :profiles
+  decorate_with UserAccountDecorator
+  permit_params :user_id, :account_id, profiles: []
 
   index do
     selectable_column
@@ -18,7 +19,7 @@ ActiveAdmin.register UserAccount do
     f.inputs do
       f.input :user
       f.input :account
-      f.input :profiles
+      f.input :profiles, as: :select
     end
     f.actions
   end
