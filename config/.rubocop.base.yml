@@ -4,6 +4,12 @@ require:
   - rubocop-capybara
   - rubocop-factory_bot
 
+FactoryBot/AssociationStyle:
+  EnforcedStyle: explicit
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 

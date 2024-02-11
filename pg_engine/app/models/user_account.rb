@@ -43,6 +43,4 @@ class UserAccount < ApplicationRecord
     dueño: 2,
     invitado: 3
   }, multiple: true
-
-  validates :user, :account, presence: true
 end

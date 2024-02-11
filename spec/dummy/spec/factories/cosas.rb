@@ -31,7 +31,7 @@ FactoryBot.define do
   factory :cosa do
     nombre { Faker::Lorem.sentence }
     tipo { Cosa.tipo.values.sample }
-    categoria_de_cosa
+    association :categoria_de_cosa
 
     trait :categoria_de_cosa_existente do
       categoria_de_cosa { nil }

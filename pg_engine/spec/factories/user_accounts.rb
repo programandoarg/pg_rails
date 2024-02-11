@@ -4,8 +4,8 @@
 
 FactoryBot.define do
   factory :user_account do
-    user
-    account
+    association :user
+    association :account
     profiles { UserAccount.profiles.values.sample }
 
     trait :user_existente do

@@ -46,10 +46,10 @@ RSpec.describe Admin::UserAccountsController do
     }
   end
 
-  let(:user) { create :user, :admin }
+  let(:logged_user) { create :user, :developer }
 
   before do
-    sign_in user if user.present?
+    sign_in logged_user if logged_user.present?
   end
 
   describe 'routing' do
@@ -64,7 +64,7 @@ RSpec.describe Admin::UserAccountsController do
       get :index, params: {}
     end
 
-    let!(:user_account) { create :user_account }
+    before { create :user_account }
 
     it 'returns a success response' do
       subject
@@ -72,7 +72,7 @@ RSpec.describe Admin::UserAccountsController do
     end
 
     context 'when user is not logged in' do
-      let(:user) { nil }
+      let(:logged_user) { nil }
 
       it 'redirects to login path' do
         subject
