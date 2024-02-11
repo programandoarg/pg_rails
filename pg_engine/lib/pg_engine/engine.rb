@@ -2,8 +2,6 @@
 
 module PgEngine
   class Engine < ::Rails::Engine
-    isolate_namespace PgEngine
-
     config.i18n.default_locale = :es
     config.time_zone = 'America/Argentina/Buenos_Aires'
 
