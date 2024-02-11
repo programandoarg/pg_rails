@@ -29,7 +29,7 @@ require 'rails_helper'
 
 RSpec.describe Admin::UserAccountsController do
   render_views
-  let(:user) { create :user }
+  let(:user) { create :orphan_user }
 
   let(:account) { create :account }
 
@@ -146,13 +146,6 @@ RSpec.describe Admin::UserAccountsController do
     context 'with valid params' do
       let(:new_attributes) do
         attributes_for(:user_account)
-      end
-
-      it 'updates the requested user_account' do
-        user_account = create(:user_account)
-        put :update, params: { id: user_account.to_param, user_account: new_attributes }
-        user_account.reload
-        skip('Add assertions for updated state')
       end
 
       it 'redirects to the user_account' do

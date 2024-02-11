@@ -36,7 +36,7 @@
 #
 
 FactoryBot.define do
-  factory :user do
+  factory :orphan_user, class: 'User' do
     email { Faker::Internet.email }
     password { "password#{rand(99_999)}" }
     confirmed_at { Faker::Date.backward }
@@ -49,9 +49,11 @@ FactoryBot.define do
       developer { true }
     end
 
-    after(:create) do |user, _context|
-      account = create :account
-      create :user_account, user:, account:
+    factory :user do
+      after(:create) do |user, _context|
+        account = create :account
+        create :user_account, user:, account:
+      end
     end
   end
 end

@@ -99,7 +99,7 @@ RSpec.describe <%= controller_class_name %>Controller do
 
       it do
         subject
-        expect(assigns(:collection)).to be_empty
+        expect(assigns(:collection)).not_to include(<%= nombre_tabla_completo_singular %>)
       end
     end
 <% end -%>

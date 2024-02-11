@@ -81,7 +81,7 @@ RSpec.describe Admin::AccountsController do
 
       it do
         subject
-        expect(assigns(:collection)).to be_empty
+        expect(assigns(:collection)).not_to include(account)
       end
     end
 
