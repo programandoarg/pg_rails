@@ -1,0 +1,38 @@
+- content_for :title do
+  = @user.to_s
+- content_for :actions do
+  = @user.destroy_link
+  .ms-1
+  = @user.edit_link
+
+table.table.table-borderless.table-sm.w-auto.mb-0.m-3
+  tr
+    th = @clase_modelo.human_attribute_name(:email)
+    td = @user.email
+  / tr
+    th = @clase_modelo.human_attribute_name(:password)
+    td = @user.password
+  tr
+    th = @clase_modelo.human_attribute_name(:profiles)
+    td = @user.profiles
+  / tr
+    th = t(:creado_por)
+    td = @user.creado_por
+  tr
+    th = @clase_modelo.human_attribute_name(:confirmed_at)
+    td = dmy_time @user.confirmed_at
+  tr
+    th = @clase_modelo.human_attribute_name(:unconfirmed_email)
+    td = @user.unconfirmed_email
+  tr
+    th = I18n.t(:created_at)
+    td = dmy_time @user.created_at
+  / tr
+    th = t(:actualizado_por)
+    td = @user.actualizado_por
+  tr
+    th = I18n.t(:updated_at)
+    td = dmy_time @user.updated_at
+  tr
+    th = t(:discarded_at)
+    td = dmy_time @user.discarded_at

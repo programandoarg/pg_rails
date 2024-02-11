@@ -1,0 +1,9 @@
+/ <%# locals: (object: nil, asociable: false) -%>
+
+= pg_form_for(@user || object) do |f|
+  = hidden_field_tag :asociable, true if asociable
+  = f.input :email
+  = f.input :password, hint: 'Si se deja en blanco no se cambia'
+  = f.input :profiles
+  .mt-2
+  = f.button :submit
