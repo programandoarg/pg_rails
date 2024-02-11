@@ -5,6 +5,14 @@ module PgEngine
     config.i18n.default_locale = :es
     config.time_zone = 'America/Argentina/Buenos_Aires'
 
+    config.generators do |g|
+      g.test_framework :pg_rspec
+      g.orm :pg_active_record
+
+      g.fallbacks[:pg_rspec] = :rspec
+      g.fallbacks[:pg_active_record] = :active_record
+    end
+
     if Rails.env.local?
       initializer 'configurar_factories', after: 'factory_bot.set_factory_paths' do
         # Para que tome las factories de pg_engine/spec/factories
