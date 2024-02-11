@@ -2,10 +2,11 @@ require 'rails_helper'
 
 describe PgAssociable::Helpers do
   describe '#pg_respond_buscar' do
-    let(:user) { create :user }
+    let(:user) { create :user, :developer }
     let(:ctrl) do
-      clazz = Class.new(PgEngine::BaseController)
-      clazz.new
+      # clazz = Class.new(Admin::CosasController)
+      # clazz.new
+      Admin::CosasController.new
     end
     let!(:cosa) { create :cosa }
 

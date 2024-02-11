@@ -79,3 +79,10 @@ Acceder a la app en <http://localhost:3000/>.
 be rake app:pg_engine_engine:install:migrations
 
 be rails pg_engine_engine:install:migrations
+
+
+    "build": "esbuild pg_rails/js/index.js --bundle --sourcemap --format=esm --outdir=pg_rails/builds --public-path=/assets",
+    "build:css:compile": "sass ./pg_rails/scss/pg_rails.scss:./pg_rails/builds/application.css --no-source-map --load-path=node_modules",
+    "build:css:prefix": "postcss ./pg_rails/builds/application.css --use=autoprefixer --output=./pg_rails/builds/application.css",
+    "build:css": "yarn build:css:compile && yarn build:css:prefix",
+

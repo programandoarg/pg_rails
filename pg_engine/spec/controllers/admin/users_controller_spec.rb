@@ -66,7 +66,7 @@ RSpec.describe Admin::UsersController do
 
       it do
         subject
-        expect(assigns(:users)).to eq [logger_user]
+        expect(assigns(:collection)).to eq [logger_user]
       end
     end
   end

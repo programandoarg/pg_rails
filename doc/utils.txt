@@ -6,3 +6,23 @@ Drop table from console:
   ActiveRecord::Base.connection.drop_table('facturas')
   And later:
   be rails db:schema:dump
+
+
+FileWatcher
+  initializer 'reload' do |app|
+    if app.config.reloading_enabled?
+      # app =
+      # directories = watched_dirs_with_extensions(reloadable_paths)
+      file = '/media/deposito/proyectos/actuales/pg_rails/pg_associable/app/helpers/pg_associable/helpers.rb'
+      # byebug
+      reloader = app.config.file_watcher.new([file]) do |p1, p2, p3|
+        PgLogger.info("changed #{file}")
+      end
+      # byebug
+      app.reloaders << reloader
+      app.reloader.to_run do
+        reloader.execute_if_updated
+      end
+      reloader.execute
+    end
+  end

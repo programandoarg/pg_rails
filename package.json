@@ -39,10 +39,6 @@
     "sass": "^1.70.0"
   },
   "scripts": {
-    "build": "esbuild pg_rails/js/index.js --bundle --sourcemap --format=esm --outdir=pg_rails/builds --public-path=/assets",
-    "build:css:compile": "sass ./pg_rails/scss/pg_rails.scss:./pg_rails/builds/application.css --no-source-map --load-path=node_modules",
-    "build:css:prefix": "postcss ./pg_rails/builds/application.css --use=autoprefixer --output=./pg_rails/builds/application.css",
-    "build:css": "yarn build:css:compile && yarn build:css:prefix",
     "dummy:build": "esbuild spec/dummy/app/javascript/*.* --bundle --sourcemap --format=esm --outdir=spec/dummy/app/assets/builds --public-path=/assets",
     "dummy:build:css:compile": "sass ./spec/dummy/app/assets/stylesheets/application.bootstrap.scss:./spec/dummy/app/assets/builds/application.css --no-source-map --load-path=node_modules",
     "dummy:build:css:prefix": "postcss ./spec/dummy/app/assets/builds/application.css --use=autoprefixer --output=./spec/dummy/app/assets/builds/application.css",

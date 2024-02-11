@@ -40,5 +40,13 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { "password#{rand(99_999)}" }
     confirmed_at { Faker::Date.backward }
+
+    trait :admin do
+      developer { true }
+    end
+
+    trait :developer do
+      developer { true }
+    end
   end
 end
