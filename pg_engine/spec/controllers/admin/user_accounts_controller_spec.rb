@@ -42,7 +42,7 @@ RSpec.describe Admin::UserAccountsController do
 
   let(:invalid_attributes) do
     {
-      user: nil
+      user_id: nil
     }
   end
 
@@ -54,7 +54,7 @@ RSpec.describe Admin::UserAccountsController do
 
   describe 'routing' do
     it 'routes GET index correctly' do
-      route = { get: '/admin/user_accounts' }
+      route = { get: '/a/user_accounts' }
       expect(route).to route_to(controller: 'admin/user_accounts', action: 'index')
     end
   end

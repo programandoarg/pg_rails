@@ -50,7 +50,7 @@ RSpec.describe Admin::AccountsController do
 
   describe 'routing' do
     it 'routes GET index correctly' do
-      route = { get: '/admin/accounts' }
+      route = { get: '/a/accounts' }
       expect(route).to route_to(controller: 'admin/accounts', action: 'index')
     end
   end

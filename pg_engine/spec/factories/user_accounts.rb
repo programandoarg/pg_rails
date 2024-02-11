@@ -6,7 +6,7 @@ FactoryBot.define do
   factory :user_account do
     association :user
     association :account
-    profiles { UserAccount.profiles.values.sample }
+    profiles { [UserAccount.profiles.values.sample] }
 
     trait :user_existente do
       user { nil }
