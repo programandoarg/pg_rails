@@ -8,6 +8,10 @@
 }
 .pg-form {
   .pg_associable_inline, .pg_associable {
+    .modal-link {
+      // FIXME:
+      display: none!important;
+    }
     .limpiar {
       display: none;
       position: absolute;

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "jsx": "react",
+    "module": "es6",
+    "moduleResolution": "node",
+    "outDir": "./pg_rails/dist",
+    "rootDir": "./",
+    "preserveConstEnums": true,
+    "lib": [ "es2015", "dom" ],
+    "target": "es5"
+  }
+}

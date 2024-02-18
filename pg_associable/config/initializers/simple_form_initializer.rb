@@ -6,8 +6,7 @@ SimpleForm.setup do |config|
     b.use :label, class: 'form-label'
     b.use :hidden_input
     b.wrapper tag: 'div', class: 'position-relative' do |ba|
-      ba.use :input, class: 'form-control', disabled: true, placeholder: 'Clic para seleccionar...',
-                     error_class: 'is-invalid'
+      ba.use :input, class: 'form-control', error_class: 'is-invalid'
       ba.use :pencil
       ba.use :modal_link
       ba.use :limpiar

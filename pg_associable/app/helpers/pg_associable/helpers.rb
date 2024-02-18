@@ -10,9 +10,10 @@ module PgAssociable
 
     def pg_respond_buscar
       partial = params[:partial] || 'pg_associable/resultados'
+      resultados = params[:resultados] || 'resultados'
       @collection = policy_scope(@clase_modelo).kept.query(params[:query]).limit(6)
       render turbo_stream:
-        turbo_stream.update("resultados-#{params[:id]}",
+        turbo_stream.update("#{resultados}-#{params[:id]}",
                             partial:, locals: { collection: @collection })
     end
   end

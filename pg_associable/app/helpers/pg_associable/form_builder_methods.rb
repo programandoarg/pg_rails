@@ -7,9 +7,12 @@ module PgAssociable
 
     def pg_associable(atributo, options = {})
       url_modal = namespaced_path(clase_asociacion(atributo), prefix: :abrir_modal)
-      options[:as] = 'pg_associable/pg_associable'
-      options[:wrapper] = :pg_associable
+      url_search = namespaced_path(clase_asociacion(atributo), prefix: :buscar)
+      options[:as] = 'pg_associable'
+      # options[:wrapper] = :pg_associable
       options[:url_modal] = url_modal
+      options[:url_search] = url_search
+      options[:wrapper_html] = { data: { controller: 'asociable', 'asociable-modal-outlet': '.modal' } }
       association atributo, options
     end
 

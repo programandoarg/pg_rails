@@ -1,4 +1,6 @@
 import { Controller } from '@hotwired/stimulus'
+import * as React from "react"
+import { renderToStaticMarkup } from "react-dom/server"
 
 export default class extends Controller {
   static outlets = ['modal']
@@ -7,7 +9,7 @@ export default class extends Controller {
   elemId = null
   input = null
   lastValue = ''
-  connect (e) {
+  connect () {
     console.log('connect asociable_inline')
     const that = this
     // ID único para identificar el campo y el modal
@@ -17,9 +19,8 @@ export default class extends Controller {
     this.result = document.createElement('div')
     this.result.setAttribute('id', `resultados-${this.elemId}`)
     this.result.classList.add('resultados-wrapper')
-    this.input.parentNode.appendChild(this.result)
-    this.input.parentNode.appendChild(this.result)
-    this.element.querySelector('.pencil').onclick = (e) => {
+    this.input.parentNode.appendChild(this.result);
+    (this.element.querySelector('.pencil') as HTMLElement).onclick = (e) => {
       that.input.focus()
     }
     if (this.input.value) {
@@ -67,11 +68,11 @@ export default class extends Controller {
   }
 
   buscando () {
-    this.result.innerHTML = `
-<div class="resultados" tabindex="-1">
-  <div class="fst-italic text-secondary">Buscando...</div>
-</div>
-`
+    this.result.innerHTML = renderToStaticMarkup(
+      <div className="resultados" tabIndex={-1}>
+        <div className="fst-italic text-secondary">Buscando...</div>
+      </div>
+    )
   }
 
   escribiAlgo () {
@@ -93,50 +94,48 @@ export default class extends Controller {
     document.addEventListener('turbo:before-stream-render', function (e) {
       clearTimeout(timerId)
     })
-    const url = `${this.input.dataset.url}?id=${this.elemId}`
-    const form = document.createElement('form')
-    form.setAttribute('method', 'post')
-    form.setAttribute('action', url)
-    form.setAttribute('data-turbo-stream', true)
-    const partial = document.createElement('input')
-    partial.setAttribute('type', 'hidden')
-    partial.setAttribute('name', 'partial')
-    partial.setAttribute('value', 'pg_associable/resultados_inline')
-    form.appendChild(partial)
-    const query = document.createElement('input')
-    query.setAttribute('type', 'hidden')
-    query.setAttribute('name', 'query')
-    query.setAttribute('value', this.input.value)
-    form.appendChild(query)
+    let elem = (
+      <form method="post" action={this.input.dataset.url} data-turbo-stream="true">
+        <input type="hidden" name="id" value={this.elemId} />
+        <input type="hidden" name="partial" value="pg_associable/resultados_inline" />
+        <input type="hidden" name="query" value={this.input.value} />
+      </form>
+    )
+    let form = document.createElement('div')
+    form.innerHTML = renderToStaticMarkup(elem)
     document.body.prepend(form)
-    form.requestSubmit()
+    form.childNodes[0].requestSubmit()
     form.remove()
   }
 
-  completarCampo (id, text) {
-    const textField = this.element.querySelector('input[type=text]')
-    const hiddenField = this.element.querySelector('input[type=hidden]')
-    if (id === undefined) {
-      id = null
-    }
-    hiddenField.value = id
-    if (id) {
-      textField.value = text
+  completarCampo (object) {
+    const textField = this.element.querySelector('input[type=text]') as HTMLInputElement
+    const hiddenField = this.element.querySelector('input[type=hidden]') as HTMLInputElement
+    if (object) {
       this.element.classList.add('filled')
+      hiddenField.value = object.id
+      textField.value = object.to_s
+      const event = new CustomEvent("pg_associable:changed", { detail: object });
+      this.element.dispatchEvent(event)
     } else {
       this.element.classList.remove('filled')
+      hiddenField.value = null
       textField.value = null
+      const event = new CustomEvent("pg_associable:changed");
+      this.element.dispatchEvent(event)
     }
   }
 
   selectItem (e) {
-    console.log('select')
-    // TODO: text en data
-    this.completarCampo(e.target.dataset.id, e.target.text)
+    if(e.target.dataset.object) {
+      this.completarCampo(JSON.parse(e.target.dataset.object))
+    } else {
+      this.completarCampo(null)
+    }
     this.result.innerHTML = ''
   }
 
-  disconnect (e) {
+  disconnect () {
     console.log('disconnect asociable_inline')
   }
 }
