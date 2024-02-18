@@ -1,6 +1,6 @@
 import { Controller } from '@hotwired/stimulus'
-import * as React from "react"
-import { renderToStaticMarkup } from "react-dom/server"
+import * as React from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 
 export default class extends Controller {
   static outlets = ['modal']
@@ -10,9 +10,8 @@ export default class extends Controller {
   elemId = null
   input = null
 
-  connect (e) {
+  connect () {
     console.log('connect asociable')
-    const that = this
 
     // ID único para identificar el campo y el modal
     this.elemId = Math.trunc(Math.random() * 1000000000)
@@ -23,31 +22,17 @@ export default class extends Controller {
     this.element.classList.add(`asociable-${this.elemId}`)
 
     this.result = document.createElement('div')
-    // FIXME: resultados-inline
     this.result.setAttribute('id', `resultados-inline-${this.elemId}`)
     this.result.classList.add('resultados-wrapper')
-    this.input.parentNode.appendChild(this.result);
+    this.input.parentNode.appendChild(this.result)
 
-    const modalLink = this.element.querySelector('.modal-link')
-    const path = modalLink.attributes.href.value
-    modalLink.setAttribute('href', `${path}?id=${this.elemId}`)
-    modalLink.onclick = (e) => {
-      // Si ya hay un modal abierto lo abro y evito que se haga el get
-      // Si no, dejo que se ejecute el comportamiento por default
-      if (that.modalOutlets.length > 0) {
-        e.preventDefault()
-        that.modalOutlet.openModal()
-      }
-    }
     const input = this.element.querySelector('input[type=text]')
     if (input.value) {
       this.element.classList.add('filled')
     }
-    this.element.querySelector('.pencil').onclick = (e) => {
-      console.log("pencil")
+    this.element.querySelector('.pencil').onclick = () => {
       input.focus()
     }
-
 
     const debounce = function (callback, wait) {
       let timerId
@@ -59,13 +44,13 @@ export default class extends Controller {
       }
     }
     const doSearchBounce = debounce((force) => {
-      that.doSearch(force)
+      this.doSearch(force)
     }, 200)
 
-    this.input.addEventListener('blur', (e) => {
+    this.input.addEventListener('blur', () => {
       this.input.placeholder = ''
     })
-    this.input.onfocus = (e) => {
+    this.input.onfocus = () => {
       this.input.select()
       if (this.input.value.length === 0) {
         this.escribiAlgo()
@@ -89,15 +74,19 @@ export default class extends Controller {
     }
   }
 
-  crearItem() {
-    const modalLink = this.element.querySelector('.modal-link')
-    const url = modalLink.attributes.href.value
-    let elem = (
-      <form method="get" action={url} data-turbo-stream="true">
+  crearItem () {
+    // Si ya hay un modal abierto lo abro y retorno
+    if (this.modalOutlets.length > 0) {
+      this.modalOutlet.openModal()
+      return
+    }
+
+    const elem = (
+      <form method="get" action={this.input.dataset.url_modal} data-turbo-stream="true">
         <input type="hidden" name="id" value={this.elemId} />
       </form>
     )
-    let form = document.createElement('div')
+    const form = document.createElement('div')
     form.innerHTML = renderToStaticMarkup(elem)
     document.body.prepend(form)
     form.childNodes[0].requestSubmit()
@@ -117,14 +106,13 @@ export default class extends Controller {
   }
 
   selectItem (e) {
-    if(e.target.dataset.object) {
+    if (e.target.dataset.object) {
       this.completarCampo(JSON.parse(e.target.dataset.object))
     } else {
       this.completarCampo(null)
     }
     this.result.innerHTML = ''
   }
-
 
   doSearch (force = false) {
     if (!force && this.input.value.length < 3) {
@@ -138,18 +126,18 @@ export default class extends Controller {
     const timerId = setTimeout(() => {
       this.buscando()
     }, 200)
-    document.addEventListener('turbo:before-stream-render', function (e) {
+    document.addEventListener('turbo:before-stream-render', function () {
       clearTimeout(timerId)
     })
-    let elem = (
-      <form method="post" action={this.input.dataset.url} data-turbo-stream="true">
+    const elem = (
+      <form method="post" action={this.input.dataset.url_search} data-turbo-stream="true">
         <input type="hidden" name="id" value={this.elemId} />
         <input type="hidden" name="partial" value="pg_associable/resultados_inline" />
         <input type="hidden" name="resultados" value="resultados-inline" />
         <input type="hidden" name="query" value={this.input.value} />
       </form>
     )
-    let form = document.createElement('div')
+    const form = document.createElement('div')
     form.innerHTML = renderToStaticMarkup(elem)
     document.body.prepend(form)
     form.childNodes[0].requestSubmit()
@@ -164,20 +152,20 @@ export default class extends Controller {
       textField.value = object.to_s
       this.element.classList.add('filled')
       this.element.dataset.object = object
-      const event = new CustomEvent("pg_associable:changed", { detail: object });
+      const event = new CustomEvent('pg_associable:changed', { detail: object })
       this.element.dispatchEvent(event)
     } else {
       textField.value = null
       hiddenField.value = null
       this.element.classList.remove('filled')
       this.element.dataset.object = null
-      const event = new CustomEvent("pg_associable:changed");
+      const event = new CustomEvent('pg_associable:changed')
       this.element.dispatchEvent(event)
     }
     this.result.innerHTML = ''
   }
 
-  disconnect (e) {
+  disconnect () {
     console.log('disconnect asociable')
   }
 }

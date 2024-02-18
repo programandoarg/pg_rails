@@ -78,7 +78,7 @@ export default class extends Controller {
 
   selectItem (e) {
     const asociable = this.asociableOutlet
-    if(e.target.dataset.object) {
+    if (e.target.dataset.object) {
       asociable.completarCampo(JSON.parse(e.target.dataset.object))
     } else {
       asociable.completarCampo(null)

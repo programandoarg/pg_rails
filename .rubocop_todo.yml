@@ -16,7 +16,6 @@ Lint/SuppressedException:
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
-    - 'pg_associable/app/inputs/pg_associable/pg_associable_inline_input.rb'
     - 'pg_engine/app/controllers/pg_engine/resource_helper.rb'
     - 'pg_engine/app/decorators/pg_engine/base_decorator.rb'
     - 'pg_engine/app/helpers/pg_engine/form_helper.rb'
@@ -30,7 +29,6 @@ Metrics/AbcSize:
 # AllowedMethods: refine
 Metrics/BlockLength:
   Exclude:
-    - 'pg_associable/lib/pg_associable/simple_form_initializer.rb'
     - 'pg_engine/app/controllers/pg_engine/resource_helper.rb'
     - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
     - 'pg_engine/config/simple_form/simple_form_bootstrap.rb'
@@ -90,7 +88,7 @@ Naming/VariableNumber:
 # Offense count: 7
 Rails/OutputSafety:
   Exclude:
-    - 'pg_associable/app/inputs/pg_associable/pg_associable_input.rb'
+    - 'pg_associable/app/inputs/pg_associable_input.rb'
     - 'pg_engine/app/decorators/pg_engine/base_decorator.rb'
     - 'pg_engine/app/helpers/pg_engine/index_helper.rb'
     - 'pg_engine/app/helpers/pg_engine/print_helper.rb'
@@ -102,8 +100,7 @@ Rails/OutputSafety:
 # URISchemes: http, https
 Layout/LineLength:
   Exclude:
-    - 'pg_associable/app/inputs/pg_associable/pg_associable_input.rb'
-    - 'pg_associable/lib/pg_associable/simple_form_initializer.rb'
+    - 'pg_associable/app/inputs/pg_associable_input.rb'
     - 'pg_engine/app/decorators/pg_engine/base_decorator.rb'
     - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
     - 'pg_engine/config/simple_form/simple_form_bootstrap.rb'

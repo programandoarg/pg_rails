@@ -2,29 +2,42 @@
 
 class PgAssociableInput < SimpleForm::Inputs::StringInput
   include ActionView::Helpers::FormTagHelper
+  include Rails.application.routes.url_helpers
+  include PgEngine::RouteHelper
 
   def hidden_input(_wrapper_options = {})
-    # merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
-    # merged_input_options = merge_wrapper_options(merged_input_options, { class: 'oculto' })
     @builder.hidden_field(attribute_name)
   end
 
+  def controller
+    # Para que no rompa polymorphic_url en NamespaceDeductor
+  end
+
   def input(wrapper_options = nil)
-    unless string?
-      input_html_classes.unshift('string')
-    end
-    input_html_options[:data] = { url: options[:url_search] }
+    atributo = attribute_name.to_s.gsub('_id', '')
+    url_modal = namespaced_path(clase_asociacion(atributo), prefix: :abrir_modal)
+    url_search = namespaced_path(clase_asociacion(atributo), prefix: :buscar)
+
+    input_html_options[:data] = { url_search:, url_modal: }
     input_html_options[:type] = 'text'
 
     merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
 
-    content_tag('div', class: 'position-relative') do
-      hidden_input + text_field_tag(nil, object.send(reflection.name).to_s, merged_input_options) + modal_link + limpiar + pencil
-    end
+    build_input(merged_input_options)
   end
 
-  def modal_link(_wrapper_options = nil)
-    "<a href=\"#{options[:url_modal]}\" class=\"modal-link d-inline-block\" data-turbo-stream style=\"position:absolute; left:0; right:0; top:0; bottom:0;\"></a>".html_safe
+  def clase_asociacion(atributo)
+    asociacion = object.class.reflect_on_all_associations.find { |a| a.name == atributo.to_sym }
+    nombre_clase = asociacion.options[:class_name]
+    nombre_clase = asociacion.name.to_s.camelize if nombre_clase.nil?
+    Object.const_get(nombre_clase)
+  end
+
+  def build_input(input_options)
+    content_tag('div', class: 'position-relative') do
+      hidden_input + text_field_tag(nil, object.send(reflection.name).to_s,
+                                    input_options) + limpiar + pencil
+    end
   end
 
   def limpiar(_wrapper_options = nil)
