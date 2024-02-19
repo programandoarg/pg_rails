@@ -6,6 +6,7 @@ module PgEngine
           get :abrir_modal
           post :buscar
         end
+        yield if block_given?
       end
     end
   end
