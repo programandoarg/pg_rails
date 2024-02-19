@@ -5,6 +5,6 @@
 
 - flash_to_show.each do |flash_type, message|
   .toast(class="bg-#{flash_type_to_class(flash_type)}-subtle" role="alert"
-         aria-live="assertive" aria-atomic="true")
+         data-turbo-temporary="true" aria-live="assertive" aria-atomic="true")
     .toast-body
       = message

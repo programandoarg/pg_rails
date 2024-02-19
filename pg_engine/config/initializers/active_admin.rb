@@ -34,10 +34,7 @@ ActiveAdmin.setup do |config|
   #     File.join(Rails.root, 'app', 'admin'),
   #     File.join(Rails.root, 'app', 'cashier')
   #   ]
-  config.load_paths = [
-    File.join(Rails.root, 'app', 'admin'),
-    File.join(PgEngine::Engine.root, 'app', 'admin')
-  ]
+  config.load_paths.push(File.join(PgEngine::Engine.root, 'app', 'admin'))
   # == Default Namespace
   #
   # Set the default namespace each administration resource

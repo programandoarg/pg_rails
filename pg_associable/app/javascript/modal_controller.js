@@ -78,15 +78,18 @@ export default class extends Controller {
 
   selectItem (e) {
     const asociable = this.asociableOutlet
-    // TODO: text en data
-    asociable.completarCampo(e.target.dataset.id, e.target.text)
+    if (e.target.dataset.object) {
+      asociable.completarCampo(JSON.parse(e.target.dataset.object))
+    } else {
+      asociable.completarCampo(null)
+    }
     this.remove()
   }
 
   responseTargetConnected (e) {
     const newObject = JSON.parse(e.dataset.response)
     const asociable = this.asociableOutlet
-    asociable.completarCampo(newObject.id, newObject.to_s)
+    asociable.completarCampo(newObject)
     this.remove()
   }
 

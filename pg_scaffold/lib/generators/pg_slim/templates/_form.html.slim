@@ -6,7 +6,7 @@ div style="max-width: 300px"
 
     = hidden_field_tag :asociable, true if asociable
   <%- attributes.each do |attribute| -%>
-    = f.<%= attribute.reference? ? :pg_associable_inline : :input %> :<%= attribute.name %>
+    = f.<%= attribute.reference? ? :pg_associable : :input %> :<%= attribute.name %>
   <%- end -%>
     .mt-2
     = f.button :submit

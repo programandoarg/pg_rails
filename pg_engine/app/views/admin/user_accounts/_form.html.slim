@@ -5,8 +5,8 @@ div style="max-width: 300px"
     = f.mensajes_de_error
 
     = hidden_field_tag :asociable, true if asociable
-    = f.pg_associable_inline :user
-    = f.pg_associable_inline :account
+    = f.pg_associable :user
+    = f.pg_associable :account
     = f.input :profiles
     .mt-2
     = f.button :submit

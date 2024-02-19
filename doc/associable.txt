@@ -1,0 +1,37 @@
+tipos de flow
+  select común
+  inline sin crear
+  inline con crear (modal opcional)
+  modal sin crear
+  modal con crear
+
+
+mobile
+  root
+    puede_crear
+      modal con crear
+    else
+      if count < MAX
+        select común
+      else
+        modal sin crear
+  in modal (creando asociado)
+    if count < MAX
+      select común
+    else
+      inline sin crear
+
+desktop
+  root
+    puede_crear
+      inline con crear (modal opcional)
+    else
+      if count < MAX
+        select comun
+      else
+        inline sin crear
+  in modal (creando asociado)
+    if count < MAX
+      select comun
+    else
+      inline sin crear

@@ -8,7 +8,7 @@ PreCommit:
   EsLint:
     enabled: true
     required_executable: npx
-    command: ["npx", "--no-install", "eslint", "-f", "compact"]
+    command: ["npx", "--no-install", "eslint", "-f", "compact", "."]
     exclude:
       - .eslintrc.js
 

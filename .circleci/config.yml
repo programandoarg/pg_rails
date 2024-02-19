@@ -76,7 +76,7 @@ jobs:
       - node/install:
           install-yarn: true
           node-version: '20.11.0'
-      - browser-tools/install-browser-tools
+      # - browser-tools/install-browser-tools
       - checkout
       - bundle_install
       - set_up_database

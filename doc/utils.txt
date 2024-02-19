@@ -7,7 +7,6 @@ Drop table from console:
   And later:
   be rails db:schema:dump
 
-
 FileWatcher
   initializer 'reload' do |app|
     if app.config.reloading_enabled?
@@ -26,3 +25,33 @@ FileWatcher
       reloader.execute
     end
   end
+
+Request con turbo-stream
+  curl 'http://localhost:3000/admin/categoria_de_cosas/buscar?id=152177034'
+    -X POST
+    -H 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:122.0) Gecko/20100101 Firefox/122.0'
+    -H 'Accept: text/vnd.turbo-stream.html, text/html, application/xhtml+xml'
+    -H 'Accept-Language: es-AR,es;q=0.8,en-US;q=0.5,en;q=0.3'
+    -H 'Accept-Encoding: gzip, deflate, br'
+    -H 'Referer: http://localhost:3000/admin/cosas/new'
+    -H 'X-CSRF-Token: 5HCyEfMRFgSbMBnIVogIwtTB6gYRZH2IUMstvAGmit8sLr7SZhW4b0qf36MdQIbGXP3wfByknynfzCHKc2Jf6g'
+    -H 'Content-Type: application/x-www-form-urlencoded;charset=UTF-8'
+    -H 'Origin: http://localhost:3000'
+    -H 'Connection: keep-alive'
+    -H 'Sec-Fetch-Dest: empty'
+    -H 'Sec-Fetch-Mode: cors'
+    -H 'Sec-Fetch-Site: same-origin'
+    -H 'Pragma: no-cache'
+    -H 'Cache-Control: no-cache'
+
+    --data-raw 'partial=pg_associable%2Fresultados_inline&query=3233'
+
+
+    let data = new FormData(form.childNodes[0])
+    let xhr = new XMLHttpRequest()
+    xhr.open("POST",this.input.dataset.url, true)
+    xhr.setRequestHeader('Accept', 'text/vnd.turbo-stream.html')
+    let token = document.head.querySelector('meta[name=csrf-token]').attributes['content'].value
+    xhr.setRequestHeader('X-CSRF-Token', token)
+    xhr.send(data)
+    // debugger
