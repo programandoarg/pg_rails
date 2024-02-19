@@ -3,7 +3,10 @@ html
   head
     title = Rails.application.class.module_parent_name
     meta name="viewport" content="width=device-width,initial-scale=1"
-    meta name="turbo-cache-control" content="no-cache"
+    / meta name="turbo-cache-control" content="no-cache"
+    / meta name="turbo-refresh-method" content="morph"
+    / meta name="turbo-refresh-scroll" content="preserve"
+    / meta name="turbo-prefetch" content="true"
     = csrf_meta_tags
     = csp_meta_tag
 
