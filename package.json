@@ -1,6 +1,6 @@
 {
   "name": "pg_rails",
-  "version": "7.0.8-alpha",
+  "version": "7.0.8-alpha.5",
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^7.3.0",
@@ -21,7 +21,8 @@
     "pg_layout/app/assets",
     "pg_engine/app/assets",
     "pg_associable/index.js",
-    "pg_associable/app/assets"
+    "pg_associable/app/assets",
+    "pg_associable/app/javascript"
   ],
   "browserslist": [
     "defaults"

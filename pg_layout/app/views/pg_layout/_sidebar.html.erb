@@ -2,7 +2,7 @@
   <% if user_signed_in? %>
     <div class="sidebar--large-items" style="position:fixed">
       <hr>
-      <div class="sidebar--small-items">
+      <%# <div class="sidebar--small-items">
         <ul class="list-unstyled ps-0">
           <li class="mb-1 text-center">
             <a href="javascript:void(0)" class="nav-link" data-bs-toggle="tooltip" data-bs-title="Agenda">
@@ -10,7 +10,7 @@
             </a>
           </li>
         </ul>
-      </div>
+      </div> %>
       <div class="sidebar--large-items">
         <ul class="list-unstyled ps-0">
           <% @navbar.sidebar.each do |entry| %>

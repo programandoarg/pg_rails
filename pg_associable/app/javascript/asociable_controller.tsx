@@ -82,7 +82,7 @@ export default class extends Controller {
     }
 
     const elem = (
-      <form method="get" action={this.input.dataset.url_modal} data-turbo-stream="true">
+      <form method="get" action={this.input.dataset.urlModal} data-turbo-stream="true">
         <input type="hidden" name="id" value={this.elemId} />
       </form>
     )
@@ -128,9 +128,10 @@ export default class extends Controller {
     }, 200)
     document.addEventListener('turbo:before-stream-render', function () {
       clearTimeout(timerId)
-    })
+      // TODO: testear
+    }, { once: true })
     const elem = (
-      <form method="post" action={this.input.dataset.url_search} data-turbo-stream="true">
+      <form method="post" action={this.input.dataset.urlSearch} data-turbo-stream="true">
         <input type="hidden" name="id" value={this.elemId} />
         <input type="hidden" name="partial" value="pg_associable/resultados_inline" />
         <input type="hidden" name="resultados" value="resultados-inline" />

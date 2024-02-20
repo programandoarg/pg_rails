@@ -32,12 +32,20 @@ module PgEngine
       NamespaceDeductor.namespace(self)
     end
 
-    def namespaced_path(object, prefix: nil, suffix: nil)
+    def namespaced_path(object, options = {})
       target = [pg_namespace, object]
-      target.prepend prefix if prefix
-      target.append suffix if suffix
-      target = target.flatten.compact
-      polymorphic_url(target, only_path: true)
+
+      if options[:prefix]
+        target.prepend options[:prefix]
+        options.delete(:prefix)
+      end
+
+      if options[:suffix]
+        target.append options[:suffix]
+        options.delete(:suffix)
+      end
+
+      polymorphic_url(target.flatten.compact, options.merge(only_path: true))
     end
   end
 end

@@ -29,6 +29,7 @@
     }
     input[type=text] {
       background-color: white;
+      padding-right: 30px;
     }
     &.filled {
       .pencil {
@@ -66,6 +67,7 @@
     }
     .resultados {
       position: absolute;
+      z-index: 10;
       // top: 30px;
       background-color: white;
       border: 1px solid #a7b7bb;
