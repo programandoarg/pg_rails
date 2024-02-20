@@ -54,6 +54,7 @@ $chevron-color: 200,200,200,.5;
   font-weight: bold;
   --bs-link-color-rgb: white!important;
 }
+// Los small-items están deprecados
 #sidebar {
   &.opened {
     .sidebar--small-items {
@@ -65,12 +66,10 @@ $chevron-color: 200,200,200,.5;
   }
   &:not(.opened) {
     .sidebar--small-items {
-      // TODO: ver qué onda los small items
       display: block;
     }
     .sidebar--large-items {
-      // FIXME: ver qué pasa quitando esto
-      display: none;
+      // display: none;
     }
   }
 }
