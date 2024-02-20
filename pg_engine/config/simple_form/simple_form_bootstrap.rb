@@ -46,7 +46,7 @@ SimpleForm.setup do |config|
   # vertical forms
   #
   # vertical default_wrapper
-  config.wrappers :vertical_no_margin_control do |b|
+  control_wrapper = lambda do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -60,7 +60,7 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { class: 'form-text' }
   end
 
-  config.wrappers :vertical_no_margin_select do |b|
+  select_wrapper = lambda do |b|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'form-label'
@@ -69,19 +69,11 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { class: 'form-text' }
   end
 
-  config.wrappers :vertical_form, class: 'mb-3' do |b|
-    b.use :html5
-    b.use :placeholder
-    b.optional :maxlength
-    b.optional :minlength
-    b.optional :pattern
-    b.optional :min_max
-    b.optional :readonly
-    b.use :label, class: 'form-label'
-    b.use :input, class: 'form-control', error_class: 'is-invalid'
-    b.use :full_error, wrap_with: { class: 'invalid-feedback' }
-    b.use :hint, wrap_with: { class: 'form-text' }
-  end
+  config.wrappers :vertical_no_margin_control, &control_wrapper
+
+  config.wrappers :vertical_no_margin_select, &select_wrapper
+
+  config.wrappers :vertical_form, class: 'mb-3', &control_wrapper
 
   # vertical input for boolean
   config.wrappers :vertical_boolean, tag: 'fieldset', class: 'mb-3' do |b|
@@ -135,14 +127,7 @@ SimpleForm.setup do |config|
   end
 
   # vertical select input
-  config.wrappers :vertical_select, class: 'mb-3' do |b|
-    b.use :html5
-    b.optional :readonly
-    b.use :label, class: 'form-label'
-    b.use :input, class: 'form-select', error_class: 'is-invalid'
-    b.use :full_error, wrap_with: { class: 'invalid-feedback' }
-    b.use :hint, wrap_with: { class: 'form-text' }
-  end
+  config.wrappers :vertical_select, class: 'mb-3', &select_wrapper
 
   # vertical multi select
   config.wrappers :vertical_multi_select, class: 'mb-3' do |b|
