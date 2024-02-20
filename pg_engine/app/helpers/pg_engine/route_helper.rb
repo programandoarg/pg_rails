@@ -34,17 +34,18 @@ module PgEngine
 
     def namespaced_path(object, options = {})
       target = [pg_namespace, object]
+
       if options[:prefix]
         target.prepend options[:prefix]
         options.delete(:prefix)
       end
+
       if options[:suffix]
         target.append options[:suffix]
         options.delete(:suffix)
       end
-      target = target.flatten.compact
-      options.merge!(only_path: true)
-      polymorphic_url(target, options)
+
+      polymorphic_url(target.flatten.compact, options.merge(only_path: true))
     end
   end
 end

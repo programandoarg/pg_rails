@@ -30,17 +30,19 @@ module PgEngine
       uri.to_s
     end
 
-    # This method creates a link with `data-id` `data-fields` attributes. These attributes are used to create new instances of the nested fields through Javascript.
-    def link_to_add_fields(name, f, association, required: false)
+    # This method creates a link with `data-id` `data-fields` attributes.
+    # These attributes are used to create new instances of the nested fields through Javascript.
+    def link_to_add_fields(name, form, association, required: false)
       # Takes an object (@person) and creates a new instance of its associated model (:addresses)
       # To better understand, run the following in your terminal:
       # rails c --sandbox
       # @person = Person.new
       # new_object = @person.send(:addresses).klass.new
-      new_object = f.object.send(association).klass.new
+      new_object = form.object.send(association).klass.new
 
       # Saves the unique ID of the object into a variable.
-      # This is needed to ensure the key of the associated array is unique. This is makes parsing the content in the `data-fields` attribute easier through Javascript.
+      # This is needed to ensure the key of the associated array is unique.
+      # This is makes parsing the content in the `data-fields` attribute easier through Javascript.
       # We could use another method to achive this.
       id = new_object.object_id
 
@@ -48,14 +50,16 @@ module PgEngine
       # record_name = :addresses
       # record_object = new_object
       # fields_options = { child_index: id }
-      # child_index` is used to ensure the key of the associated array is unique, and that it matched the value in the `data-id` attribute.
+      # child_index` is used to ensure the key of the associated array is unique,
+      # and that it matched the value in the `data-id` attribute.
       # `person[addresses_attributes][child_index_value][_destroy]`
       fields =
-        f.fields_for(association, new_object, child_index: id) do |builder|
+        form.fields_for(association, new_object, child_index: id) do |builder|
           # `association.to_s.singularize + "_fields"` ends up evaluating to `address_fields`
           # The render function will then look for `views/people/_address_fields.html.erb`
-          # The render function also needs to be passed the value of 'builder', because `views/people/_address_fields.html.erb` needs this to render the form tags.
-          render(association.to_s.singularize + "_fields", f: builder)
+          # The render function also needs to be passed the value of 'builder', because
+          # `views/people/_address_fields.html.erb` needs this to render the form tags.
+          render("#{association.to_s.singularize}_fields", f: builder)
         end
 
       # This renders a simple link, but passes information into `data` attributes.
@@ -65,29 +69,32 @@ module PgEngine
       # We use `gsub("\n", "")` to remove anywhite space from the rendered partial.
       # The `id:` value needs to match the value used in `child_index: id`.
       link_to(
-        "javascript:void(0)",
+        'javascript:void(0)',
         class: 'link-to-add',
         data: {
           controller: 'nested',
           action: 'nested#addItem',
-          id: id,
-          required: required,
-          fields: fields.gsub("\n", ""),
-        },
+          id:,
+          required:,
+          fields: fields.gsub("\n", '')
+        }
       ) do
+        # rubocop:disable Rails/OutputSafety
         "<i class=\"bi bi-plus-lg\"></i> #{name}".html_safe
+        # rubocop:enable Rails/OutputSafety
       end
     end
 
-    def link_to_remove(text = nil)
+    def link_to_remove(text = nil, &)
       if block_given?
-        link_to 'javascript:void(0)', class: 'link-to-remove text-danger-emphasis', title: 'Quitar', data: { controller: 'nested', action: 'nested#quitar' } do
-          yield
-        end
+        link_to('javascript:void(0)', class: 'link-to-remove text-danger-emphasis', title: 'Quitar',
+                                      data: { controller: 'nested', action: 'nested#quitar' }, &)
       elsif text.present?
-        link_to text, 'javascript:void(0)', class: 'link-to-remove text-danger-emphasis', title: 'Quitar', data: { controller: 'nested', action: 'nested#quitar' }
+        link_to text, 'javascript:void(0)', class: 'link-to-remove text-danger-emphasis', title: 'Quitar',
+                                            data: { controller: 'nested', action: 'nested#quitar' }
       else
-        link_to 'javascript:void(0)', class: 'link-to-remove text-danger-emphasis', title: 'Quitar', data: { controller: 'nested', action: 'nested#quitar' } do
+        link_to 'javascript:void(0)', class: 'link-to-remove text-danger-emphasis', title: 'Quitar',
+                                      data: { controller: 'nested', action: 'nested#quitar' } do
           '<i class="bi bi-x-lg"></i>'.html_safe
         end
       end
