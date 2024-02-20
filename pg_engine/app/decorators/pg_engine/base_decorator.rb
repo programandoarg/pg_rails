@@ -12,8 +12,8 @@ module PgEngine
 
     delegate_all
 
-    def as_json(_options = {})
-      object.as_json.tap { |o| o[:to_s] = to_s }
+    def as_json(options = {})
+      object.as_json(options).tap { |o| o[:to_s] = to_s }
     end
 
     # rubocop:disable Style/MissingRespondToMissing
