@@ -65,9 +65,11 @@ $chevron-color: 200,200,200,.5;
   }
   &:not(.opened) {
     .sidebar--small-items {
+      // TODO: ver qué onda los small items
       display: block;
     }
     .sidebar--large-items {
+      // FIXME: ver qué pasa quitando esto
       display: none;
     }
   }
@@ -84,6 +86,9 @@ $chevron-color: 200,200,200,.5;
   // display: none!important;
   flex-basis: 0px;
   transition: flex-basis 0.5s;
+
+  // Para que al cerrar y abrir no se vean los textos por fuera de la sidebar
+  clip-path: inset(0 0 0 0);
   // flex-grow: 1;
 
   &.opened {
