@@ -1,13 +1,22 @@
 / # locals: (object: nil, asociable: false)
 
-div style="max-width: 300px"
+div style="max-width: 22em" data-controller="pg_form"
   = pg_form_for(@categoria_de_cosa || object) do |f|
     = f.mensajes_de_error
 
     = hidden_field_tag :asociable, true if asociable
     = f.input :nombre
-    = f.input :tipo
     = f.input :fecha
     = f.input :tiempo, html5: true
+    = f.input :tipo
+
+    h4 Items
+    #items.nested-container data-required="true"
+      = f.fields_for :cosas do |vi|
+        = render partial: 'cosa_fields', locals: { f: vi }
+
+      div
+        = link_to_add_fields 'Agregar', f, :cosas
+
     .mt-2
     = f.button :submit

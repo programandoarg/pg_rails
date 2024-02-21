@@ -1,11 +1,13 @@
 // Controllers
 import NavbarController from './app/javascript/navbar_controller'
 import NestedController from './app/javascript/nested_controller'
+import PgFormController from './app/javascript/pg_form_controller'
 // Bootstrap's toasts
 import * as bootstrap from 'bootstrap'
 
 window.Stimulus.register('navbar', NavbarController)
 window.Stimulus.register('nested', NestedController)
+window.Stimulus.register('pg_form', PgFormController)
 
 document.addEventListener('turbo:load', function () {
   const toastElList = document.querySelectorAll('.toast:not(.hide):not(.show)')

@@ -14,9 +14,9 @@ module PgEngine
       case flash_type
       when 'notice'
         'info'
-      when 'error'
-        'danger'
       when 'alert'
+        'danger'
+      when 'warning'
         'warning'
       when 'success'
         'success'

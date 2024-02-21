@@ -27,6 +27,9 @@
   "browserslist": [
     "defaults"
   ],
+  "exports": {
+    "./utils": "./pg_layout/app/javascript/utils.ts"
+  },
   "devDependencies": {
     "@types/react": "^18.2.55",
     "@typescript-eslint/eslint-plugin": "^6.4.0",

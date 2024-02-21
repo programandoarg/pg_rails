@@ -37,12 +37,6 @@ PreCommit:
     exclude:
       - pg_scaffold/lib/generators/**/templates/**/*
 
-  FixMe:
-    enabled: true
-    keywords: ["FIXME"]
-    exclude:
-      - .overcommit.yml
-
   RuboCop:
     enabled: true
     required_executable: bundle

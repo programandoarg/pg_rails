@@ -6,50 +6,44 @@
   --bs-form-invalid-border-color: #b50000;
 }
 
+// Toasts
+.toast.show {
+  display: inline-block;
+}
 
 // FORMS
-// .pg-form {
-  // max-width: 300px;
+input[disabled] {
+  background-color: #e9e9ed;
+  color: black;
+}
 
-  input[disabled] {
-    background-color: #e9e9ed;
-    color: black;
+.form-control,
+.form-select {
+  border: 1px solid #a7b7bb;
+
+  &:focus, &:focus-visible {
+    outline: 1px solid color.adjust(#a7b7bb, $saturation: +30%);
   }
+}
+select[multiple] {
+  height: inherit;
+}
 
-  .form-control.is-invalid {
-    background-image: none !important; /* override bootstrap forms */
-  }
+input[type=date] {
+  max-width: 12em;
+}
 
-  .form-control,
-  .form-select {
-    width: 100%;
-    height: 35px;
-    border: 1px solid #a7b7bb;
+input[type=datetime-local], input[type=datetime] {
+  max-width: 15em;
+}
 
-    &.form-control-sm,
-    &.form-select-sm {
-      height: 29px;
-    }
+.form-select:not(:has(option)) {
+  background-color: #d5d5d5;
+}
 
-    &.is-invalid {
-      --bs-form-select-bg-icon: none !important; /* override bootstrap forms */
-    }
-
-    &:focus, &:focus-visible {
-      outline: 1px solid color.adjust(#a7b7bb, $saturation: +30%);
-    }
-  }
-  select[multiple] {
-    height: inherit;
-  }
-  .form-control:focus {
-    box-shadow: none!important; /* override bootstrap forms */
-  }
-
-  input[type=date] {
-    max-width: 170px;
-  }
-// }
+.form-control.is-invalid, .form-select.is-invalid {
+  background-color: #fff3f3;
+}
 
 // LISTADOS
 .listado {
@@ -58,9 +52,7 @@
   }
 }
 .listado .btn-sm {
-  min-width: 25px;
-  height: 25px;
-  padding: 1px;
+  padding: 0em 0.3em;
   margin-right: 4px;
 }
 
@@ -68,9 +60,23 @@
 .filter {
   display: inline-block;
   vertical-align: top;
-  min-width: 200px;
+  max-width: 17em;
+}
 
-  .input-group {
-    width: 230px;
-  }
+// Modal
+.modal-content {
+  box-shadow: 15px 15px 9px 0px rgba(0, 0, 0, 0.6);
+}
+
+// Nested
+.link-to-add:hover {
+  background-color: #f4f4f4;
+}
+
+.link-to-add {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  border-radius: var(--bs-border-radius);
+  padding: 0.6em 0.4em;
 }
