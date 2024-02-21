@@ -1,34 +1,34 @@
-export function round(value) {
-  return Math.round(value * 100) / 100;
+export function round (value) {
+  return Math.round(value * 100) / 100
 }
 
-export function print_currency(value, moneda) {
-  return moneda_simbolo(moneda) + numberWithDots(round(value).toFixed(2).replace(".",","));
+export function printCurrency (value, moneda) {
+  return monedaSimbolo(moneda) + numberWithDots(round(value).toFixed(2).replace('.', ','))
 }
 
-export function show_percentage(value) {
-  return "% "+value;
+export function showPercentage (value) {
+  return '% ' + value
 }
 
-export function moneda_simbolo(moneda) {
-  switch(moneda) {
+export function monedaSimbolo (moneda) {
+  switch (moneda) {
     case 'pesos':
-      return '$ ';
+      return '$ '
     case 'dolares':
-      return 'U$S ';
+      return 'U$S '
     case 'euros':
-      return '€ ';
+      return '€ '
     case 'reales':
-      return 'R$ ';
+      return 'R$ '
     case 'pesos_chilenos':
-      return 'CLP ';
+      return 'CLP '
     case 'pesos_mexicanos':
-      return 'MXN ';
+      return 'MXN '
     default:
-      return '$ ';
+      return '$ '
   }
 }
 
-export function numberWithDots(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+export function numberWithDots (x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 }

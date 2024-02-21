@@ -16,8 +16,7 @@ div style="max-width: 22em" data-controller="pg_form"
         = render partial: 'cosa_fields', locals: { f: vi }
 
       div
-        = link_to_add_fields "Agregar", f, :cosas
-
+        = link_to_add_fields 'Agregar', f, :cosas
 
     .mt-2
     = f.button :submit
