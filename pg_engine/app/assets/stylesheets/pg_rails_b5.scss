@@ -6,6 +6,10 @@
   --bs-form-invalid-border-color: #b50000;
 }
 
+// Toasts
+.toast.show {
+  display: inline-block;
+}
 
 // FORMS
 input[disabled] {
