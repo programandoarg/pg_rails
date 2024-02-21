@@ -9,8 +9,8 @@
   = @clase_modelo.new.decorate.new_link
   .ms-1
   = @clase_modelo.new.decorate.export_link(request.url)
-.collapse.p-2.border-bottom#filtros class="#{ 'show' if any_filter? }"
-  .d-flex.align-items-center
+.collapse.border-bottom#filtros class="#{ 'show' if any_filter? }"
+  .d-flex.align-items-center.p-2
     .px-2.d-none.d-sm-inline-block
       span.bi.bi-funnel-fill
     = form_tag nil, class: '', method: :get do

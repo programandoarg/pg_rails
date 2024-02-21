@@ -2,8 +2,8 @@
 
 .nested-fields.mb-1
   = f.hidden_field :_destroy
-  .d-flex.form-fields.form-fixed
-    = f.input :nombre
-    = f.input :tipo
-    span.align-self-center.m-0
+  .d-flex
+    = f.input :nombre, label: false, wrapper: :vertical_no_margin_control
+    = f.input :tipo, label: false, wrapper: :vertical_no_margin_select
+    span.align-self-center.mx-1
       = link_to_remove
