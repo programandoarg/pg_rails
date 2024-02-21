@@ -11,11 +11,11 @@ module PgAssociable
     end
 
     def pg_respond_buscar
-      partial = params[:partial] || 'pg_associable/resultados'
-      resultados = params[:resultados] || 'resultados'
+      partial = 'pg_associable/resultados_inline'
+      resultados_prefix = 'resultados-inline'
       @collection = policy_scope(@clase_modelo).kept.query(params[:query]).limit(MAX_RESULTS)
       render turbo_stream:
-        turbo_stream.update("#{resultados}-#{params[:id]}",
+        turbo_stream.update("#{resultados_prefix}-#{params[:id]}",
                             partial:, locals: { collection: @collection })
     end
   end

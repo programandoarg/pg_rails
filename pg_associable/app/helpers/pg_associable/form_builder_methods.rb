@@ -9,6 +9,17 @@ module PgAssociable
     MAXIMO_PARA_SELECT = 10
     # TODO: si está entre 10 y 50, habilitar un buscador por js
 
+    def pg_associable(atributo, options = {})
+      collection, puede_crear = collection_pc(atributo, options)
+      options.deep_merge!({ wrapper_html: { 'data-puede-crear': 'true' } }) if puede_crear
+
+      if !puede_crear && collection.count <= MAXIMO_PARA_SELECT
+        select_comun(atributo, options, collection)
+      else
+        select_pro(atributo, options, collection)
+      end
+    end
+
     def collection_pc(atributo, _options)
       klass = clase_asociacion(atributo)
       user = template.controller.current_user
@@ -18,9 +29,9 @@ module PgAssociable
       [collection, puede_crear]
     end
 
-    def select_pro(_atributo, options, collection)
+    def select_pro(atributo, options, collection)
       if (preload = options.delete(:preload))
-        collection = preload.is_a? Integer ? collection.limit(preload) : preload
+        collection = preload.is_a?(Integer) ? collection.limit(preload) : preload
         options.deep_merge!({ wrapper_html: { 'data-preload': collection.decorate.to_json } })
       end
       # TODO: usar una clase más precisa para el modal?
@@ -33,17 +44,6 @@ module PgAssociable
     def select_comun(atributo, options, collection)
       options[:collection] = collection
       association atributo, options
-    end
-
-    def pg_associable(atributo, options = {})
-      collection, puede_crear = collection_pc(atributo, options)
-      options.deep_merge!({ wrapper_html: { 'data-puede-crear': 'true' } }) if puede_crear
-
-      if !puede_crear && collection.count <= MAXIMO_PARA_SELECT
-        select_comun(atributo, options, collection)
-      else
-        select_pro(atributo, options, collection)
-      end
     end
 
     def clase_asociacion(atributo)

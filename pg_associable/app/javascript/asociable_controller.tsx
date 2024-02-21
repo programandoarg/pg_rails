@@ -121,7 +121,7 @@ export default class extends Controller {
       })
     }
     this.subWrapper.innerHTML = renderToStaticMarkup(
-      <div className="resultados inline" tabIndex={-1}>
+      <div className="resultados" tabIndex={-1}>
         <ul className="list-group list-group-flush">
           {rows}
         </ul>
@@ -172,9 +172,8 @@ export default class extends Controller {
   }
 
   buscando () {
-    // FIXME: quitar class inline?
     this.subWrapper.innerHTML = renderToStaticMarkup(
-      <div className="resultados inline" tabIndex={-1}>
+      <div className="resultados" tabIndex={-1}>
         <div className="fst-italic text-secondary">Buscando...</div>
       </div>
     )
@@ -211,8 +210,6 @@ export default class extends Controller {
     const elem = (
       <form method="post" action={this.input.dataset.urlSearch} data-turbo-stream="true">
         <input type="hidden" name="id" value={this.elemId} />
-        <input type="hidden" name="partial" value="pg_associable/resultados_inline" />
-        <input type="hidden" name="resultados" value="resultados-inline" />
         <input type="hidden" name="query" value={this.input.value} />
         <input type="hidden" name="puede_crear" value={this.element.dataset.puedeCrear} />
       </form>
