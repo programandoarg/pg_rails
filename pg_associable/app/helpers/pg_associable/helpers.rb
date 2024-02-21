@@ -1,5 +1,7 @@
 module PgAssociable
   module Helpers
+    MAX_RESULTS = 8
+
     def pg_respond_abrir_modal
       respond_to do |format|
         format.turbo_stream do
@@ -11,7 +13,7 @@ module PgAssociable
     def pg_respond_buscar
       partial = params[:partial] || 'pg_associable/resultados'
       resultados = params[:resultados] || 'resultados'
-      @collection = policy_scope(@clase_modelo).kept.query(params[:query]).limit(6)
+      @collection = policy_scope(@clase_modelo).kept.query(params[:query]).limit(MAX_RESULTS)
       render turbo_stream:
         turbo_stream.update("#{resultados}-#{params[:id]}",
                             partial:, locals: { collection: @collection })

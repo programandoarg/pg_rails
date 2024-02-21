@@ -101,13 +101,6 @@ export default class extends Controller {
     this.modalPuntero.show()
   }
 
-  toggleCrearElegir (e) {
-    const content = this.element.querySelector('.modal-content')
-    const state = content.dataset.state
-    const newValue = state === 'new-item' ? 'select-item' : 'new-item'
-    content.setAttribute('data-state', newValue)
-  }
-
   disconnect (e) {
     console.log('ModalController disconnected')
     this.modalPuntero.dispose()

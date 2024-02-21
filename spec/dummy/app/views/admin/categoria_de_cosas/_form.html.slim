@@ -1,7 +1,7 @@
 / # locals: (object: nil, asociable: false)
 
 div style="max-width: 22em" data-controller="pg_form"
-  = pg_form_for(@categoria_de_cosa || object) do |f|
+  = pg_form_for(@categoria_de_cosa || object, asociable: asociable) do |f|
     = f.mensajes_de_error
 
     = hidden_field_tag :asociable, true if asociable
@@ -9,6 +9,8 @@ div style="max-width: 22em" data-controller="pg_form"
     = f.input :fecha
     = f.input :tiempo, html5: true
     = f.input :tipo
+
+    = f.pg_associable :cosa
 
     h4 Items
     #items.nested-container data-required="true"
