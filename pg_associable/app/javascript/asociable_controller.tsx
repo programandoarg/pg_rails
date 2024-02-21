@@ -19,7 +19,7 @@ export default class extends Controller {
     this.element.setAttribute('data-asociable-modal-outlet', `.modal-${this.elemId}`)
     this.element.classList.add(`asociable-${this.elemId}`)
 
-    let result = document.createElement('div')
+    const result = document.createElement('div')
     result.classList.add('resultados-wrapper')
     this.subWrapper = document.createElement('div')
     this.subWrapper.setAttribute('id', `resultados-inline-${this.elemId}`)
@@ -61,20 +61,19 @@ export default class extends Controller {
         this.escribiAlgo()
       }
 
-      if(!this.element.closest('.modal')) {
-        let wHeight = window.visualViewport.height
-        let scrollTop = document.scrollingElement.scrollTop
-        let viewPortBottom = scrollTop + wHeight
-        let swHeight = parseInt(this.subWrapper.style.maxHeight) + 20
-        let elementTop = this.element.getBoundingClientRect().top + scrollTop
-        let inputBottom = this.input.getBoundingClientRect().bottom + scrollTop
-        let swBottom = inputBottom + swHeight
+      if (!this.element.closest('.modal')) {
+        const wHeight = window.visualViewport.height
+        const scrollTop = document.scrollingElement.scrollTop
+        const viewPortBottom = scrollTop + wHeight
+        const swHeight = parseInt(this.subWrapper.style.maxHeight) + 20
+        const elementTop = this.element.getBoundingClientRect().top + scrollTop
+        const inputBottom = this.input.getBoundingClientRect().bottom + scrollTop
+        const swBottom = inputBottom + swHeight
 
         if (swBottom > viewPortBottom) {
           document.scrollingElement.scroll({ top: elementTop })
         }
       }
-
     }
     this.input.onkeyup = (e) => {
       if (this.input.value.length === 0) {
@@ -96,7 +95,7 @@ export default class extends Controller {
   }
 
   resetResultados () {
-    let rows = []
+    const rows = []
     if (this.element.dataset.puedeCrear) {
       rows.push(
         <a key="new" href="javascript:void(0)"
@@ -130,20 +129,21 @@ export default class extends Controller {
     )
   }
 
-  setMaxHeight() {
-    if(!this.element.closest('.modal')) {
-      let scrollTop = document.scrollingElement.scrollTop
-      let inputY = this.input.getBoundingClientRect().bottom + scrollTop
-      let bodyHeight = document.body.getBoundingClientRect().height
-      var maxHeight = bodyHeight - inputY
+  setMaxHeight () {
+    let maxHeight
+    if (!this.element.closest('.modal')) {
+      const scrollTop = document.scrollingElement.scrollTop
+      const inputY = this.input.getBoundingClientRect().bottom + scrollTop
+      const bodyHeight = document.body.getBoundingClientRect().height
+      maxHeight = bodyHeight - inputY
       if (maxHeight < 200) {
         maxHeight = 200
       }
-      if(bodyHeight < inputY + maxHeight) {
+      if (bodyHeight < inputY + maxHeight) {
         document.body.style.height = `${inputY + maxHeight}px`
       }
     } else {
-      var maxHeight = 200
+      maxHeight = 200
     }
     this.subWrapper.style.maxHeight = `${maxHeight - 20}px`
   }
