@@ -28,6 +28,7 @@
     "defaults"
   ],
   "exports": {
+    ".": "./pg_rails/js/index.js",
     "./utils": "./pg_layout/app/javascript/utils.ts"
   },
   "devDependencies": {
