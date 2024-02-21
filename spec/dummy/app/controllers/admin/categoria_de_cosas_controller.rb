@@ -15,7 +15,8 @@ module Admin
     private
 
     def atributos_permitidos
-      %i[nombre tipo fecha tiempo]
+      %i[nombre tipo fecha tiempo
+      ].push(cosas_attributes: [:id, :nombre, :tipo, :_destroy])
     end
 
     def atributos_para_buscar
