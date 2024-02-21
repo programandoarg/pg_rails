@@ -1,7 +1,7 @@
 / # locals: (object: nil, asociable: false)
 
 div style="max-width: 22em" data-controller="pg_form"
-  = pg_form_for(@<%= singular_name %> || object) do |f|
+  = pg_form_for(@<%= singular_name %> || object, asociable:)) do |f|
     = f.mensajes_de_error
 
     = hidden_field_tag :asociable, true if asociable

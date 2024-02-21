@@ -3,40 +3,12 @@
                        data-modal-asociable-outlet=".asociable-#{params[:id]}"]
   .modal-dialog
     / TODO: pg_associable no va
-    .modal-content.pg_associable data-state="select-item"
+    .modal-content.pg_associable
       .modal-header
-        .modal-title.show-on-new-item
+        .modal-title
+          / TODO: género "Nuevo/a"
           h3 Nuevo #{@clase_modelo.nombre_singular.downcase}
-        .modal-title.show-on-select-item
-          h3 Buscar #{@clase_modelo.nombre_singular.downcase}
         a.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]
       .modal-body
-        .show-on-select-item
-          - if policy_scope(@clase_modelo).kept.count.zero?
-            p No hay #{@clase_modelo.nombre_plural.downcase} aún
-            = link_to "Crear el primer #{@clase_modelo.nombre_singular.downcase}",
-                      'javascript:void(0)', data: { action: 'modal#toggleCrearElegir' }
-          - else
-            = form_tag namespaced_path(@clase_modelo, prefix: :buscar),
-                       data: { 'modal-target': 'searchForm' },
-                       method: :post, class: 'pg-form buscar' do
-              = hidden_field_tag :id, params[:id]
-              = text_field_tag :query, '', class: 'form-control',
-                                           placeholder: 'Escribí algo para buscar',
-                                           autocomplete: 'off',
-                                           data: { 'modal-target': 'searchInput' }
-              / = button_tag 'Buscar'
-            .resultados-wrapper id="resultados-#{params[:id]}" data-modal-target="result"
-        #pg-associable-form.show-on-new-item
+        #pg-associable-form
           = render partial: 'form', locals: { object: @clase_modelo.new, asociable: true }
-
-      .modal-footer
-        = link_to "Buscar #{@clase_modelo.nombre_singular.downcase} existente",
-                  'javascript:void(0)', class: 'btn btn-primary show-on-new-item',
-                  data: { action: 'modal#toggleCrearElegir' }
-        = link_to "Nuevo #{@clase_modelo.nombre_singular.downcase}",
-                  'javascript:void(0)', class: 'btn btn-primary show-on-select-item',
-                   data: { action: 'modal#toggleCrearElegir' }
-        = link_to "Sin #{@clase_modelo.nombre_singular.downcase}",
-                  'javascript:void(0)', class: 'btn btn-secondary',
-                   data: { action: 'modal#selectItem' }

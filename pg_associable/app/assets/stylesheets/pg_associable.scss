@@ -1,11 +1,5 @@
 @use 'sass:color';
 
-[data-state=select-item] .show-on-new-item {
-  display: none;
-}
-[data-state=new-item] .show-on-select-item {
-  display: none;
-}
 .pg-form {
   .pg_associable {
     .limpiar {
@@ -49,6 +43,9 @@
       input, input:focus {
         background-color: color.adjust(#a7b7bb, $saturation: +10%, $lightness: +20%);
       }
+      .resultados-wrapper {
+        display:none!important;
+      }
     }
     .resultados-wrapper {
       display: none;
@@ -68,38 +65,36 @@
         display: block;
       }
     }
-    // TODO: qué onda, aplica para modal? no porque no tiene pg-form
-    .resultados {
-      position: absolute;
-      z-index: 1;
-      background-color: white;
-      border: 1px solid #a7b7bb;
-      border-top: none;
-      border-radius: 4px;
-      padding: 5px 11px;
-      width: 100%;
-
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
   }
 }
-.modal-asociable {
-  .buscar input[type=text] {
-    max-width: 180px;
-  }
-  .resultados {
-    margin-top: 16px;
-    border: 1px solid #c8c8c8;
-  }
-}
+// .modal-asociable {
+//   .buscar input[type=text] {
+//     max-width: 180px;
+//   }
+//   .resultados {
+//     margin-top: 16px;
+//     border: 1px solid #c8c8c8;
+//   }
+// }
 .resultados {
   .list-group-item:hover {
     background-color: color.adjust(#a7b7bb, $saturation: +10%, $lightness: +20%);
   }
 }
-.resultados.inline {
+.sub-wrapper {
+  overflow: scroll;
   box-shadow: 0px 9px 13px -3px rgba(0, 0, 0, 0.5);
+  // position: absolute;
+  // z-index: 1;
+  background-color: white;
+  border: 1px solid #a7b7bb;
+  border-top: none;
+  border-radius: 4px;
+  padding: 5px 11px;
+  width: 100%;
+
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 .modal-asociable .modal-footer {
   justify-content: space-between;
