@@ -94,6 +94,10 @@ $chevron-color: 200,200,200,.5;
     // display: block!important;
     flex-basis: 9em;
   }
+  & > * {
+    width: 9em;
+    position:fixed;
+  }
 }
 
 .with-sidebar > :last-child {

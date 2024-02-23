@@ -86,3 +86,5 @@ be rails pg_engine_engine:install:migrations
     "build:css:prefix": "postcss ./pg_rails/builds/application.css --use=autoprefixer --output=./pg_rails/builds/application.css",
     "build:css": "yarn build:css:compile && yarn build:css:prefix",
 
+
+ruby-vips

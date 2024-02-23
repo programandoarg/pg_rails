@@ -24,6 +24,16 @@
               </li>
             </ul>
           </li>
+          <% @navbar.sidebar.each do |entry| %>
+            <% next if @navbar.hide_entry?(entry) %>
+            <% random_id = rand(99999).to_s %>
+            <li class="nav-item d-md-none">
+              <a class="nav-link" href="<%= entry[:path] %>" role="button">
+                <%= entry[:title] %>
+              </a>
+            </li>
+          <% end %>
+
         <% else %>
           <li class="nav-item">
             <%= link_to 'ingresar', new_user_session_path, class: 'nav-link' %>
