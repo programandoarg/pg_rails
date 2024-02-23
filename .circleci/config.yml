@@ -24,8 +24,8 @@ commands:
             - bundle-v1-{{ arch }}-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
             - bundle-v1-{{ arch }}-{{ checksum ".ruby-version" }}-
       - run: sudo apt-get --allow-releaseinfo-change update && sudo apt-get install -y libmagic-dev # libmagic (requerido por carrierwave-magic)
-# FIXME: ver qué onda, si se puede evitar, pesa 250mbbbb
-# ruby-vips
+      # TODO: ver qué onda, si se puede evitar, pesa 250mbbbb
+      # - run: sudo apt-get install -y ruby-vips # requerido por image_processing
       - run:
           name: Install Ruby Dependencies
           command: |

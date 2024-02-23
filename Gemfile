@@ -136,3 +136,5 @@ gem 'letter_opener'
 gem 'overcommit'
 
 gem 'database_cleaner-active_record'
+
+gem "image_processing", "~> 1.2"
