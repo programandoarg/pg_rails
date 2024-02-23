@@ -93,7 +93,7 @@ module PgEngine
           if params[:asociable]
             format.turbo_stream do
               render turbo_stream:
-                turbo_stream.update('pg-associable-form', <<~HTML
+                turbo_stream.update_all('.modal.show .pg-associable-form', <<~HTML
                   <div data-modal-target="response" data-response='#{object.decorate.to_json}'></div>
                 HTML
                 )
@@ -114,7 +114,7 @@ module PgEngine
           if params[:asociable]
             format.turbo_stream do
               render turbo_stream:
-                turbo_stream.update('pg-associable-form', partial: 'form', locals: { asociable: true })
+                turbo_stream.update_all('.modal.show .pg-associable-form', partial: 'form', locals: { asociable: true })
             end
           end
           format.html { render :new, status: :unprocessable_entity }

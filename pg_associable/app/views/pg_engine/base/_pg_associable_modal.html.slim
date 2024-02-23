@@ -10,5 +10,5 @@
           h3 Nuevo #{@clase_modelo.nombre_singular.downcase}
         a.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]
       .modal-body
-        #pg-associable-form
+        .pg-associable-form
           = render partial: 'form', locals: { object: @clase_modelo.new, asociable: true }
