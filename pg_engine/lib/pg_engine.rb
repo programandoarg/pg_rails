@@ -6,7 +6,7 @@ require_relative 'pg_engine/configuracion'
 require_relative 'pg_engine/route_helpers'
 require_relative 'pg_engine/utils/pg_logger'
 
-require_relative './../app/helpers/pg_engine/print_helper'
+require_relative '../app/helpers/pg_engine/print_helper'
 
 module PgEngine
   class << self

@@ -93,10 +93,12 @@ module PgEngine
           if params[:asociable]
             format.turbo_stream do
               render turbo_stream:
+                # rubocop:disable Rails/SkipsModelValidations
                 turbo_stream.update_all('.modal.show .pg-associable-form', <<~HTML
                   <div data-modal-target="response" data-response='#{object.decorate.to_json}'></div>
                 HTML
                 )
+              # rubocop:enable Rails/SkipsModelValidations
             end
           end
           format.html do
@@ -113,8 +115,10 @@ module PgEngine
           # self.instancia_modelo = instancia_modelo.decorate
           if params[:asociable]
             format.turbo_stream do
+              # rubocop:disable Rails/SkipsModelValidations
               render turbo_stream:
                 turbo_stream.update_all('.modal.show .pg-associable-form', partial: 'form', locals: { asociable: true })
+              # rubocop:enable Rails/SkipsModelValidations
             end
           end
           format.html { render :new, status: :unprocessable_entity }
