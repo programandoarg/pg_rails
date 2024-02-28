@@ -18,7 +18,7 @@ module PgEngine
 
       def self.namespace(context)
         req = request(context)
-        route = Rails.application.routes.recognize_path(req.path, method: req.env["REQUEST_METHOD"])
+        route = Rails.application.routes.recognize_path(req.path, method: req.env['REQUEST_METHOD'])
         parts = route[:controller].split('/')
         return unless parts.length > 1
 

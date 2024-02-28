@@ -10,9 +10,7 @@ module PgAssociable
     # TODO: si está entre 10 y 50, habilitar un buscador por js
 
     def pg_associable(atributo, options = {})
-      if options[:disabled]
-        return input(atributo, options)
-      end
+      return input(atributo, options) if options[:disabled]
 
       collection, puede_crear = collection_pc(atributo, options)
       options.deep_merge!({ wrapper_html: { 'data-puede-crear': 'true' } }) if puede_crear
