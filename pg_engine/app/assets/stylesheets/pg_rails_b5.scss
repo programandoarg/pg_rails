@@ -17,6 +17,10 @@ input[disabled] {
   color: black;
 }
 
+form label {
+  font-weight: bold;
+}
+
 .form-control,
 .form-select {
   border: 1px solid #a7b7bb;
