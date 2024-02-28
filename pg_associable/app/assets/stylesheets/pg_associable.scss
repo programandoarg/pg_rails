@@ -40,9 +40,6 @@
       .limpiar {
         display: flex;
       }
-      input, input:focus {
-        background-color: color.adjust(#a7b7bb, $saturation: +10%, $lightness: +20%);
-      }
       .resultados-wrapper {
         display:none!important;
       }
