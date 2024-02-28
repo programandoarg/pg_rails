@@ -5,6 +5,7 @@ require_relative 'pg_engine/core_ext'
 require_relative 'pg_engine/configuracion'
 require_relative 'pg_engine/route_helpers'
 require_relative 'pg_engine/utils/pg_logger'
+require_relative 'pg_engine/utils/pdf_preview_generator'
 
 require_relative '../app/helpers/pg_engine/print_helper'
 

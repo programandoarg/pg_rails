@@ -14,7 +14,7 @@ module PgEngine
     end
 
     if Rails.env.local?
-      initializer 'configurar_factories', after: 'factory_bot.set_factory_paths' do
+      initializer 'pg_engine.set_factory_paths', after: 'factory_bot.set_factory_paths' do
         # Para que tome las factories de pg_engine/spec/factories
         # además de las de dummy/spec/factories
         FactoryBot.definition_file_paths << "#{root}/spec/factories"

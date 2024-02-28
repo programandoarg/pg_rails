@@ -88,3 +88,4 @@ be rails pg_engine_engine:install:migrations
 
 
 ruby-vips
+pdftoppm

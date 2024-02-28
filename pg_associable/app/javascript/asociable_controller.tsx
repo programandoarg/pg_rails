@@ -34,6 +34,7 @@ export default class extends Controller {
     const input = this.element.querySelector('input[type=text]')
     if (input.value) {
       this.element.classList.add('filled')
+      input.setAttribute('readonly', 'true')
     }
     this.element.querySelector('.pencil').onclick = () => {
       input.focus()
