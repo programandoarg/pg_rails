@@ -3,7 +3,7 @@ import * as bootstrap from 'bootstrap'
 
 export default class extends Controller {
   static outlets = ['asociable']
-  static targets = ['response', 'result', 'searchInput', 'searchForm']
+  static targets = ['response']
 
   modalPuntero = null
 
