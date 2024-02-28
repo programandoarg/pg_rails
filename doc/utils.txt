@@ -55,3 +55,7 @@ Request con turbo-stream
     xhr.setRequestHeader('X-CSRF-Token', token)
     xhr.send(data)
     // debugger
+
+Encontrar a qué package pertenece un binario
+  whereis pdftoppm
+  apt-file search /usr/bin/pdftoppm

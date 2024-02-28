@@ -3,6 +3,7 @@ require 'English'
 module PgEngine
   class PdfPreviewGenerator
     def open_tempfile
+      FileUtils.mkdir_p('tmp')
       tempfile = Tempfile.open('PgEnginePdfPreview-', 'tmp')
 
       begin
