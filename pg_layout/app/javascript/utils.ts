@@ -3,8 +3,8 @@ export function round (value) {
 }
 
 export function printCurrency (value, moneda) {
-  // TODO: si no tiene decimales, no mostrarlos
-  return monedaSimbolo(moneda) + numberWithDots(round(value).toFixed(2).replace('.', ','))
+  let decimals = (value % 1 > 0) ? 2 : 0
+  return monedaSimbolo(moneda) + numberWithDots(value.toFixed(decimals).replace('.', ','))
 }
 
 export function showPercentage (value) {
