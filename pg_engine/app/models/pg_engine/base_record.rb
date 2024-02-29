@@ -33,6 +33,15 @@ module PgEngine
       model_name.human(count: 1)
     end
 
+    def self.human_attribute_name(attribute)
+      # Si es un enumerized
+      if attribute.to_s.ends_with?('_text')
+        super(attribute[0..-6])
+      else
+        super(attribute)
+      end
+    end
+
     def to_s
       %i[nombre name].each do |campo|
         return "#{send(campo)} ##{id}" if try(campo).present?

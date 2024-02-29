@@ -3,6 +3,7 @@ export function round (value) {
 }
 
 export function printCurrency (value, moneda) {
+  // TODO: si no tiene decimales, no mostrarlos
   return monedaSimbolo(moneda) + numberWithDots(round(value).toFixed(2).replace('.', ','))
 }
 
