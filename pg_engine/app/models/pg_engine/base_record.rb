@@ -33,12 +33,12 @@ module PgEngine
       model_name.human(count: 1)
     end
 
-    def self.human_attribute_name(attribute)
+    def self.human_attribute_name(attribute, options = {})
       # Si es un enumerized
       if attribute.to_s.ends_with?('_text')
-        super(attribute[0..-6])
+        super(attribute[0..-6], options)
       else
-        super(attribute)
+        super(attribute, options)
       end
     end
 
