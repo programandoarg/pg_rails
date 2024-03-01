@@ -4,16 +4,17 @@ describe PgEngine::ErrorHelper do
   let(:dummy) { Class.new { include PgEngine::ErrorHelper }.new }
 
   describe '#error_message_for' do
-    let!(:categoria) { create :categoria_de_cosa }
-    let!(:cosas) { create_list :cosa, 2, categoria_de_cosa: categoria }
-
     subject do
       categoria.validate
       dummy.error_message_for(categoria, associations: [:cosas])
     end
 
+    let!(:categoria) { create :categoria_de_cosa }
+
+    before { create_list :cosa, 2, categoria_de_cosa: categoria }
+
     it do
-      is_expected.to eq nil
+      expect(subject).to be_nil
     end
 
     context 'cuando solo tiene errores de presencia' do
@@ -22,7 +23,7 @@ describe PgEngine::ErrorHelper do
       end
 
       it do
-        is_expected.to eq :only_presence_errors
+        expect(subject).to eq :only_presence_errors
       end
     end
 
@@ -32,7 +33,7 @@ describe PgEngine::ErrorHelper do
       end
 
       it do
-        is_expected.to eq :not_presence_errors
+        expect(subject).to eq :not_presence_errors
       end
     end
 
@@ -43,7 +44,7 @@ describe PgEngine::ErrorHelper do
       end
 
       it do
-        is_expected.to eq :multiple_error_types
+        expect(subject).to eq :multiple_error_types
       end
     end
 
@@ -53,7 +54,7 @@ describe PgEngine::ErrorHelper do
       end
 
       it do
-        is_expected.to eq :only_presence_errors
+        expect(subject).to eq :only_presence_errors
       end
     end
   end
