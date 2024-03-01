@@ -98,11 +98,12 @@ module PgEngine
       'No'
     end
 
-    def print_currency(number, moneda = 'pesos')
+    def print_currency(number, simbolo: '$')
       return if number.blank?
 
-      "#{simbolo_moneda(moneda)} #{number_with_precision(number, delimiter: '.', separator: ',',
-                                                                 precision: 2)}"
+      precision = number % 1 > 0 ? 2 : 0
+      "#{simbolo} #{number_with_precision(number, delimiter: '.', separator: ',',
+                                                                 precision: precision)}"
     end
 
     def simbolo_moneda(moneda)
