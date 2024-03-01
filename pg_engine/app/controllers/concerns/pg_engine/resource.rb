@@ -1,8 +1,6 @@
 module PgEngine
   module Resource
     def self.included(clazz)
-      include ErrorHelper
-
       clazz.before_action :authenticate_user!
       clazz.helper_method :atributos_para_listar
       clazz.helper_method :atributos_para_mostrar
