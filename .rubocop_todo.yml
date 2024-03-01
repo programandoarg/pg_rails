@@ -16,7 +16,7 @@ Lint/SuppressedException:
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
-    - 'pg_engine/app/controllers/pg_engine/resource_helper.rb'
+    - 'pg_engine/app/controllers/concerns/pg_engine/resource.rb'
     - 'pg_engine/app/decorators/pg_engine/base_decorator.rb'
     - 'pg_engine/app/helpers/pg_engine/form_helper.rb'
     - 'pg_engine/app/helpers/pg_engine/index_helper.rb'
@@ -29,7 +29,7 @@ Metrics/AbcSize:
 # AllowedMethods: refine
 Metrics/BlockLength:
   Exclude:
-    - 'pg_engine/app/controllers/pg_engine/resource_helper.rb'
+    - 'pg_engine/app/controllers/concerns/pg_engine/resource.rb'
     - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
     - 'pg_engine/config/simple_form/simple_form_bootstrap.rb'
     - 'pg_engine/app/admin/*'
@@ -52,7 +52,7 @@ Metrics/CyclomaticComplexity:
 Metrics/MethodLength:
   Exclude:
     - 'pg_engine/app/controllers/pg_engine/base_controller.rb'
-    - 'pg_engine/app/controllers/pg_engine/resource_helper.rb'
+    - 'pg_engine/app/controllers/concerns/pg_engine/resource.rb'
     - 'pg_engine/app/helpers/pg_engine/flash_helper.rb'
     - 'pg_engine/app/helpers/pg_engine/form_helper.rb'
     - 'pg_engine/app/helpers/pg_engine/index_helper.rb'
@@ -66,7 +66,7 @@ Metrics/MethodLength:
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:
   Exclude:
-    - 'pg_engine/app/controllers/pg_engine/resource_helper.rb'
+    - 'pg_engine/app/controllers/concerns/pg_engine/resource.rb'
     - 'pg_engine/app/helpers/pg_engine/print_helper.rb'
 
 # Offense count: 6

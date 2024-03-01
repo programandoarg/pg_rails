@@ -10,6 +10,9 @@ FactoryBot/AssociationStyle:
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
+RSpec/ContextWording:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 

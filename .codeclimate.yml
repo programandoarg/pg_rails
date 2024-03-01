@@ -5,8 +5,6 @@ engines:
     enabled: true
   coffeelint:
     enabled: true
-  fixme:
-    enabled: true
   duplication:
     enabled: true
     config:

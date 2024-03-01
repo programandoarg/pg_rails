@@ -2,12 +2,27 @@
 
 class PgFormBuilder < SimpleForm::FormBuilder
   include PgAssociable::FormBuilderMethods
+  include PgEngine::ErrorHelper
 
   def mensajes_de_error
-    errors_to_show = object.errors[:base]
-    message = (errors_to_show.map(&:to_s).join('<br>') if errors_to_show.present?)
+    base_errors = object.errors[:base]
+    base_message = (base_errors.map(&:to_s).join('<br>') if base_errors.present?)
+    title = error_notification(message: mensaje, class: 'text-danger mb-2') if mensaje
+    base_tag = error_notification(message: base_message, class: 'alert alert-danger') if base_message
+    (title || '') + (base_tag || '')
+  end
 
-    error_notification(message:)
+  def mensaje
+    scope = error_message_for(object, associations:)
+    return if scope.blank?
+
+    I18n.t("simple_form.error_notification.#{scope}")
+  end
+
+  def associations
+    object.class.reflect_on_all_associations
+          .select { |a| a.instance_of? ActiveRecord::Reflection::HasManyReflection }
+          .map(&:name)
   end
 
   map_type :date, to: PgEngine::FechaInput

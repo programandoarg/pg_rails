@@ -1,4 +1,4 @@
 class AdminController < ApplicationController
   include PgEngine::RequireSignIn
-  include PgEngine::ResourceHelper
+  include PgEngine::Resource
 end

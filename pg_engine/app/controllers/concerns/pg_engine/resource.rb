@@ -1,5 +1,5 @@
 module PgEngine
-  module ResourceHelper
+  module Resource
     def self.included(clazz)
       clazz.before_action :authenticate_user!
       clazz.helper_method :atributos_para_listar

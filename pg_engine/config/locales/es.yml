@@ -8,15 +8,6 @@ es:
   ancestry:
     exclude_self: No puede ser hijx de si mismx
   simple_form:
-    # labels:
-    #   user:
-    #     username: 'User name'
-    #     password: 'Password'
-    # hints:
-    error_notification:
-      default_message: "hubo algunos errores:"
-
-  simple_form:
     "yes": 'Sí'
     "no": 'No'
     required:
@@ -26,7 +17,10 @@ es:
       # When using html, text and mark won't be used.
       # html: '<abbr title="required">*</abbr>'
     error_notification:
-      default_message: "Por favor, revisá los errores debajo:"
+      default_message: "Por favor, revisá los siguientes errores:"
+      not_presence_errors: "Por favor, revisá los siguientes errores:"
+      only_presence_errors: 'Por favor, revisá los campos obligatorios:'
+      multiple_error_types: 'Por favor, revisá los campos obligatorios y otros errores:'
     # Examples
     # labels:
     #   defaults:

@@ -41,4 +41,16 @@ class CategoriaDeCosa < ApplicationRecord
   scope :query, ->(param) { param.present? ? where(id: param) : all }
 
   validates :nombre, :tipo, presence: true
+
+  validates_associated :cosas
+
+  attr_accessor :validate_aux
+
+  # def validate_aux
+  #   true
+  # end
+
+  validate if: :validate_aux do
+    errors.add(:base, 'aux')
+  end
 end
