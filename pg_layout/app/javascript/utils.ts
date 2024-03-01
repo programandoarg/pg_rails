@@ -3,7 +3,7 @@ export function round (value) {
 }
 
 export function printCurrency (value, simboloMoneda = '$') {
-  let decimals = (value % 1 > 0) ? 2 : 0
+  const decimals = (value % 1 > 0) ? 2 : 0
   return simboloMoneda + ' ' + numberWithDots(value.toFixed(decimals).replace('.', ','))
 }
 

@@ -54,18 +54,22 @@ module PgEngine
 
     protected
 
+    def merge_association_errors(details, assoc_key)
+      details = details.except(assoc_key)
+      assoc_items = object.send(assoc_key).map(&:errors).map(&:details)
+      merged = assoc_items.inject({}) { |acc, el| acc.merge(el) }
+      merged = merged.transform_values { |errs| errs.pluck(:error) }
+      details.merge(merged)
+    end
+
     def error_types(object, associations: [])
       details = object.errors.details.transform_values do |errs|
         errs.pluck(:error)
       end
-      associations.each do |ak|
-        next unless details.key? ak
+      associations.each do |assoc_key|
+        next unless details.key? assoc_key
 
-        details = details.except(ak)
-        asoc_items = object.send(ak).map(&:errors).map(&:details)
-        merged = asoc_items.inject({}) { |acc, el| acc.merge(el) }
-        merged = merged.transform_values { |errs| errs.pluck(:error) }
-        details = details.merge(merged)
+        details = merge_association_errors(details, assoc_key)
       end
       details.values.flatten.uniq
     end

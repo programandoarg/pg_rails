@@ -101,9 +101,9 @@ module PgEngine
     def print_currency(number, simbolo: '$')
       return if number.blank?
 
-      precision = number % 1 > 0 ? 2 : 0
+      precision = (number % 1).positive? ? 2 : 0
       "#{simbolo} #{number_with_precision(number, delimiter: '.', separator: ',',
-                                                                 precision: precision)}"
+                                                  precision:)}"
     end
 
     def simbolo_moneda(moneda)
