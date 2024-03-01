@@ -5,10 +5,11 @@ class PgFormBuilder < SimpleForm::FormBuilder
   include PgEngine::ErrorHelper
 
   def mensajes_de_error
-    errors_to_show = object.errors[:base]
-    message = (errors_to_show.map(&:to_s).join('<br>') if errors_to_show.present?)
-
-    error_notification(message:)
+    base_errors = object.errors[:base]
+    base_message = (base_errors.map(&:to_s).join('<br>') if base_errors.present?)
+    title = error_notification(message: mensaje, class: 'text-danger mb-2') if mensaje
+    base_tag = error_notification(message: base_message, class: 'alert alert-danger') if base_message
+    (title || '') + (base_tag || '')
   end
 
   def mensaje

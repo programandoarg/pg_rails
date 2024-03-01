@@ -45,6 +45,9 @@ class CategoriaDeCosa < ApplicationRecord
   validates_associated :cosas
 
   attr_accessor :validate_aux
+  # def validate_aux
+  #   true
+  # end
 
   validate if: :validate_aux do
     errors.add(:base, 'aux')
