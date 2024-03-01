@@ -54,6 +54,35 @@ module PgEngine
 
     protected
 
+    def error_types(object, associations: [])
+      details = object.errors.details.transform_values do |errs|
+        errs.pluck(:error)
+      end
+      associations.each do |ak|
+        next unless details.key? ak
+
+        details = details.except(ak)
+        asoc_items = object.send(ak).map(&:errors).map(&:details)
+        merged = asoc_items.inject({}) { |acc, el| acc.merge(el) }
+        merged = merged.transform_values { |errs| errs.pluck(:error) }
+        details = details.merge(merged)
+      end
+      details.values.flatten.uniq
+    end
+
+    def error_message_for(object, associations: [])
+      types = error_types(object, associations:)
+
+      if types == [:blank]
+        # Si son solo errores de presence
+        'Por favor, completá los campos obligatorios:'
+      elsif types.include? :blank
+        'Por favor, completá los campos obligatorios y otros errores debajo:'
+      else
+        'Por favor, revisá los errores debajo:'
+      end
+    end
+
     def any_filter?
       params.keys.reject { |a| a.in? %w[controller action page page_size order_by order_direction] }.any?
     end
