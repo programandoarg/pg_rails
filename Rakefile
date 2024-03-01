@@ -52,3 +52,9 @@ task :prepush do
   Rake::Task['static_analysis'].invoke
   Rake::Task['test'].invoke
 end
+
+desc 'Release all'
+task :release_all do
+  Rake::Task['release'].invoke
+  system "npm pack --pack-destination pkg && npm publish"
+end
