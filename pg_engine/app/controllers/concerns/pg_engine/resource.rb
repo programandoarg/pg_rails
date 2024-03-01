@@ -1,6 +1,8 @@
 module PgEngine
-  module ResourceHelper
+  module Resource
     def self.included(clazz)
+      include ErrorHelper
+
       clazz.before_action :authenticate_user!
       clazz.helper_method :atributos_para_listar
       clazz.helper_method :atributos_para_mostrar
@@ -53,39 +55,6 @@ module PgEngine
     # End public endpoints
 
     protected
-
-    def merge_association_errors(details, assoc_key)
-      details = details.except(assoc_key)
-      assoc_items = object.send(assoc_key).map(&:errors).map(&:details)
-      merged = assoc_items.inject({}) { |acc, el| acc.merge(el) }
-      merged = merged.transform_values { |errs| errs.pluck(:error) }
-      details.merge(merged)
-    end
-
-    def error_types(object, associations: [])
-      details = object.errors.details.transform_values do |errs|
-        errs.pluck(:error)
-      end
-      associations.each do |assoc_key|
-        next unless details.key? assoc_key
-
-        details = merge_association_errors(details, assoc_key)
-      end
-      details.values.flatten.uniq
-    end
-
-    def error_message_for(object, associations: [])
-      types = error_types(object, associations:)
-
-      if types == [:blank]
-        # Si son solo errores de presence
-        'Por favor, completá los campos obligatorios:'
-      elsif types.include? :blank
-        'Por favor, completá los campos obligatorios y otros errores debajo:'
-      else
-        'Por favor, revisá los errores debajo:'
-      end
-    end
 
     def any_filter?
       params.keys.reject { |a| a.in? %w[controller action page page_size order_by order_direction] }.any?

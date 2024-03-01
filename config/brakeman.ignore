@@ -6,14 +6,14 @@
       "fingerprint": "17caeceb2913edeee3225f0546197ac6f73b06df8b8ec8a887b73bd544c6a087",
       "check_name": "SQL",
       "message": "Possible SQL injection",
-      "file": "pg_engine/app/controllers/pg_engine/resource_helper.rb",
+      "file": "pg_engine/app/controllers/concerns/pg_engine/resource.rb",
       "line": 98,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "turbo_stream.update_all(\".modal.show .pg-associable-form\", \"<div data-modal-target=\\\"response\\\" data-response='#{instancia_modelo.decorate.to_json}'></div>\\n\")",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "PgEngine::ResourceHelper",
+        "class": "PgEngine::Resource",
         "method": "pg_respond_create"
       },
       "user_input": "instancia_modelo.decorate.to_json",
