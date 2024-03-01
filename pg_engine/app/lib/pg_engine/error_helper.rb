@@ -2,7 +2,7 @@ module PgEngine
   module ErrorHelper
     extend ActiveSupport::Concern
 
-    def merge_association_errors(details, assoc_key)
+    def merge_association_errors(object, details, assoc_key)
       details = details.except(assoc_key)
       assoc_items = object.send(assoc_key).map(&:errors).map(&:details)
       merged = assoc_items.inject({}) { |acc, el| acc.merge(el) }
@@ -17,7 +17,7 @@ module PgEngine
       associations.each do |assoc_key|
         next unless details.key? assoc_key
 
-        details = merge_association_errors(details, assoc_key)
+        details = merge_association_errors(object, details, assoc_key)
       end
       details.values.flatten.uniq
     end
