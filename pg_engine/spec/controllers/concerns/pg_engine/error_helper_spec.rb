@@ -50,6 +50,7 @@ describe PgEngine::ErrorHelper do
 
     context 'cuando tiene errores anidados' do
       before do
+        categoria.reload
         categoria.cosas[0].nombre = nil
       end
 
