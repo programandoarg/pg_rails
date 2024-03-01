@@ -42,6 +42,8 @@ class CategoriaDeCosa < ApplicationRecord
 
   validates :nombre, :tipo, presence: true
 
+  validates_associated :cosas
+
   attr_accessor :validate_aux
 
   validate if: :validate_aux do
