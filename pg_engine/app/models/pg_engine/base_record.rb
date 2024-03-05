@@ -34,9 +34,12 @@ module PgEngine
     end
 
     def self.human_attribute_name(attribute, options = {})
-      # Si es un enumerized
       if attribute.to_s.ends_with?('_text')
+        # Si es un enumerized
         super(attribute[0..-6], options)
+      elsif attribute.to_s.ends_with?('_f')
+        # Si es un decorated method
+        super(attribute[0..-3], options)
       else
         super(attribute, options)
       end
