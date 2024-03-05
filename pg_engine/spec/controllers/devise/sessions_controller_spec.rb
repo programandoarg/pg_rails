@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 describe Devise::SessionsController do
-  # let(:user) { create :user, :admin }
-
-  # before { sign_in user }
-  before do |variable|
-    @request.env["devise.mapping"] = Devise.mappings[:user]
+  before do
+    # rubocop:disable RSpec/InstanceVariable
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+    # rubocop:enable RSpec/InstanceVariable
   end
 
   describe '#new' do

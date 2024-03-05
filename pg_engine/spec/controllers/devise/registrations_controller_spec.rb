@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 describe Devise::RegistrationsController do
-  before do |variable|
-    @request.env["devise.mapping"] = Devise.mappings[:user]
+  before do
+    # rubocop:disable RSpec/InstanceVariable
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+    # rubocop:enable RSpec/InstanceVariable
   end
 
   describe '#new' do
@@ -15,14 +17,13 @@ describe Devise::RegistrationsController do
   end
 
   describe '#edit' do
+    subject { get :edit }
 
     let(:logger_user) { create :user, :admin }
 
     before do
       sign_in logger_user
     end
-
-    subject { get :edit }
 
     it do
       subject
