@@ -5,15 +5,23 @@ class Navbar
     @user = user
   end
 
+  def topbar
+    bar('topbar')
+  end
+
   def sidebar
+    bar('sidebar')
+  end
+
+  def bar(key)
     yaml_data = YAML.load_file("#{Rails.application.root}/config/pg_rails.yml")
-    sidebar = ActiveSupport::HashWithIndifferentAccess.new(yaml_data)['sidebar']
+    _bar = ActiveSupport::HashWithIndifferentAccess.new(yaml_data)[key]
     # rubocop:disable Security/Eval
-    sidebar.map do |item|
+    _bar.map do |item|
       {
         title: item['name'],
         path: eval(item['path']),
-        show: true
+        show: item['policy'] ? eval(item['policy']) : true
       }
     end
     # rubocop:enable Security/Eval
