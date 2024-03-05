@@ -15,8 +15,8 @@ module PgEngine
     protected
 
     def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: [:nombre, :apellido])
-      devise_parameter_sanitizer.permit(:account_update, keys: [:nombre, :apellido])
+      devise_parameter_sanitizer.permit(:sign_up, keys: %i[nombre apellido])
+      devise_parameter_sanitizer.permit(:account_update, keys: %i[nombre apellido])
     end
   end
 end

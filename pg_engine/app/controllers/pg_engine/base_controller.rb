@@ -75,9 +75,7 @@ module PgEngine
     end
 
     def go_back(message = nil, type: :alert)
-      if message.present?
-        flash[type] = message
-      end
+      flash[type] = message if message.present?
       redirect_back fallback_location: root_path
     end
   end

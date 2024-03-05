@@ -15,9 +15,9 @@ class Navbar
 
   def bar(key)
     yaml_data = YAML.load_file("#{Rails.application.root}/config/pg_rails.yml")
-    _bar = ActiveSupport::HashWithIndifferentAccess.new(yaml_data)[key]
+    bar_data = ActiveSupport::HashWithIndifferentAccess.new(yaml_data)[key]
     # rubocop:disable Security/Eval
-    _bar.map do |item|
+    bar_data.map do |item|
       {
         title: item['name'],
         path: eval(item['path']),
