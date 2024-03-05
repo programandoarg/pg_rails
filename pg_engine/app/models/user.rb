@@ -53,7 +53,11 @@ class User < ApplicationRecord
   scope :query, ->(param) { where('email ILIKE ?', "%#{param}%") }
 
   def to_s
-    email
+    nombre_completo
+  end
+
+  def nombre_completo
+    "#{nombre} #{apellido}"
   end
 
   def current_account
