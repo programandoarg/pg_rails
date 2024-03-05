@@ -23,9 +23,9 @@ class PgSlimGenerator < Slim::Generators::ScaffoldGenerator
 
   def available_views
     if options[:index_file]
-      %w[index edit show new _form]
+      %w[index show _form]
     else
-      %w[edit show new _form]
+      %w[show _form]
     end
   end
 end

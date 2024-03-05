@@ -26,22 +26,34 @@ module Admin
       pg_respond_update
     end
 
+    skip_before_action :authenticate_user!, only: [:login_as]
+
+    # :nocov:
+    def login_as
+      if current_user&.developer? || Rails.env.development?
+        usuario = User.find(params[:id])
+        sign_in(:user, usuario)
+      end
+      redirect_to '/'
+    end
+    # :nocov:
+
     private
 
     def atributos_permitidos
-      %i[email password developer]
+      %i[email nombre apellido password developer]
     end
 
     def atributos_para_buscar
-      %i[email developer]
+      %i[email nombre apellido developer]
     end
 
     def atributos_para_listar
-      %i[email developer]
+      %i[email nombre apellido developer]
     end
 
     def atributos_para_mostrar
-      %i[email developer]
+      %i[email nombre apellido developer]
     end
   end
 end

@@ -36,10 +36,9 @@ class User < ApplicationRecord
   # ApplicationRecord should be defined on Application
 
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :lockable, :timeoutable, :trackable
+         :lockable, :timeoutable, :trackable, :confirmable
 
   audited
   include Discard::Model
@@ -47,12 +46,16 @@ class User < ApplicationRecord
   has_many :user_accounts
   has_many :accounts, through: :user_accounts
 
-  validates :email, presence: true
+  validates :email, :nombre, :apellido, presence: true
 
   scope :query, ->(param) { where('email ILIKE ?', "%#{param}%") }
 
   def to_s
-    email
+    nombre_completo
+  end
+
+  def nombre_completo
+    "#{nombre} #{apellido}"
   end
 
   def current_account

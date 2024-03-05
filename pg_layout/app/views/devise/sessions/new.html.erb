@@ -18,3 +18,14 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+
+<% if Rails.env.development? %>
+  <br>
+  <br>
+  <br>
+  <ul>
+    <% User.all.each do |user| %>
+      <li><%= link_to user, admin_login_as_path(id: user.id) %></li>
+    <% end %>
+  </ul>
+<% end %>
