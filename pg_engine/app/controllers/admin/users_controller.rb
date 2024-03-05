@@ -26,6 +26,16 @@ module Admin
       pg_respond_update
     end
 
+    skip_before_action :authenticate_user!, only: [:login_as]
+
+    def login_as
+      if current_user&.developer? || Rails.env.development?
+        usuario = User.find(params[:id])
+        sign_in(:user, usuario)
+      end
+      redirect_to '/'
+    end
+
     private
 
     def atributos_permitidos
