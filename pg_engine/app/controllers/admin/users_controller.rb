@@ -39,19 +39,19 @@ module Admin
     private
 
     def atributos_permitidos
-      %i[email password developer]
+      %i[email nombre apellido password developer]
     end
 
     def atributos_para_buscar
-      %i[email developer]
+      %i[email nombre apellido developer]
     end
 
     def atributos_para_listar
-      %i[email developer]
+      %i[email nombre apellido developer]
     end
 
     def atributos_para_mostrar
-      %i[email developer]
+      %i[email nombre apellido developer]
     end
   end
 end

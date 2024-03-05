@@ -16,6 +16,8 @@ class Navbar
   def bar(key)
     yaml_data = YAML.load_file("#{Rails.application.root}/config/pg_rails.yml")
     bar_data = ActiveSupport::HashWithIndifferentAccess.new(yaml_data)[key]
+    return [] unless bar_data.present?
+
     # rubocop:disable Security/Eval
     bar_data.map do |item|
       {
