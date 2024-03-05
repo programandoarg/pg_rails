@@ -1,9 +1,22 @@
 module PgEngine
   class DeviseController < ApplicationController
-    layout 'pg_layout/devise'
+    before_action :configure_permitted_parameters
 
-    before_action do
-      render(layout: 'pg_layout/layout') if controller_name == 'registrations' && action_name == 'edit'
+    layout :layout_by_resource
+
+    def layout_by_resource
+      if controller_name == 'registrations' && action_name.in?(%w[edit update])
+        'pg_layout/layout'
+      else
+        'pg_layout/devise'
+      end
+    end
+
+    protected
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:nombre, :apellido])
+      devise_parameter_sanitizer.permit(:account_update, keys: [:nombre, :apellido])
     end
   end
 end

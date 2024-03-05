@@ -39,7 +39,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :lockable, :timeoutable, :trackable
+         :lockable, :timeoutable, :trackable
+  # TODO: agregar confirmable, y que sea configurable desde la App
 
   audited
   include Discard::Model
