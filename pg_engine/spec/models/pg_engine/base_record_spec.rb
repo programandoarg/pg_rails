@@ -2,12 +2,14 @@ require 'rails_helper'
 
 describe PgEngine::BaseRecord do
   describe '#human_attribute_name' do
-    subject do
-      described_class.human_attribute_name('bla_text')
+    it do
+      obj = described_class.human_attribute_name('bla_text')
+      expect(obj).to eq described_class.human_attribute_name('bla')
     end
 
     it do
-      expect(subject).to eq described_class.human_attribute_name('bla')
+      obj = described_class.human_attribute_name('bla_h')
+      expect(obj).to eq described_class.human_attribute_name('bla')
     end
   end
 end

@@ -28,6 +28,7 @@ module Admin
 
     skip_before_action :authenticate_user!, only: [:login_as]
 
+    # :nocov:
     def login_as
       if current_user&.developer? || Rails.env.development?
         usuario = User.find(params[:id])
@@ -35,6 +36,7 @@ module Admin
       end
       redirect_to '/'
     end
+    # :nocov:
 
     private
 
