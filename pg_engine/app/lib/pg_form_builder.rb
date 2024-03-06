@@ -19,10 +19,10 @@ class PgFormBuilder < SimpleForm::FormBuilder
     end
   end
 
-  def input(attribute_name, options = {}, &block)
+  def input(attribute_name, options = {}, &)
     options[:error_prefix] ||= default_prefix(attribute_name)
 
-    super(attribute_name, options, &block)
+    super(attribute_name, options, &)
   end
 
   def mensajes_de_error

@@ -53,7 +53,8 @@ class User < ApplicationRecord
   validates_format_of     :email, with: /\A[^@\s]+@[^@\s]+\z/
   validates_presence_of     :password, if: :password_required?
   validates_confirmation_of :password, if: :password_required?, message: 'Las contraseñas no coinciden'
-  validates_length_of       :password, if: :password_required?, within: 6..128, message: 'es demasiado corta (6 caracteres mínimo)'
+  validates_length_of       :password, if: :password_required?, within: 6..128,
+                                       message: 'es demasiado corta (6 caracteres mínimo)'
 
   def password_required?
     !persisted? || !password.nil? || !password_confirmation.nil?
