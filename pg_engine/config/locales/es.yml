@@ -40,3 +40,7 @@ es:
     # prompts:
     #   defaults:
     #     age: 'Select your age'
+  errors:
+    messages:
+      blank: ''
+      empty: ''

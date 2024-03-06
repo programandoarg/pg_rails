@@ -4,6 +4,27 @@ class PgFormBuilder < SimpleForm::FormBuilder
   include PgAssociable::FormBuilderMethods
   include PgEngine::ErrorHelper
 
+  def default_prefix(attribute_name)
+    at_name = object.class.human_attribute_name(attribute_name.to_s).downcase
+    "#{articulo(attribute_name)} #{at_name}"
+  end
+
+  def articulo(attribute_name)
+    gender = I18n.t("gender.#{attribute_name}", default: nil)
+    if gender.present?
+      gender == 'f' ? 'La' : 'El'
+    else
+      at_name = object.class.human_attribute_name(attribute_name.to_s).downcase
+      at_name.ends_with?('a') ? 'La' : 'El'
+    end
+  end
+
+  def input(attribute_name, options = {}, &)
+    options[:error_prefix] ||= default_prefix(attribute_name)
+
+    super(attribute_name, options, &)
+  end
+
   def mensajes_de_error
     base_errors = object.errors[:base]
     base_message = (base_errors.map(&:to_s).join('<br>') if base_errors.present?)

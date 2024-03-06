@@ -37,7 +37,7 @@ class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
+         :recoverable, :rememberable,
          :lockable, :timeoutable, :trackable, :confirmable
 
   audited
@@ -46,7 +46,19 @@ class User < ApplicationRecord
   has_many :user_accounts
   has_many :accounts, through: :user_accounts
 
-  validates :email, :nombre, :apellido, presence: true
+  validates :nombre, :apellido, presence: true
+
+  validates_presence_of   :email
+  validates_uniqueness_of :email, message: 'ya pertenece a un usuario'
+  validates_format_of     :email, with: /\A[^@\s]+@[^@\s]+\z/
+  validates_presence_of     :password, if: :password_required?
+  validates_confirmation_of :password, if: :password_required?, message: 'Las contraseñas no coinciden'
+  validates_length_of       :password, if: :password_required?, within: 6..128,
+                                       message: 'es demasiado corta (6 caracteres mínimo)'
+
+  def password_required?
+    !persisted? || !password.nil? || !password_confirmation.nil?
+  end
 
   scope :query, ->(param) { where('email ILIKE ?', "%#{param}%") }
 
