@@ -23,7 +23,7 @@ export default class extends Controller {
   }
 
   disconnect (e) {
+    this.modalPuntero.hide()
     this.modalPuntero.dispose()
-    document.querySelectorAll('.modal-backdrop').forEach(e => { e.remove() })
   }
 }
