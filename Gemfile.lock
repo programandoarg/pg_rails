@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pg_rails (7.0.8.pre.alpha.10)
+    pg_rails (7.0.8.pre.alpha.11)
 
 GEM
   remote: https://rubygems.org/
