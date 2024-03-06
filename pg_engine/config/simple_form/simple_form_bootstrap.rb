@@ -56,7 +56,6 @@ SimpleForm.setup do |config|
     b.optional :readonly
     b.use :label, class: 'form-label'
     b.use :input, class: 'form-control', error_class: 'is-invalid'
-    # b.use :full_error, wrap_with: { class: 'invalid-feedback' }
     b.use :error, wrap_with: { class: 'invalid-feedback' }
     b.use :hint, wrap_with: { class: 'form-text' }
   end
@@ -66,7 +65,6 @@ SimpleForm.setup do |config|
     b.optional :readonly
     b.use :label, class: 'form-label'
     b.use :input, class: 'form-select', error_class: 'is-invalid'
-    # b.use :full_error, wrap_with: { class: 'invalid-feedback' }
     b.use :error, wrap_with: { class: 'invalid-feedback' }
     b.use :hint, wrap_with: { class: 'form-text' }
   end
