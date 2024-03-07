@@ -210,6 +210,8 @@ module PgEngine
     def buscar_instancia
       if Object.const_defined?('FriendlyId') && @clase_modelo.is_a?(FriendlyId)
         @clase_modelo.friendly.find(params[:id])
+      elsif @clase_modelo.respond_to? :find_by_hashid
+        @clase_modelo.find_by_hashid!(params[:id])
       else
         @clase_modelo.find(params[:id])
       end
