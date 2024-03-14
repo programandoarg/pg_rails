@@ -3,34 +3,29 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  apellido               :string           not null
 #  confirmation_sent_at   :datetime
-#  confirmation_token     :string
+#  confirmation_token     :string           indexed
 #  confirmed_at           :datetime
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string
 #  developer              :boolean          default(FALSE), not null
 #  discarded_at           :datetime
-#  email                  :string           default(""), not null
+#  email                  :string           default(""), not null, indexed
 #  encrypted_password     :string           default(""), not null
 #  failed_attempts        :integer          default(0), not null
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string
 #  locked_at              :datetime
+#  nombre                 :string           not null
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
-#  reset_password_token   :string
+#  reset_password_token   :string           indexed
 #  sign_in_count          :integer          default(0), not null
 #  unconfirmed_email      :string
-#  unlock_token           :string
+#  unlock_token           :string           indexed
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#
-# Indexes
-#
-#  index_users_on_confirmation_token    (confirmation_token) UNIQUE
-#  index_users_on_email                 (email) UNIQUE
-#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
-#  index_users_on_unlock_token          (unlock_token) UNIQUE
 #
 class User < ApplicationRecord
   # ApplicationRecord should be defined on Application
