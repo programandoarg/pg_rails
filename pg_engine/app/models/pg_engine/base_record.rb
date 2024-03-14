@@ -47,10 +47,10 @@ module PgEngine
 
     def to_s
       %i[nombre name].each do |campo|
-        return "#{send(campo)} ##{id}" if try(campo).present?
+        return "#{send(campo)} ##{to_param}" if try(campo).present?
       end
-      if id.present?
-        "#{self.class.nombre_singular} ##{id}"
+      if to_param.present?
+        "#{self.class.nombre_singular} ##{to_param}"
       else
         super
       end

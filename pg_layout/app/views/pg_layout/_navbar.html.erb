@@ -1,8 +1,10 @@
 <nav class="navbar navbar-expand-<%= @breakpoint_navbar_expand %> bg-light">
   <div class="container-fluid">
-    <button data-controller="navbar" data-action="navbar#expandNavbar" class="btn btn-outline-primary me-2 d-none d-<%= @breakpoint_navbar_expand %>-inline-block">
-      <i class="bi bi-list"></i>
-    </button>
+    <% unless @sidebar == false %>
+      <button data-controller="navbar" data-action="navbar#expandNavbar" class="btn btn-outline-primary me-2 d-none d-<%= @breakpoint_navbar_expand %>-inline-block">
+        <i class="bi bi-list"></i>
+      </button>
+    <% end %>
     <!-- <a class="navbar-brand" href="#">Navbar</a> -->
     <button class="navbar-toggler btn btn-outline-primary me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <i class="bi bi-list"></i>

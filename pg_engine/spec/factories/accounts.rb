@@ -6,6 +6,5 @@ FactoryBot.define do
   factory :account do
     plan { Account.plan.values.sample }
     nombre { Faker::Lorem.sentence }
-    hashid { Faker::Lorem.sentence }
   end
 end
