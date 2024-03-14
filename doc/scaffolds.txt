@@ -2,7 +2,6 @@ be rails g pg_scaffold \
   Admin/Account \
   "plan:integer{enum,required}" \
   "nombre:string{required}" \
-  hashid:string \
   --model-name=Account \
   --discard \
   --activeadmin
