@@ -3,7 +3,7 @@ export function round (value) {
 }
 
 export function printCurrency (value, simboloMoneda = '$') {
-  if(typeof value === 'string') {
+  if (typeof value === 'string') {
     value = parseFloat(value)
   }
   const decimals = (value % 1 > 0) ? 2 : 0
