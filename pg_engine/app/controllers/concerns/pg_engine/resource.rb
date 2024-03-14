@@ -211,7 +211,9 @@ module PgEngine
       if Object.const_defined?('FriendlyId') && @clase_modelo.is_a?(FriendlyId)
         @clase_modelo.friendly.find(params[:id])
       elsif @clase_modelo.respond_to? :find_by_hashid
-        @clase_modelo.find_by!(hashid: params[:id])
+        # rubocop:disable Rails/DynamicFindBy
+        @clase_modelo.find_by_hashid!(params[:id])
+        # rubocop:enable Rails/DynamicFindBy
       else
         @clase_modelo.find(params[:id])
       end
