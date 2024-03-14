@@ -15,19 +15,19 @@ module Admin
     private
 
     def atributos_permitidos
-      %i[plan nombre hashid]
+      %i[plan nombre]
     end
 
     def atributos_para_buscar
-      %i[plan nombre hashid]
+      %i[plan nombre]
     end
 
     def atributos_para_listar
-      %i[plan nombre hashid]
+      %i[plan nombre]
     end
 
     def atributos_para_mostrar
-      %i[plan nombre hashid]
+      %i[plan nombre]
     end
   end
 end

@@ -25,6 +25,9 @@ RSpec/NamedSubject:
 FactoryBot/ConsistentParenthesesStyle:
   Enabled: false
 
+FactoryBot/FactoryAssociationWithStrategy:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
