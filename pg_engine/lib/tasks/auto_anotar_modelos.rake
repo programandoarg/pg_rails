@@ -3,6 +3,12 @@
 # NOTE: to have a dev-mode tool do its thing in production.
 Dotenv.load
 
+model_paths = begin
+                JSON.parse(ENV['MODEL_PATHS'])
+              rescue JSON::ParserError
+                ENV['MODEL_PATHS'] || 'app/models'
+              end
+
 if Rails.env.development?
   require 'annotate'
   task :set_annotation_options do
@@ -23,9 +29,7 @@ if Rails.env.development?
       'show_complete_foreign_keys'  => 'false',
       'show_indexes'                => 'false',
       'simple_indexes'              => 'true',
-      'model_dir'                   => ENV['MODEL_PATHS'],
-      # 'model_dir'                   => ['app/models', 'app/overrides'],
-      # 'model_dir'                   => 'app/models',
+      'model_dir'                   => model_paths,
       'root_dir'                    => '',
       'include_version'             => 'false',
       'require'                     => '',
