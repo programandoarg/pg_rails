@@ -1,6 +1,6 @@
 {
   "name": "pg_rails",
-  "version": "7.0.8-alpha.11",
+  "version": "7.0.8-alpha.12",
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.3",
