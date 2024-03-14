@@ -57,9 +57,10 @@ gem 'discard'
 gem "audited", "~> 5.0"
 
   # Access policies
-
 gem 'pundit'
 
+# Dotenv
+gem 'dotenv-rails'
 
 
 
