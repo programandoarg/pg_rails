@@ -32,11 +32,11 @@ module PgEngine
       end
 
       def warn(obj, type = :error)
-        if obj.is_a? Exception
-          mensaje = obj.full_message.lines.first
-        else
-          mensaje = obj
-        end
+        mensaje = if obj.is_a? Exception
+                    obj.full_message.lines.first
+                  else
+                    obj
+                  end
         # bktrc = ActiveSupport::BacktraceCleaner.new.clean(caller)
         bktrc = caller
         titulo = Rainbow(mensaje).bold.send(color_for(type))

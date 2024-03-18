@@ -29,7 +29,6 @@
 #
 
 class User < ApplicationRecord
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable,
          :lockable, :timeoutable, :trackable, :confirmable
@@ -73,7 +72,8 @@ class User < ApplicationRecord
   class Error < StandardError; end
 
   def current_account
-    raise Error.new('El usuario debe tener cuenta') if accounts.empty?
+    raise Error, 'El usuario debe tener cuenta' if accounts.empty?
+
     accounts.first
   end
 end
