@@ -18,32 +18,48 @@ module PgEngine
       #   Rollbar.warning("#{mensaje}\n\n#{caller.join("\n")}")
       # end
 
-      def color_for(type)
-        case type
-        when :error
-          :red
-        when :info
-          :blue
-        when :warn
-          :yellow
-        else
-          :red
-        end
-      end
-
       def warn(obj, type = :error)
         mensaje = if obj.is_a? Exception
                     obj.full_message.lines.first
                   else
                     obj
                   end
-        # bktrc = ActiveSupport::BacktraceCleaner.new.clean(caller)
-        bktrc = caller
-        titulo = Rainbow(mensaje).bold.send(color_for(type))
-        detalles = Rainbow("#{type.to_s.upcase} logueado en #{bktrc[1]}").send(color_for(type))
-        Rails.logger.send(type, titulo)
-        Rails.logger.send(type, detalles)
+        notify(mensaje, type)
+      end
+
+      private
+
+      def notify(mensaje, type)
+        Rails.logger.send(type, titulo(mensaje, type))
+        Rails.logger.send(type, detalles(type))
         Rollbar.send(type, "#{mensaje}\n\n#{bktrc.join("\n")}")
+        nil
+      end
+
+      def titulo(mensaje, type)
+        Rainbow(mensaje).bold.send(color_for(type))
+      end
+
+      def detalles(type)
+        Rainbow("#{type.to_s.upcase} logueado en #{bktrc[0]}").send(color_for(type))
+      end
+
+      def bktrc
+        bc = ActiveSupport::BacktraceCleaner.new
+        bc.add_filter   { |line| line.gsub(%r{.*pg_rails/}, '') }
+        bc.add_silencer { |line| /pg_logger/.match?(line) }
+        bc.clean(caller)
+      end
+
+      def color_for(type)
+        case type
+        when :info
+          :blue
+        when :warn
+          :yellow
+        else # :error
+          :red
+        end
       end
     end
   end
