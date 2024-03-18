@@ -11,7 +11,10 @@
     = link_to 'Fade out', 'javascript:void(0)', 'data-action': 'cosa#doFadeOut'
     h1.init-invisible Fade INN
 
-  = image_tag 'facturabien.png', class: 'animation-long', 'data-controller': 'fadein_onload', style: 'display:none'
+  = image_tag 'facturabien.png',
+              class: 'animation-long',
+              'data-controller': 'fadein_onload',
+              style: 'display:none'
 
 table.table.table-borderless.table-sm.w-auto.mb-0.m-3
   - atributos_para_mostrar.each do |att|
@@ -33,4 +36,3 @@ table.table.table-borderless.table-sm.w-auto.mb-0.m-3
   tr
     th = t('attributes.discarded_at')
     td = dmy_time @categoria_de_cosa.discarded_at
-

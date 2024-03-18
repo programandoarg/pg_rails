@@ -29,9 +29,9 @@ require 'rails_helper'
 
 RSpec.describe Admin::UserAccountsController do
   render_views
-  let(:user) { create :user }
+  let!(:user) { create :user }
 
-  let(:account) { create :account }
+  let!(:account) { create :account }
 
   # This should return the minimal set of attributes required to create a valid
   # UserAccount. As you add validations to UserAccount, be sure to
