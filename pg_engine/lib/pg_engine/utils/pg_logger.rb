@@ -2,42 +2,48 @@
 
 require 'rainbow'
 
+def pg_warn(obj, type = :error)
+  PgEngine::PgLogger.warn(obj, type)
+end
+
 module PgEngine
   class PgLogger
     class << self
-      def deprecated(mensaje)
-        titulo = Rainbow("  WARNING en #{caller[1]}").yellow.bold
-        detalles = Rainbow("  #{mensaje}").yellow
-        Rails.logger.warn("#{titulo}\n#{detalles}")
-        Rollbar.warning("#{mensaje}\n\n#{caller.join("\n")}")
+      # DEPRECATED
+      # Muestro el caller[1] para saber dónde se llamó a la función deprecada
+      # def deprecated(mensaje)
+      #   titulo = Rainbow("  WARNING en #{caller[1]}").yellow.bold
+      #   detalles = Rainbow("  #{mensaje}").yellow
+      #   Rails.logger.warn("#{titulo}\n#{detalles}")
+      #   Rollbar.warning("#{mensaje}\n\n#{caller.join("\n")}")
+      # end
+
+      def color_for(type)
+        case type
+        when :error
+          :red
+        when :info
+          :blue
+        when :warn
+          :yellow
+        else
+          :red
+        end
       end
 
-      def excepcion(exception)
-        titulo = Rainbow("  EXCEPCION #{exception.class} en #{caller.first}").red.bold
-        detalles = Rainbow("  #{exception.message}").red
-        Rails.logger.error("#{titulo}\n#{detalles}")
-        Rollbar.error(exception)
-      end
-
-      def error(mensaje)
-        titulo = Rainbow("  ERROR en #{caller.first}").red.bold
-        detalles = Rainbow("  #{mensaje}").red
-        Rails.logger.error("#{titulo}\n#{detalles}")
-        Rollbar.error("#{mensaje}\n\n#{caller.join("\n")}")
-      end
-
-      def warning(mensaje)
-        titulo = Rainbow("  WARNING en #{caller.first}").yellow.bold
-        detalles = Rainbow("  #{mensaje}").yellow
-        Rails.logger.warn("#{titulo}\n#{detalles}")
-        Rollbar.warning("#{mensaje}\n\n#{caller.join("\n")}")
-      end
-
-      def info(mensaje)
-        titulo = Rainbow("  INFO en #{caller.first}").blue.bold
-        detalles = Rainbow("  #{mensaje}").blue
-        Rails.logger.info("#{titulo}\n#{detalles}")
-        Rollbar.info("#{mensaje}\n\n#{caller.join("\n")}")
+      def warn(obj, type = :error)
+        if obj.is_a? Exception
+          mensaje = obj.full_message.lines.first
+        else
+          mensaje = obj
+        end
+        # bktrc = ActiveSupport::BacktraceCleaner.new.clean(caller)
+        bktrc = caller
+        titulo = Rainbow(mensaje).bold.send(color_for(type))
+        detalles = Rainbow("#{type.to_s.upcase} logueado en #{bktrc[1]}").send(color_for(type))
+        Rails.logger.send(type, titulo)
+        Rails.logger.send(type, detalles)
+        Rollbar.send(type, "#{mensaje}\n\n#{bktrc.join("\n")}")
       end
     end
   end

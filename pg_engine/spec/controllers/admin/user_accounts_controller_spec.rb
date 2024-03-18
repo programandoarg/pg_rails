@@ -29,7 +29,7 @@ require 'rails_helper'
 
 RSpec.describe Admin::UserAccountsController do
   render_views
-  let(:user) { create :orphan_user }
+  let(:user) { create :user }
 
   let(:account) { create :account }
 

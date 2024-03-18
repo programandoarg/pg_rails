@@ -10,4 +10,6 @@ RSpec.describe User do
   it 'se persiste' do
     expect(user).to be_persisted
   end
+
+  pending 'Si falla la creación de cuenta, que rollbackee la transaction de create user'
 end
