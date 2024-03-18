@@ -6,7 +6,7 @@ require 'generators/pg_active_record/model/model_generator'
 
 DESTINATION_PATH = File.expand_path('./../../tmp/generator_testing', __dir__)
 
-describe 'Generators' do
+describe 'Generators', type: :generator do
   describe 'PgDecoratorGenerator' do
     destination DESTINATION_PATH
     tests PgDecoratorGenerator

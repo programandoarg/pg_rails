@@ -83,11 +83,11 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Warden::Test::Helpers
-  config.include ActiveSupport::Testing::TimeHelpers
 
+  config.include Rails::Generators::Testing::Behavior, type: :generator
+  config.include Rails::Generators::Testing::SetupAndTeardown, type: :generator
+  config.include Rails::Generators::Testing::Assertions, type: :generator
+  config.include FileUtils, type: :generator
 
-  config.include Rails::Generators::Testing::Behavior
-  config.include Rails::Generators::Testing::SetupAndTeardown
-  config.include Rails::Generators::Testing::Assertions
-  config.include FileUtils
+  # config.include ActiveSupport::Testing::TimeHelpers
 end
