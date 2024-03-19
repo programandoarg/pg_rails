@@ -50,7 +50,11 @@ module PgRails
             query = query.joins(nombre_campo.to_sym).group("#{@clase_modelo.table_name}.id")
               .having("ARRAY_AGG(#{asociacion.join_table}.#{asociacion.association_foreign_key}) #{comparador_array(suf)} ARRAY[#{array}]::bigint[]")
           elsif asociacion.class == ActiveRecord::Reflection::BelongsToReflection
-            query = query.where("#{@clase_modelo.table_name}.#{campo}_id = ?", parametros[campo])
+            if asociacion.active_record.table_name != @clase_modelo.table_name
+              query = query.joins(asociacion.plural_name.to_sym)
+            end
+            # query = query.where("#{@clase_modelo.table_name}.#{campo}_id = ?", parametros[campo])
+            query = query.where("#{asociacion.active_record.table_name}.#{asociacion.foreign_key} = ?", parametros[campo])
           else
             fail 'filtro de asociacion no soportado'
           end
@@ -173,7 +177,7 @@ module PgRails
       fail 'no se encontró la asociacion' if asociacion.nil?
       if asociacion.class == ActiveRecord::Reflection::ThroughReflection
         through_class = asociacion.through_reflection.class_name.constantize
-        asociacion_posta = through_class.reflect_on_all_associations.find {|a| a.name == nombre_campo.to_sym }
+        asociacion_posta = through_class.reflect_on_all_associations.find {|a| nombre_campo.to_sym.in? [a.name, a.plural_name.to_sym]  }
         fail 'no se encontró la asociacion' if asociacion_posta.nil?
         asociacion_posta
       else
@@ -183,10 +187,17 @@ module PgRails
 
     def filtro_asociacion(campo, placeholder = '')
       asociacion = obtener_asociacion(campo)
-      multiple = asociacion.class == ActiveRecord::Reflection::HasAndBelongsToManyReflection
+      multiple = asociacion.class.in? [
+        ActiveRecord::Reflection::HasAndBelongsToManyReflection,
+        ActiveRecord::Reflection::HasManyReflection
+      ]
       nombre_clase = asociacion.options[:class_name]
       if nombre_clase.nil?
-        nombre_clase = asociacion.name.to_s.camelize
+        if multiple
+          nombre_clase = asociacion.name.to_s.singularize.camelize
+        else
+          nombre_clase = asociacion.name.to_s.camelize
+        end
       end
       clase_asociacion = Object.const_get(nombre_clase)
       scope = Pundit.policy_scope!(controller.current_user, clase_asociacion)
