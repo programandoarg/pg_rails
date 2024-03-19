@@ -12,7 +12,6 @@ describe PgEngine::Resource do
     let(:request) { double }
 
     before do
-      CategoriaDeCosa.stub(:find_by_hashid!)
       allow(request).to receive_messages(filtered_parameters: { id: categoria_de_cosa.to_param },
                                          parameters: { id: categoria_de_cosa.to_param })
       allow(instancia).to receive(:request).and_return(request)
@@ -20,6 +19,7 @@ describe PgEngine::Resource do
     end
 
     it do
+      allow(CategoriaDeCosa).to receive(:find_by_hashid!)
       subject
       expect(CategoriaDeCosa).to have_received(:find_by_hashid!)
     end
