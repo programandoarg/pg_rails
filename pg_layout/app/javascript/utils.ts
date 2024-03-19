@@ -18,16 +18,6 @@ export function numberWithDots (x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 }
 
-export function onAnimationEndShow (e) {
-  e.target.style.visibility = 'visible'
-  e.target.classList.remove('fade-in')
-}
-
-export function onAnimationEndHide (e) {
-  e.target.style.visibility = 'hidden'
-  e.target.classList.remove('fade-out')
-}
-
 export function fadeOut (e) {
   if (window.getComputedStyle(e).visibility !== 'hidden') {
     e.classList.add('fade-out')
@@ -40,4 +30,14 @@ export function fadeIn (e) {
     e.classList.add('fade-in')
     e.addEventListener('animationend', onAnimationEndShow, { once: true })
   }
+}
+
+function onAnimationEndShow (e) {
+  e.target.style.visibility = 'visible'
+  e.target.classList.remove('fade-in')
+}
+
+function onAnimationEndHide (e) {
+  e.target.style.visibility = 'hidden'
+  e.target.classList.remove('fade-out')
 }

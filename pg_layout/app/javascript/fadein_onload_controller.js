@@ -1,11 +1,8 @@
 import { Controller } from '@hotwired/stimulus'
 
-// Connects to data-controller="fadein_onload"
-// Should add style: "display:none" to root element
+// To be used by img_placeholder helper
 export default class extends Controller {
   connect () {
-    // this.element.classList.remove('invisible')
-
     if (this.element.complete) {
       this.loaded()
     } else {
