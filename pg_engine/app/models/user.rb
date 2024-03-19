@@ -49,10 +49,17 @@ class User < ApplicationRecord
   validates_length_of       :password, if: :password_required?, within: 6..128,
                                        message: 'es demasiado corta (6 caracteres mínimo)'
 
+  attr_accessor :orphan
+
   after_create do
     # TODO: si fue invitado, sumar a la account del invitador
-    account = Account.create!(nombre: email, plan: 0)
-    user_accounts.create!(account:)
+    create_account unless orphan
+  end
+
+  def create_account
+    account = Account.create(nombre: email, plan: 0)
+    ua = user_accounts.create(account:)
+    raise(ActiveRecord::Rollback) unless ua.persisted?
   end
 
   def password_required?

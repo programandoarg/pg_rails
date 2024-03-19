@@ -11,5 +11,40 @@ RSpec.describe User do
     expect(user).to be_persisted
   end
 
-  pending 'Si falla la creación de cuenta, que rollbackee la transaction de create user'
+  it do
+    expect(user.current_account).to be_present
+  end
+
+  context 'si es orphan' do
+    let(:user) { create(:user, orphan: true) }
+
+    it do
+      expect(user.accounts).to be_empty
+    end
+
+    it do
+      expect { user.current_account }.to raise_error(User::Error)
+    end
+
+  end
+
+  context 'Si falla la creación de cuenta, que rollbackee la transaction de create user' do
+    before do
+      allow_any_instance_of(Account).to receive(:save).and_return(false)
+      allow_any_instance_of(UserAccount).to receive(:save).and_return(false)
+    end
+
+    subject do
+      build(:user)
+    end
+
+    it do
+      expect { subject.save }.not_to change(User, :count)
+    end
+
+    it do
+      subject.save
+      expect(subject).not_to be_persisted
+    end
+  end
 end
