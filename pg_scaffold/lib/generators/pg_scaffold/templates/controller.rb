@@ -9,6 +9,8 @@ require_dependency "<%= namespaced_path %>/application_controller"
 <% module_namespacing do -%>
 <% module_namespacing_2 do -%>
 class <%= controller_class_name.split('::').last %>Controller < <%= parent_controller %>
+  include PgEngine::Resource
+
   before_action { @clase_modelo = <%= class_name.split('::').last %> }
 
   before_action(only: :index) { authorize <%= class_name.split('::').last %> }

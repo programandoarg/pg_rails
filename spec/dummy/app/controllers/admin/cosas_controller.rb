@@ -4,6 +4,8 @@
 
 module Admin
   class CosasController < AdminController
+    include PgEngine::Resource
+
     before_action { @clase_modelo = Cosa }
 
     before_action(only: :index) { authorize Cosa }
