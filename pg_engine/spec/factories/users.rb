@@ -36,7 +36,7 @@
 #
 
 FactoryBot.define do
-  factory :orphan_user, class: 'User' do
+  factory :user, class: 'User' do
     nombre { Faker::Name.name }
     apellido { Faker::Name.name }
     email { Faker::Internet.email }
@@ -49,13 +49,6 @@ FactoryBot.define do
 
     trait :developer do
       developer { true }
-    end
-
-    factory :user do
-      after(:create) do |user, _context|
-        account = create :account
-        create :user_account, user:, account:
-      end
     end
   end
 end

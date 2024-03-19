@@ -27,10 +27,8 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
-class User < ApplicationRecord
-  # ApplicationRecord should be defined on Application
 
-  # Include default devise modules. Others available are:
+class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable,
          :lockable, :timeoutable, :trackable, :confirmable
@@ -51,6 +49,19 @@ class User < ApplicationRecord
   validates_length_of       :password, if: :password_required?, within: 6..128,
                                        message: 'es demasiado corta (6 caracteres mínimo)'
 
+  attr_accessor :orphan
+
+  after_create do
+    # TODO: si fue invitado, sumar a la account del invitador
+    create_account unless orphan
+  end
+
+  def create_account
+    account = Account.create(nombre: email, plan: 0)
+    ua = user_accounts.create(account:)
+    raise(ActiveRecord::Rollback) unless ua.persisted?
+  end
+
   def password_required?
     !persisted? || !password.nil? || !password_confirmation.nil?
   end
@@ -65,7 +76,11 @@ class User < ApplicationRecord
     "#{nombre} #{apellido}"
   end
 
+  class Error < StandardError; end
+
   def current_account
+    raise Error, 'El usuario debe tener cuenta' if accounts.empty?
+
     accounts.first
   end
 end

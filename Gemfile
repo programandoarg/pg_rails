@@ -139,3 +139,5 @@ gem 'overcommit'
 gem 'database_cleaner-active_record'
 
 gem "image_processing", "~> 1.2"
+
+gem "hashid-rails", "~> 1.0"

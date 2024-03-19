@@ -40,13 +40,14 @@ module PgEngine
 
     protected
 
-    def default_url_options(options = {})
-      if Rails.env.production?
-        options.merge(protocol: 'https')
-      else
-        options
-      end
-    end
+    # TODO: ver qué pasa en producción
+    # def default_url_options(options = {})
+    #   if Rails.env.production?
+    #     options.merge(protocol: 'https')
+    #   else
+    #     options
+    #   end
+    # end
 
     def fecha_invalida
       respond_to do |format|

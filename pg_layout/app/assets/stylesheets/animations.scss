@@ -1,0 +1,26 @@
+// Animations
+.fade-in {
+  animation: fadeInAnimation 0.2s ease-in-out forwards;
+}
+
+.fade-out {
+  animation: fadeOutAnimation 0.2s ease forwards;
+}
+
+.init-invisible {
+  visibility: hidden;
+}
+
+.animation-long {
+  animation-duration: 1s;
+}
+
+@keyframes fadeInAnimation {
+  0% { opacity: 0; visibility: visible; }
+  100% { opacity: 1; visibility: visible; }
+}
+
+@keyframes fadeOutAnimation {
+  0% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
+}

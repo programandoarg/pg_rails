@@ -210,8 +210,10 @@ module PgEngine
     def buscar_instancia
       if Object.const_defined?('FriendlyId') && @clase_modelo.is_a?(FriendlyId)
         @clase_modelo.friendly.find(params[:id])
-      elsif @clase_modelo.respond_to? :find_by_hashid
-        @clase_modelo.find_by!(hashid: params[:id])
+      elsif @clase_modelo.respond_to? :find_by_hashid!
+        # rubocop:disable Rails/DynamicFindBy
+        @clase_modelo.find_by_hashid!(params[:id])
+        # rubocop:enable Rails/DynamicFindBy
       else
         @clase_modelo.find(params[:id])
       end
@@ -271,7 +273,7 @@ module PgEngine
 
     def do_sort(scope, field, direction)
       unless scope.model.column_names.include? field.to_s
-        PgLogger.warning("No existe el campo \"#{field}\"")
+        PgLogger.warn("No existe el campo \"#{field}\"", :warn)
         return scope
       end
       scope = scope.order(field => direction)
@@ -279,7 +281,7 @@ module PgEngine
       instance_variable_set(:@direction, direction)
       scope
     rescue ArgumentError => e
-      PgLogger.warning(e.to_s)
+      PgLogger.warn(e, :warn)
       scope
     end
 

@@ -4,7 +4,12 @@
 
 module Admin
   class CategoriaDeCosasController < AdminController
-    before_action { @clase_modelo = CategoriaDeCosa }
+    include PgEngine::Resource
+
+    before_action :set_clase_modelo
+    def set_clase_modelo
+      @clase_modelo = CategoriaDeCosa
+    end
 
     before_action(only: :index) { authorize CategoriaDeCosa }
 

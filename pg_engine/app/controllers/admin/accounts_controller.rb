@@ -4,6 +4,8 @@
 
 module Admin
   class AccountsController < AdminController
+    include PgEngine::Resource
+
     before_action { @clase_modelo = Account }
 
     before_action(only: :index) { authorize Account }

@@ -1,4 +1,4 @@
-DatabaseCleaner.clean_with(:truncation, except: %w(ar_internal_metadata users accounts user_accounts))
+DatabaseCleaner.clean_with(:truncation, except: %w(ar_internal_metadata))
 
 MAIL = 'mrosso10@gmail.com'
 
