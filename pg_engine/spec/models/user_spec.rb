@@ -28,22 +28,25 @@ RSpec.describe User do
   end
 
   context 'Si falla la creación de cuenta, que rollbackee la transaction de create user' do
-    subject do
+    let(:user) do
       build(:user)
     end
 
     before do
-      allow_any_instance_of(Account).to receive(:save).and_return(false)
-      allow_any_instance_of(UserAccount).to receive(:save).and_return(false)
+      # rubocop:disable RSpec/MessageChain
+      allow(user).to receive_message_chain(:user_accounts, :create) {
+                       instance_double(UserAccount, persisted?: false)
+                     }
+      # rubocop:enable RSpec/MessageChain
     end
 
     it do
-      expect { subject.save }.not_to change(described_class, :count)
+      expect { user.save }.not_to change(described_class, :count)
     end
 
     it do
-      subject.save
-      expect(subject).not_to be_persisted
+      user.save
+      expect(user).not_to be_persisted
     end
   end
 end

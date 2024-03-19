@@ -12,15 +12,16 @@ describe PgEngine::Resource do
     let(:request) { double }
 
     before do
-      instancia.set_clase_modelo
+      CategoriaDeCosa.stub(:find_by_hashid!)
       allow(request).to receive_messages(filtered_parameters: { id: categoria_de_cosa.to_param },
                                          parameters: { id: categoria_de_cosa.to_param })
       allow(instancia).to receive(:request).and_return(request)
+      instancia.set_clase_modelo
     end
 
     it do
-      expect(CategoriaDeCosa).to receive(:find_by_hashid!)
       subject
+      expect(CategoriaDeCosa).to have_received(:find_by_hashid!)
     end
 
     it do
@@ -33,8 +34,8 @@ describe PgEngine::Resource do
       instancia.send(:do_sort, scope, param, direction)
     end
 
-    let!(:categoria_de_cosa1) { create :categoria_de_cosa, nombre: 'Z' }
-    let!(:categoria_de_cosa2) { create :categoria_de_cosa, nombre: 'a' }
+    let!(:categoria_de_cosa_ult) { create :categoria_de_cosa, nombre: 'Z' }
+    let!(:categoria_de_cosa_pri) { create :categoria_de_cosa, nombre: 'a' }
     let(:scope) { CategoriaDeCosa.all }
     let(:param) { :nombre }
     let(:direction) { :desc }
@@ -43,7 +44,7 @@ describe PgEngine::Resource do
       let(:direction) { :asc }
 
       it do
-        expect(subject.to_a).to eq [categoria_de_cosa2, categoria_de_cosa1]
+        expect(subject.to_a).to eq [categoria_de_cosa_pri, categoria_de_cosa_ult]
       end
     end
 
@@ -51,7 +52,7 @@ describe PgEngine::Resource do
       let(:direction) { :desc }
 
       it do
-        expect(subject.to_a).to eq [categoria_de_cosa1, categoria_de_cosa2]
+        expect(subject.to_a).to eq [categoria_de_cosa_ult, categoria_de_cosa_pri]
       end
     end
 
@@ -59,7 +60,7 @@ describe PgEngine::Resource do
       let(:param) { :inexistente }
 
       it do
-        expect(subject.to_a).to eq [categoria_de_cosa1, categoria_de_cosa2]
+        expect(subject.to_a).to eq [categoria_de_cosa_ult, categoria_de_cosa_pri]
       end
     end
   end
