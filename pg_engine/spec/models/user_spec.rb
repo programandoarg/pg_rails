@@ -25,21 +25,20 @@ RSpec.describe User do
     it do
       expect { user.current_account }.to raise_error(User::Error)
     end
-
   end
 
   context 'Si falla la creación de cuenta, que rollbackee la transaction de create user' do
+    subject do
+      build(:user)
+    end
+
     before do
       allow_any_instance_of(Account).to receive(:save).and_return(false)
       allow_any_instance_of(UserAccount).to receive(:save).and_return(false)
     end
 
-    subject do
-      build(:user)
-    end
-
     it do
-      expect { subject.save }.not_to change(User, :count)
+      expect { subject.save }.not_to change(described_class, :count)
     end
 
     it do

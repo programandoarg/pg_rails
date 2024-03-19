@@ -4,18 +4,20 @@ describe PgEngine::Resource do
   let(:instancia) { Admin::CategoriaDeCosasController.new }
 
   describe '#buscar_instancia' do
-    let!(:categoria_de_cosa) { create :categoria_de_cosa }
-    let(:request) { double }
-    before do
-      instancia.set_clase_modelo
-      allow(request).to receive(:filtered_parameters).and_return({ id: categoria_de_cosa.to_param })
-      allow(request).to receive(:parameters).and_return({ id: categoria_de_cosa.to_param })
-      allow(instancia).to receive(:request).and_return(request)
-    end
-
     subject do
       instancia.send(:buscar_instancia)
     end
+
+    let!(:categoria_de_cosa) { create :categoria_de_cosa }
+    let(:request) { double }
+
+    before do
+      instancia.set_clase_modelo
+      allow(request).to receive_messages(filtered_parameters: { id: categoria_de_cosa.to_param },
+                                         parameters: { id: categoria_de_cosa.to_param })
+      allow(instancia).to receive(:request).and_return(request)
+    end
+
     it do
       expect(CategoriaDeCosa).to receive(:find_by_hashid!)
       subject
@@ -27,15 +29,15 @@ describe PgEngine::Resource do
   end
 
   describe '#do_sort' do
+    subject do
+      instancia.send(:do_sort, scope, param, direction)
+    end
+
     let!(:categoria_de_cosa1) { create :categoria_de_cosa, nombre: 'Z' }
     let!(:categoria_de_cosa2) { create :categoria_de_cosa, nombre: 'a' }
     let(:scope) { CategoriaDeCosa.all }
     let(:param) { :nombre }
     let(:direction) { :desc }
-
-    subject do
-      instancia.send(:do_sort, scope, param, direction)
-    end
 
     context 'asc' do
       let(:direction) { :asc }
