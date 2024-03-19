@@ -29,6 +29,7 @@
 class CategoriaDeCosa < ApplicationRecord
   audited
   include Discard::Model
+  include Hashid::Rails
 
   belongs_to :creado_por, optional: true, class_name: 'User'
   belongs_to :actualizado_por, optional: true, class_name: 'User'

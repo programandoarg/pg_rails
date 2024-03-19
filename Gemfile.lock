@@ -191,6 +191,10 @@ GEM
     has_scope (0.8.2)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
+    hashid-rails (1.4.1)
+      activerecord (>= 4.0)
+      hashids (~> 1.0)
+    hashids (1.0.6)
     htmlentities (4.3.4)
     i18n (1.14.3)
       concurrent-ruby (~> 1.0)
@@ -478,6 +482,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   fuubar
+  hashid-rails (~> 1.0)
   image_processing (~> 1.2)
   jsbundling-rails (~> 1.3)
   kaminari
