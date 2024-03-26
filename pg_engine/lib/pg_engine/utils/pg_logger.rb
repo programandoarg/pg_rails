@@ -29,8 +29,9 @@ module PgEngine
       # end
 
       def error(obj)
+        # TODO: arreglar
         # Si es dev o test lanzo el error y si no, lo logueo para que no le salte al usuario
-        raise obj if Rails.env.local?
+        # raise obj if Rails.env.local? && ENV.fetch('RAISE_ERRORS', nil).present?
 
         mensaje = if obj.is_a?(Exception) && obj.backtrace.present?
                     "#{obj.message}\nBacktrace:\n#{cleaner.clean(obj.backtrace).join("\n")}"

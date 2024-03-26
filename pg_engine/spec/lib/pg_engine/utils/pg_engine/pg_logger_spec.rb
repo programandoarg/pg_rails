@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-TYPES = %i[error warn info].freeze
+TYPES = %i[error warn info debug].freeze
 
 describe PgEngine::PgLogger do
   describe '#pg_err' do
@@ -11,12 +11,32 @@ describe PgEngine::PgLogger do
       end
     end
 
-    context 'con exception' do
-      subject { pg_err(StandardError.new('bla')) }
+    shared_examples 'logger' do |type|
+      it do
+        expect(Rails.logger).to have_received(type).twice
+      end
 
       it do
-        expect { subject }.to raise_error(StandardError)
+        expect(Rollbar).to have_received(type).once
       end
+    end
+
+    context "con string" do
+      before { pg_err('bla') }
+
+      it_behaves_like 'logger', :error
+    end
+
+    context 'con exception' do
+      before do
+        begin
+          raise StandardError.new('bla')
+        rescue StandardError => e
+          pg_err(e)
+        end
+      end
+
+      it_behaves_like 'logger', :error
     end
   end
 
@@ -47,11 +67,19 @@ describe PgEngine::PgLogger do
     end
 
     context 'con exception' do
-      before { pg_warn(StandardError.new('bla')) }
+      before do
+        begin
+          raise StandardError.new('bla')
+        rescue StandardError => e
+          pg_warn(e)
+        end
+      end
+
 
       it_behaves_like 'logger', :error
     end
   end
+
   describe '#pg_log' do
     before do
       TYPES.each do |type|
@@ -72,16 +100,10 @@ describe PgEngine::PgLogger do
 
     TYPES.each do |type|
       context "con type #{type}" do
-        before { pg_warn('bla', type) }
+        before { pg_log('bla', type) }
 
         it_behaves_like 'logger', type
       end
-    end
-
-    context 'con exception' do
-      before { pg_warn(StandardError.new('bla')) }
-
-      it_behaves_like 'logger', :error
     end
   end
 end
