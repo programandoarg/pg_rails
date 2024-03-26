@@ -1,15 +1,9 @@
-// Controllers
-import NavbarController from './app/javascript/navbar_controller'
-import NestedController from './app/javascript/nested_controller'
-import PgFormController from './app/javascript/pg_form_controller'
-import FadeinOnloadController from './app/javascript/fadein_onload_controller'
+import './config'
+import './channels'
+import './controllers'
+
 // Bootstrap's toasts
 import * as bootstrap from 'bootstrap'
-
-window.Stimulus.register('navbar', NavbarController)
-window.Stimulus.register('nested', NestedController)
-window.Stimulus.register('pg_form', PgFormController)
-window.Stimulus.register('fadein_onload', FadeinOnloadController)
 
 document.addEventListener('turbo:load', function () {
   const toastElList = document.querySelectorAll('.toast:not(.hide):not(.show)')
@@ -25,11 +19,11 @@ document.addEventListener('turbo:load', function () {
   const callback = (mutationList, observer) => {
     for (const mutation of mutationList) {
       if (mutation.type === 'childList') {
-        console.log('A child node has been added or removed.')
+        // console.log('A child node has been added or removed.')
         const toastElList = document.querySelectorAll('.toast:not(.hide):not(.show)')
         Array.from(toastElList).map(toastEl => new bootstrap.Toast(toastEl).show())
       } else if (mutation.type === 'attributes') {
-        console.log(`The ${mutation.attributeName} attribute was modified.`)
+        // console.log(`The ${mutation.attributeName} attribute was modified.`)
       }
     }
   }

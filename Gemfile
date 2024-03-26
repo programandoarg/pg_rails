@@ -141,3 +141,11 @@ gem 'database_cleaner-active_record'
 gem "image_processing", "~> 1.2"
 
 gem "hashid-rails", "~> 1.0"
+
+gem "anycable-rails"
+gem "anycable-rails-jwt"
+
+gem "cable_ready", "~> 5.0"
+
+# Use Redis adapter to run Action Cable in production
+gem "redis", "~> 5"

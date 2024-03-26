@@ -1,13 +1,15 @@
 {
   "name": "pg_rails",
-  "version": "7.0.8-alpha.14",
+  "version": "7.0.8-alpha.15",
   "dependencies": {
+    "@anycable/web": "0.8.0",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.3",
     "@popperjs/core": "^2.11.8",
     "autoprefixer": "^10.4.17",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.3",
+    "cable_ready": "^5.0.3",
     "prettier": "^4.0.0-alpha.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -29,7 +31,7 @@
   ],
   "exports": {
     ".": "./pg_rails/js/index.js",
-    "./utils": "./pg_layout/app/javascript/utils.ts"
+    "./utils": "./pg_layout/app/javascript/utils/utils.ts"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",

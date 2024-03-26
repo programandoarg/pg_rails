@@ -1,3 +1,4 @@
 web: env RUBY_DEBUG_OPEN=true bin/rails server
 js: yarn dummy:build --watch
 css: yarn dummy:watch:css
+ws: bin/anycable-go --port=8080 --presets=broker

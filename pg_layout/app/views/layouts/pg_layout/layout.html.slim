@@ -3,13 +3,16 @@ html
   head
     title = Rails.application.class.module_parent_name
     meta name="viewport" content="width=device-width,initial-scale=1"
-    / meta name="turbo-cache-control" content="no-cache"
+    - if @turbo_no_cache
+      meta name="turbo-cache-control" content="no-cache"
     / meta name="turbo-refresh-method" content="morph"
     / meta name="turbo-refresh-scroll" content="preserve"
     / meta name="turbo-prefetch" content="true"
     meta name="view-transition" content="same-origin"
+    meta name="cable-history-timestamp" content="#{Time.now.to_i}"
     = csrf_meta_tags
     = csp_meta_tag
+    = action_cable_with_jwt_meta_tag
 
     = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
     = javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module'

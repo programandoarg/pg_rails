@@ -23,3 +23,6 @@ dist/
 spec/examples.txt
 
 spec/dummy/routes.txt
+.env.local
+
+bin/dist

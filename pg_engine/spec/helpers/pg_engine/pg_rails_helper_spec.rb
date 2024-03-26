@@ -3,7 +3,7 @@ require 'rails_helper'
 describe PgEngine::PgRailsHelper do
   describe '#img_placeholder' do
     it 'si no es fade_in' do
-      asd = img_placeholder('bla', fade_in: false, class: 'img-fluid', style: 'color:red')
+      asd = img_placeholder(src: 'bla', fade_in: false, class: 'img-fluid', style: 'color:red')
       expectation = <<~HTML
         <img class="img-fluid" style="color:red" src="/images/bla" />
       HTML
@@ -11,10 +11,10 @@ describe PgEngine::PgRailsHelper do
     end
 
     it 'si tiene style' do
-      asd = img_placeholder('bla', fade_in: true, class: 'img-fluid', style: 'color:red')
+      asd = img_placeholder(src: 'bla', fade_in: true, class: 'img-fluid', style: 'color:red')
       expectation = <<~HTML
-        <div class="placeholder-glow">
-          <div class="placeholder" style="width: 100%; height: 100%">
+        <div class="placeholder-glow" style="width: 100%; height: 100%">
+          <div class="placeholder w-100 h-100">
           <img data-controller="fadein_onload" class="img-fluid" style="color:red;display:none" src="/images/bla" />
           </div>
         </div>
@@ -23,10 +23,10 @@ describe PgEngine::PgRailsHelper do
     end
 
     it 'si no tiene style' do
-      asd = img_placeholder('bla', fade_in: true, class: 'img-fluid')
+      asd = img_placeholder(src: 'bla', fade_in: true, class: 'img-fluid')
       expectation = <<~HTML
-        <div class="placeholder-glow">
-          <div class="placeholder" style="width: 100%; height: 100%">
+        <div class="placeholder-glow" style="width: 100%; height: 100%">
+          <div class="placeholder w-100 h-100">
           <img data-controller="fadein_onload" class="img-fluid" style="display:none" src="/images/bla" />
           </div>
         </div>

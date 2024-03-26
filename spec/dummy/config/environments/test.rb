@@ -8,6 +8,14 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.after_initialize do
+    # Don't forget to configure URL
+    config.action_cable.url = ActionCable.server.config.url = ENV.fetch("CABLE_URL", "ws://localhost:8080/cable")
+
+    # Make test adapter AnyCable-compatible
+    AnyCable::Rails.extend_adapter!(ActionCable.server.pubsub)
+  end
+
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = true
 
