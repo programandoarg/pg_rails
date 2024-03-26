@@ -272,8 +272,13 @@ module PgEngine
     end
 
     def do_sort(scope, field, direction)
+      # TODO: restringir ciertos campos?
       unless scope.model.column_names.include? field.to_s
         PgLogger.warn("No existe el campo \"#{field}\"", :warn)
+        return scope
+      end
+      unless direction.to_sym.in? %i[asc desc]
+        PgLogger.warn("Direction not valid: \"#{direction}\"", :warn)
         return scope
       end
       scope = scope.order(field => direction)

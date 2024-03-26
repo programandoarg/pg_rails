@@ -25,11 +25,11 @@ document.addEventListener('turbo:load', function () {
   const callback = (mutationList, observer) => {
     for (const mutation of mutationList) {
       if (mutation.type === 'childList') {
-        console.log('A child node has been added or removed.')
+        // console.log('A child node has been added or removed.')
         const toastElList = document.querySelectorAll('.toast:not(.hide):not(.show)')
         Array.from(toastElList).map(toastEl => new bootstrap.Toast(toastEl).show())
       } else if (mutation.type === 'attributes') {
-        console.log(`The ${mutation.attributeName} attribute was modified.`)
+        // console.log(`The ${mutation.attributeName} attribute was modified.`)
       }
     }
   }

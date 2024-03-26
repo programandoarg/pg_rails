@@ -2,8 +2,18 @@
 
 require 'rainbow'
 
+# TODO: poder pasar blocks
+
+def pg_err(obj)
+  PgEngine::PgLogger.error(obj)
+end
+
 def pg_warn(obj, type = :error)
   PgEngine::PgLogger.warn(obj, type)
+end
+
+def pg_log(obj, type = :debug)
+  PgEngine::PgLogger.warn("#{obj.inspect} (#{obj.class})", type)
 end
 
 module PgEngine
@@ -18,9 +28,21 @@ module PgEngine
       #   Rollbar.warning("#{mensaje}\n\n#{caller.join("\n")}")
       # end
 
+      def error(obj)
+        # Si es dev o test lanzo el error y si no, lo logueo para que no le salte al usuario
+        raise obj if Rails.env.local?
+
+        mensaje = if obj.is_a?(Exception) && obj.backtrace.present?
+                    "#{obj.message}\nBacktrace:\n#{cleaner.clean(obj.backtrace).join("\n")}"
+                  else
+                    obj
+                  end
+        notify(mensaje, :error)
+      end
+
       def warn(obj, type = :error)
-        mensaje = if obj.is_a? Exception
-                    obj.full_message.lines.first
+        mensaje = if obj.is_a?(Exception) && obj.backtrace.present?
+                    "#{obj.message}\nBacktrace:\n#{cleaner.clean(obj.backtrace).join("\n")}"
                   else
                     obj
                   end
@@ -37,18 +59,22 @@ module PgEngine
       end
 
       def titulo(mensaje, type)
-        Rainbow(mensaje).bold.send(color_for(type))
+        Rainbow("#{type.to_s.upcase}: #{mensaje}").bold.send(color_for(type))
       end
 
       def detalles(type)
-        Rainbow("#{type.to_s.upcase} logueado en #{bktrc[0]}").send(color_for(type))
+        Rainbow("  called in #{bktrc[0]}").send(color_for(type))
       end
 
-      def bktrc
+      def cleaner
         bc = ActiveSupport::BacktraceCleaner.new
         bc.add_filter   { |line| line.gsub(%r{.*pg_rails/}, '') }
         bc.add_silencer { |line| /pg_logger/.match?(line) }
-        bc.clean(caller)
+        bc
+      end
+
+      def bktrc
+        cleaner.clean(caller)
       end
 
       def color_for(type)
@@ -57,6 +83,8 @@ module PgEngine
           :blue
         when :warn
           :yellow
+        when :debug
+          :orange
         else # :error
           :red
         end

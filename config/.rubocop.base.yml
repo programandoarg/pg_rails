@@ -5,7 +5,7 @@ require:
   - rubocop-factory_bot
 
 FactoryBot/AssociationStyle:
-  EnforcedStyle: explicit
+  Enabled: false
 
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
