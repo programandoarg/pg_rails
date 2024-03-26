@@ -21,7 +21,7 @@ describe PgEngine::PgLogger do
       end
     end
 
-    context "con string" do
+    context 'con string' do
       before { pg_err('bla') }
 
       it_behaves_like 'logger', :error
@@ -29,11 +29,9 @@ describe PgEngine::PgLogger do
 
     context 'con exception' do
       before do
-        begin
-          raise StandardError.new('bla')
-        rescue StandardError => e
-          pg_err(e)
-        end
+        raise StandardError, 'bla'
+      rescue StandardError => e
+        pg_err(e)
       end
 
       it_behaves_like 'logger', :error
@@ -68,13 +66,10 @@ describe PgEngine::PgLogger do
 
     context 'con exception' do
       before do
-        begin
-          raise StandardError.new('bla')
-        rescue StandardError => e
-          pg_warn(e)
-        end
+        raise StandardError, 'bla'
+      rescue StandardError => e
+        pg_warn(e)
       end
-
 
       it_behaves_like 'logger', :error
     end
