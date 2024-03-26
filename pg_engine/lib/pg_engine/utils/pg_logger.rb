@@ -34,7 +34,7 @@ module PgEngine
         # raise obj if Rails.env.local? && ENV.fetch('RAISE_ERRORS', nil).present?
 
         mensaje = if obj.is_a?(Exception) && obj.backtrace.present?
-                    "#{obj.message}\nBacktrace:\n#{cleaner.clean(obj.backtrace).join("\n")}"
+                    "#{obj.inspect}\nBacktrace:\n#{cleaner.clean(obj.backtrace).join("\n")}"
                   else
                     obj
                   end
@@ -43,7 +43,7 @@ module PgEngine
 
       def warn(obj, type = :error)
         mensaje = if obj.is_a?(Exception) && obj.backtrace.present?
-                    "#{obj.message}\nBacktrace:\n#{cleaner.clean(obj.backtrace).join("\n")}"
+                    "#{obj.inspect}\nBacktrace:\n#{cleaner.clean(obj.backtrace).join("\n")}"
                   else
                     obj
                   end
