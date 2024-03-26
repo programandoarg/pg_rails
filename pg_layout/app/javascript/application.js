@@ -1,15 +1,9 @@
-// Controllers
-import NavbarController from './app/javascript/navbar_controller'
-import NestedController from './app/javascript/nested_controller'
-import PgFormController from './app/javascript/pg_form_controller'
-import FadeinOnloadController from './app/javascript/fadein_onload_controller'
+import './config'
+import './channels'
+import './controllers'
+
 // Bootstrap's toasts
 import * as bootstrap from 'bootstrap'
-
-window.Stimulus.register('navbar', NavbarController)
-window.Stimulus.register('nested', NestedController)
-window.Stimulus.register('pg_form', PgFormController)
-window.Stimulus.register('fadein_onload', FadeinOnloadController)
 
 document.addEventListener('turbo:load', function () {
   const toastElList = document.querySelectorAll('.toast:not(.hide):not(.show)')

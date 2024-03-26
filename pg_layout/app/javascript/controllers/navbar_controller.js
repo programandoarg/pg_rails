@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
-import Cookies from './cookies'
+import Cookies from './../utils/cookies'
 
 export default class extends Controller {
   expandNavbar (e) {

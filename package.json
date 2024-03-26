@@ -29,7 +29,7 @@
   ],
   "exports": {
     ".": "./pg_rails/js/index.js",
-    "./utils": "./pg_layout/app/javascript/utils.ts"
+    "./utils": "./pg_layout/app/javascript/utils/utils.ts"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",
