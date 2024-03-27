@@ -12,9 +12,9 @@ describe PgEngine::PgLogger do
     end
 
     around do |example|
-      PgEngine::PgLogger.raise_errors = false
+      described_class.raise_errors = false
       example.run
-      PgEngine::PgLogger.raise_errors = true
+      described_class.raise_errors = true
     end
 
     shared_examples 'logger' do |type|
