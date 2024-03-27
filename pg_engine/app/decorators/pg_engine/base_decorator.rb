@@ -31,58 +31,62 @@ module PgEngine
     end
     # rubocop:enable Style/MissingRespondToMissing
 
-    def destroy_link(message = '¿Estás seguro?')
+    def destroy_link(confirm_text: '¿Estás seguro?', klass: 'btn-light')
       return unless Pundit.policy!(helpers.send(PgEngine.configuracion.current_user_method), object).destroy?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Eliminar' do
-        helpers.link_to object_url, data: { 'turbo-confirm': message, 'turbo-method': :delete },
-                                    class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_destroy}" do
-          helpers.content_tag :span, nil, class: clase_icono(_config.icono_destroy).to_s
+        helpers.link_to object_url, data: { 'turbo-confirm': confirm_text, 'turbo-method': :delete },
+                                    class: "btn btn-sm #{klass}" do
+          helpers.content_tag :span, nil, class: clase_icono('trash-fill')
         end
       end
     end
 
-    def edit_link(texto = '')
+    def edit_link(text: '', klass: 'btn-light')
       return unless Pundit.policy!(helpers.send(PgEngine.configuracion.current_user_method), object).edit?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Editar' do
         helpers.link_to edit_object_url, data: { turbo_frame: :main },
-                                         class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_edit}" do
-          helpers.content_tag(:span, nil, class: clase_icono(_config.icono_edit).to_s) + texto
+                                         class: "btn btn-sm #{klass}" do
+          helpers.content_tag(:span, nil, class: clase_icono('pencil')) + text
         end
       end
     end
 
-    def show_link(texto = '')
+    def show_link(text: '', klass: 'btn-light')
       return unless Pundit.policy!(helpers.send(PgEngine.configuracion.current_user_method), object).show?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Ver' do
         helpers.link_to object_url, data: { turbo_frame: :main },
-                                    class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_show}" do
-          helpers.content_tag(:span, nil, class: clase_icono(_config.icono_show).to_s) + texto
+                                    class: "btn btn-sm #{klass}" do
+          helpers.content_tag(:span, nil, class: clase_icono('eye-fill')) + text
         end
       end
     end
 
-    def export_link(url, texto = '')
-      return unless Pundit.policy!(helpers.send(PgEngine.configuracion.current_user_method), object).export?
+    def export_link(url, text: '', klass: 'btn-info')
+      return unless Pundit.policy!(helpers.current_user, object).export?
 
-      helpers.content_tag :span, rel: :tooltip, title: 'Exportar' do
+      helpers.content_tag :span, rel: :tooltip, title: 'Exportar en excel' do
         helpers.content_tag :a, target: '_blank',
-                                class: "btn #{_config.clase_botones_chicos} btn-#{_config.boton_export}", href: url_change_format(url, 'xlsx') do
-          "#{helpers.content_tag(:span, nil, class: clase_icono('file-earmark-excel-fill'))} #{texto}".html_safe
+                                class: "btn btn-sm #{klass}", href: url_change_format(url, 'xlsx') do
+          "#{helpers.content_tag(:span, nil, class: clase_icono('file-earmark-excel-fill'))} #{text}".html_safe
         end
       end
     end
 
-    def new_link(options = {})
+    def new_link(remote: nil, klass: 'btn-warning')
       return unless Pundit.policy!(helpers.send(PgEngine.configuracion.current_user_method), object).new?
 
-      helpers.content_tag :span, rel: :tooltip, title: 'Crear' do
-        helpers.link_to new_object_url, class: "btn #{_config.clase_botones_chicos} btn-primary",
-                                        remote: options[:remote] do
+      word_to_create = I18n.t("form.#{object.class.nombre_singular.downcase}.create", default: :'form.create')
+
+      full_text = "#{word_to_create} #{object.class.nombre_singular.downcase}"
+
+      helpers.content_tag :span, rel: :tooltip, title: word_to_create do
+        helpers.link_to(new_object_url, class: "btn btn-sm #{klass}",
+                                        remote:) do
           helpers.content_tag(:span, nil,
-                              class: clase_icono('plus').to_s) + "<span class='d-none d-sm-inline'> Crear #{object.class.nombre_singular.downcase}</span>".html_safe
+                              class: clase_icono('plus').to_s) + "<span class='d-none d-sm-inline'> #{full_text}</span>".html_safe
         end
       end
     end
@@ -109,12 +113,8 @@ module PgEngine
 
     private
 
-    def _config
-      PgEngine.configuracion
-    end
-
     def clase_icono(icono)
-      "#{_config.sistema_iconos} #{_config.sistema_iconos}-#{icono}"
+      "bi bi-#{icono}"
     end
   end
 end
