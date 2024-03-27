@@ -80,12 +80,11 @@ module PgEngine
 
       word_to_create = I18n.t("form.#{object.class.nombre_singular.downcase}.create", default: :'form.create')
 
-      tooltip = word_to_create
       full_text = "#{word_to_create} #{object.class.nombre_singular.downcase}"
 
-      helpers.content_tag :span, rel: :tooltip, title: tooltip do
-        helpers.link_to new_object_url, class: "btn btn-sm #{klass}",
-                                        remote: remote do
+      helpers.content_tag :span, rel: :tooltip, title: word_to_create do
+        helpers.link_to(new_object_url, class: "btn btn-sm #{klass}",
+                                        remote:) do
           helpers.content_tag(:span, nil,
                               class: clase_icono('plus').to_s) + "<span class='d-none d-sm-inline'> #{full_text}</span>".html_safe
         end
