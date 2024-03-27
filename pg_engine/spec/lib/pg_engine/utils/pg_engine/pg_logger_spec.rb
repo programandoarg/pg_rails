@@ -11,6 +11,12 @@ describe PgEngine::PgLogger do
       end
     end
 
+    around do |example|
+      PgEngine::PgLogger.raise_errors = false
+      example.run
+      PgEngine::PgLogger.raise_errors = true
+    end
+
     shared_examples 'logger' do |type|
       it do
         expect(Rails.logger).to have_received(type).twice
