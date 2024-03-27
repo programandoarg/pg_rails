@@ -25,5 +25,5 @@ CableReady.configure do |config|
   # Doing so is a best practice to avoid heavy ActionCable traffic
   #
   # config.updatable_debounce_time = 0.1.seconds
-  config.verifier_key = ENV.fetch('ANYCABLE_CABLE_READY_KEY')
+  config.verifier_key = ENV.fetch('ANYCABLE_CABLE_READY_KEY', nil)
 end
