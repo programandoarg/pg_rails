@@ -1,14 +1,13 @@
 - content_for(:title, @clase_modelo.nombre_plural)
 - content_for :actions do
-  button.btn.btn-sm.btn-primary[type="button" data-bs-toggle="collapse"
+  button.btn.btn-sm.btn-outline-primary[type="button" data-bs-toggle="collapse"
                                 data-bs-target="#filtros" aria-expanded="false"
                                 aria-controls="filtros"]
     span.bi.bi-funnel-fill
     span.d-none.d-sm-inline  Filtrar
   .ms-1
   = @clase_modelo.new.decorate.new_link
-  .ms-1
-  = @clase_modelo.new.decorate.export_link(request.url)
+  
 .collapse.border-bottom#filtros class="#{ 'show' if any_filter? }"
   .d-flex.align-items-center.p-2
     .px-2.d-none.d-sm-inline-block
@@ -33,7 +32,7 @@ div
           tr
             - atributos_para_listar.each do |att|
               th = encabezado att, ordenable: true
-            th
+            th.text-end = @clase_modelo.new.decorate.export_link(request.url)
         tbody
           - @collection.each do |object|
             - object = object.decorate
