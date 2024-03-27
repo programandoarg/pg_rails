@@ -41,6 +41,9 @@ Rails/LexicallyScopedActionFilter:
 RSpec/NestedGroups:
   Max: 4
 
+Metrics/ClassLength:
+  Max: 150
+
 AllCops:
   NewCops: enable
   Exclude:
