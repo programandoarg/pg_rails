@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pg_rails (7.0.8.pre.alpha.15)
+    pg_rails (7.0.8.pre.alpha.16)
 
 GEM
   remote: https://rubygems.org/
@@ -365,7 +365,7 @@ GEM
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
-    rdoc (6.6.2)
+    rdoc (6.6.3.1)
       psych (>= 4.0.0)
     redis (5.1.0)
       redis-client (>= 0.17.0)
