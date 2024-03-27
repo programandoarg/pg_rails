@@ -1,4 +1,7 @@
-// TODO: si no existe la aplicacion mostrar error
+if (!window.Stimulus) {
+  console.error('window.Stimulus must be set')
+}
+
 const application = window.Stimulus
 
 export { application }
