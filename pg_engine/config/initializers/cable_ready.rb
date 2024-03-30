@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-Dotenv.load
-
 CableReady.configure do |config|
   # Enable/disable exiting / warning when the sanity checks fail options:
   # `:exit` or `:warn` or `:ignore`
