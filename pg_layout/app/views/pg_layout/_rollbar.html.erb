@@ -1,7 +1,7 @@
-<% if ENV['ROLLBAR_ACCESS_TOKEN_CLIENT'].present? %>
+<% if Rails.application.credentials.rollbar.present? %>
 <script>
 var _rollbarConfig = {
-    accessToken: '<%= ENV['ROLLBAR_ACCESS_TOKEN_CLIENT'] %>',
+    accessToken: '<%= Rails.application.credentials.rollbar.access_token_client %>',
     captureUncaught: true,
     captureUnhandledRejections: true,
     payload: {
