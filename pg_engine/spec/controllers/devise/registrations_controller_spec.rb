@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Devise::RegistrationsController do
+describe Users::RegistrationsController do
   before do
     # rubocop:disable RSpec/InstanceVariable
     @request.env['devise.mapping'] = Devise.mappings[:user]
