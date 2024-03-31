@@ -1,1 +1,1 @@
-Dotenv.load('.env.test.local', '.env.test', '.env')
+Dotenv.load(".env.#{Rails.env}.local", ".env.#{Rails.env}", '.env')
