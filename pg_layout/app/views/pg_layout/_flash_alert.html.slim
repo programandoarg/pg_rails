@@ -3,11 +3,10 @@
 - flash_to_show = flash.select { |flash_message| flash_message[0].to_sym.in? ApplicationController._flash_types }
 / slim-lint:enable LineLength
 - toast = flash[:toast].nil? ? true : flash[:toast]
-- if toast
+- if !toast
   / TODO: data-turbo-temporary, setear al activar toast?
-  - flash_to_show.each do |flash_type, message|
-    .toast(class="bg-#{flash_type_to_class(flash_type)}-subtle" role="alert" data-bs-autohide="true"
-           data-xturbo-temporary="true" aria-live="assertive" aria-atomic="true")
-      .toast-body
+  .text-center
+    - flash_to_show.each do |flash_type, message|
+      div(class="alert alert-#{flash_type_to_class(flash_type)}" role="alert"
+             data-xturbo-temporary="true" aria-live="assertive" aria-atomic="true")
         = message
-/ TODO: centrar texto
