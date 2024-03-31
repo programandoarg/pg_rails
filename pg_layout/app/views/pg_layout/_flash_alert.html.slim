@@ -3,7 +3,7 @@
 - flash_to_show = flash.select { |flash_message| flash_message[0].to_sym.in? ApplicationController._flash_types }
 / slim-lint:enable LineLength
 - toast = flash[:toast].nil? ? true : flash[:toast]
-- if !toast
+- unless toast
   / TODO: data-turbo-temporary, setear al activar toast?
   .text-center
     - flash_to_show.each do |flash_type, message|
