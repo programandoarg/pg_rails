@@ -5,7 +5,7 @@ Dotenv.load
 
 model_paths = begin
                 JSON.parse(ENV['MODEL_PATHS'])
-              rescue JSON::ParserError
+              rescue StandardError
                 ENV['MODEL_PATHS'] || 'app/models'
               end
 
