@@ -36,7 +36,7 @@ module Admin
         usuario = User.find(params[:id])
         sign_in(:user, usuario)
       end
-      redirect_to '/'
+      redirect_to after_sign_in_path_for(usuario)
     end
     # :nocov:
 
