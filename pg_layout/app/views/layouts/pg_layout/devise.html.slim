@@ -15,6 +15,7 @@ html
         #flash.flash.d-inline-block
           = render partial: 'pg_layout/flash'
       .container.text-center
+        = render partial: 'pg_layout/flash_alert'
         = yield
       = render_turbo_stream_title
 

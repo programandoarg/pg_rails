@@ -28,6 +28,7 @@ gem 'rainbow'
 gem 'simple_form'
 
   # User manamement
+  # Al updatear, chequear los controllers overrideados
 gem 'devise'
 gem 'devise-i18n'
 
