@@ -21,7 +21,7 @@ gem 'draper'
 
 gem 'pg', '~> 1.1'
 
-gem "rails", "~> 7.1.3"
+gem "rails", "~> 7.1.3.1"
 
 gem 'rainbow'
 
