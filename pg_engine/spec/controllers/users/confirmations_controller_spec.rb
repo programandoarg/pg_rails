@@ -17,8 +17,9 @@ describe Users::ConfirmationsController do
   end
 
   describe '#show con el token' do
-    let(:user) { create :user, confirmed_at: nil, confirmation_token: 'bla' }
     subject { get :show, params: { confirmation_token: 'bla' } }
+
+    let(:user) { create :user, confirmed_at: nil, confirmation_token: 'bla' }
 
     it do
       subject
