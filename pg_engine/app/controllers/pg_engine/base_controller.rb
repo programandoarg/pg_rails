@@ -67,6 +67,8 @@ module PgEngine
         end
         format.html do
           if request.path == root_path
+            # FIXME: renderear un 500.html y pg_err
+            sign_out(current_user) if current_user.present?
             render plain: 'Not authorized'
           else
             go_back('Not authorized')
