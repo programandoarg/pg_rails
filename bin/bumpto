@@ -11,3 +11,8 @@ newcontent = engver.sub /VERSION = .*/, "VERSION = '#{newversion}'"
 File.write('pg_rails/lib/version.rb', newcontent)
 
 system 'bundle'
+
+system 'git add .'
+system "git commit -m 'Version #{newversion}'"
+
+system 'bundle exec rake release_all'
