@@ -1,7 +1,7 @@
 module Users
   class RegistrationsController < Devise::RegistrationsController
     # POST /resource
-    def create
+    def create # rubocop:disable Metrics/AbcSize
       build_resource(sign_up_params)
 
       resource.save
