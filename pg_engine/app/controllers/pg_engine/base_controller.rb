@@ -18,7 +18,7 @@ module PgEngine
 
     helper_method :mobile_device?
 
-    layout 'pg_layout/layout'
+    layout 'pg_layout/base'
 
     # Los flash_types resultantes serían:
     # [:alert, :notice, :warning, :success]

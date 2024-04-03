@@ -37,6 +37,6 @@ html
                 = yield(:actions)
             hr.my-0
           = render partial: 'pg_layout/flash_alert'
-          = yield
+          = content_for?(:content) ? yield(:content) : yield
           div style="width:100%; height: 10em"
     = render_turbo_stream_title

@@ -7,7 +7,7 @@ module PgEngine
     protected
 
     def layout_by_resource
-      edit_registration? ? 'pg_layout/devise' : 'pg_layout/layout'
+      edit_registration? ? 'pg_layout/devise' : 'pg_layout/containerized'
     end
 
     def edit_registration?
