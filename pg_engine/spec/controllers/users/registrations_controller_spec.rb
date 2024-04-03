@@ -20,16 +20,14 @@ describe Users::RegistrationsController do
 
   describe '#create' do
     subject do
-      post :create, params: {
-        user: {
-          nombre: Faker::Name.first_name,
-          apellido: Faker::Name.last_name,
-          email: Faker::Internet.email,
-          password: '123123',
-          password_confirmation: '123123'
-        }
-      }
+      post :create, params: { user: { nombre:, apellido:, email:, password:, password_confirmation: } }
     end
+
+    let(:nombre) { Faker::Name.first_name }
+    let(:apellido) { Faker::Name.last_name }
+    let(:email) { Faker::Internet.email }
+    let(:password) { '123123' }
+    let(:password_confirmation) { password }
 
     it do
       expect { subject }.to change(User, :count).by(1)
@@ -38,6 +36,15 @@ describe Users::RegistrationsController do
     it do
       subject
       expect(response.body).to include I18n.t('devise.registrations.signed_up_but_unconfirmed')
+    end
+
+    context 'cuando no coinciden los passwords' do
+      let(:password_confirmation) { 'bla' }
+
+      it do
+        subject
+        expect(response).not_to be_successful
+      end
     end
   end
 
