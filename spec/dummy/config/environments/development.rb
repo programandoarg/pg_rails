@@ -7,7 +7,7 @@ Rails.application.configure do
   config.after_initialize do
     config.action_cable.url = ActionCable.server.config.url = ENV.fetch("CABLE_URL", "ws://localhost:8080/cable") if AnyCable::Rails.enabled?
   end
-  config.turbo.signed_stream_verifier_key = ENV.fetch('ANYCABLE_TURBO_RAILS_KEY')
+  config.turbo.signed_stream_verifier_key = ENV.fetch('ANYCABLE_TURBO_RAILS_KEY', nil)
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development

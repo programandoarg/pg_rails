@@ -5,7 +5,10 @@ import './controllers'
 // Bootstrap's toasts
 import * as bootstrap from 'bootstrap'
 
-document.addEventListener('turbo:load', function () {
+document.addEventListener('turbo:load', bindToasts)
+document.addEventListener('turbo:render', bindToasts)
+
+function bindToasts () {
   const toastElList = document.querySelectorAll('.toast:not(.hide):not(.show)')
   Array.from(toastElList).map(toastEl => new bootstrap.Toast(toastEl).show())
 
@@ -33,4 +36,12 @@ document.addEventListener('turbo:load', function () {
 
   // Start observing the target node for configured mutations
   observer.observe(targetNode, config)
-})
+}
+
+// document.addEventListener('turbo:before-stream-render', function () { console.log('turbo:before-stream-render') })
+// document.addEventListener('turbo:render', function () { console.log('turbo:render') })
+// document.addEventListener('turbo:before-render', function () { console.log('turbo:before-render') })
+// document.addEventListener('turbo:before-frame-render', function () { console.log('turbo:before-frame-render') })
+// document.addEventListener('turbo:frame-load', function () { console.log('turbo:frame-load') })
+// document.addEventListener('turbo:before-fetch-request', function () { console.log('turbo:before-fetch-request') })
+// document.addEventListener('turbo:fetch-request-error', function () { console.log('turbo:fetch-request-error') })

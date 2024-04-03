@@ -18,7 +18,7 @@ module PgEngine
 
     helper_method :mobile_device?
 
-    layout 'pg_layout/layout'
+    layout 'pg_layout/base'
 
     # Los flash_types resultantes serían:
     # [:alert, :notice, :warning, :success]
@@ -67,6 +67,8 @@ module PgEngine
         end
         format.html do
           if request.path == root_path
+            # TODO!: renderear un 500.html y pg_err
+            sign_out(current_user) if current_user.present?
             render plain: 'Not authorized'
           else
             go_back('Not authorized')

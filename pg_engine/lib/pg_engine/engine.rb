@@ -13,12 +13,10 @@ module PgEngine
       g.fallbacks[:pg_active_record] = :active_record
     end
 
-    if Rails.env.local?
-      initializer 'pg_engine.set_factory_paths', after: 'factory_bot.set_factory_paths' do
-        # Para que tome las factories de pg_engine/spec/factories
-        # además de las de dummy/spec/factories
-        FactoryBot.definition_file_paths << "#{root}/spec/factories"
-      end
+    initializer 'pg_engine.set_factory_paths', after: 'factory_bot.set_factory_paths' do
+      # Para que tome las factories de pg_engine/spec/factories
+      # además de las de dummy/spec/factories
+      FactoryBot.definition_file_paths << "#{root}/spec/factories"
     end
 
     initializer 'configurar_pg_rails' do

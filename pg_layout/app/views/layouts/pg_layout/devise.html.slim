@@ -1,25 +1,11 @@
-doctype html
-html
-  head
-    title = Rails.application.class.module_parent_name
-    meta name="viewport" content="width=device-width,initial-scale=1"
-    = csrf_meta_tags
-    = csp_meta_tag
-    meta name="cable-history-timestamp" content="#{Time.now.to_i}"
-    = action_cable_with_jwt_meta_tag
-    = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
-    = javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module'
-  body
-    div
-      .text-center
-        #flash.flash.d-inline-block
-          = render partial: 'pg_layout/flash'
-      .container.text-center
-        = yield
-      = render_turbo_stream_title
+- content_for :content do
+  .container.text-center
+    = yield
 
-css:
-  .pg-form {
-    max-width: 22em;
-    margin: auto;
-  }
+  css:
+    .pg-form {
+      max-width: 30em;
+      margin: auto;
+    }
+
+= render template: 'layouts/pg_layout/base'

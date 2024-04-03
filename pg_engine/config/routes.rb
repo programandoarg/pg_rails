@@ -1,7 +1,10 @@
 include PgEngine::RouteHelpers
 
 Rails.application.routes.draw do
-  devise_for :users, controllers: { registrations: 'users/registrations' }
+  devise_for :users, controllers: {
+    confirmations: 'users/confirmations',
+    registrations: 'users/registrations'
+  }
   namespace :admin, path: 'a' do
     pg_resource(:users)
     pg_resource(:accounts)
