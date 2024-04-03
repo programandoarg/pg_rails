@@ -1,11 +1,11 @@
-<% if Rails.application.credentials.rollbar.present? %>
+<% if Rollbar.configuration.enabled && Rails.application.credentials.rollbar.present? %>
 <script>
 var _rollbarConfig = {
     accessToken: '<%= Rails.application.credentials.rollbar.access_token_client %>',
     captureUncaught: true,
     captureUnhandledRejections: true,
     payload: {
-        environment: "production",
+        environment: <%= Rails.env %>,
         //trace_id: 'abc',
         client: {
             javascript: {
