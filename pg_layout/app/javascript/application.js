@@ -8,7 +8,7 @@ import * as bootstrap from 'bootstrap'
 document.addEventListener('turbo:load', bindToasts)
 document.addEventListener('turbo:render', bindToasts)
 
-function bindToasts() {
+function bindToasts () {
   const toastElList = document.querySelectorAll('.toast:not(.hide):not(.show)')
   Array.from(toastElList).map(toastEl => new bootstrap.Toast(toastEl).show())
 
