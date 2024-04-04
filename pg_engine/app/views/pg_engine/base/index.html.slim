@@ -49,4 +49,5 @@ div
     .ps-3.justify-content-center
       = paginate(@collection)
   - else
-    p.m-3 No hay #{@clase_modelo.nombre_plural.downcase} que mostrar
+    - i18n_key = "#{controller.class.to_s.underscore.sub(/_controller\z/, '')}.#{action_name}.index.empty"
+    p.m-3 = t(i18n_key, default: :'.empty', model: @clase_modelo.nombre_plural.downcase)
