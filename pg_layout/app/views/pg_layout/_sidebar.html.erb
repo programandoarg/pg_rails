@@ -13,7 +13,7 @@
       </div> %>
       <div class="sidebar--large-items">
         <ul class="list-unstyled ps-0">
-          <% @navbar.sidebar.each do |entry| %>
+          <% @navbar.bar('sidebar').each do |entry| %>
             <% next if @navbar.hide_entry?(entry) %>
             <% random_id = rand(99999).to_s %>
             <li class="mb-1">

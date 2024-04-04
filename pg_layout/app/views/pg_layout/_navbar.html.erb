@@ -12,6 +12,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav xme-auto mb-2 mb-lg-0">
+        <% @navbar.bar('topbar.before').each do |entry| %>
+          <li class="nav-item">
+            <a class="nav-link" href="<%= entry[:path] %>">
+              <%= entry[:title] %>
+            </a>
+          </li>
+        <% end %>
         <% if user_signed_in? %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -21,7 +28,7 @@
               <li>
                 <%= link_to "Mi perfil", edit_user_registration_path, class: 'dropdown-item' %>
               </li>
-              <% @navbar.topbar.each do |entry| %>
+              <% @navbar.bar('topbar.dropdown_user').each do |entry| %>
                 <% next if @navbar.hide_entry?(entry) %>
                 <li>
                   <a class="dropdown-item" href="<%= entry[:path] %>">
@@ -35,7 +42,8 @@
               </li>
             </ul>
           </li>
-          <% @navbar.sidebar.each do |entry| %>
+          <%# Los item de sidebar en mobile %>
+          <% @navbar.bar('sidebar').each do |entry| %>
             <% next if @navbar.hide_entry?(entry) %>
             <% random_id = rand(99999).to_s %>
             <li class="nav-item d-md-none">
@@ -54,8 +62,9 @@
           </li>
         <% end %>
       </ul>
-      <%= @navbar_ext %>
-
+      <% @navbar.extensiones.each do |extension| %>
+        <%= extension %>
+      <% end %>
     </div>
   </div>
 </nav>
