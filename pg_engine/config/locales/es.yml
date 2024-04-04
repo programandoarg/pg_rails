@@ -52,6 +52,9 @@ es:
       blank: ''
       empty: ''
   devise:
+    sign_in: ¿Ya tenés una cuenta? Iniciar sesión
+    sign_out: Cerrar sesión
+    sign_up: Crear una cuenta
     registrations:
       new:
         sign_up: Crear una cuenta
@@ -61,7 +64,7 @@ es:
         forgot_your_password: ¿Olvidaste tu contraseña?
     shared:
       links:
+        sign_in: ¿Ya tenés una cuenta? Iniciar sesión
         sign_up: Crear una cuenta
         forgot_your_password: ¿Olvidaste tu contraseña?
-        sign_out: Cerrar sesión
         didn_t_receive_confirmation_instructions: ¿No recibiste las instrucciones para confirmar tu cuenta?
