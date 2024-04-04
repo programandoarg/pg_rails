@@ -20,13 +20,15 @@
 
 <%= render "devise/shared/links" %>
 
-<% if Rails.env.development? %>
+<% if dev? %>
+  <div class="text-end" style="margin-top: 500px">
   <br>
   <br>
   <br>
-  <ul>
+  <ul style="max-width: 500px">
     <% User.all.each do |user| %>
       <li><%= link_to user, admin_login_as_path(id: user.id) %></li>
     <% end %>
   </ul>
+  </div>
 <% end %>
