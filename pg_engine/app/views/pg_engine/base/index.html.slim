@@ -49,5 +49,14 @@ div
     .ps-3.justify-content-center
       = paginate(@collection)
   - else
-    - i18n_key = "#{controller.class.to_s.underscore.sub(/_controller\z/, '')}.#{action_name}.index.empty"
-    p.m-3 = t(i18n_key, default: :'.empty', model: @clase_modelo.nombre_plural.downcase)
+    - if @records_filtered
+      - i18n_key = "#{controller.class.to_s.underscore.sub(/_controller\z/, '')}.#{action_name}.index.empty_but_filtered"
+      p.m-3
+        = t(i18n_key, default: :'.empty_but_filtered', model: @clase_modelo.nombre_plural.downcase)
+        | :
+        span.ms-2
+        = link_to namespaced_path(@clase_modelo, clean: true) do
+          | Limpiar búsqueda
+    - else
+      - i18n_key = "#{controller.class.to_s.underscore.sub(/_controller\z/, '')}.#{action_name}.index.empty"
+      p.m-3 = t(i18n_key, default: :'.empty', model: @clase_modelo.nombre_plural.downcase)

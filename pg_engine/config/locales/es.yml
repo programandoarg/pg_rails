@@ -2,7 +2,8 @@ es:
   pg_engine:
     base:
       index:
-        empty: 'No hay %{model} que mostrar'
+        empty: 'No hay %{model} aún'
+        empty_but_filtered: 'No hay %{model} para los filtros aplicados'
   attributes:
     created_at: Fecha de creación
     updated_at: Fecha de actualización

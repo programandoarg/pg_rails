@@ -20,6 +20,9 @@ module PgEngine
     def index
       @collection = filtros_y_policy atributos_para_buscar
       @collection = sort_collection(@collection)
+      if @collection.empty?
+        @records_filtered = policy_scope(clase_modelo).any?
+      end
       pg_respond_index
     end
 

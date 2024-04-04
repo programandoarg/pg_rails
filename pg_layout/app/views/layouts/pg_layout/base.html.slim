@@ -27,7 +27,7 @@ html
             = render partial: 'pg_layout/flash'
         = render partial: 'pg_layout/navbar'
         div
-          - if user_signed_in? && @breadcrumb != false
+          - if user_signed_in? && breadcrumbs.any?
             .d-flex.align-items-center.justify-content-between.px-3.py-1.d-print-none[
               style="min-height: 2.5em;"]
               nav aria-label="breadcrumb"

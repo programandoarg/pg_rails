@@ -4,14 +4,18 @@ module PgEngine
 
     layout :layout_by_resource
 
+    before_action do
+      @sidebar = edit_registration?
+    end
+
     protected
 
     def layout_by_resource
-      edit_registration? ? 'pg_layout/devise' : 'pg_layout/containerized'
+      edit_registration? ? 'pg_layout/containerized' : 'pg_layout/devise'
     end
 
     def edit_registration?
-      !(controller_name == 'registrations' && action_name.in?(%w[edit update]))
+      controller_name == 'registrations' && action_name.in?(%w[edit update])
     end
 
     def configure_permitted_parameters

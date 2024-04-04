@@ -16,6 +16,16 @@ module PgEngine
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
 
+    helper_method :dev?
+    def dev?
+      Rails.env.development? || current_user&.developer?
+    end
+
+    helper_method :developer?
+    def developer?
+      current_user&.developer?
+    end
+
     helper_method :mobile_device?
 
     layout 'pg_layout/base'
