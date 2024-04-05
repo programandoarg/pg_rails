@@ -49,6 +49,11 @@ end
 
 desc 'Pre push tasks'
 task :prepush do
+  system 'bundle exec rubocop -A'
+  if `git status -s` != ''
+    system 'git add .'
+    system 'git commit -m "Lint [automatic on prepush]"'
+  end
   Rake::Task['static_analysis'].invoke
   Rake::Task['test'].invoke
 end
