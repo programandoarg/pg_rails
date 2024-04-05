@@ -11,7 +11,6 @@ module PgEngine
     include RouteHelper
     include PgAssociable::Helpers
 
-    # FIXME: testear
     class Redirect < PgEngine::Error
       attr_accessor :url
 
@@ -29,7 +28,6 @@ module PgEngine
       redirect_to e.url
     end
 
-    # FIXME: testear
     helper_method :dev_user_or_env?
     def dev_user_or_env?
       Rails.env.development? || dev_user?
