@@ -26,5 +26,7 @@ Gem::Specification.new do |spec|
   #     'public gem pushes.'
   # end
 
+  spec.add_dependency "rails", "~> 7.1.3.2"
+
   spec.files = Dir['{pg_associable,pg_engine,pg_layout,pg_scaffold,pg_rails}/**/*', 'MIT-LICENSE', 'README.md']
 end
