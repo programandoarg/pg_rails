@@ -14,7 +14,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def puede_editar?
-    user.setup_status.in? %i[init setted_up]
+    true
   end
 
   def puede_crear?
