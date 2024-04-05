@@ -2,16 +2,12 @@ module PgEngine
   class DeviseController < ApplicationController
     before_action :configure_permitted_parameters
 
-    layout :layout_by_resource
+    layout :layout_by_user
 
     protected
 
-    def layout_by_resource
-      edit_registration? ? 'pg_layout/devise' : 'pg_layout/containerized'
-    end
-
-    def edit_registration?
-      !(controller_name == 'registrations' && action_name.in?(%w[edit update]))
+    def layout_by_user
+      user_signed_in? ? 'pg_layout/containerized' : 'pg_layout/devise'
     end
 
     def configure_permitted_parameters

@@ -1,4 +1,4 @@
-class MailDeliveryTemporalError < StandardError; end
+class MailDeliveryTemporalError < PgEngine::Error; end
 
 ActionMailer::MailDeliveryJob.rescue_from EOFError,
                                       IOError,

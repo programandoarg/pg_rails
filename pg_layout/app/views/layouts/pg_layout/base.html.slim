@@ -7,7 +7,7 @@ html
       meta name="turbo-cache-control" content="no-cache"
     / meta name="turbo-refresh-method" content="morph"
     / meta name="turbo-refresh-scroll" content="preserve"
-    / meta name="turbo-prefetch" content="true"
+    meta name="turbo-prefetch" content="false"
     meta name="view-transition" content="same-origin"
     meta name="cable-history-timestamp" content="#{Time.now.to_i}"
     = csrf_meta_tags
@@ -27,7 +27,7 @@ html
             = render partial: 'pg_layout/flash'
         = render partial: 'pg_layout/navbar'
         div
-          - if user_signed_in? && @breadcrumb != false
+          - if user_signed_in? && breadcrumbs.any?
             .d-flex.align-items-center.justify-content-between.px-3.py-1.d-print-none[
               style="min-height: 2.5em;"]
               nav aria-label="breadcrumb"

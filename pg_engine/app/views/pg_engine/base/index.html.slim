@@ -1,27 +1,29 @@
 - content_for(:title, @clase_modelo.nombre_plural)
 - content_for :actions do
-  button.btn.btn-sm.btn-outline-primary[type="button" data-bs-toggle="collapse"
-                                data-bs-target="#filtros" aria-expanded="false"
-                                aria-controls="filtros"]
-    span.bi.bi-funnel-fill
-    span.d-none.d-sm-inline  Filtrar
-  .ms-1
+  - if @filtros.present?
+    button.btn.btn-sm.btn-outline-primary[type="button" data-bs-toggle="collapse"
+                                  data-bs-target="#filtros" aria-expanded="false"
+                                  aria-controls="filtros"]
+      span.bi.bi-funnel-fill
+      span.d-none.d-sm-inline  Filtrar
+    .ms-1
   = @clase_modelo.new.decorate.new_link
 
-.collapse.border-bottom#filtros class="#{ 'show' if any_filter? }"
-  .d-flex.align-items-center.p-2
-    .px-2.d-none.d-sm-inline-block
-      span.bi.bi-funnel-fill
-    = form_tag nil, class: '', method: :get do
-      .row.g-1
-        = @filtros.filtros_html
-        .col-auto
-          = button_tag class: 'btn btn-sm btn-primary col-auto' do
-            span.bi.bi-search
-        .col-auto
-          = link_to namespaced_path(@clase_modelo, clean: true),
-                    class: 'btn btn-sm btn-secondary col-auto' do
-            | Limpiar
+- if @filtros.present?
+  .collapse.border-bottom#filtros class="#{ 'show' if any_filter? }"
+    .d-flex.align-items-center.p-2
+      .px-2.d-none.d-sm-inline-block
+        span.bi.bi-funnel-fill
+      = form_tag nil, class: '', method: :get do
+        .row.g-1
+          = @filtros.filtros_html
+          .col-auto
+            = button_tag class: 'btn btn-sm btn-primary col-auto' do
+              span.bi.bi-search
+          .col-auto
+            = link_to namespaced_path(@clase_modelo, clean: true),
+                      class: 'btn btn-sm btn-secondary col-auto' do
+              | Limpiar
 
 div
   - if @collection.any?
@@ -46,5 +48,14 @@ div
 
     .ps-3.justify-content-center
       = paginate(@collection)
+  - elsif @records_filtered
+    - i18n_key = "#{controller_key}.#{action_name}.index.empty_but_filtered"
+    p.m-3
+      = t(i18n_key, default: :'.empty_but_filtered', model: @clase_modelo.nombre_plural.downcase)
+      | :
+      span.ms-2
+      = link_to namespaced_path(@clase_modelo, clean: true) do
+        | Limpiar búsqueda
   - else
-    p.m-3 No hay #{@clase_modelo.nombre_plural.downcase} que mostrar
+    - i18n_key = "#{controller_key}.#{action_name}.index.empty"
+    p.m-3 = t(i18n_key, default: :'.empty', model: @clase_modelo.nombre_plural.downcase)

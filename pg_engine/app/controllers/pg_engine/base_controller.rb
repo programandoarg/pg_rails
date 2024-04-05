@@ -11,10 +11,32 @@ module PgEngine
     include RouteHelper
     include PgAssociable::Helpers
 
+    class Redirect < PgEngine::Error
+      attr_accessor :url
+
+      def initialize(url)
+        @url = url
+        super
+      end
+    end
+
     protect_from_forgery with: :exception
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
+    rescue_from Redirect do |e|
+      redirect_to e.url
+    end
+
+    helper_method :dev_user_or_env?
+    def dev_user_or_env?
+      Rails.env.development? || dev_user?
+    end
+
+    helper_method :dev_user?
+    def dev_user?
+      current_user&.developer?
+    end
 
     helper_method :mobile_device?
 
@@ -49,6 +71,7 @@ module PgEngine
     #   end
     # end
 
+    # TODO!: ver qué onda esto, tiene sentido acá?
     def fecha_invalida
       respond_to do |format|
         format.json do

@@ -4,7 +4,7 @@ module PgEngine
   module PrintHelper
     include ActionView::Helpers::NumberHelper
 
-    class FechaInvalidaError < StandardError
+    class FechaInvalidaError < PgEngine::Error
     end
 
     def mostrar_con_link(objeto, options = {})

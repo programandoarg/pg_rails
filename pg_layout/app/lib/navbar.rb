@@ -1,21 +1,26 @@
 class Navbar
   include Rails.application.routes.url_helpers
 
+  attr_reader :extensiones
+
   def initialize(user)
     @user = user
+    @yaml_data = YAML.load_file("#{Rails.application.root}/config/pg_rails.yml")
+    @yaml_data = ActiveSupport::HashWithIndifferentAccess.new(@yaml_data)
+    @extensiones = []
   end
 
-  def topbar
-    bar('topbar')
+  def add_html(html)
+    @extensiones << html
   end
 
-  def sidebar
-    bar('sidebar')
+  def add_item(key, obj)
+    @yaml_data[key] ||= []
+    @yaml_data[key] << ActiveSupport::HashWithIndifferentAccess.new(obj)
   end
 
   def bar(key)
-    yaml_data = YAML.load_file("#{Rails.application.root}/config/pg_rails.yml")
-    bar_data = ActiveSupport::HashWithIndifferentAccess.new(yaml_data)[key]
+    bar_data = @yaml_data[key]
     return [] if bar_data.blank?
 
     # rubocop:disable Security/Eval

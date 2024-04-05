@@ -32,7 +32,7 @@ module Admin
 
     # :nocov:
     def login_as
-      if current_user&.developer? || Rails.env.development?
+      if dev_user_or_env?
         usuario = User.find(params[:id])
         sign_in(:user, usuario)
       end

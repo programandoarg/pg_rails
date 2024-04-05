@@ -47,6 +47,7 @@ module PgEngine
 
       private
 
+      # TODO: loguear time
       def notify(mensaje, type)
         Rails.logger.send(type, titulo(mensaje, type))
         Rails.logger.send(type, detalles(type))

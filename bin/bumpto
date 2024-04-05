@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+newversion = ARGV[0] || raise('usage: bumpto version')
+
+pkgjson = File.read('package.json')
+newcontent = pkgjson.sub /"version": .*,/, "\"version\": \"#{newversion}\","
+File.write('package.json', newcontent)
+
+engver = File.read('pg_rails/lib/version.rb')
+newcontent = engver.sub /VERSION = .*/, "VERSION = '#{newversion}'"
+File.write('pg_rails/lib/version.rb', newcontent)
+
+system 'bundle'
+
+system 'git add .'
+system "git commit -m 'Version #{newversion}'"
+
+system 'bundle exec rake release_all'
