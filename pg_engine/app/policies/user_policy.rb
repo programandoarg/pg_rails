@@ -12,4 +12,8 @@ class UserPolicy < ApplicationPolicy
     #   end
     # end
   end
+
+  def acceso_total?
+    true
+  end
 end
