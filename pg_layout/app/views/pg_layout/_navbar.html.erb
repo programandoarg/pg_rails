@@ -25,9 +25,11 @@
               <%= current_user %>
             </a>
             <ul class="dropdown-menu">
-              <li>
-                <%= link_to "Mi perfil", edit_user_registration_path, class: 'dropdown-item' %>
-              </li>
+              <% if policy(current_user).edit? %>
+                <li>
+                  <%= link_to "Mi perfil", edit_user_registration_path, class: 'dropdown-item' %>
+                </li>
+              <% end %>
               <% @navbar.bar('topbar.dropdown_user').each do |entry| %>
                 <% next if @navbar.hide_entry?(entry) %>
                 <li>

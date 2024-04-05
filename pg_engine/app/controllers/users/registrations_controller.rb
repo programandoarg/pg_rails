@@ -1,6 +1,11 @@
 module Users
   class RegistrationsController < Devise::RegistrationsController
     # POST /resource
+
+    before_action do
+      authorize User
+    end
+
     def create
       build_resource(sign_up_params)
 

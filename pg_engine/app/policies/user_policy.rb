@@ -13,19 +13,19 @@ class UserPolicy < ApplicationPolicy
     # end
   end
 
-  # def puede_editar?
-  #   acceso_total? && !record.readonly?
-  # end
+  def puede_editar?
+    user.setup_status.in? %i[init setted_up]
+  end
 
-  # def puede_crear?
-  #   acceso_total? || user.asesor?
-  # end
+  def puede_crear?
+    true
+  end
 
-  # def puede_borrar?
-  #   acceso_total? && !record.readonly?
-  # end
+  def puede_borrar?
+    false
+  end
 
-  # def acceso_total?
-  #   user.developer?
-  # end
+  def acceso_total?
+    false
+  end
 end
