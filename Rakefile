@@ -14,7 +14,7 @@ task :hola do
   puts 'holaaa'
 end
 
-PATHS_TO_TEST='spec pg_scaffold/spec pg_associable/spec pg_engine/spec'
+PATHS_TO_TEST='spec pg_scaffold/spec pg_associable/spec pg_engine/spec pg_layout/spec'
 
 desc "Testear rápido"
 task :test_spring do |t, args|
