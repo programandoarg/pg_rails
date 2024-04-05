@@ -12,11 +12,6 @@ class DummyBaseController < PgEngine::BaseController
   end
 end
 
-Rails.application.routes.draw do
-  get :action_with_redirect, to: 'dummy_base#action_with_redirect'
-  get :check_dev_user, to: 'dummy_base#check_dev_user'
-end
-
 # rubocop:disable RSpec/MultipleExpectations
 # rubocop:disable RSpec/FilePath
 # rubocop:disable RSpec/SpecFilePathFormat
