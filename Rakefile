@@ -1,6 +1,7 @@
 require "bundler/setup"
 
 APP_RAKEFILE = File.expand_path("spec/dummy/Rakefile", __dir__)
+
 load "rails/tasks/engine.rake"
 
 load "rails/tasks/statistics.rake"
@@ -16,8 +17,8 @@ end
 PATHS_TO_TEST='spec pg_scaffold/spec pg_associable/spec pg_engine/spec'
 
 desc "Testear rápido"
-task :test_spring do
-  system "bundle exec spring rspec #{PATHS_TO_TEST}"
+task :test_spring do |t, args|
+  system "bundle exec spring rspec #{PATHS_TO_TEST} #{args.to_a.join(' ')}"
 end
 
 desc "Preparar y testear"
@@ -49,10 +50,15 @@ end
 
 desc 'Pre push tasks'
 task :prepush do
-  system 'bundle exec rubocop -A'
   if `git status -s` != ''
     system 'git add .'
-    system 'git commit -m "Lint [automatic on prepush]"'
+    system 'git commit -m "Some changes that wasn\'t commited on prepush [automatic commit]"'
+  end
+  system 'bundle exec rubocop -A'
+  system 'npx --no-install eslint --fix .'
+  if `git status -s` != ''
+    system 'git add .'
+    system 'git commit -m "Lint on prepush [automatic commit]"'
   end
   Rake::Task['static_analysis'].invoke
   Rake::Task['test'].invoke
