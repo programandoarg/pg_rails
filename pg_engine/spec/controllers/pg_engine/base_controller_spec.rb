@@ -2,7 +2,7 @@ require 'rails_helper'
 
 class DummyBaseController < PgEngine::BaseController
   def action_with_redirect
-    raise PgEngine::BaseController::Redirect.new('/some_path')
+    raise PgEngine::BaseController::Redirect, '/some_path'
   end
 
   def check_dev_user
@@ -31,9 +31,8 @@ describe DummyBaseController do
 
     before do
       sign_in user if user.present?
+      get :check_dev_user
     end
-
-    before { get :check_dev_user }
 
     it do
       expect(assigns(:dev_user_or_env)).to be_truthy
