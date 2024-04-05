@@ -16,6 +16,7 @@ module PgEngine
 
       def initialize(url)
         @url = url
+        super
       end
     end
 
