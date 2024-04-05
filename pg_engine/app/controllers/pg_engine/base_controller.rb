@@ -11,10 +11,21 @@ module PgEngine
     include RouteHelper
     include PgAssociable::Helpers
 
+    class Redirect < PgEngine::Error
+      attr_accessor :url
+
+      def initialize(url)
+        @url = url
+      end
+    end
+
     protect_from_forgery with: :exception
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
+    rescue_from Redirect do |e|
+      redirect_to e.url
+    end
 
     helper_method :dev?
     def dev?

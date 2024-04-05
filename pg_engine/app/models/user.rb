@@ -76,7 +76,7 @@ class User < ApplicationRecord
     "#{nombre} #{apellido}"
   end
 
-  class Error < StandardError; end
+  class Error < PgEngine::Error; end
 
   def current_account
     raise Error, 'El usuario debe tener cuenta' if accounts.empty?
