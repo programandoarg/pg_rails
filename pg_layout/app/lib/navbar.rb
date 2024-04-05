@@ -10,6 +10,7 @@ class Navbar
     @extensiones = []
   end
 
+  # FIXME: testear
   def add_html(html)
     @extensiones << html
   end
