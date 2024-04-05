@@ -28,13 +28,13 @@ module PgEngine
       redirect_to e.url
     end
 
-    helper_method :dev?
-    def dev?
-      Rails.env.development? || current_user&.developer?
+    helper_method :dev_user_or_env?
+    def dev_user_or_env?
+      Rails.env.development? || dev_user?
     end
 
-    helper_method :developer?
-    def developer?
+    helper_method :dev_user?
+    def dev_user?
       current_user&.developer?
     end
 
