@@ -26,7 +26,7 @@
   <br>
   <br>
   <ul style="max-width: 500px">
-    <% User.all.each do |user| %>
+    <% User.order(:id).each do |user| %>
       <li><%= link_to user, admin_login_as_path(id: user.id) %></li>
     <% end %>
   </ul>
