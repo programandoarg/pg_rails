@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   get :check_dev_user, to: 'dummy_base#check_dev_user'
 end
 
+# rubocop:disable RSpec/MultipleExpectations
+# rubocop:disable RSpec/FilePath
+# rubocop:disable RSpec/SpecFilePathFormat
 describe DummyBaseController do
   describe 'PgEngine::BaseController::Redirect' do
     before { get :action_with_redirect }
@@ -49,3 +52,6 @@ describe DummyBaseController do
     end
   end
 end
+# rubocop:enable RSpec/MultipleExpectations
+# rubocop:enable RSpec/FilePath
+# rubocop:enable RSpec/SpecFilePathFormat
