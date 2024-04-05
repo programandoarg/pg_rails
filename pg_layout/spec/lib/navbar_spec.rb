@@ -10,7 +10,7 @@ describe Navbar do
     let(:some_html) { '<p>Hola</p>' }
 
     it do
-      expect { subject }.to change { instancia.extensiones }
+      expect { subject }.to(change(instancia, :extensiones))
     end
   end
 
@@ -26,7 +26,7 @@ describe Navbar do
     end
 
     it do
-      expect { subject }.to change { instancia.bar('key') }
+      expect { subject }.to(change { instancia.bar('key') })
     end
   end
 end
