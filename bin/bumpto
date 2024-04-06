@@ -1,6 +1,21 @@
 #!/usr/bin/env ruby
 
+def system!(cmd)
+  abort("Error en: #{cmd}") unless system(cmd)
+end
+
 newversion = ARGV[0] || raise('usage: bumpto version')
+
+MAIN_BRANCH = 'master'
+current_branch = `git branch --show-current`
+
+if current_branch != "#{MAIN_BRANCH}\n"
+  system!('git fetch --all --prune')
+  system("git branch -d #{MAIN_BRANCH}")
+  system!("git checkout -b #{MAIN_BRANCH}")
+  system!("git branch -d #{current_branch}")
+  system!("git rebase origin/#{MAIN_BRANCH}")
+end
 
 pkgjson = File.read('package.json')
 newcontent = pkgjson.sub /"version": .*,/, "\"version\": \"#{newversion}\","
@@ -10,9 +25,9 @@ engver = File.read('pg_rails/lib/version.rb')
 newcontent = engver.sub /VERSION = .*/, "VERSION = '#{newversion}'"
 File.write('pg_rails/lib/version.rb', newcontent)
 
-system 'bundle'
+system! 'bundle'
 
-system 'git add .'
-system "git commit -m 'Version #{newversion}'"
+system! 'git add .'
+system! "git commit -m 'Version #{newversion}'"
 
-system 'bundle exec rake release_all'
+system! 'bundle exec rake release_all'

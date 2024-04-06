@@ -25,11 +25,15 @@ class Navbar
 
     # rubocop:disable Security/Eval
     bar_data.map do |item|
-      {
-        title: item['name'],
-        path: eval(item['path']),
-        show: item['policy'] ? eval(item['policy']) : true
-      }
+      begin
+        {
+          title: item['name'],
+          path: eval(item['path']),
+          show: item['policy'] ? eval(item['policy']) : true
+        }
+      rescue
+        pg_err item
+      end
     end
     # rubocop:enable Security/Eval
   end
