@@ -34,7 +34,7 @@ class PgFormBuilder < SimpleForm::FormBuilder
 
     all_errors_tag = build_all_errors_tag unless base_tag
 
-    "#{title}#{base_tag}#{all_errors_tag}"
+    "#{title}#{base_tag}#{all_errors_tag}".html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def build_all_errors_tag
@@ -47,9 +47,7 @@ class PgFormBuilder < SimpleForm::FormBuilder
     # TODO!: poder pasar un block para que no se ejecute si no se va a loguear por el log level
     pg_warn "Not base errors en pg_form: #{object.errors.details}. Record: #{object.inspect}", :debug
 
-    # rubocop:disable Rails/OutputSafety
-    "<span class='not_base_errors' data-errors='#{object.errors.details.to_json}'></span>".html_safe
-    # rubocop:enable Rails/OutputSafety
+    "<span class='not_base_errors' data-errors='#{object.errors.details.to_json}'></span>"
   end
 
   def mensaje
