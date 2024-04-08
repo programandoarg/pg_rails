@@ -16,7 +16,9 @@ html
 
     = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
     = javascript_include_tag 'application', 'data-turbo-track': 'reload', type: 'module'
-    = render partial: 'pg_layout/rollbar'
+    - if Rollbar.configuration.enabled && Rails.application.credentials.rollbar.present?
+      meta name="rollbar-token" content="#{Rails.application.credentials.rollbar.access_token_client}"
+      meta name="rollbar-env" content="#{Rails.env}"
   body
     div class="#{ @sidebar == false ? '' : 'with-sidebar' }"
       - unless @sidebar == false
