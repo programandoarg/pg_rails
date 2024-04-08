@@ -54,6 +54,10 @@ module PgEngine
                                'opened'
                              end
       @navbar = Navbar.new(current_user)
+
+      if Rollbar.configuration.enabled && Rails.application.credentials.rollbar.present?
+        @rollbar_token = Rails.application.credentials.rollbar.access_token_client
+      end
     end
 
     def mobile_device?
