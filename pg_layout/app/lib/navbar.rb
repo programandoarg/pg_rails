@@ -30,6 +30,9 @@ class Navbar
         path: eval(item['path']),
         show: item['policy'] ? eval(item['policy']) : true
       }
+    rescue StandardError
+      # FIXME: testear
+      pg_err item
     end
     # rubocop:enable Security/Eval
   end

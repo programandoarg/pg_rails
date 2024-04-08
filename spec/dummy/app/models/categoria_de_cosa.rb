@@ -45,13 +45,21 @@ class CategoriaDeCosa < ApplicationRecord
 
   validates_associated :cosas
 
-  attr_accessor :validate_aux
+  attr_accessor :validate_created_at, :validate_base
 
-  # def validate_aux
-  #   true
+  # def validate_created_at
+  #   false
   # end
 
-  validate if: :validate_aux do
-    errors.add(:base, 'aux')
+  # def validate_base
+  #   false
+  # end
+
+  validate if: :validate_created_at do
+    errors.add(:created_at, 'created_at las cosas')
+  end
+
+  validate if: :validate_base do
+    errors.add(:base, 'base las cosas')
   end
 end

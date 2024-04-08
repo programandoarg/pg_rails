@@ -26,3 +26,5 @@ spec/dummy/routes.txt
 .env.local
 
 bin/dist
+
+master.key
