@@ -5,7 +5,7 @@ var _rollbarConfig = {
     captureUncaught: true,
     captureUnhandledRejections: true,
     payload: {
-        environment: <%= Rails.env %>,
+        environment: '<%= Rails.env %>',
         //trace_id: 'abc',
         client: {
             javascript: {
