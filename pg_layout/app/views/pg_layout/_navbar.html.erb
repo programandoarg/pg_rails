@@ -54,16 +54,16 @@
               </a>
             </li>
           <% end %>
-
-        <% else %>
-          <li class="nav-item">
-            <%= link_to t("devise.sign_up"), new_user_registration_path, class: 'btn btn-success' %>
-          </li>
+        <% end %>
+      </ul>
+      <% unless user_signed_in? %>
+        <%= link_to t("devise.sign_up"), new_user_registration_path, class: 'btn btn-success' %>
+        <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
             <%= link_to t("devise.sign_in"), new_user_session_path, class: 'nav-link' %>
           </li>
-        <% end %>
-      </ul>
+        </ul>
+      <% end %>
       <% @navbar.extensiones.each do |extension| %>
         <%= extension %>
       <% end %>
