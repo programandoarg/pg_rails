@@ -4,10 +4,7 @@ Rollbar.configure do |config|
 
   config.access_token = Rails.application.credentials.rollbar&.access_token_server
 
-  # Here we'll disable in 'test':
-  if Rails.env.local?
-    config.enabled = false
-  end
+  config.enabled = Rails.env.production? || ENV.fetch('FORCE_ROLLBAR', false)
 
   # By default, Rollbar will try to call the `current_user` controller method
   # to fetch the logged-in user object, and then call that object's `id`
@@ -75,4 +72,20 @@ Rollbar.configure do |config|
   # setup for Heroku. See:
   # https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment
   config.environment = ENV['ROLLBAR_ENV'].presence || Rails.env
+
+  # Este parámetro rollbar lo usa para los log files, pero yo lo uso también para filtrar
+  # el error reporting en before_process
+  config.logger_level = ENV.fetch('ROLLBAR_LOGGER_LEVEL', 'info').to_sym
+
+  config.before_process << Proc.new do |item|
+    acceptable_levels = begin
+      levels = [:debug, :info, :warn, :error]
+      if Rollbar.configuration.logger_level
+        levels[levels.find_index(Rollbar.configuration.logger_level)..-1]
+      else
+        []
+      end
+    end
+    acceptable_levels.include?(item[:level].to_sym) ? 'gogoogogooo' : 'ignored'
+  end
 end

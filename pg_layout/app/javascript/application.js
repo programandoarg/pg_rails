@@ -9,29 +9,29 @@ import * as bootstrap from 'bootstrap'
 
 let rollbarToken = document.head.querySelector('meta[name=rollbar-token]')
 rollbarToken = rollbarToken && rollbarToken.content
-if (rollbarToken) {
-  let rollbarEnv = document.head.querySelector('meta[name=rollbar-env]')
-  rollbarEnv = rollbarEnv && rollbarEnv.content
-  rollbarEnv = rollbarEnv || 'unknown'
 
-  window.Rollbar = Rollbar
+let rollbarEnv = document.head.querySelector('meta[name=rollbar-env]')
+rollbarEnv = rollbarEnv && rollbarEnv.content
+rollbarEnv = rollbarEnv || 'unknown'
 
-  Rollbar.init()
+window.Rollbar = Rollbar
 
-  Rollbar.global({
-    itemsPerMinute: 2,
-    maxItems: 5
-  })
-  Rollbar.configure({
-    accessToken: rollbarToken,
-    captureUncaught: true,
-    captureUnhandledRejections: true,
-    reportLevel: 'warning',
-    payload: {
-      environment: rollbarEnv
-    }
-  })
-}
+Rollbar.init()
+
+Rollbar.global({
+  itemsPerMinute: 2,
+  maxItems: 5
+})
+Rollbar.configure({
+  enabled: !!rollbarToken,
+  accessToken: rollbarToken,
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+  reportLevel: 'warning',
+  payload: {
+    environment: rollbarEnv
+  }
+})
 
 document.addEventListener('turbo:load', bindToasts)
 document.addEventListener('turbo:render', bindToasts)

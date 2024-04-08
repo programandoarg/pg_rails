@@ -18,7 +18,8 @@ export default class extends Controller {
         console.error(notBaseErrors.dataset.errors)
         Rollbar.error(notBaseErrors.dataset.errors)
         const errorTitle = this.element.querySelector('.error-title')
-        errorTitle.innerText = 'Lo lamentamos mucho pero ocurrió algo inesperado'
+        errorTitle.innerText = 'Lo lamentamos mucho pero ocurrió algo inesperado. Por favor, intentá nuevamente o ponete en contacto con nosotros.'
+        // FIXME: link a contacto
       }
     }
   }
