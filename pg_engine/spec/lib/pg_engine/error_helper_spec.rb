@@ -29,7 +29,7 @@ describe PgEngine::ErrorHelper do
 
     context 'cuando solo tiene otros errores' do
       before do
-        categoria.validate_aux = true
+        categoria.validate_base = true
       end
 
       it do
@@ -39,7 +39,7 @@ describe PgEngine::ErrorHelper do
 
     context 'cuando tiene multiples errores' do
       before do
-        categoria.validate_aux = true
+        categoria.validate_base = true
         categoria.nombre = nil
       end
 

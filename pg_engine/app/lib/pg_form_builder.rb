@@ -34,7 +34,7 @@ class PgFormBuilder < SimpleForm::FormBuilder
 
     all_errors_tag = build_all_errors_tag unless base_tag
 
-    title + base_tag + all_errors_tag
+    "#{title}#{base_tag}#{all_errors_tag}"
   end
 
   def build_all_errors_tag
