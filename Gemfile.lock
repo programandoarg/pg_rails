@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pg_rails (7.0.8.pre.alpha.28)
+    pg_rails (7.0.8.pre.alpha.29)
       rails (~> 7.1.3.2)
 
 GEM
