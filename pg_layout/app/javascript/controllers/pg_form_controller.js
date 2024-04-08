@@ -9,5 +9,16 @@ export default class extends Controller {
         }
       })
     })
+    const notBaseErrors = this.element.querySelector('.not_base_errors')
+
+    if (notBaseErrors) {
+      const invalidFields = document.querySelector('.form-control.is-invalid,.form-select.is-invalid')
+      if (!invalidFields) {
+        console.error(notBaseErrors.dataset.errors)
+        Rollbar.error(notBaseErrors.dataset.errors)
+        const errorTitle = this.element.querySelector('.error-title')
+        errorTitle.innerText = 'Lo lamentamos mucho pero ocurrió algo inesperado'
+      }
+    }
   }
 }

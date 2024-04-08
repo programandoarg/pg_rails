@@ -2,6 +2,8 @@ module PgEngine
   module ErrorHelper
     extend ActiveSupport::Concern
 
+    # pg_engine/config/initializers/simple_form_monkey_patch.rb
+
     def merge_association_errors(object, details, assoc_key)
       details = details.except(assoc_key)
       assoc_items = object.send(assoc_key).map(&:errors).map(&:details)
