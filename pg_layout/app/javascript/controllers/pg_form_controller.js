@@ -1,5 +1,5 @@
 import { Controller } from '@hotwired/stimulus'
-import Rollbar from 'rollbar';
+import Rollbar from 'rollbar'
 
 export default class extends Controller {
   connect () {

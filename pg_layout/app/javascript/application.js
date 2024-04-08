@@ -1,4 +1,11 @@
-import Rollbar from 'rollbar';
+import Rollbar from 'rollbar'
+
+import './config'
+import './channels'
+import './controllers'
+
+// Bootstrap's toasts
+import * as bootstrap from 'bootstrap'
 
 let rollbarToken = document.head.querySelector('meta[name=rollbar-token]')
 rollbarToken = rollbarToken && rollbarToken.content
@@ -7,7 +14,6 @@ if (rollbarToken) {
   rollbarEnv = rollbarEnv && rollbarEnv.content
   rollbarEnv = rollbarEnv || 'unknown'
 
-
   window.Rollbar = Rollbar
 
   Rollbar.init()
@@ -15,24 +21,17 @@ if (rollbarToken) {
   Rollbar.global({
     itemsPerMinute: 2,
     maxItems: 5
-  });
+  })
   Rollbar.configure({
     accessToken: rollbarToken,
     captureUncaught: true,
     captureUnhandledRejections: true,
     reportLevel: 'warning',
     payload: {
-      environment: rollbarEnv,
+      environment: rollbarEnv
     }
-  });
+  })
 }
-
-import './config'
-import './channels'
-import './controllers'
-
-// Bootstrap's toasts
-import * as bootstrap from 'bootstrap'
 
 document.addEventListener('turbo:load', bindToasts)
 document.addEventListener('turbo:render', bindToasts)
