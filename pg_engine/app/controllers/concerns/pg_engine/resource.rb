@@ -21,6 +21,7 @@ module PgEngine
       @collection = filtros_y_policy atributos_para_buscar
       @collection = sort_collection(@collection)
       @records_filtered = policy_scope(clase_modelo).any? if @collection.empty?
+      # FIXME: si hay pero en páginas anteriores, mostrar texto correspondiente
       pg_respond_index
     end
 
