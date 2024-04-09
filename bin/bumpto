@@ -45,7 +45,7 @@ if proj
     left = SECONDS - i
     puts "Dandole tiempo a rubygems para que actualice: #{left}"
     sleep 1
-  end 
+  end
 
   FileUtils.chdir("../#{proj}") do
     system! './bin/update_pgrails'

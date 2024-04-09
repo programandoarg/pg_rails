@@ -1,5 +1,9 @@
 require "bundler/setup"
 
+def playchord
+  system 'play -n synth pl G2 pl B2 pl D3 pl G3 pl D4 pl G4 delay 0 .05 .1 .15 .2 .25 remix - fade 0 4 .1 norm -1'
+end
+
 APP_RAKEFILE = File.expand_path("spec/dummy/Rakefile", __dir__)
 
 load "rails/tasks/engine.rake"
@@ -62,6 +66,8 @@ task :prepush do
   end
   Rake::Task['static_analysis'].invoke
   Rake::Task['test'].invoke
+ensure
+  playchord
 end
 
 desc 'Release all'
