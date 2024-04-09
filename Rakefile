@@ -54,7 +54,7 @@ task :prepush do
     system 'git add .'
     system 'git commit -m "Some changes that wasn\'t commited on prepush [automatic commit]"'
   end
-  system 'bundle exec rubocop -A'
+  system 'bundle exec rubocop -a'
   system 'npx --no-install eslint --fix .'
   if `git status -s` != ''
     system 'git add .'

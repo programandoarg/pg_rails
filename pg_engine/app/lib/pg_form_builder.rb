@@ -45,7 +45,8 @@ class PgFormBuilder < SimpleForm::FormBuilder
     return unless not_base_errors
 
     # TODO!: poder pasar un block para que no se ejecute si no se va a loguear por el log level
-    pg_warn "Not base errors en pg_form: #{object.errors.details}. Record: #{object.inspect}", :debug
+    # TODO: quizá esta warning loguearla pero no mandarla a rollbar por si son demasiadas
+    pg_warn "Not base errors en pg_form: #{object.errors.details}. Record: #{object.inspect}", :warn
 
     "<span class='not_base_errors' data-errors='#{object.errors.details.to_json}'></span>"
   end
