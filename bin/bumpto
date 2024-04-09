@@ -39,7 +39,7 @@ system! 'bundle exec rake release_all'
 
 proj = ENV['UPGRADE_PROJECT_AFTER_PGRAILS']
 if proj
-  SECONDS = 4
+  SECONDS = 15
   puts "Dandole tiempo a rubygems para que actualice para actualizar #{proj}"
   SECONDS.times.each do |i|
     left = SECONDS - i
