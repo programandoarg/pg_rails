@@ -57,9 +57,11 @@ end
 
 desc 'Pre push tasks'
 task :prepush do
+  # FIXME: mensaje con el diff
   if `git status -s` != ''
+    changes = `git diff --name-only`.gsub "\n", ''
     system 'git add .'
-    system 'git commit -m "Some changes that wasn\'t commited on prepush [automatic commit]"'
+    system "git commit -m \"[automatic commit] #{changes} (Some changes that wasn't commited on prepush)\""
   end
   system 'bundle exec rubocop -a'
   system 'npx --no-install eslint --fix .'
