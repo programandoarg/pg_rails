@@ -11,5 +11,6 @@ gemspec
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-# group :development, :test do
-# end
+group :development, :test do
+  gem 'rubocop', '~> 1.60.2'
+end

@@ -115,7 +115,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bullet', "~> 7.1.6"
 
     # Linters
-  spec.add_development_dependency 'rubocop', "~> 1.60.2"
+  spec.add_development_dependency 'rubocop', '~> 1.60.2'
 
   spec.add_development_dependency 'rubocop-rails', "~> 2.23.1"
   spec.add_development_dependency 'rubocop-rspec', "~> 2.26.1"
