@@ -89,7 +89,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'jsbundling-rails', "~> 1.3"
   spec.add_dependency 'cssbundling-rails', "~> 1.3"
 
-  spec.add_dependency 'turbo-rails', "~> 1.5"
+  spec.add_dependency 'turbo-rails', "~> 2.0"
 
   spec.add_dependency 'activeadmin', "~> 3.2.0"
 
@@ -100,7 +100,6 @@ Gem::Specification.new do |spec|
 
   # Use Redis adapter to run Action Cable in production
   spec.add_dependency 'redis', '~> 5.1'
-
   ### Development dependencies
   #---------------------------
   # Misc
@@ -120,6 +119,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'slim_lint', "~> 0.26.0"
   spec.add_development_dependency 'ruby-lint', "~> 0.9.1"
   spec.add_development_dependency 'brakeman', "~> 6.1"
+  spec.add_development_dependency 'bundler-audit', "~> 0.9.1"
 
   # Capybara
   spec.add_development_dependency 'capybara', "~> 3.40.0"
