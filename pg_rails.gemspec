@@ -100,7 +100,6 @@ Gem::Specification.new do |spec|
 
   # Use Redis adapter to run Action Cable in production
   spec.add_dependency 'redis', '~> 5.1'
-gem "bootsnap", require: false
   ### Development dependencies
   #---------------------------
   # Misc
@@ -120,7 +119,7 @@ gem "bootsnap", require: false
   spec.add_development_dependency 'slim_lint', "~> 0.26.0"
   spec.add_development_dependency 'ruby-lint', "~> 0.9.1"
   spec.add_development_dependency 'brakeman', "~> 6.1"
-gem "bundler-audit", require: false
+  spec.add_development_dependency 'bundler-audit', "~> 0.9.1"
 
   # Capybara
   spec.add_development_dependency 'capybara', "~> 3.40.0"
