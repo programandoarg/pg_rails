@@ -1,7 +1,10 @@
 require "bundler/setup"
 
 def playchord
-  system 'play -n synth pl G2 pl B2 pl D3 pl G3 pl D4 pl G4 delay 0 .05 .1 .15 .2 .25 remix - fade 0 4 .1 norm -1'
+  if ENV['PLAYSOUND_CMD']
+    system ENV['PLAYSOUND_CMD']
+    # system 'play -n synth pl G2 pl B2 pl D3 pl G3 pl D4 pl G4 delay 0 .05 .1 .15 .2 .25 remix - fade 0 4 .1 norm -1'
+  end
 end
 
 APP_RAKEFILE = File.expand_path("spec/dummy/Rakefile", __dir__)
@@ -55,8 +58,9 @@ end
 desc 'Pre push tasks'
 task :prepush do
   if `git status -s` != ''
+    changes = `git diff --name-only`.gsub "\n", ''
     system 'git add .'
-    system 'git commit -m "Some changes that wasn\'t commited on prepush [automatic commit]"'
+    system "git commit -m \"[automatic commit] #{changes} (Some changes that wasn't commited on prepush)\""
   end
   system 'bundle exec rubocop -a'
   system 'npx --no-install eslint --fix .'

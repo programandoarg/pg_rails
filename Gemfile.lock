@@ -2,7 +2,41 @@ PATH
   remote: .
   specs:
     pg_rails (7.0.8.pre.alpha.31)
+      activeadmin (~> 3.2.0)
+      anycable (= 1.5.0)
+      anycable-rails (~> 1.5.1)
+      anycable-rails-jwt (~> 0.2.0)
+      audited (~> 5.4.3)
+      breadcrumbs_on_rails (~> 4.1.0)
+      cable_ready (~> 5.0)
+      caxlsx_rails (~> 0.6.3)
+      cssbundling-rails (~> 1.3)
+      devise (~> 4.9.3)
+      devise-i18n (~> 1.12.0)
+      discard (~> 1.3.0)
+      dotenv-rails (~> 3.1.0)
+      draper (~> 4.0.2)
+      enumerize (~> 2.7.0)
+      faker (~> 3.2.3)
+      hashid-rails (~> 1.0)
+      image_processing (~> 1.2)
+      jsbundling-rails (~> 1.3)
+      kaminari (~> 1.2.2)
+      kaminari-i18n (~> 0.5.0)
+      nokogiri (~> 1.16)
+      pg (~> 1.5.4)
+      puma (~> 6.4)
+      pundit (~> 2.3.1)
       rails (~> 7.1.3.2)
+      rails-i18n (~> 7.0.8)
+      rainbow (~> 3.1.1)
+      redis (~> 5.1)
+      rollbar (~> 3.5.1)
+      sassc (~> 2.4.0)
+      simple_form (~> 5.3.0)
+      slim-rails (~> 3.6.3)
+      sprockets-rails (~> 3.4.2)
+      turbo-rails (~> 1.5)
 
 GEM
   remote: https://rubygems.org/
@@ -99,18 +133,18 @@ GEM
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
-    anycable (1.4.4)
-      anycable-core (= 1.4.4)
+    anycable (1.5.0)
+      anycable-core (= 1.5.0)
       grpc (~> 1.53)
-    anycable-core (1.4.4)
+    anycable-core (1.5.0)
       anyway_config (~> 2.2)
       google-protobuf (~> 3.25)
-    anycable-rails (1.4.4)
-      anycable
-      anycable-rails-core (= 1.4.4)
-    anycable-rails-core (1.4.4)
+    anycable-rails (1.5.1)
+      anycable (~> 1.5.0)
+      anycable-rails-core (= 1.5.1)
+    anycable-rails-core (1.5.1)
       actioncable (>= 6.0)
-      anycable-core (~> 1.4)
+      anycable-core (~> 1.5.0)
       globalid
     anycable-rails-jwt (0.2.0)
       anycable-rails-core (~> 1.1)
@@ -208,9 +242,6 @@ GEM
     formtastic (5.0.0)
       actionpack (>= 6.0.0)
     formtastic_i18n (0.7.0)
-    fuubar (2.5.1)
-      rspec-core (~> 3.0)
-      ruby-progressbar (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
     google-protobuf (3.25.3-x86_64-linux)
@@ -501,62 +532,27 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  activeadmin
-  annotate
-  anycable-rails
-  anycable-rails-jwt
-  audited (~> 5.0)
-  brakeman
-  breadcrumbs_on_rails
-  bullet
-  byebug
-  cable_ready (~> 5.0)
-  capybara
-  caxlsx_rails
-  cssbundling-rails (~> 1.3)
-  database_cleaner-active_record
-  devise
-  devise-i18n
-  discard
-  dotenv-rails
-  draper
-  enumerize
-  factory_bot_rails
-  faker
-  fuubar
-  hashid-rails (~> 1.0)
-  image_processing (~> 1.2)
-  jsbundling-rails (~> 1.3)
-  kaminari
-  kaminari-i18n
-  letter_opener
-  nokogiri
-  overcommit
-  pg (~> 1.1)
+  annotate (~> 3.2.0)
+  brakeman (~> 6.1)
+  bullet (~> 7.1.6)
+  byebug (~> 11.1)
+  capybara (~> 3.40.0)
+  database_cleaner-active_record (~> 2.1.0)
+  factory_bot_rails (~> 6.4.3)
+  letter_opener (~> 1.8.1)
+  overcommit (~> 0.61.0)
   pg_rails!
-  puma
-  pundit
-  rails (~> 7.1.3.1)
-  rails-controller-testing
-  rails-i18n
-  rainbow
-  redis (~> 5)
-  rollbar
-  rspec-rails (~> 6.0.0)
-  rubocop
-  rubocop-rails
-  rubocop-rspec
-  ruby-lint
-  sassc
-  selenium-webdriver
-  simple_form
+  rails-controller-testing (~> 1.0.5)
+  rspec-rails (~> 6.0.4)
+  rubocop (~> 1.60.2)
+  rubocop-rails (~> 2.23.1)
+  rubocop-rspec (~> 2.26.1)
+  ruby-lint (~> 0.9.1)
+  selenium-webdriver (~> 4.17.0)
   simplecov (~> 0.22.0)
-  slim-rails
-  slim_lint
-  spring
-  spring-commands-rspec
-  sprockets-rails
-  turbo-rails (~> 1.5)
+  slim_lint (~> 0.26.0)
+  spring (~> 4.1.3)
+  spring-commands-rspec (~> 1.0.4)
 
 BUNDLED WITH
    2.4.22

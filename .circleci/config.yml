@@ -35,7 +35,7 @@ commands:
             gem install slim_lint ruby-lint
             bundle config --local deployment true
             bundle config --local path vendor/bundle
-            bundle config --local without development:production
+            bundle config --local without production
             bundle check || (bundle install --jobs=4 --retry=3 && bundle clean)
       - save_cache:
           paths:
