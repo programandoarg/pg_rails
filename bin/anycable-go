@@ -3,7 +3,7 @@
 cd $(dirname $0)/..
 
 # It's recommended to use the exact version of AnyCable-Go here
-version="1.4.4"
+version="1.5.0"
 
 if [ ! -f ./bin/dist/anycable-go ]; then
   echo "AnyCable-go is not installed, downloading..."
