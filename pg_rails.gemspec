@@ -100,6 +100,7 @@ Gem::Specification.new do |spec|
 
   # Use Redis adapter to run Action Cable in production
   spec.add_dependency 'redis', '~> 5.1'
+
   ### Development dependencies
   #---------------------------
   # Misc
@@ -108,6 +109,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'database_cleaner-active_record', "~> 2.1.0"
   spec.add_development_dependency 'byebug', "~> 11.1"
   spec.add_development_dependency 'annotate', "~> 3.2.0"
+  spec.add_development_dependency 'web-console', "~> 4.2.1"
 
   # Bullet
   spec.add_development_dependency 'bullet', "~> 7.1.6"
