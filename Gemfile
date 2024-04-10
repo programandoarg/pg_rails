@@ -13,4 +13,9 @@ gemspec
 
 group :development, :test do
   gem 'rubocop', '~> 1.60.2'
+  gem 'rubocop-rails', "~> 2.23.1"
+  gem 'rubocop-rspec', "~> 2.26.1"
+  gem 'slim_lint', "~> 0.26.0"
+  gem 'ruby-lint', "~> 0.9.1"
+  gem 'brakeman', "~> 6.1"
 end
