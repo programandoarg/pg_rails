@@ -12,6 +12,7 @@ gemspec
 # your gem to rubygems.org.
 
 group :development, :test do
+  # FIXME: probar luego quitando esto
   gem 'rubocop', '~> 1.60.2'
   gem 'rubocop-rails', "~> 2.23.1"
   gem 'rubocop-rspec', "~> 2.26.1"
