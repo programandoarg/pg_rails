@@ -143,9 +143,10 @@ gem "image_processing", "~> 1.2"
 
 gem "hashid-rails", "~> 1.0"
 
-gem "anycable-rails"
-# FIXME: update to 1.5.0
-# gemspec
+gem "anycable", "= 1.5.0"
+gem "anycable-rails", "~> 1.5.1"
+# FIXME: gemspec
+
 gem "anycable-rails-jwt"
 
 gem "cable_ready", "~> 5.0"

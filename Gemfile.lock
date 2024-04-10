@@ -99,18 +99,18 @@ GEM
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
-    anycable (1.4.4)
-      anycable-core (= 1.4.4)
+    anycable (1.5.0)
+      anycable-core (= 1.5.0)
       grpc (~> 1.53)
-    anycable-core (1.4.4)
+    anycable-core (1.5.0)
       anyway_config (~> 2.2)
       google-protobuf (~> 3.25)
-    anycable-rails (1.4.4)
-      anycable
-      anycable-rails-core (= 1.4.4)
-    anycable-rails-core (1.4.4)
+    anycable-rails (1.5.1)
+      anycable (~> 1.5.0)
+      anycable-rails-core (= 1.5.1)
+    anycable-rails-core (1.5.1)
       actioncable (>= 6.0)
-      anycable-core (~> 1.4)
+      anycable-core (~> 1.5.0)
       globalid
     anycable-rails-jwt (0.2.0)
       anycable-rails-core (~> 1.1)
@@ -503,7 +503,8 @@ PLATFORMS
 DEPENDENCIES
   activeadmin
   annotate
-  anycable-rails
+  anycable (= 1.5.0)
+  anycable-rails (~> 1.5.1)
   anycable-rails-jwt
   audited (~> 5.0)
   brakeman
