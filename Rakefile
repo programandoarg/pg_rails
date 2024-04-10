@@ -57,7 +57,6 @@ end
 
 desc 'Pre push tasks'
 task :prepush do
-  # FIXME: mensaje con el diff
   if `git status -s` != ''
     changes = `git diff --name-only`.gsub "\n", ''
     system 'git add .'
