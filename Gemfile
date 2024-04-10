@@ -11,145 +11,109 @@ gemspec
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-# To use a debugger
-# gem 'byebug', group: [:development, :test]
 
+gem 'caxlsx_rails', "~> 0.6.3"
 
-gem 'caxlsx_rails'
+gem 'draper', "~> 4.0.2"
 
-gem 'draper'
-
-gem 'pg', '~> 1.1'
+gem 'pg', '~> 1.5.4'
 
 gem "rails", "~> 7.1.3.1"
 
-gem 'rainbow'
+gem 'rainbow', "~> 3.1.1"
 
-gem 'simple_form'
+gem 'simple_form', "~> 5.3.0"
 
-  # User manamement
-  # Al updatear, chequear los controllers overrideados
-gem 'devise'
-gem 'devise-i18n'
+# User manamement
+# Al updatear, chequear los controllers overrideados
+gem 'devise', "~> 4.9.3"
+gem 'devise-i18n', "~> 1.12.0"
 
   # Rails internationalization
-gem 'rails-i18n'
+gem 'rails-i18n', "~> 7.0.8"
 
   # Slim template
-gem 'slim-rails'
+gem 'slim-rails', "~> 3.6.3"
 
   # Better enums
-gem 'enumerize'
+gem 'enumerize', "~> 2.7.0"
 
   # XML parsing
-gem 'nokogiri'
+gem 'nokogiri', "~> 1.16"
 
   # Pagination
-gem 'kaminari'
-gem 'kaminari-i18n'
+gem 'kaminari', "~> 1.2.2"
+gem 'kaminari-i18n', "~> 0.5.0"
 
   # Breadcrumbs
 gem 'breadcrumbs_on_rails'
 
   # Soft deletion
-gem 'discard'
+gem 'discard', "~> 1.3.0"
 
   # DB Audition
-gem "audited", "~> 5.0"
+gem "audited", "~> 5.4.3"
 
   # Access policies
-gem 'pundit'
+gem 'pundit', "~> 2.3.1"
 
 # Dotenv
-gem 'dotenv-rails'
+gem 'dotenv-rails', "~> 3.1.0"
 
+# TODO: mover a development y no usar en prod
+gem 'faker', "~> 3.2.3"
 
+gem "puma", "~> 6.4"
+gem "rollbar", "~> 3.5.1"
 
-
-
-
-
-  # Simplecov
-gem 'simplecov', '~> 0.22.0'
-
-
-  # Spring
-
-gem 'spring'
-gem 'spring-commands-rspec'
-
-
-  # Rspec
-
-gem 'rspec-rails', '~> 6.0.0'
-gem 'factory_bot_rails'
-gem 'rails-controller-testing'
-
-gem 'fuubar'
-gem 'faker'
-
-
-  # # VCR
-# gem 'vcr'
-# gem 'webmock'
-
-
-  # # Capybara
-gem 'capybara'
-gem 'selenium-webdriver'
-
-  # Bullet
-
-gem 'bullet'
-
-
-  # Linters
-gem 'rubocop'
-
-gem 'rubocop-rails'
-gem 'rubocop-rspec'
-gem "slim_lint"
-gem 'ruby-lint'
-gem 'brakeman'
-
-gem "puma"
-gem "rollbar"
-
-
-gem "sprockets-rails"
+gem "sprockets-rails", "~> 3.4.2"
 
 gem "jsbundling-rails", "~> 1.3"
 gem "cssbundling-rails", "~> 1.3"
 
 gem "turbo-rails", "~> 1.5"
-gem "annotate"
 
+gem 'activeadmin', "~> 3.2.0"
 
-gem 'byebug'
+gem 'sassc', "~> 2.4.0"
 
-gem 'activeadmin'
+group :development, :test do
+  gem 'letter_opener', "~> 1.8.1"
+  gem 'overcommit', "~> 0.61.0"
+  gem 'database_cleaner-active_record', "~> 2.1.0"
+  gem 'byebug', "~> 11.1"
+  gem "annotate", "~> 3.2.0"
 
-gem 'sassc'
+  # Bullet
+  gem 'bullet', "~> 7.1.6"
 
-gem 'letter_opener'
+    # Linters
+  gem 'rubocop', "~> 1.60.2"
 
-# TODO: agrupar gemas de development y test
+  gem 'rubocop-rails', "~> 2.23.1"
+  gem 'rubocop-rspec', "~> 2.26.1"
+  gem "slim_lint", "~> 0.26.0"
+  gem 'ruby-lint', "~> 0.9.1"
+  gem 'brakeman', "~> 6.1"
 
-gem 'overcommit'
+    # # Capybara
+  gem 'capybara', "~> 3.40.0"
+  gem 'selenium-webdriver', "~> 4.17.0"
 
-gem 'database_cleaner-active_record'
+  # Simplecov
+  gem 'simplecov', '~> 0.22.0'
+
+  # Spring
+
+  gem 'spring', "~> 4.1.3"
+  gem 'spring-commands-rspec', "~> 1.0.4"
+
+  # Rspec
+
+  gem 'rspec-rails', '~> 6.0.4'
+  gem 'factory_bot_rails', "~> 6.4.3"
+  gem 'rails-controller-testing', "~> 1.0.5"
+end
 
 gem "image_processing", "~> 1.2"
-
 gem "hashid-rails", "~> 1.0"
-
-gem "anycable", "= 1.5.0"
-gem "anycable-rails", "~> 1.5.1"
-# FIXME: gemspec
-
-gem "anycable-rails-jwt"
-
-gem "cable_ready", "~> 5.0"
-
-# Use Redis adapter to run Action Cable in production
-gem "redis", "~> 5"

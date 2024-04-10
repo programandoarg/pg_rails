@@ -27,6 +27,13 @@ Gem::Specification.new do |spec|
   # end
 
   spec.add_dependency "rails", "~> 7.1.3.2"
+  spec.add_dependency "anycable", "= 1.5.0"
+  spec.add_dependency "anycable-rails", "~> 1.5.1"
+  spec.add_dependency "anycable-rails-jwt", "~> 0.2.0"
+  spec.add_dependency "cable_ready", "~> 5.0"
+
+  # Use Redis adapter to run Action Cable in production
+  spec.add_dependency "redis", "~> 5.1"
 
   spec.files = Dir['{pg_associable,pg_engine,pg_layout,pg_scaffold,pg_rails}/**/*', 'MIT-LICENSE', 'README.md']
 end

@@ -10,6 +10,8 @@ require_relative 'pg_engine/utils/pdf_preview_generator'
 
 require_relative '../app/helpers/pg_engine/print_helper'
 
+# FIXME: require gems
+
 module PgEngine
   class << self
     attr_writer :configuracion
