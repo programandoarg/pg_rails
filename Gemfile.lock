@@ -36,7 +36,7 @@ PATH
       simple_form (~> 5.3.0)
       slim-rails (~> 3.6.3)
       sprockets-rails (~> 3.4.2)
-      turbo-rails (~> 1.5)
+      turbo-rails (~> 2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -509,7 +509,7 @@ GEM
     thread-local (1.1.0)
     tilt (2.3.0)
     timeout (0.4.1)
-    turbo-rails (1.5.0)
+    turbo-rails (2.0.5)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
