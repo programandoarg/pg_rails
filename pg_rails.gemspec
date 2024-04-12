@@ -78,9 +78,6 @@ Gem::Specification.new do |spec|
   # Dotenv
   spec.add_dependency 'dotenv-rails', "~> 3.1.0"
 
-  # TODO: mover a development y no usar en prod
-  spec.add_dependency 'faker', "~> 3.2.3"
-
   spec.add_dependency 'puma', "~> 6.4"
   spec.add_dependency 'rollbar', "~> 3.5.1"
 
@@ -138,4 +135,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-rails', '~> 6.0.4'
   spec.add_development_dependency 'factory_bot_rails', "~> 6.4.3"
   spec.add_development_dependency 'rails-controller-testing', "~> 1.0.5"
+  spec.add_development_dependency 'faker', "~> 3.2.3"
 end
