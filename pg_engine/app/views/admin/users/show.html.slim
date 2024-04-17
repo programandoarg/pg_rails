@@ -10,6 +10,9 @@ table.table.table-borderless.table-sm.w-auto.mb-0.m-3
     tr
       th = @clase_modelo.human_attribute_name(att)
       td = @user.send(att)
+  tr
+    th = t('attributes.confirmed_at')
+    td = @user.confirmed_at
   / tr
     th = t('attributes.creado_por')
     td = @user.creado_por
