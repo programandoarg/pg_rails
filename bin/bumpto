@@ -14,7 +14,7 @@ newversion = ARGV[0] || raise('usage: bumpto version')
 MAIN_BRANCH = 'master'
 current_branch = `git branch --show-current`
 
-if current_branch != "#{MAIN_BRANCH}\n"
+if current_branch != "#{MAIN_BRANCH}\n" && !ENV['DONT_REBASE']
   system!('git fetch --all --prune')
   system("git branch -d #{MAIN_BRANCH}")
   system!("git checkout -b #{MAIN_BRANCH}")
