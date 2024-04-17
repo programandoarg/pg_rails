@@ -18,7 +18,7 @@ es:
     "yes": 'Sí'
     "no": 'No'
     required:
-      text: 'required'
+      text: 'Obligatorio'
       mark: '*'
       # You can uncomment the line below if you need to overwrite the whole required html.
       # When using html, text and mark won't be used.
