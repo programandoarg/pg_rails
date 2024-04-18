@@ -73,6 +73,9 @@ $chevron-color: 200,200,200,.5;
     }
   }
 }
+.offcanvas {
+  --bs-offcanvas-width: 250px;
+}
 /* Layout */
 .with-sidebar {
   display: flex;
