@@ -8,6 +8,7 @@ ActiveAdmin.register User do
     column :email
     column :current_sign_in_at
     column :created_at
+    column :developer
     actions
   end
   filter :email
