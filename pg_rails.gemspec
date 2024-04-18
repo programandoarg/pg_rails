@@ -107,6 +107,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'byebug', "~> 11.1"
   spec.add_development_dependency 'annotate', "~> 3.2.0"
   spec.add_development_dependency 'web-console', "~> 4.2.1"
+  spec.add_development_dependency 'stimulus-rails', '~> 1.3.3'
 
   # Bullet
   spec.add_development_dependency 'bullet', "~> 7.1.6"

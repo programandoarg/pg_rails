@@ -4,12 +4,17 @@
       <button data-controller="navbar" data-action="navbar#expandNavbar" class="btn btn-outline-primary me-2 d-none d-<%= @breakpoint_navbar_expand %>-inline-block">
         <i class="bi bi-list"></i>
       </button>
+
+      <button class="btn btn-outline-primary d-inline-block d-<%= @breakpoint_navbar_expand %>-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <i class="bi bi-list"></i>
+      </button>
+
     <% end %>
     <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-    <button class="navbar-toggler btn btn-outline-primary me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <%# <button class="navbar-toggler btn btn-outline-primary me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <i class="bi bi-list"></i>
       <!-- <span class="navbar-toggler-icon"></span> -->
-    </button>
+    </button> %>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mb-2 mb-lg-0">
         <% @navbar.bar('topbar.before').each do |entry| %>
@@ -44,16 +49,6 @@
               </li>
             </ul>
           </li>
-          <%# Los item de sidebar en mobile %>
-          <% @navbar.bar('sidebar').each do |entry| %>
-            <% next if @navbar.hide_entry?(entry) %>
-            <% random_id = rand(99999).to_s %>
-            <li class="nav-item d-md-none">
-              <a class="nav-link" href="<%= entry[:path] %>" role="button">
-                <%= entry[:title] %>
-              </a>
-            </li>
-          <% end %>
         <% end %>
       </ul>
       <% unless user_signed_in? %>
