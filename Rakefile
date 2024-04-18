@@ -58,14 +58,14 @@ end
 desc 'Pre push tasks'
 task :prepush do
   if `git status -s` != ''
-    changes = `git diff --name-only`.gsub "\n", ''
+    changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
     system 'git add .'
     system "git commit -m \"[auto commit] #{changes} (Some changes that wasn't commited on prepush)\""
   end
   system 'bundle exec rubocop -a'
   system 'npx --no-install eslint --fix .'
   if `git status -s` != ''
-    changes = `git diff --name-only`.gsub "\n", ''
+    changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
     system 'git add .'
     system "git commit -m \"[auto commit] #{changes} (Lint on prepush)\""
   end
