@@ -102,13 +102,12 @@ module PgEngine
       return if number.blank?
 
       # FIXME: testear
-      precision ||= begin
-        if (number % 0.01).positive?
-          3
-        else
-          (number % 1).positive? ? 2 : 0
-        end
-      end
+      precision ||= if (number % 0.01).positive?
+                      3
+                    else
+                      (number % 1).positive? ? 2 : 0
+                    end
+
       "#{simbolo} #{number_with_precision(number, delimiter: '.', separator: ',',
                                                   precision:)}"
     end

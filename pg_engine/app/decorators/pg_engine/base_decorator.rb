@@ -115,7 +115,7 @@ module PgEngine
       defaults << :"helpers.submit.#{object.model_name.i18n_key}.#{key}"
       defaults << :"helpers.submit.#{key}"
       defaults << "#{key.to_s.humanize} #{model}"
-      I18n.t(defaults.shift, model: model, default: defaults)
+      I18n.t(defaults.shift, model:, default: defaults)
     end
 
     private
