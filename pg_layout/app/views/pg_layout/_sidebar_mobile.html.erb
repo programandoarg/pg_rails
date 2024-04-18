@@ -1,0 +1,97 @@
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel"></h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <% @navbar.bar('topbar.before').each do |entry| %>
+        <li class="nav-item">
+          <a class="nav-link" href="<%= entry[:path] %>">
+            <%= entry[:title] %>
+          </a>
+        </li>
+      <% end %>
+      <% if user_signed_in? %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= current_user %>
+          </a>
+          <ul class="dropdown-menu">
+            <% if policy(current_user).edit? %>
+              <li>
+                <%= link_to "Mi perfil", edit_user_registration_path, class: 'dropdown-item' %>
+              </li>
+            <% end %>
+            <% @navbar.bar('topbar.dropdown_user').each do |entry| %>
+              <% next if @navbar.hide_entry?(entry) %>
+              <li>
+                <a class="dropdown-item" href="<%= entry[:path] %>">
+                  <%= entry[:title] %>
+                </a>
+              </li>
+            <% end %>
+
+            <li>
+              <%= link_to t("devise.sign_out"), destroy_user_session_path, data: { 'turbo-method': 'delete' }, class: 'dropdown-item' %>
+            </li>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+    <% unless user_signed_in? %>
+      <%= link_to t("devise.sign_up"), new_user_registration_path, class: 'btn btn-success' %>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to t("devise.sign_in"), new_user_session_path, class: 'nav-link' %>
+        </li>
+      </ul>
+    <% end %>
+    <% @navbar.extensiones.each do |extension| %>
+      <%= extension %>
+    <% end %>
+
+
+    <% if user_signed_in? %>
+      <div class="sidebar--large-items">
+        <hr>
+        <%# <div class="sidebar--small-items">
+          <ul class="list-unstyled ps-0">
+            <li class="mb-1 text-center">
+              <a href="javascript:void(0)" class="nav-link" data-bs-toggle="tooltip" data-bs-title="Agenda">
+                <i class="bi bi-calendar"></i>
+              </a>
+            </li>
+          </ul>
+        </div> %>
+        <div class="sidebar--large-items">
+          <ul class="list-unstyled ps-0">
+            <% @navbar.bar('sidebar').each do |entry| %>
+              <% next if @navbar.hide_entry?(entry) %>
+              <% random_id = rand(99999).to_s %>
+              <li class="mb-1">
+                <% if entry[:children].present? %>
+                  <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#<%= 'collapse-' + random_id %>" aria-expanded="true">
+                    <%= entry[:title] %>
+                  </button>
+                  <div class="collapse <%= @navbar.any_children_active?(entry, request) ? 'show' : '' %>" id="<%= 'collapse-' + random_id %>">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                      <% entry[:children].each do |child| %>
+                        <% next if @navbar.hide_entry?(child) %>
+                        <li><a href="<%= child[:path] %>" class="<%= @navbar.active_entry?(child, request) ? 'active' : '' %> d-inline-flex text-decoration-none rounded"><%= child[:title] %></a></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% else %>
+                  <a href="<%= entry[:path] %>" class="<%= @navbar.active_entry?(entry, request) ? 'active' : '' %> d-inline-flex text-decoration-none ms-4"><%= entry[:title] %></a>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+          <hr>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</div>

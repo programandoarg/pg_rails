@@ -21,6 +21,8 @@ html
       meta name="rollbar-token" content="#{@rollbar_token}"
       meta name="rollbar-env" content="#{Rails.env}"
   body
+    = render partial: 'pg_layout/sidebar_mobile'
+
     div class="#{ @sidebar == false ? '' : 'with-sidebar' }"
       - unless @sidebar == false
         = render partial: 'pg_layout/sidebar'
