@@ -32,7 +32,7 @@ module PgEngine
     end
 
     def new
-      add_breadcrumb 'Crear'
+      add_breadcrumb instancia_modelo.submit_default_value
     end
 
     def edit

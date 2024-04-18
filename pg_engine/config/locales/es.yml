@@ -11,8 +11,6 @@ es:
     confirmed_at: Fecha de confirmación
     actualizado_por: Actualizado por
     creado_por: Creado por
-  form:
-    create: Crear
   ancestry:
     exclude_self: No puede ser hijx de si mismx
   simple_form:
