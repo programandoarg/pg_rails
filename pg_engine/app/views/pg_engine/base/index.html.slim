@@ -34,7 +34,9 @@ div
           tr
             - atributos_para_listar.each do |att|
               th = encabezado att, ordenable: true
-            th.text-end = @clase_modelo.new.decorate.export_link(request.url)
+            th.text-end
+              - unless @export_link == false
+                = @clase_modelo.new.decorate.export_link(request.url)
         tbody
           - @collection.each do |object|
             - object = object.decorate
