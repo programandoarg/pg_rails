@@ -101,7 +101,13 @@ module PgEngine
     def print_currency(number, simbolo: '$', precision: nil)
       return if number.blank?
 
-      precision ||= (number % 1).positive? ? 2 : 0
+      # FIXME: testear
+      precision ||= if (number % 0.01).positive?
+                      3
+                    else
+                      (number % 1).positive? ? 2 : 0
+                    end
+
       "#{simbolo} #{number_with_precision(number, delimiter: '.', separator: ',',
                                                   precision:)}"
     end

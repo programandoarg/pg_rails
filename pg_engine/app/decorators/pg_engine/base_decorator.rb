@@ -78,15 +78,11 @@ module PgEngine
     def new_link(remote: nil, klass: 'btn-warning')
       return unless Pundit.policy!(helpers.send(PgEngine.configuracion.current_user_method), object).new?
 
-      word_to_create = I18n.t("form.#{object.class.nombre_singular.downcase}.create", default: :'form.create')
-
-      full_text = "#{word_to_create} #{object.class.nombre_singular.downcase}"
-
-      helpers.content_tag :span, rel: :tooltip, title: word_to_create do
+      helpers.content_tag :span, rel: :tooltip, title: submit_default_value do
         helpers.link_to(new_object_url, class: "btn btn-sm #{klass}",
                                         remote:) do
           helpers.content_tag(:span, nil,
-                              class: clase_icono('plus').to_s) + "<span class='d-none d-sm-inline'> #{full_text}</span>".html_safe
+                              class: clase_icono('plus').to_s) + "<span class='d-none d-sm-inline'> #{submit_default_value}</span>".html_safe
         end
       end
     end
@@ -109,6 +105,17 @@ module PgEngine
 
     def target_index
       pg_namespace.present? ? [pg_namespace, object.class] : object.class
+    end
+
+    # actionview-7.1.3.2/lib/action_view/helpers/form_helper.rb
+    def submit_default_value
+      key = :create
+      model = object.model_name.human
+      defaults = []
+      defaults << :"helpers.submit.#{object.model_name.i18n_key}.#{key}"
+      defaults << :"helpers.submit.#{key}"
+      defaults << "#{key.to_s.humanize} #{model}"
+      I18n.t(defaults.shift, model:, default: defaults)
     end
 
     private
