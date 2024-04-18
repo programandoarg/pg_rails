@@ -3,7 +3,6 @@
 
 import { createConsumer } from '@anycable/web'
 
-
 let cableProtocol = document.head.querySelector('meta[name=actioncable-protocol]')
 cableProtocol = cableProtocol && cableProtocol.content
 cableProtocol = cableProtocol || 'actioncable-v1-ext-json'
