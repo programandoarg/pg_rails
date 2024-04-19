@@ -32,23 +32,7 @@ class PgFormBuilder < SimpleForm::FormBuilder
     base_message = (base_errors.map(&:to_s).join('<br>') if base_errors.present?)
     base_tag = error_notification(message: base_message, class: 'alert alert-danger') if base_message
 
-    all_errors_tag = build_all_errors_tag unless base_tag
-
-    "#{title}#{base_tag}#{all_errors_tag}".html_safe # rubocop:disable Rails/OutputSafety
-  end
-
-  def build_all_errors_tag
-    details = object.errors.details.dup
-    details.delete(:base)
-    not_base_errors = details.any?
-
-    return unless not_base_errors
-
-    # TODO!: poder pasar un block para que no se ejecute si no se va a loguear por el log level
-    # TODO: quizá esta warning loguearla pero no mandarla a rollbar por si son demasiadas
-    pg_warn "Not base errors en pg_form: #{object.errors.details}. Record: #{object.inspect}", :warn
-
-    "<span class='not_base_errors' data-errors='#{object.errors.details.to_json}'></span>"
+    "#{title}#{base_tag}".html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def mensaje

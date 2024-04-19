@@ -15,9 +15,6 @@ describe PgFormBuilder do
   describe '#mensajes_de_error' do
     subject { instancia.mensajes_de_error }
 
-    # expect(subject)
-    # it { expect(subject).to eq 'Por favor, revisá los campos obligatorios:' }
-
     context 'cuando solo tiene errores de presencia' do
       before do
         categoria.nombre = nil
@@ -25,7 +22,6 @@ describe PgFormBuilder do
       end
 
       it { expect(subject).to include 'Por favor, revisá los campos obligatorios:' }
-      it { expect(subject).to include 'not_base_errors' }
     end
 
     context 'cuando solo tiene errores de :base' do
@@ -35,7 +31,6 @@ describe PgFormBuilder do
       end
 
       it { expect(subject).to include 'Por favor, revisá los siguientes errores' }
-      it { expect(subject).not_to include 'not_base_errors' }
     end
   end
 

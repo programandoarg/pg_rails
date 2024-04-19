@@ -3,6 +3,7 @@
 module PgEngine
   module FormHelper
     def pg_form_for(object, *args, &)
+      resource = object
       if object.is_a? PgEngine::BaseDecorator
         object = object.target_object
       elsif object.is_a?(PgEngine::BaseRecord) &&
@@ -20,6 +21,11 @@ module PgEngine
                                else
                                  'pg-form'
                                end
+
+      if resource.errors.any?
+        options[:html][:data] ||= {}
+        options[:html][:data][:errors] = resource.errors.details.to_json
+      end
 
       simple_form_for(object, *(args << options), &)
     end
