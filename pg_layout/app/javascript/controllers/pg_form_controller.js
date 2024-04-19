@@ -13,7 +13,7 @@ export default class extends Controller {
     const notBaseErrors = this.element.querySelector('.not_base_errors')
 
     if (notBaseErrors) {
-      const invalidFeedback = document.querySelector('.invalid-feedback')
+      const invalidFeedback = document.querySelector('.is-invalid')
       if (!invalidFeedback) {
         console.error(notBaseErrors.dataset.errors)
         Rollbar.error(notBaseErrors.dataset.errors)

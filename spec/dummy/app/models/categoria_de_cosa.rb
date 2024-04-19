@@ -48,11 +48,11 @@ class CategoriaDeCosa < ApplicationRecord
   attr_accessor :validate_created_at, :validate_base
 
   # def validate_created_at
-  #   false
+  #   true
   # end
 
   # def validate_base
-  #   false
+  #   true
   # end
 
   validate if: :validate_created_at do
