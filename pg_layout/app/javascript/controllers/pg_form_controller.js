@@ -10,16 +10,18 @@ export default class extends Controller {
         }
       })
     })
-    const notBaseErrors = this.element.querySelector('.not_base_errors')
-
-    if (notBaseErrors) {
-      const invalidFeedback = document.querySelector('.is-invalid')
-      if (!invalidFeedback) {
-        console.error(notBaseErrors.dataset.errors)
-        Rollbar.error(notBaseErrors.dataset.errors)
+    const errorTitle = this.element.querySelector('.error-title')
+    if (errorTitle) {
+      const invalidField = document.querySelector('.is-invalid')
+      const baseAlert = document.querySelector('.alert-danger')
+      if (!invalidField && !baseAlert) {
         const errorTitle = this.element.querySelector('.error-title')
         errorTitle.innerText = 'Lo lamentamos mucho pero ocurrió algo inesperado. Por favor, intentá nuevamente o ponete en contacto con nosotros.'
         // FIXME: link a contacto
+        let form = this.element.querySelector('form')
+        let errorMsg = `${form.id} - ${form.action} - ${form.dataset.errors}`
+        console.error(errorMsg)
+        Rollbar.error(errorMsg)
       }
     }
   }
