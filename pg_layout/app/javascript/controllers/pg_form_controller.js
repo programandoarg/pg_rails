@@ -18,8 +18,8 @@ export default class extends Controller {
         const errorTitle = this.element.querySelector('.error-title')
         errorTitle.innerText = 'Lo lamentamos mucho pero ocurrió algo inesperado. Por favor, intentá nuevamente o ponete en contacto con nosotros.'
         // FIXME: link a contacto
-        let form = this.element.querySelector('form')
-        let errorMsg = `${form.id} - ${form.action} - ${form.dataset.errors}`
+        const form = this.element.querySelector('form')
+        const errorMsg = `${form.id} - ${form.action} - ${form.dataset.errors}`
         console.error(errorMsg)
         Rollbar.error(errorMsg)
       }
