@@ -51,7 +51,7 @@ module PgEngine
     add_flash_types :warning, :success
 
     before_action do
-      console if params[:show_web_console]
+      console if dev_user_or_env? && (params[:show_web_console] || params[:wc])
     end
 
     before_action do
