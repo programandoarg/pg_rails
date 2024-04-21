@@ -6,7 +6,7 @@ class Current < ActiveSupport::CurrentAttributes
 
   def user=(user)
     super
-    self.account = user.current_account
+    self.account = user&.current_account
     # Time.zone    = user.time_zone
   end
 end
