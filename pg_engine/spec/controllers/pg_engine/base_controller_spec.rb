@@ -47,7 +47,6 @@ describe DummyBaseController do
     end
 
     context 'cuando ocurre en el root_path' do
-
       before do
         allow_any_instance_of(ActionController::TestRequest).to receive(:path).and_return(root_path)
       end
