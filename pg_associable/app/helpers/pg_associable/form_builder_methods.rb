@@ -24,7 +24,7 @@ module PgAssociable
 
     def collection_pc(atributo, _options)
       klass = clase_asociacion(atributo)
-      user = template.controller.current_user
+      user = Current.user
       in_modal = options[:asociable].present?
       puede_crear = !in_modal && Pundit::PolicyFinder.new(klass).policy.new(user, klass).new?
       collection = Pundit::PolicyFinder.new(klass).scope.new(user, klass).resolve

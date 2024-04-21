@@ -32,7 +32,7 @@ module PgEngine
     # rubocop:enable Style/MissingRespondToMissing
 
     def destroy_link(confirm_text: '¿Estás seguro?', klass: 'btn-light')
-      return unless Pundit.policy!(helpers.send(PgEngine.configuracion.current_user_method), object).destroy?
+      return unless Pundit.policy!(Current.user, object).destroy?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Eliminar' do
         helpers.link_to object_url, data: { 'turbo-confirm': confirm_text, 'turbo-method': :delete },
@@ -43,7 +43,7 @@ module PgEngine
     end
 
     def edit_link(text: '', klass: 'btn-light')
-      return unless Pundit.policy!(helpers.send(PgEngine.configuracion.current_user_method), object).edit?
+      return unless Pundit.policy!(Current.user, object).edit?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Editar' do
         helpers.link_to edit_object_url, data: { turbo_frame: :main },
@@ -54,7 +54,7 @@ module PgEngine
     end
 
     def show_link(text: '', klass: 'btn-light')
-      return unless Pundit.policy!(helpers.send(PgEngine.configuracion.current_user_method), object).show?
+      return unless Pundit.policy!(Current.user, object).show?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Ver' do
         helpers.link_to object_url, data: { turbo_frame: :main },
@@ -65,7 +65,7 @@ module PgEngine
     end
 
     def export_link(url, text: '', klass: 'btn-info')
-      return unless Pundit.policy!(helpers.current_user, object).export?
+      return unless Pundit.policy!(Current.user, object).export?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Exportar en excel' do
         helpers.content_tag :a, target: '_blank',
@@ -76,7 +76,7 @@ module PgEngine
     end
 
     def new_link(remote: nil, klass: 'btn-warning')
-      return unless Pundit.policy!(helpers.send(PgEngine.configuracion.current_user_method), object).new?
+      return unless Pundit.policy!(Current.user, object).new?
 
       helpers.content_tag :span, rel: :tooltip, title: submit_default_value do
         helpers.link_to(new_object_url, class: "btn btn-sm #{klass}",
