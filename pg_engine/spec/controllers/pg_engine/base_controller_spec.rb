@@ -43,7 +43,7 @@ describe DummyBaseController do
       subject
       expect(response).to redirect_to root_path
       expect(flash[:alert]).to eq 'Not authorized'
-      expect(controller.user_signed_in?).to be_truthy
+      expect(controller).to be_user_signed_in
     end
 
     context 'cuando ocurre en el root_path' do
@@ -55,7 +55,7 @@ describe DummyBaseController do
         subject
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq 'Not authorized'
-        expect(controller.user_signed_in?).to be_falsey
+        expect(controller).not_to be_user_signed_in
       end
     end
   end
