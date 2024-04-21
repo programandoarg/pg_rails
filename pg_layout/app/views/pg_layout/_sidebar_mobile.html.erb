@@ -15,10 +15,10 @@
       <% if user_signed_in? %>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <%= current_user %>
+            <%= Current.user %>
           </a>
           <ul class="dropdown-menu">
-            <% if policy(current_user).edit? %>
+            <% if policy(Current.user).edit? %>
               <li>
                 <%= link_to "Mi perfil", edit_user_registration_path, class: 'dropdown-item' %>
               </li>

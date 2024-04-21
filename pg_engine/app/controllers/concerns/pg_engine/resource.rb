@@ -230,8 +230,6 @@ module PgEngine
         instancia_modelo.assign_attributes(modelo_params) if action_name.in? %w[update]
       end
 
-      instancia_modelo.current_user = send(PgEngine.configuracion.current_user_method)
-
       authorize instancia_modelo
 
       # TODO: problema en create y update cuando falla la validacion

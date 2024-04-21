@@ -18,9 +18,9 @@ end
 
 module PgEngine
   class PgLogger
-    # Generalmente en local queremos que se lancen los errores, salvo
+    # Generalmente en test queremos que se lancen los errores, salvo
     # cuando estamos testeando casos de error puntuales.
-    @raise_errors = Rails.env.local?
+    @raise_errors = Rails.env.test?
 
     class << self
       attr_accessor :raise_errors

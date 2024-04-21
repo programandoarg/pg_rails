@@ -17,6 +17,8 @@ module PgEngine
       end
 
       def self.namespace(context)
+        return Current.namespace if Current.namespace.present?
+
         req = request(context)
         route = Rails.application.routes.recognize_path(req.path, method: req.env['REQUEST_METHOD'])
         parts = route[:controller].split('/')

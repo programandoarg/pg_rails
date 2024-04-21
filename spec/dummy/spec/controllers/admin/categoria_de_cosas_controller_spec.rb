@@ -125,6 +125,11 @@ RSpec.describe Admin::CategoriaDeCosasController do
         post :create, params: { categoria_de_cosa: valid_attributes }
         expect(response).to redirect_to(CategoriaDeCosa.last.decorate.target_object)
       end
+
+      it 'assigns creado_por' do
+        post :create, params: { categoria_de_cosa: valid_attributes }
+        expect(CategoriaDeCosa.last.creado_por).to eq user
+      end
     end
 
     context 'with invalid params' do

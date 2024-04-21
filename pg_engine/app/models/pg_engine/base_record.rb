@@ -10,8 +10,6 @@ module PgEngine
 
     self.abstract_class = true
 
-    attr_accessor :current_user
-
     before_create :setear_creado_y_actualizado_por
     before_update :setear_actualizado_por
 
@@ -59,12 +57,12 @@ module PgEngine
     private
 
     def setear_creado_y_actualizado_por
-      setear_si_existe :creado_por, current_user
-      setear_si_existe :actualizado_por, current_user
+      setear_si_existe :creado_por, Current.user
+      setear_si_existe :actualizado_por, Current.user
     end
 
     def setear_actualizado_por
-      setear_si_existe :actualizado_por, current_user
+      setear_si_existe :actualizado_por, Current.user
     end
 
     def setear_si_existe(campo, valor)

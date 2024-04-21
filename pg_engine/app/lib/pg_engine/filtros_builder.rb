@@ -233,7 +233,7 @@ module PgEngine
       nombre_clase = asociacion.options[:class_name]
       nombre_clase = asociacion.name.to_s.camelize if nombre_clase.nil?
       clase_asociacion = Object.const_get(nombre_clase)
-      scope = Pundit.policy_scope!(controller.send(PgEngine.configuracion.current_user_method), clase_asociacion)
+      scope = Pundit.policy_scope!(Current.user, clase_asociacion)
 
       # Filtro soft deleted, y sea con paranoia o con discard
       scope = scope.without_deleted if scope.respond_to?(:without_deleted)

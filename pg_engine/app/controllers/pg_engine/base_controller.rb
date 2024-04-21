@@ -20,6 +20,10 @@ module PgEngine
       end
     end
 
+    before_action do
+      Current.user = current_user
+    end
+
     protect_from_forgery with: :exception
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
@@ -35,7 +39,7 @@ module PgEngine
 
     helper_method :dev_user?
     def dev_user?
-      current_user&.developer?
+      Current.user&.developer?
     end
 
     helper_method :mobile_device?
@@ -47,7 +51,7 @@ module PgEngine
     add_flash_types :warning, :success
 
     before_action do
-      console if params[:show_web_console]
+      console if dev_user_or_env? && (params[:show_web_console] || params[:wc])
     end
 
     before_action do
@@ -57,7 +61,7 @@ module PgEngine
                              else
                                'opened'
                              end
-      @navbar = Navbar.new(current_user)
+      @navbar = Navbar.new(Current.user)
 
       if Rollbar.configuration.enabled && Rails.application.credentials.rollbar.present?
         @rollbar_token = Rails.application.credentials.rollbar.access_token_client
@@ -66,6 +70,10 @@ module PgEngine
 
     def mobile_device?
       request.user_agent =~ /Mobile|webOS/
+    end
+
+    def pundit_user
+      Current.user
     end
 
     protected
@@ -99,7 +107,7 @@ module PgEngine
         format.html do
           if request.path == root_path
             # TODO!: renderear un 500.html y pg_err
-            sign_out(current_user) if current_user.present?
+            sign_out(Current.user) if Current.user.present?
             render plain: 'Not authorized'
           else
             go_back('Not authorized')

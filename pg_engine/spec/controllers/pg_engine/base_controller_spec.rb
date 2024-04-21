@@ -5,6 +5,10 @@ class DummyBaseController < PgEngine::BaseController
     raise PgEngine::BaseController::Redirect, '/some_path'
   end
 
+  def test_not_authorized
+    raise Pundit::NotAuthorizedError
+  end
+
   def check_dev_user
     @dev_user_or_env = dev_user_or_env?
     @dev_user = dev_user?
@@ -21,6 +25,38 @@ describe DummyBaseController do
 
     it do
       expect(response).to redirect_to '/some_path'
+    end
+  end
+
+  describe 'not_authorized' do
+    subject do
+      get :test_not_authorized
+    end
+
+    let(:user) { create :user }
+
+    before do
+      sign_in user
+    end
+
+    it do
+      subject
+      expect(response).to redirect_to root_path
+      expect(flash[:alert]).to eq 'Not authorized'
+      expect(controller).to be_user_signed_in
+    end
+
+    context 'cuando ocurre en el root_path' do
+      before do
+        allow_any_instance_of(ActionController::TestRequest).to receive(:path).and_return(root_path)
+      end
+
+      it do
+        subject
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to eq 'Not authorized'
+        expect(controller).not_to be_user_signed_in
+      end
     end
   end
 
