@@ -13,4 +13,5 @@ Rails.application.routes.draw do
 
   get :action_with_redirect, to: 'dummy_base#action_with_redirect'
   get :check_dev_user, to: 'dummy_base#check_dev_user'
+  get :test_not_authorized, to: 'dummy_base#test_not_authorized'
 end
