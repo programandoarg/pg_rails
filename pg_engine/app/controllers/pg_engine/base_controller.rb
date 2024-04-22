@@ -20,16 +20,16 @@ module PgEngine
       end
     end
 
-    before_action do
-      Current.user = current_user
-    end
-
     protect_from_forgery with: :exception
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
     rescue_from Redirect do |e|
       redirect_to e.url
+    end
+
+    before_action do
+      Current.user = current_user
     end
 
     helper_method :dev_user_or_env?
