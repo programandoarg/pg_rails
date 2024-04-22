@@ -46,10 +46,10 @@ es:
     # prompts:
     #   defaults:
     #     age: 'Select your age'
-  errors:
-    messages:
-      blank: ''
-      empty: ''
+  # errors:
+  #   messages:
+  #     blank: ''
+  #     empty: ''
   devise:
     sign_in: ¿Ya tenés una cuenta? Iniciar sesión
     sign_out: Cerrar sesión
