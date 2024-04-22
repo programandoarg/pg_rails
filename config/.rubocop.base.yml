@@ -4,6 +4,10 @@ require:
   - rubocop-capybara
   - rubocop-factory_bot
 
+Lint/UselessAssignment:
+  Exclude:
+    - "**/*.slim*"
+
 FactoryBot/AssociationStyle:
   Enabled: false
 
