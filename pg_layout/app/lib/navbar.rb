@@ -33,6 +33,7 @@ class Navbar
     rescue StandardError
       # FIXME: testear
       pg_err item
+      return []
     end
     # rubocop:enable Security/Eval
   end
