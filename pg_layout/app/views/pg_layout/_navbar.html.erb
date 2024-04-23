@@ -1,68 +1,14 @@
-<nav class="navbar navbar-expand-<%= @breakpoint_navbar_expand %> bg-light">
+<nav class="navbar navbar-expand-<%= @breakpoint_navbar_expand %>">
   <div class="container-fluid">
     <% unless @sidebar == false %>
-      <button data-controller="navbar" data-action="navbar#expandNavbar" class="btn btn-outline-primary me-2 d-none d-<%= @breakpoint_navbar_expand %>-inline-block">
+      <button data-controller="navbar" data-action="navbar#expandNavbar" class="btn btn-outline-light me-2 d-none d-<%= @breakpoint_navbar_expand %>-inline-block">
         <i class="bi bi-list"></i>
       </button>
 
-      <button class="btn btn-outline-primary d-inline-block d-<%= @breakpoint_navbar_expand %>-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+      <button class="btn btn-outline-light d-inline-block d-<%= @breakpoint_navbar_expand %>-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
         <i class="bi bi-list"></i>
       </button>
-
     <% end %>
-    <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-    <%# <button class="navbar-toggler btn btn-outline-primary me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="bi bi-list"></i>
-      <!-- <span class="navbar-toggler-icon"></span> -->
-    </button> %>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mb-2 mb-lg-0">
-        <% @navbar.bar('topbar.before').each do |entry| %>
-          <li class="nav-item">
-            <a class="nav-link" href="<%= entry[:path] %>">
-              <%= entry[:title] %>
-            </a>
-          </li>
-        <% end %>
-        <% if user_signed_in? %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <%= Current.user %>
-            </a>
-            <ul class="dropdown-menu">
-              <% if policy(Current.user).edit? %>
-                <li>
-                  <%= link_to "Mi perfil", edit_user_registration_path, class: 'dropdown-item' %>
-                </li>
-              <% end %>
-              <% @navbar.bar('topbar.dropdown_user').each do |entry| %>
-                <% next if @navbar.hide_entry?(entry) %>
-                <li>
-                  <a class="dropdown-item" href="<%= entry[:path] %>">
-                    <%= entry[:title] %>
-                  </a>
-                </li>
-              <% end %>
-
-              <li>
-                <%= link_to t("devise.sign_out"), destroy_user_session_path, data: { 'turbo-method': 'delete' }, class: 'dropdown-item' %>
-              </li>
-            </ul>
-          </li>
-        <% end %>
-      </ul>
-      <% unless user_signed_in? %>
-        <%= link_to t("devise.sign_up"), new_user_registration_path, class: 'btn btn-success' %>
-        <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item">
-            <%= link_to t("devise.sign_in"), new_user_session_path, class: 'nav-link' %>
-          </li>
-        </ul>
-      <% end %>
-      <% @navbar.extensiones.each do |extension| %>
-        <%= extension %>
-      <% end %>
-    </div>
     <%= @navbar.logo if @navbar.logo.present? %>
   </div>
 </nav>

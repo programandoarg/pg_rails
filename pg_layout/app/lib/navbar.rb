@@ -20,6 +20,14 @@ class Navbar
     @yaml_data[key] << ActiveSupport::HashWithIndifferentAccess.new(obj)
   end
 
+  def sidebar
+    ret = bar(@user.present? ? 'sidebar.signed_in' : 'sidebar.not_signed_in')
+    if @user.present? && @user.developer?
+      ret.push *bar('sidebar.developer')
+    end
+    ret
+  end
+
   def bar(key)
     bar_data = @yaml_data[key]
     return [] if bar_data.blank?
@@ -28,6 +36,7 @@ class Navbar
     bar_data.map do |item|
       {
         title: item['name'],
+        attributes: item['attributes']&.html_safe,
         path: eval(item['path']),
         show: item['policy'] ? eval(item['policy']) : true
       }
