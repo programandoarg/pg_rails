@@ -54,6 +54,10 @@ es:
     sign_in: ¿Ya tenés una cuenta? Iniciar sesión
     sign_out: Cerrar sesión
     sign_up: Crear una cuenta
+    sessions:
+      signed_in: ''
+      signed_out: ''
+      already_signed_out: ''
     registrations:
       new:
         sign_up: Crear una cuenta
