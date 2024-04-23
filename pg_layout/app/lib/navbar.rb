@@ -22,9 +22,7 @@ class Navbar
 
   def sidebar
     ret = bar(@user.present? ? 'sidebar.signed_in' : 'sidebar.not_signed_in')
-    if @user.present? && @user.developer?
-      ret.push *bar('sidebar.developer')
-    end
+    ret.push(*bar('sidebar.developer')) if @user.present? && @user.developer?
     ret
   end
 
