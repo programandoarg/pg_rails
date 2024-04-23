@@ -26,6 +26,11 @@ $form-select-focus-box-shadow: none;
 
 @import './../../../../../pg_rails/scss/pg_rails';
 
+.navbar {
+  @extend .bg-primary;
+  // background-color: #{$primary};
+}
+
 :root {
   --bs-border-radius: 0.0rem;
   --bs-border-radius-sm: 0.0rem;

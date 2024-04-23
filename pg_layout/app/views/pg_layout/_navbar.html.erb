@@ -2,12 +2,15 @@
   <div class="container-fluid">
     <% unless @sidebar == false %>
       <button data-controller="navbar" data-action="navbar#expandNavbar" class="btn btn-outline-light me-2 d-none d-<%= @breakpoint_navbar_expand %>-inline-block">
-        <i class="bi bi-list"></i>
+        <i class="bi <%= @navbar_chevron_class %>"></i>
       </button>
 
       <button class="btn btn-outline-light d-inline-block d-<%= @breakpoint_navbar_expand %>-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
         <i class="bi bi-list"></i>
       </button>
+    <% end %>
+    <% @navbar.extensiones.each do |extension| %>
+      <%= extension %>
     <% end %>
     <%= @navbar.logo if @navbar.logo.present? %>
   </div>

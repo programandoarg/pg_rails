@@ -56,11 +56,9 @@ module PgEngine
 
     before_action do
       @breakpoint_navbar_expand = 'md'
-      @navbar_opened_class = if cookies[:navbar_expand] == 'false'
-                               ''
-                             else
-                               'opened'
-                             end
+      navbar_expanded = cookies[:navbar_expand] != 'false'
+      @navbar_opened_class = navbar_expanded ? 'opened' : ''
+      @navbar_chevron_class = navbar_expanded ? 'bi-chevron-left' : 'bi-chevron-right'
       @navbar = Navbar.new(Current.user)
 
       if Rollbar.configuration.enabled && Rails.application.credentials.rollbar.present?
