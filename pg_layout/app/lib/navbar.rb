@@ -34,7 +34,7 @@ class Navbar
     bar_data.map do |item|
       {
         title: item['name'],
-        attributes: item['attributes']&.html_safe,
+        attributes: item['attributes']&.html_safe, # rubocop:disable Rails/OutputSafety
         path: eval(item['path']),
         show: item['policy'] ? eval(item['policy']) : true
       }
