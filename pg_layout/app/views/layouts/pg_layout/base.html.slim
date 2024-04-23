@@ -22,15 +22,15 @@ html
       meta name="rollbar-token" content="#{@rollbar_token}"
       meta name="rollbar-env" content="#{Rails.env}"
   body
+    #flash-wrapper.d-flex.justify-content-around
+      #flash.flash.z-1
+        = render partial: 'pg_layout/flash'
     = render partial: 'pg_layout/sidebar_mobile'
 
     div class="#{ @sidebar == false ? '' : 'with-sidebar' }"
       - unless @sidebar == false
         = render partial: 'pg_layout/sidebar'
       div
-        .position-relative.d-flex.justify-content-around
-          #flash.flash.position-absolute.z-1.mt-1
-            = render partial: 'pg_layout/flash'
         = render partial: 'pg_layout/navbar'
         div
           - if user_signed_in? && breadcrumbs.any?

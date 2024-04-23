@@ -115,3 +115,23 @@ $chevron-color: 200,200,200,.5;
 .btn-toggle[aria-expanded="true"]::before {
   transform: rotate(90deg);
 }
+
+// FLASH
+#flash-wrapper {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+@include media-breakpoint-up(md) {
+  #flash-wrapper {
+    top: 0;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  #flash-wrapper {
+    bottom: 0;
+  }
+}
