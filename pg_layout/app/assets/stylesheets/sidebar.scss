@@ -2,10 +2,6 @@ html, body {
   height: 100%;
 }
 
-.navbar {
-  --#{$prefix}navbar-toggler-border-color: #{$primary};
-}
-
 /* Style & Colors */
 $text-color: $gray-300;
 $text-hover-color: $gray-100;
