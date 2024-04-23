@@ -2,6 +2,7 @@ class Navbar
   include Rails.application.routes.url_helpers
 
   attr_reader :extensiones
+  attr_accessor :logo
 
   def initialize(user)
     @user = user
