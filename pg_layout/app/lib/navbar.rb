@@ -2,6 +2,7 @@ class Navbar
   include Rails.application.routes.url_helpers
 
   attr_reader :extensiones
+  attr_accessor :logo
 
   def initialize(user)
     @user = user
@@ -19,6 +20,12 @@ class Navbar
     @yaml_data[key] << ActiveSupport::HashWithIndifferentAccess.new(obj)
   end
 
+  def sidebar
+    ret = bar(@user.present? ? 'sidebar.signed_in' : 'sidebar.not_signed_in')
+    ret.push(*bar('sidebar.developer')) if @user.present? && @user.developer?
+    ret
+  end
+
   def bar(key)
     bar_data = @yaml_data[key]
     return [] if bar_data.blank?
@@ -27,6 +34,7 @@ class Navbar
     bar_data.map do |item|
       {
         title: item['name'],
+        attributes: item['attributes']&.html_safe, # rubocop:disable Rails/OutputSafety
         path: eval(item['path']),
         show: item['policy'] ? eval(item['policy']) : true
       }

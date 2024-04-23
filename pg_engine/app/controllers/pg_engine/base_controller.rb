@@ -56,7 +56,7 @@ module PgEngine
 
     before_action do
       @breakpoint_navbar_expand = 'md'
-      @navbar_opened_class = if cookies[:navbar_expand] == 'false' || !user_signed_in?
+      @navbar_opened_class = if cookies[:navbar_expand] == 'false'
                                ''
                              else
                                'opened'

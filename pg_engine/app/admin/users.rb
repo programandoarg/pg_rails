@@ -30,6 +30,11 @@ ActiveAdmin.register User do
     user.skip_confirmation! if action_name == 'create'
   end
 
+  member_action :confirm, method: :put do
+    resource.update(confirmed_at: Time.zone.now)
+    redirect_to resource_path, notice: 'Confirmed!'
+  end
+
   member_action :discard, method: :put do
     resource.discard!
     redirect_to resource_path, notice: 'Discarded!'
@@ -42,6 +47,10 @@ ActiveAdmin.register User do
 
   action_item :view, only: :show do
     link_to 'Discard', discard_active_admin_user_path(resource), method: :put if resource.kept?
+  end
+
+  action_item :view, only: :show do
+    link_to 'Confirm', confirm_active_admin_user_path(resource), method: :put if resource.kept?
   end
 
   action_item :view, only: :show do

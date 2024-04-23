@@ -1,0 +1,4 @@
+/ # locals: (image_url:, href:)
+
+a.navbar-brand href="#{ href }"
+  = image_tag(image_url, style: 'max-height: 24px', alt: Rails.application.class.module_parent_name)

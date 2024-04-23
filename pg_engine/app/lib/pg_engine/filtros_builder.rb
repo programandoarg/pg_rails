@@ -322,7 +322,7 @@ module PgEngine
     def filtro_fecha(campo, placeholder = '')
       content_tag :div, class: 'col-auto' do
         content_tag :div, class: 'filter' do
-          label_tag(nil, placeholder, class: 'text-muted') + \
+          label_tag(nil, placeholder, class: 'text-body-secondary') + \
             date_field_tag(
               campo, parametros_controller[campo], class: 'form-control form-control-sm d-inline-block w-auto ms-1', placeholder:, autocomplete: 'off'
             )

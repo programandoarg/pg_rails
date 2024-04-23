@@ -11,7 +11,7 @@
     <%= link_to t(".forgot_your_password"), new_password_path(resource_name) %>
   <% end %>
 
-  <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+  <%- if false # devise_mapping.confirmable? && controller_name != 'confirmations' %>
     <%= link_to t('.didn_t_receive_confirmation_instructions'), new_confirmation_path(resource_name) %>
   <% end %>
 
