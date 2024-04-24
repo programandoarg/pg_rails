@@ -18,23 +18,9 @@ $primary: #6a2a05; /* naranja */
 $font-size-base: 0.9rem;
 
 $enable-validation-icons:     false;
-$input-focus-box-shadow: none;
-$form-select-focus-box-shadow: none;
+$focus-ring-width:      .05rem !default;
 
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 
 @import './../../../../../pg_rails/scss/pg_rails';
-
-.navbar {
-  @extend .bg-primary;
-  // background-color: #{$primary};
-}
-
-:root {
-  --bs-border-radius: 0.0rem;
-  --bs-border-radius-sm: 0.0rem;
-  --bs-border-radius-lg: 0.0rem;
-  --bs-border-radius-xl: 0.0rem;
-  --bs-border-radius-xxl: 0.0rem;
-}

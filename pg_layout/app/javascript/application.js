@@ -36,6 +36,12 @@ Rollbar.configure({
 document.addEventListener('turbo:load', bindToasts)
 document.addEventListener('turbo:render', bindToasts)
 
+document.addEventListener('turbo:before-cache', () => {
+  document.querySelectorAll('.offcanvas-backdrop').forEach((el) => {
+    el.remove()
+  })
+})
+
 function bindToasts () {
   const toastElList = document.querySelectorAll('.toast:not(.hide):not(.show)')
   Array.from(toastElList).map(toastEl => new bootstrap.Toast(toastEl).show())

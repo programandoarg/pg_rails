@@ -1,3 +1,5 @@
+<%= @navbar.logo_xl if @navbar.logo_xl.present? %>
+
 <h2><%= t(".sign_up") %></h2>
 <div id="form-signup" data-controller="pg_form">
   <%= pg_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>

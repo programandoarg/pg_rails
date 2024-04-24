@@ -51,11 +51,11 @@ module Admin
     end
 
     def atributos_para_listar
-      %i[email nombre apellido developer]
+      %i[email nombre apellido confirmed_at developer]
     end
 
     def atributos_para_mostrar
-      %i[email nombre apellido developer]
+      %i[email nombre apellido confirmed_at developer]
     end
   end
 end

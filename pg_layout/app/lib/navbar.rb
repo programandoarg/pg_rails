@@ -3,6 +3,7 @@ class Navbar
 
   attr_reader :extensiones
   attr_accessor :logo
+  attr_accessor :logo_xl
 
   def initialize(user)
     @user = user
