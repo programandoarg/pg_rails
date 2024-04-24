@@ -14,6 +14,7 @@
  *= require_self
  */
 $primary: #6a2a05; /* naranja */
+// $primary: #1a172f; /* fbien */
 
 $font-size-base: 0.9rem;
 
@@ -24,3 +25,7 @@ $focus-ring-width:      .05rem !default;
 @import 'bootstrap-icons/font/bootstrap-icons';
 
 @import './../../../../../pg_rails/scss/pg_rails';
+
+:root {
+  --bs-danger-bg-subtle: #d79f84;
+}

@@ -23,7 +23,7 @@ html
       meta name="rollbar-env" content="#{Rails.env}"
   body
     #flash-wrapper.d-flex.justify-content-around
-      #flash.flash.z-1
+      #flash.flash.z-1 style="margin-top: 3px"
         = render partial: 'pg_layout/flash'
     = render partial: 'pg_layout/sidebar_mobile'
 
