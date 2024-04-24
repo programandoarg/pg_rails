@@ -69,6 +69,22 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { class: 'form-text' }
   end
 
+  config.wrappers :vertical_form_inline_wrap, class: 'mb-3' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :minlength
+    b.optional :pattern
+    b.optional :min_max
+    b.optional :readonly
+    b.use :label, class: 'form-label d-block'
+    b.wrapper class: 'd-inline-block' do |bb|
+      bb.use :input, class: 'form-control', error_class: 'is-invalid'
+    end
+    b.use :error, wrap_with: { class: 'invalid-feedback' }
+    b.use :hint, wrap_with: { class: 'form-text' }
+  end
+
   config.wrappers :vertical_no_margin_control, &control_wrapper
 
   config.wrappers :vertical_no_margin_select, &select_wrapper
