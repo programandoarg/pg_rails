@@ -45,7 +45,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :email, message: 'ya pertenece a un usuario'
   validates_format_of     :email, with: /\A[^@\s]+@[^@\s]+\z/
   validates_presence_of     :password, if: :password_required?
-  validates_confirmation_of :password, if: :password_required?, message: 'Las contraseñas no coinciden'
+  validates_confirmation_of :password, if: :password_required?, message: 'no coincide'
   validates_length_of       :password, if: :password_required?, within: 6..128,
                                        message: 'es demasiado corta (6 caracteres mínimo)'
 
