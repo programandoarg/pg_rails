@@ -22,9 +22,6 @@ html
       meta name="rollbar-token" content="#{@rollbar_token}"
       meta name="rollbar-env" content="#{Rails.env}"
   body
-    #flash-wrapper.d-flex.justify-content-around
-      #flash.flash.z-1 style="margin-top: 3px"
-        = render partial: 'pg_layout/flash'
     = render partial: 'pg_layout/sidebar_mobile'
 
     div class="#{ @sidebar == false ? '' : 'with-sidebar' }"
@@ -42,6 +39,9 @@ html
               .btn-toolbar
                 = yield(:actions)
             hr.my-0
-          = content_for?(:content) ? yield(:content) : yield
+          - content = content_for?(:content) ? yield(:content) : yield
+          - unless content.include? 'flash-wrapper'
+            = render partial: 'pg_layout/flash_container'
+          = content
           div style="width:100%; height: 10em"
     = render_turbo_stream_title

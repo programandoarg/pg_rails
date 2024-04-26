@@ -15,11 +15,15 @@
  */
 $primary: #6a2a05; /* naranja */
 // $primary: #1a172f; /* fbien */
+$red:     #a70101;
+$light:  #f3fdff;
 
 $font-size-base: 0.9rem;
 
 $enable-validation-icons:     false;
 $focus-ring-width:      .05rem !default;
+$alert-padding-y:               0.5rem;
+$alert-margin-bottom:           0.5rem;
 
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
@@ -27,5 +31,15 @@ $focus-ring-width:      .05rem !default;
 @import './../../../../../pg_rails/scss/pg_rails';
 
 :root {
-  --bs-danger-bg-subtle: #d79f84;
+  --bs-danger-bg-subtle: #{$light};
+}
+
+.alert-danger {
+  --bs-alert-color: var(--bs-red);
+}
+
+.alert-dismissible {
+  .btn-close {
+    padding: 0.725rem $alert-padding-x;
+  }
 }
