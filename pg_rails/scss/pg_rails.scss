@@ -1,4 +1,19 @@
+$red:     #a70101;
+$yellow:     #f4a815;
+$font-size-base: 0.9rem;
+
+$enable-validation-icons:     false;
+$focus-ring-width:      .05rem;
+$alert-padding-y:               0.5rem;
+$alert-margin-bottom:           0.5rem;
+
+@import 'bootstrap_pre';
+@import 'bootstrap_overrides';
+@import 'bootstrap_post';
+
 @import './../../pg_engine/app/assets/stylesheets/pg_rails_b5';
 @import './../../pg_associable/app/assets/stylesheets/pg_associable';
 @import './../../pg_layout/app/assets/stylesheets/sidebar';
 @import './../../pg_layout/app/assets/stylesheets/animations';
+
+@import 'bootstrap-icons/font/bootstrap-icons';

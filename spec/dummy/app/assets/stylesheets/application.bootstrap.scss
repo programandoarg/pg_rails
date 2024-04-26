@@ -15,12 +15,6 @@
  */
 $primary: #6a2a05; /* naranja */
 // $primary: #1a172f; /* fbien */
-$red:     #a70101;
 $light:  #f3fdff;
-
-@import './../../../../../pg_rails/scss/bootstrap_variables';
-
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-icons/font/bootstrap-icons';
 
 @import './../../../../../pg_rails/scss/pg_rails';
