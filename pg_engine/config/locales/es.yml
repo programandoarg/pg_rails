@@ -54,6 +54,8 @@ es:
     sign_in: ¿Ya tenés una cuenta? Iniciar sesión
     sign_out: Cerrar sesión
     sign_up: Crear una cuenta
+    confirmations:
+      confirmed: ¡Tu cuenta está confirmada! Ya podés iniciar sesión
     sessions:
       signed_in: ''
       signed_out: ''
