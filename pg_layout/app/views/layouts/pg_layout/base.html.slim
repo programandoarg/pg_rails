@@ -5,8 +5,8 @@ html
     meta name="viewport" content="width=device-width,initial-scale=1"
     - if @turbo_no_cache
       meta name="turbo-cache-control" content="no-cache"
-    / meta name="turbo-refresh-method" content="morph"
-    / meta name="turbo-refresh-scroll" content="preserve"
+    meta name="turbo-refresh-method" content="morph"
+    meta name="turbo-refresh-scroll" content="preserve"
     meta name="turbo-prefetch" content="false"
     meta name="view-transition" content="same-origin"
     meta name="cable-history-timestamp" content="#{Time.now.to_i}"
@@ -22,9 +22,6 @@ html
       meta name="rollbar-token" content="#{@rollbar_token}"
       meta name="rollbar-env" content="#{Rails.env}"
   body
-    #flash-wrapper.d-flex.justify-content-around
-      #flash.flash.z-1
-        = render partial: 'pg_layout/flash'
     = render partial: 'pg_layout/sidebar_mobile'
 
     div class="#{ @sidebar == false ? '' : 'with-sidebar' }"
@@ -42,7 +39,9 @@ html
               .btn-toolbar
                 = yield(:actions)
             hr.my-0
-          = render partial: 'pg_layout/flash_alert'
-          = content_for?(:content) ? yield(:content) : yield
+          - content = content_for?(:content) ? yield(:content) : yield
+          - unless content.include? 'flash-wrapper'
+            = render partial: 'pg_layout/flash_container'
+          = content
           div style="width:100%; height: 10em"
     = render_turbo_stream_title

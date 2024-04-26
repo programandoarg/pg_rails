@@ -6,7 +6,6 @@ module Users
       yield resource if block_given?
 
       if resource.errors.empty?
-        flash[:toast] = false
         set_flash_message!(:notice, :confirmed)
         respond_with_navigational(resource) { redirect_to after_confirmation_path_for(resource_name, resource) }
       else

@@ -23,7 +23,7 @@ module Users
 
     def render_message
       msg = <<~HTML
-        <div class="alert alert-info">
+        <div class="alert alert-info mt-4">
           #{I18n.t 'devise.registrations.signed_up_but_unconfirmed'}
         </div>
       HTML

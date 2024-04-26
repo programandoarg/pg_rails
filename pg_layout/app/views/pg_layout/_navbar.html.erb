@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-<%= @breakpoint_navbar_expand %>">
+<nav class="navbar navbar-expand-<%= @breakpoint_navbar_expand %>" data-bs-theme="dark">
   <div class="container-fluid">
     <% unless @sidebar == false %>
       <button data-controller="navbar" data-action="navbar#expandNavbar" class="btn btn-outline-light me-2 d-none d-<%= @breakpoint_navbar_expand %>-inline-block">

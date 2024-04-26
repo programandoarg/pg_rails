@@ -1,4 +1,11 @@
-sidebar:
+sidebar.not_signed_in:
+  -
+    name: Crear una cuenta
+    path: new_user_registration_path
+  -
+    name: Iniciar sesión
+    path: new_user_session_path
+sidebar.signed_in:
   -
     name: La Home
     path: root_path
@@ -17,3 +24,28 @@ sidebar:
   -
     name: Cosas front
     path: frontend_cosas_path
+  -
+    name: Mi perfil
+    path: edit_user_registration_path
+    policy: policy(Current.user).edit?
+  -
+    name: Cerrar sesión
+    path: destroy_user_session_path
+    attributes: 'data-turbo-method="delete"'
+# sidebar.developer:
+#   -
+#     name: ActiveAdmin
+#     path: active_admin_root_path
+#     policy: "@user.developer?"
+#   -
+#     name: Users
+#     path: admin_users_path
+#     policy: "@user.developer?"
+#   -
+#     name: Tipos Cbtes
+#     path: admin_tipo_cbtes_path
+#     policy: "@user.developer?"
+#   -
+#     name: Config. pruebas
+#     path: users_setup_configuracion_pruebas_path
+#     policy: "@user.developer?"
