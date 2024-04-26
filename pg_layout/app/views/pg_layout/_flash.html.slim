@@ -9,5 +9,11 @@
   ]
     - if flash_type_to_class(flash_type) == 'danger'
       .bi.bi-exclamation-triangle-fill.me-2
+    - elsif flash_type_to_class(flash_type) == 'warning'
+      .bi.bi-exclamation-circle.me-2
+    - elsif flash_type_to_class(flash_type) == 'success'
+      .bi.bi-check-lg.me-2
+    - elsif flash_type_to_class(flash_type) == 'info'
+      .bi.bi-info-circle.me-2
     = message
     button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
