@@ -17,5 +17,5 @@ class MensajeContacto < ApplicationRecord
   audited
 
   validates :nombre, :email, :mensaje, presence: true
-  validates_format_of     :email, with: /\A[^@\s]+@[^@\s]+\z/
+  validates_format_of :email, with: /\A[^@\s]+@[^@\s]+\z/
 end
