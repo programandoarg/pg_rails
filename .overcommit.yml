@@ -58,6 +58,7 @@ PreCommit:
   TrailingWhitespace:
     enabled: true
     exclude:
+      - "**/*.svg"
       - "**/db/structure.sql"
       - "**/*.slim"
       - "vendor/**/*"

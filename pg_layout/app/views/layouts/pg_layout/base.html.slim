@@ -5,7 +5,11 @@ html
     meta name="viewport" content="width=device-width,initial-scale=1"
     - if @turbo_no_cache
       meta name="turbo-cache-control" content="no-cache"
+    / El morph no estaría siendo de utilidad
     / meta name="turbo-refresh-method" content="morph"
+
+    / En general es deseable el comportamiento scroll "reset", por ejemplo en los forms,
+    / ya que los errores se muestran arriba y el botón de submit está abajo
     / meta name="turbo-refresh-scroll" content="preserve"
     meta name="turbo-prefetch" content="false"
     meta name="view-transition" content="same-origin"

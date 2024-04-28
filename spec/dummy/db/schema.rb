@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_14_114829) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_28_153107) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
@@ -117,6 +117,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_14_114829) do
     t.index ["actualizado_por_id"], name: "index_cosas_on_actualizado_por_id"
     t.index ["categoria_de_cosa_id"], name: "index_cosas_on_categoria_de_cosa_id"
     t.index ["creado_por_id"], name: "index_cosas_on_creado_por_id"
+  end
+
+  create_table "mensaje_contactos", force: :cascade do |t|
+    t.string "nombre"
+    t.string "email"
+    t.string "telefono"
+    t.string "mensaje"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_accounts", force: :cascade do |t|

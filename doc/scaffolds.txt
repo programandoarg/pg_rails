@@ -14,3 +14,13 @@ be rails g pg_scaffold \
   "profiles:integer{enum,array}" \
   --model-name=UserAccount \
   --activeadmin
+
+be rails g pg_scaffold \
+  public/mensaje_contacto \
+  nombre:string{required} \
+  email:string{required} \
+  telefono:string \
+  mensaje:string{required} \
+  --model-name=mensaje_contacto \
+  --activeadmin \
+  --no-trackeo-de-usuarios

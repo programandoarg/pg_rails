@@ -5,6 +5,9 @@ sidebar.not_signed_in:
   -
     name: Iniciar sesión
     path: new_user_session_path
+  -
+    name: Contacto
+    path: new_public_mensaje_contacto_path
 sidebar.signed_in:
   -
     name: La Home
