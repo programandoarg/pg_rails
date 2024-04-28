@@ -43,6 +43,8 @@ class PgFormBuilder < SimpleForm::FormBuilder
   end
 
   def associations
+    return [] unless object.class.respond_to?(:reflect_on_all_associations)
+
     object.class.reflect_on_all_associations
           .select { |a| a.instance_of? ActiveRecord::Reflection::HasManyReflection }
           .map(&:name)
