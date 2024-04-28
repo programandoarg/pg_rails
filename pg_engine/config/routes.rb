@@ -2,7 +2,7 @@ include PgEngine::RouteHelpers
 
 Rails.application.routes.draw do
   namespace :public, path: 'p' do
-    pg_resource(:mensaje_contactos)
+    pg_resource(:mensaje_contactos, only: [:new, :create])
   end
   devise_for :users, controllers: {
     confirmations: 'users/confirmations',

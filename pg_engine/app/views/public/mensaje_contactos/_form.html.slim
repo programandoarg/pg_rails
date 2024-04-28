@@ -1,13 +1,14 @@
 / # locals: (object: nil, asociable: false)
+#mensaje_contacto.text-center
+  .d-inline-block style="width: 22em; max-width: 100%"
+    div data-controller="pg_form"
+      = pg_form_for(@mensaje_contacto || object, asociable:) do |f|
+        = f.mensajes_de_error
 
-div style="max-width: 22em" data-controller="pg_form"
-  = pg_form_for(@mensaje_contacto || object, asociable:) do |f|
-    = f.mensajes_de_error
-
-    = hidden_field_tag :asociable, true if asociable
-    = f.input :nombre
-    = f.input :email
-    = f.input :telefono
-    = f.input :mensaje
-    .mt-2
-    = f.button :submit
+        = hidden_field_tag :asociable, true if asociable
+        = f.input :nombre
+        = f.input :email
+        = f.input :telefono, hint: '(Opcional)'
+        = f.input :mensaje, as: :text
+        .mt-2
+        = f.button :submit, value: 'Enviar'

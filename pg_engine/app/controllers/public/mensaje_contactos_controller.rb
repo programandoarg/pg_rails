@@ -10,25 +10,19 @@ module Public
 
     before_action(only: :index) { authorize MensajeContacto }
 
-    before_action :set_instancia_modelo, only: %i[new create show edit update destroy]
+    before_action :set_instancia_modelo, only: %i[new create]
 
-    add_breadcrumb MensajeContacto.nombre_plural, :public_mensaje_contactos_path
+    def create
+      if @mensaje_contacto.save
+        render turbo_stream: turbo_stream.update('mensaje_contacto', partial: 'gracias')
+      else
+        render :new, status: :unprocessable_entity
+      end
+    end
 
     private
 
     def atributos_permitidos
-      %i[nombre email telefono mensaje]
-    end
-
-    def atributos_para_buscar
-      %i[nombre email telefono mensaje]
-    end
-
-    def atributos_para_listar
-      %i[nombre email telefono mensaje]
-    end
-
-    def atributos_para_mostrar
       %i[nombre email telefono mensaje]
     end
   end
