@@ -1,7 +1,7 @@
 module PgEngine
   module Resource
     def self.included(clazz)
-      clazz.before_action :authenticate_user!
+      # clazz.before_action :authenticate_user!
       clazz.helper_method :atributos_para_listar
       clazz.helper_method :atributos_para_mostrar
       clazz.helper_method :current_page_size
