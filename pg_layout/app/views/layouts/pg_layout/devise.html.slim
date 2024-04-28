@@ -1,5 +1,5 @@
-- content_for :content do
-  .container.text-center.pt-4
+- content_for :container_logo_content do
+  .text-center
     = yield
 
   css:
@@ -8,4 +8,4 @@
       margin: auto;
     }
 
-= render template: 'layouts/pg_layout/base'
+= render template: 'layouts/pg_layout/container_logo'

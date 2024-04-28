@@ -12,6 +12,8 @@ module Public
 
     before_action :set_instancia_modelo, only: %i[new create]
 
+    layout 'pg_layout/container_logo'
+
     def create
       if @mensaje_contacto.save
         render turbo_stream: turbo_stream.update('mensaje_contacto', partial: 'gracias')

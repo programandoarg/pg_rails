@@ -1,0 +1,10 @@
+- content_for :content do
+  .container-fluid.pt-4
+    .text-center
+      - if @navbar.logo_xl_url.present?
+        .mb-4
+          = image_tag @navbar.logo_xl_url, class: 'img-fluid', style: 'max-height: 4em'
+
+    = content_for?(:container_logo_content) ? yield(:container_logo_content) : yield
+
+= render template: 'layouts/pg_layout/base'

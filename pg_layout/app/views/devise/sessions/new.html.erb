@@ -1,9 +1,3 @@
-<% if @navbar.logo_xl_url.present? %>
-  <div class="mx-3 my-4 m-md-5">
-    <%= image_tag @navbar.logo_xl_url, class: 'img-fluid' %>
-  </div>
-<% end %>
-
 <h2><%= t(".sign_in") %></h2>
 
 <%= render partial: 'pg_layout/flash_container' %>
