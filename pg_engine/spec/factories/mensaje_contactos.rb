@@ -5,7 +5,7 @@
 FactoryBot.define do
   factory :mensaje_contacto do
     nombre { Faker::Lorem.sentence }
-    email { Faker::Lorem.sentence }
+    email { Faker::Internet.email }
     telefono { Faker::Lorem.sentence }
     mensaje { Faker::Lorem.sentence }
   end

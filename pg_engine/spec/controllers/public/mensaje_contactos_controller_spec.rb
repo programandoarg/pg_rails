@@ -50,8 +50,8 @@ RSpec.describe Public::MensajeContactosController do
 
   describe 'routing' do
     it 'routes GET index correctly' do
-      route = { get: '/p/mensaje_contactos' }
-      expect(route).to route_to(controller: 'public/mensaje_contactos', action: 'index')
+      route = { get: '/mensaje_contactos/new' }
+      expect(route).to route_to(controller: 'public/mensaje_contactos', action: 'new')
     end
   end
 
