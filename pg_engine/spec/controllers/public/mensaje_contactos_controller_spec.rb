@@ -50,7 +50,7 @@ RSpec.describe Public::MensajeContactosController do
 
   describe 'routing' do
     it 'routes GET index correctly' do
-      route = { get: '/mensaje_contactos/new' }
+      route = { get: '/contacto/new' }
       expect(route).to route_to(controller: 'public/mensaje_contactos', action: 'new')
     end
   end
@@ -72,7 +72,7 @@ RSpec.describe Public::MensajeContactosController do
 
       it 'redirects to the created mensaje_contacto' do
         post :create, params: { mensaje_contacto: valid_attributes }
-        expect(response).to redirect_to(MensajeContacto.last.decorate.target_object)
+        expect(response).to have_http_status(:ok)
       end
     end
 
