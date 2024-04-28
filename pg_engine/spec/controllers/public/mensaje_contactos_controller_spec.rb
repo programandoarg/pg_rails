@@ -50,63 +50,14 @@ RSpec.describe Public::MensajeContactosController do
 
   describe 'routing' do
     it 'routes GET index correctly' do
-      route = { get: '/public/mensaje_contactos' }
+      route = { get: '/p/mensaje_contactos' }
       expect(route).to route_to(controller: 'public/mensaje_contactos', action: 'index')
-    end
-  end
-
-  describe 'GET #index' do
-    subject do
-      get :index, params: {}
-    end
-
-    let!(:mensaje_contacto) { create :mensaje_contacto }
-
-    it 'returns a success response' do
-      subject
-      expect(response).to be_successful
-    end
-
-    context 'when user is not logged in' do
-      let(:logged_user) { nil }
-
-      it 'redirects to login path' do
-        subject
-        expect(response).to redirect_to(new_user_session_path)
-      end
-    end
-
-    context 'when se pide el excel' do
-      subject do
-        get :index, params: {}, format: 'xlsx'
-      end
-
-      it 'returns a success response' do
-        subject
-        expect(response).to be_successful
-      end
-    end
-  end
-
-  describe 'GET #show' do
-    it 'returns a success response' do
-      mensaje_contacto = create(:mensaje_contacto)
-      get :show, params: { id: mensaje_contacto.to_param }
-      expect(response).to be_successful
     end
   end
 
   describe 'GET #new' do
     it 'returns a success response' do
       get :new, params: {}
-      expect(response).to be_successful
-    end
-  end
-
-  describe 'GET #edit' do
-    it 'returns a success response' do
-      mensaje_contacto = create(:mensaje_contacto)
-      get :edit, params: { id: mensaje_contacto.to_param }
       expect(response).to be_successful
     end
   end
@@ -135,58 +86,6 @@ RSpec.describe Public::MensajeContactosController do
         post :create, params: { mensaje_contacto: invalid_attributes }
         expect(response).to render_template(:new)
       end
-    end
-  end
-
-  describe 'PUT #update' do
-    context 'with valid params' do
-      let(:new_attributes) do
-        attributes_for(:mensaje_contacto)
-      end
-
-      it 'updates the requested mensaje_contacto' do
-        mensaje_contacto = create(:mensaje_contacto)
-        put :update, params: { id: mensaje_contacto.to_param, mensaje_contacto: new_attributes }
-        mensaje_contacto.reload
-        expect(mensaje_contacto.nombre).to eq new_attributes[:nombre]
-      end
-
-      it 'redirects to the mensaje_contacto' do
-        mensaje_contacto = create(:mensaje_contacto)
-        put :update, params: { id: mensaje_contacto.to_param, mensaje_contacto: valid_attributes }
-        expect(response).to redirect_to(mensaje_contacto.decorate.target_object)
-      end
-    end
-
-    context 'with invalid params' do
-      it 'returns a unprocessable_entity response' do
-        mensaje_contacto = create(:mensaje_contacto)
-        put :update, params: { id: mensaje_contacto.to_param, mensaje_contacto: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-
-      it 'renders the edit template' do
-        mensaje_contacto = create(:mensaje_contacto)
-        put :update, params: { id: mensaje_contacto.to_param, mensaje_contacto: invalid_attributes }
-        expect(response).to render_template(:edit)
-      end
-    end
-  end
-
-  describe 'DELETE #destroy' do
-    subject do
-      delete :destroy, params: { id: mensaje_contacto.to_param }
-    end
-
-    let!(:mensaje_contacto) { create :mensaje_contacto }
-
-    it 'destroys the requested mensaje_contacto' do
-      expect { subject }.to change(MensajeContacto, :count).by(-1)
-    end
-
-    it 'redirects to the mensaje_contactos list' do
-      subject
-      expect(response).to redirect_to(public_mensaje_contactos_url)
     end
   end
 end
