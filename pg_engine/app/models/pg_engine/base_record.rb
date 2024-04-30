@@ -47,6 +47,14 @@ module PgEngine
       end
     end
 
+    def to_key
+      if respond_to? :hashid
+        [hashid]
+      else
+        super
+      end
+    end
+
     def to_s
       %i[nombre name].each do |campo|
         return "#{send(campo)} ##{to_param}" if try(campo).present?
