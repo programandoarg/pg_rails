@@ -49,8 +49,7 @@ module PgEngine
     end
 
     def destroy
-      url = namespaced_path(@clase_modelo)
-      pg_respond_destroy(instancia_modelo, url)
+      pg_respond_destroy(instancia_modelo, params[:redirect_to])
     end
     # End public endpoints
 
@@ -151,15 +150,25 @@ module PgEngine
     def pg_respond_destroy(model, redirect_url = nil)
       if destroy_model(model)
         respond_to do |format|
-          format.html do
-            msg = "#{model.model_name.human} #{model.gender == 'f' ? 'borrada' : 'borrado'}"
-            if redirect_url.present?
+          if redirect_url.present?
+            format.html do
+              msg = "#{model.model_name.human} #{model.gender == 'f' ? 'borrada' : 'borrado'}"
               redirect_to redirect_url, notice: msg, status: :see_other
-            else
-              redirect_back(fallback_location: root_path, notice: msg, status: 303)
             end
+          else
+            format.turbo_stream do
+              render turbo_stream: turbo_stream.remove(model)
+            end
+            format.html do
+              msg = "#{model.model_name.human} #{model.gender == 'f' ? 'borrada' : 'borrado'}"
+              if redirect_url.present?
+                redirect_to redirect_url, notice: msg, status: :see_other
+              else
+                redirect_back(fallback_location: root_path, notice: msg, status: 303)
+              end
+            end
+            format.json { head :no_content }
           end
-          format.json { head :no_content }
         end
       else
         respond_to do |format|

@@ -1,7 +1,7 @@
 - content_for :title do
   = @categoria_de_cosa.to_s
 - content_for :actions do
-  = @categoria_de_cosa.destroy_link
+  = @categoria_de_cosa.destroy_link_redirect
   .ms-1
   = @categoria_de_cosa.edit_link
 

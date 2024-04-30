@@ -1,7 +1,7 @@
 - content_for :title do
   = @<%= singular_name %>.to_s
 - content_for :actions do
-  = @<%= singular_name %>.destroy_link
+  = @<%= singular_name %>.destroy_link_redirect
   .ms-1
   = @<%= singular_name %>.edit_link
 
