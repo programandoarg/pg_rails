@@ -14,8 +14,7 @@ module Public
 
     layout 'pg_layout/container_logo'
 
-    def new
-    end
+    def new; end
 
     def create
       if @mensaje_contacto.save

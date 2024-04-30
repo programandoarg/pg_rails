@@ -3,7 +3,7 @@ import Cookies from './../utils/cookies'
 import { fadeOut, fadeIn } from './../utils/utils'
 
 export default class extends Controller {
-  connect() {
+  connect () {
     if (document.getElementById('sidebar').classList.contains('opened')) {
       document.querySelector('.navbar .navbar-brand').style.visibility = 'hidden'
     }
