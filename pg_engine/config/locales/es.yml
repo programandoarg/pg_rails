@@ -77,7 +77,10 @@ es:
         sign_up: Crear una cuenta
         forgot_your_password: ¿Olvidaste tu contraseña?
         didn_t_receive_confirmation_instructions: ¿No recibiste las instrucciones para confirmar tu cuenta?
-
+  activerecord:
+    attributes:
+      user:
+        remember_me: Mantener sesión abierta
 
 
 

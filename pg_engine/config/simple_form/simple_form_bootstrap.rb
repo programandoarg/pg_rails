@@ -92,7 +92,7 @@ SimpleForm.setup do |config|
   config.wrappers :vertical_form, class: 'mb-3', &control_wrapper
 
   # vertical input for boolean
-  config.wrappers :vertical_boolean, tag: 'fieldset', class: 'mb-3' do |b|
+  config.wrappers :vertical_boolean, tag: 'fieldset', class: 'mb-3 d-flex justify-content-center' do |b|
     b.use :html5
     b.optional :readonly
     b.wrapper :form_check_wrapper, class: 'form-check' do |bb|
