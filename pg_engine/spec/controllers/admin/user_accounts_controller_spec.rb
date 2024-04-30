@@ -180,7 +180,7 @@ RSpec.describe Admin::UserAccountsController do
     let(:redirect_url) { nil }
 
     it 'destroys the requested user_account' do
-      expect { subject }.to change(UserAccount.kept, :count).by(-1)
+      expect { subject }.to change(UserAccount, :count).by(-1)
     end
 
     it 'quita el elemento de la lista' do
