@@ -14,6 +14,9 @@ module Public
 
     layout 'pg_layout/container_logo'
 
+    def new
+    end
+
     def create
       if @mensaje_contacto.save
         render turbo_stream: turbo_stream.update('mensaje_contacto', partial: 'gracias')
