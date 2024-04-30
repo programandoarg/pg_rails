@@ -13,7 +13,11 @@ class UserPolicy < ApplicationPolicy
     # end
   end
 
-  # def acceso_total?
-  #   user&.developer?
-  # end
+  def puede_editar?
+    user.present?
+  end
+
+  def puede_crear?
+    true
+  end
 end
