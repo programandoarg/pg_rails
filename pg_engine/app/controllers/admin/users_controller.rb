@@ -34,9 +34,13 @@ module Admin
     def login_as
       if dev_user_or_env?
         usuario = User.find(params[:id])
-        sign_in(:user, usuario)
+        if usuario.confirmed_at.present?
+          sign_in(:user, usuario)
+          redirect_to after_sign_in_path_for(usuario)
+        else
+          go_back('No está confirmado')
+        end
       end
-      redirect_to after_sign_in_path_for(usuario)
     end
     # :nocov:
 

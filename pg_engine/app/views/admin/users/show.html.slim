@@ -4,6 +4,10 @@
   = @user.destroy_link_redirect
   .ms-1
   = @user.edit_link
+  .ms-1
+  = link_to admin_login_as_path(id: @user.id), class: 'btn btn-light btn-sm' do
+    span.bi.bi-arrow-right
+    |  Login as
 
 table.table.table-borderless.table-sm.w-auto.mb-0.m-3
   - atributos_para_mostrar.each do |att|

@@ -13,7 +13,7 @@ class UserPolicy < ApplicationPolicy
     # end
   end
 
-  def acceso_total?
-    true
-  end
+  # def acceso_total?
+  #   user&.developer?
+  # end
 end
