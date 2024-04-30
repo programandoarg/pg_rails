@@ -39,4 +39,8 @@ class Cosa < ApplicationRecord
   enumerize :tipo, in: { completar: 0, los: 1, valores: 2 }
 
   validates :nombre, :tipo, presence: true
+
+  scope :order_by_categoria_de_cosa, -> (direction) do
+    joins(:categoria_de_cosa).order(:'categoria_de_cosas.nombre' => direction)
+  end
 end
