@@ -184,7 +184,7 @@ RSpec.describe Admin::AccountsController do
 
   describe 'DELETE #destroy' do
     subject do
-      request.headers["Accept"] = "text/vnd.turbo-stream.html,text/html"
+      request.headers['Accept'] = 'text/vnd.turbo-stream.html,text/html'
       delete :destroy, params: { id: account.to_param, redirect_to: redirect_url }
     end
 
