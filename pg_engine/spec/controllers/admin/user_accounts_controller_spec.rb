@@ -172,18 +172,29 @@ RSpec.describe Admin::UserAccountsController do
 
   describe 'DELETE #destroy' do
     subject do
-      delete :destroy, params: { id: user_account.to_param }
+      request.headers["Accept"] = "text/vnd.turbo-stream.html,text/html"
+      delete :destroy, params: { id: user_account.to_param, redirect_to: redirect_url }
     end
 
     let!(:user_account) { create :user_account }
+    let(:redirect_url) { nil }
 
     it 'destroys the requested user_account' do
-      expect { subject }.to change(UserAccount, :count).by(-1)
+      expect { subject }.to change(UserAccount.kept, :count).by(-1)
     end
 
-    it 'redirects to the user_accounts list' do
+    it 'quita el elemento de la lista' do
       subject
-      expect(response).to redirect_to(admin_user_accounts_url)
+      expect(response.body).to include('turbo-stream action="remove"')
+    end
+
+    context 'si hay redirect_to' do
+      let(:redirect_url) { admin_user_accounts_url }
+
+      it 'redirects to the user_accounts list' do
+        subject
+        expect(response).to redirect_to(admin_user_accounts_url)
+      end
     end
   end
 end

@@ -179,10 +179,12 @@ RSpec.describe Frontend::CosasController do
 
   describe 'DELETE #destroy' do
     subject do
-      delete :destroy, params: { id: cosa.to_param }
+      request.headers["Accept"] = "text/vnd.turbo-stream.html,text/html"
+      delete :destroy, params: { id: cosa.to_param, redirect_to: redirect_url }
     end
 
     let!(:cosa) { create :cosa }
+    let(:redirect_url) { nil }
 
     it 'destroys the requested cosa' do
       expect { subject }.to change(Cosa.kept, :count).by(-1)
@@ -193,9 +195,18 @@ RSpec.describe Frontend::CosasController do
       expect(cosa.reload.discarded_at).to be_present
     end
 
-    it 'redirects to the cosas list' do
+    it 'quita el elemento de la lista' do
       subject
-      expect(response).to redirect_to(frontend_cosas_url)
+      expect(response.body).to include('turbo-stream action="remove"')
+    end
+
+    context 'si hay redirect_to' do
+      let(:redirect_url) { frontend_cosas_url }
+
+      it 'redirects to the cosas list' do
+        subject
+        expect(response).to redirect_to(frontend_cosas_url)
+      end
     end
   end
 end

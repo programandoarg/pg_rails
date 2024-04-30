@@ -158,10 +158,12 @@ RSpec.describe Admin::UsersController do
 
   describe 'DELETE #destroy' do
     subject do
-      delete :destroy, params: { id: user.to_param }
+      request.headers["Accept"] = "text/vnd.turbo-stream.html,text/html"
+      delete :destroy, params: { id: user.to_param, redirect_to: redirect_url }
     end
 
     let!(:user) { create :user }
+    let(:redirect_url) { nil }
 
     it 'destroys the requested user' do
       expect { subject }.to change(User.kept, :count).by(-1)
@@ -172,9 +174,18 @@ RSpec.describe Admin::UsersController do
       expect(user.reload.discarded_at).to be_present
     end
 
-    it 'redirects to the users list' do
+    it 'quita el elemento de la lista' do
       subject
-      expect(response).to redirect_to(admin_users_url)
+      expect(response.body).to include('turbo-stream action="remove"')
+    end
+
+    context 'si hay redirect_to' do
+      let(:redirect_url) { admin_users_url }
+
+      it 'redirects to the users list' do
+        subject
+        expect(response).to redirect_to(admin_users_url)
+      end
     end
   end
 end

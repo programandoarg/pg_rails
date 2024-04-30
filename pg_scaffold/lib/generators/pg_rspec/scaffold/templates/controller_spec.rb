@@ -241,14 +241,12 @@ RSpec.describe <%= controller_class_name %>Controller do
 
   describe 'DELETE #destroy' do
     subject do
-<% if Rails::VERSION::STRING < '5.0' -%>
-      delete :destroy, { id: <%= file_name %>.to_param }
-<% else -%>
-      delete :destroy, params: { id: <%= file_name %>.to_param }
-<% end -%>
+      request.headers["Accept"] = "text/vnd.turbo-stream.html,text/html"
+      delete :destroy, params: { id: <%= file_name %>.to_param, redirect_to: redirect_url }
     end
 
     let!(:<%= nombre_tabla_completo_singular %>) { create :<%= nombre_tabla_completo_singular %> }
+    let(:redirect_url) { nil }
 
     it 'destroys the requested <%= nombre_tabla_completo_singular %>' do
 <% if options[:discard] -%>
@@ -267,9 +265,18 @@ RSpec.describe <%= controller_class_name %>Controller do
     end
 
 <% end -%>
-    it 'redirects to the <%= table_name %> list' do
+    it 'quita el elemento de la lista' do
       subject
-      expect(response).to redirect_to(<%= index_helper %>_url)
+      expect(response.body).to include('turbo-stream action="remove"')
+    end
+
+    context 'si hay redirect_to' do
+      let(:redirect_url) { <%= index_helper %>_url }
+
+      it 'redirects to the <%= table_name %> list' do
+        subject
+        expect(response).to redirect_to(<%= index_helper %>_url)
+      end
     end
   end
 end
