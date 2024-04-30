@@ -1,0 +1,9 @@
+es:
+  activerecord:
+    # attributes:
+    #   user:
+    #     confirmation_sent_at: Confirmación enviada a
+    models:
+      cosa:
+        one: Coso
+        other: Cosos

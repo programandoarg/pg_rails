@@ -23,6 +23,10 @@ module PgEngine
       authorizable_ransackable_attributes
     end
 
+    def gender
+      self.class.model_name.human.downcase.ends_with?('a') ? 'f' : 'm'
+    end
+
     def self.nombre_plural
       model_name.human(count: 2)
     end
