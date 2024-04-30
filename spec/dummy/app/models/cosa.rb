@@ -40,7 +40,7 @@ class Cosa < ApplicationRecord
 
   validates :nombre, :tipo, presence: true
 
-  scope :order_by_categoria_de_cosa, -> (direction) do
-    joins(:categoria_de_cosa).order(:'categoria_de_cosas.nombre' => direction)
-  end
+  scope :order_by_categoria_de_cosa, lambda { |direction|
+    joins(:categoria_de_cosa).order('categoria_de_cosas.nombre': direction)
+  }
 end

@@ -40,8 +40,8 @@ module PgEngine
 
       helpers.content_tag :span, rel: :tooltip, title: 'Eliminar' do
         helpers.link_to object_url + (redirect_to.present? ? "?redirect_to=#{redirect_to}" : ''),
-                          data: { 'turbo-confirm': confirm_text, 'turbo-method': :delete },
-                                    class: "btn btn-sm #{klass}" do
+                        data: { 'turbo-confirm': confirm_text, 'turbo-method': :delete },
+                        class: "btn btn-sm #{klass}" do
           helpers.content_tag :span, nil, class: clase_icono('trash-fill')
         end
       end

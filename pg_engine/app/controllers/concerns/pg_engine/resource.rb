@@ -147,7 +147,7 @@ module PgEngine
       end
     end
 
-    def pg_respond_destroy(model, redirect_url = nil)
+    def pg_respond_destroy(model, redirect_url = nil) # rubocop:disable Metrics/PerceivedComplexity
       if destroy_model(model)
         respond_to do |format|
           if redirect_url.present?
@@ -284,7 +284,7 @@ module PgEngine
     def do_sort(scope, field, direction)
       # TODO: restringir ciertos campos?
       unless scope.model.column_names.include?(field.to_s) ||
-          scope.model.respond_to?("order_by_#{field}")
+             scope.model.respond_to?("order_by_#{field}")
         PgLogger.warn("No existe el campo \"#{field}\"", :warn)
         return scope
       end
@@ -292,11 +292,11 @@ module PgEngine
         PgLogger.warn("Direction not valid: \"#{direction}\"", :warn)
         return scope
       end
-      if scope.model.respond_to? "order_by_#{field}"
-        scope = scope.send "order_by_#{field}", direction
-      else
-        scope = scope.order(field => direction)
-      end
+      scope = if scope.model.respond_to? "order_by_#{field}"
+                scope.send "order_by_#{field}", direction
+              else
+                scope.order(field => direction)
+              end
       instance_variable_set(:@field, field)
       instance_variable_set(:@direction, direction)
       scope
