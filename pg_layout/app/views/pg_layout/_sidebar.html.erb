@@ -1,5 +1,8 @@
 <div id="sidebar" class="<%= @navbar_opened_class %> flex-shrink-0 d-none d-<%= @breakpoint_navbar_expand %>-block">
-  <div class="mt-4">
+  <div class="mt-1">
+    <div class="m-3">
+      <%= @navbar.logo if @navbar.logo.present? %>
+    </div>
     <% if user_signed_in? %>
       <span class="ms-3 text-light"><%= Current.user %></span>
       <hr>

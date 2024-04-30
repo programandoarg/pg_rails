@@ -5,13 +5,19 @@
         <i class="bi <%= @navbar_chevron_class %>"></i>
       </button>
 
-      <button class="btn btn-outline-light d-inline-block d-<%= @breakpoint_navbar_expand %>-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-        <i class="bi bi-list"></i>
-      </button>
     <% end %>
     <% @navbar.extensiones.each do |extension| %>
       <%= extension %>
     <% end %>
     <%= @navbar.logo if @navbar.logo.present? %>
+    <button class="btn btn-outline-light d-inline-block d-<%= @breakpoint_navbar_expand %>-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+      <i class="bi bi-list"></i>
+    </button>
   </div>
 </nav>
+
+<style type="text/css" media="(max-width: 767px)">
+  .navbar .navbar-brand {
+    visibility:visible!important;
+  }
+</style>
