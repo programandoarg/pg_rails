@@ -149,10 +149,10 @@ module PgEngine
 
     def pg_respond_destroy(model, redirect_url = nil) # rubocop:disable Metrics/PerceivedComplexity
       if destroy_model(model)
+        msg = "#{model.model_name.human} #{model.gender == 'f' ? 'borrada' : 'borrado'}"
         respond_to do |format|
           if redirect_url.present?
             format.html do
-              msg = "#{model.model_name.human} #{model.gender == 'f' ? 'borrada' : 'borrado'}"
               redirect_to redirect_url, notice: msg, status: :see_other
             end
           else
@@ -160,12 +160,7 @@ module PgEngine
               render turbo_stream: turbo_stream.remove(model)
             end
             format.html do
-              msg = "#{model.model_name.human} #{model.gender == 'f' ? 'borrada' : 'borrado'}"
-              if redirect_url.present?
-                redirect_to redirect_url, notice: msg, status: :see_other
-              else
-                redirect_back(fallback_location: root_path, notice: msg, status: 303)
-              end
+              redirect_back(fallback_location: root_path, notice: msg, status: 303)
             end
             format.json { head :no_content }
           end
@@ -178,11 +173,7 @@ module PgEngine
               render destroy_error_details_view
             else
               flash[:alert] = @error_message
-              # if redirect_url.present?
-              #   redirect_to redirect_url
-              # else
               redirect_back(fallback_location: root_path, status: 303)
-              # end
             end
           end
           format.json { render json: { error: @error_message }, status: :unprocessable_entity }
