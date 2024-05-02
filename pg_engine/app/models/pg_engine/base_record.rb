@@ -47,6 +47,7 @@ module PgEngine
       end
     end
 
+    # Para el dom_id (index.html)
     def to_key
       if respond_to? :hashid
         [hashid]
