@@ -147,7 +147,7 @@ module PgEngine
       end
     end
 
-    def pg_respond_destroy(model, redirect_url = nil) # rubocop:disable Metrics/PerceivedComplexity
+    def pg_respond_destroy(model, redirect_url = nil)
       if destroy_model(model)
         msg = "#{model.model_name.human} #{model.gender == 'f' ? 'borrada' : 'borrado'}"
         respond_to do |format|
