@@ -30,7 +30,7 @@ describe 'Sign in', :js do
   shared_examples 'destroy from show' do
     subject do
       accept_confirm do
-        find(".btn-toolbar span[title=Eliminar] a").click
+        find('.btn-toolbar span[title=Eliminar] a').click
       end
       sleep 1
     end
