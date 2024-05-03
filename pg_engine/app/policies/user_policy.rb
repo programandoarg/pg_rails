@@ -13,7 +13,19 @@ class UserPolicy < ApplicationPolicy
     # end
   end
 
-  def acceso_total?
-    true
-  end
+  # def puede_editar?
+  #   acceso_total? && !record.readonly?
+  # end
+
+  # def puede_crear?
+  #   acceso_total? || user.asesor?
+  # end
+
+  # def puede_borrar?
+  #   acceso_total? && !record.readonly?
+  # end
+
+  # def acceso_total?
+  #   user.developer?
+  # end
 end

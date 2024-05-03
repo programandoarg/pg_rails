@@ -184,10 +184,12 @@ RSpec.describe Admin::AccountsController do
 
   describe 'DELETE #destroy' do
     subject do
-      delete :destroy, params: { id: account.to_param }
+      request.headers['Accept'] = 'text/vnd.turbo-stream.html,text/html'
+      delete :destroy, params: { id: account.to_param, redirect_to: redirect_url }
     end
 
     let!(:account) { create :account }
+    let(:redirect_url) { nil }
 
     it 'destroys the requested account' do
       expect { subject }.to change(Account.kept, :count).by(-1)
@@ -198,9 +200,18 @@ RSpec.describe Admin::AccountsController do
       expect(account.reload.discarded_at).to be_present
     end
 
-    it 'redirects to the accounts list' do
+    it 'quita el elemento de la lista' do
       subject
-      expect(response).to redirect_to(admin_accounts_url)
+      expect(response.body).to include('turbo-stream action="remove"')
+    end
+
+    context 'si hay redirect_to' do
+      let(:redirect_url) { admin_accounts_url }
+
+      it 'redirects to the accounts list' do
+        subject
+        expect(response).to redirect_to(admin_accounts_url)
+      end
     end
   end
 end

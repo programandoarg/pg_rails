@@ -1,7 +1,7 @@
 - content_for :title do
   = @cosa.to_s
 - content_for :actions do
-  = @cosa.destroy_link
+  = @cosa.destroy_link_redirect
   .ms-1
   = @cosa.edit_link
 

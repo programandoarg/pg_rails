@@ -1,9 +1,7 @@
 module Users
   class RegistrationsController < Devise::RegistrationsController
-    # POST /resource
-
     before_action do
-      authorize User
+      authorize resource, nil, policy_class: UserRegistrationPolicy
     end
 
     def create

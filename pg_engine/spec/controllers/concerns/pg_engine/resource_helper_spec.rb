@@ -34,9 +34,9 @@ describe PgEngine::Resource do
       instancia.send(:do_sort, scope, param, direction)
     end
 
-    let!(:categoria_de_cosa_ult) { create :categoria_de_cosa, nombre: 'Z' }
-    let!(:categoria_de_cosa_pri) { create :categoria_de_cosa, nombre: 'a' }
-    let(:scope) { CategoriaDeCosa.all }
+    let!(:cosa_ult) { create :cosa, nombre: 'Z' }
+    let!(:cosa_pri) { create :cosa, nombre: 'a' }
+    let(:scope) { Cosa.all }
     let(:param) { :nombre }
     let(:direction) { :desc }
 
@@ -44,7 +44,7 @@ describe PgEngine::Resource do
       let(:direction) { :asc }
 
       it do
-        expect(subject.to_a).to eq [categoria_de_cosa_pri, categoria_de_cosa_ult]
+        expect(subject.to_a).to eq [cosa_pri, cosa_ult]
       end
     end
 
@@ -52,7 +52,7 @@ describe PgEngine::Resource do
       let(:direction) { :desc }
 
       it do
-        expect(subject.to_a).to eq [categoria_de_cosa_ult, categoria_de_cosa_pri]
+        expect(subject.to_a).to eq [cosa_ult, cosa_pri]
       end
     end
 
@@ -60,7 +60,32 @@ describe PgEngine::Resource do
       let(:param) { :inexistente }
 
       it do
-        expect(subject.to_a).to eq [categoria_de_cosa_ult, categoria_de_cosa_pri]
+        expect(subject.to_a).to eq [cosa_ult, cosa_pri]
+      end
+    end
+
+    context 'cuando ordeno por categoria' do
+      let(:param) { :categoria_de_cosa }
+
+      before do
+        cosa_pri.categoria_de_cosa.update_column(:nombre, 'a') # rubocop:disable Rails/SkipsModelValidations
+        cosa_ult.categoria_de_cosa.update_column(:nombre, 'z') # rubocop:disable Rails/SkipsModelValidations
+      end
+
+      context 'si es asc' do
+        let(:direction) { :asc }
+
+        it do
+          expect(subject.to_a).to eq [cosa_pri, cosa_ult]
+        end
+      end
+
+      context 'si es desc' do
+        let(:direction) { :desc }
+
+        it do
+          expect(subject.to_a).to eq [cosa_ult, cosa_pri]
+        end
       end
     end
   end

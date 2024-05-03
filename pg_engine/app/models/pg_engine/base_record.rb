@@ -23,6 +23,10 @@ module PgEngine
       authorizable_ransackable_attributes
     end
 
+    def gender
+      self.class.model_name.human.downcase.ends_with?('a') ? 'f' : 'm'
+    end
+
     def self.nombre_plural
       model_name.human(count: 2)
     end
@@ -40,6 +44,15 @@ module PgEngine
         super(attribute[0..-3], options)
       else
         super(attribute, options)
+      end
+    end
+
+    # Para el dom_id (index.html)
+    def to_key
+      if respond_to? :hashid
+        [hashid]
+      else
+        super
       end
     end
 

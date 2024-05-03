@@ -1,7 +1,7 @@
 - content_for :title do
   = @user_account.to_s
 - content_for :actions do
-  = @user_account.destroy_link
+  = @user_account.destroy_link_redirect
   .ms-1
   = @user_account.edit_link
 

@@ -99,16 +99,16 @@ module PgEngine
     def not_authorized
       respond_to do |format|
         format.json do
-          render json: { error: 'Not authorized' },
+          render json: { error: 'Acceso no autorizado' },
                  status: :unprocessable_entity
         end
         format.html do
           if request.path == root_path
             # TODO!: renderear un 500.html y pg_err
             sign_out(Current.user) if Current.user.present?
-            render plain: 'Not authorized'
+            render plain: 'Acceso no autorizado'
           else
-            go_back('Not authorized')
+            go_back('Acceso no autorizado')
           end
         end
       end

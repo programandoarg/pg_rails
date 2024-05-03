@@ -3,6 +3,8 @@
 module PgEngine
   module IndexHelper
     def encabezado(campo, options = {})
+      campo = campo.to_s.sub(/_f\z/, '')
+      campo = campo.to_s.sub(/_text\z/, '')
       clase = options[:clase] || @clase_modelo
       if options[:ordenable]
         field = controller.instance_variable_get(:@field)

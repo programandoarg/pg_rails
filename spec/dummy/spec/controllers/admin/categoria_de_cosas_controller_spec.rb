@@ -182,10 +182,12 @@ RSpec.describe Admin::CategoriaDeCosasController do
 
   describe 'DELETE #destroy' do
     subject do
-      delete :destroy, params: { id: categoria_de_cosa.to_param }
+      request.headers['Accept'] = 'text/vnd.turbo-stream.html,text/html'
+      delete :destroy, params: { id: categoria_de_cosa.to_param, redirect_to: redirect_url }
     end
 
     let!(:categoria_de_cosa) { create :categoria_de_cosa }
+    let(:redirect_url) { nil }
 
     it 'destroys the requested categoria_de_cosa' do
       expect { subject }.to change(CategoriaDeCosa.kept, :count).by(-1)
@@ -196,9 +198,18 @@ RSpec.describe Admin::CategoriaDeCosasController do
       expect(categoria_de_cosa.reload.discarded_at).to be_present
     end
 
-    it 'redirects to the categoria_de_cosas list' do
+    it 'quita el elemento de la lista' do
       subject
-      expect(response).to redirect_to(admin_categoria_de_cosas_url)
+      expect(response.body).to include('turbo-stream action="remove"')
+    end
+
+    context 'si hay redirect_to' do
+      let(:redirect_url) { admin_categoria_de_cosas_url }
+
+      it 'redirects to the categoria_de_cosas list' do
+        subject
+        expect(response).to redirect_to(admin_categoria_de_cosas_url)
+      end
     end
   end
 end

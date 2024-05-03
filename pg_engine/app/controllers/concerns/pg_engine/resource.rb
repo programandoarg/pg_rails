@@ -49,8 +49,7 @@ module PgEngine
     end
 
     def destroy
-      url = namespaced_path(@clase_modelo)
-      pg_respond_destroy(instancia_modelo, url)
+      pg_respond_destroy(instancia_modelo, params[:redirect_to])
     end
     # End public endpoints
 
@@ -150,15 +149,21 @@ module PgEngine
 
     def pg_respond_destroy(model, redirect_url = nil)
       if destroy_model(model)
+        msg = "#{model.model_name.human} #{model.gender == 'f' ? 'borrada' : 'borrado'}"
         respond_to do |format|
-          format.html do
-            if redirect_url.present?
-              redirect_to redirect_url, notice: 'Elemento borrado.', status: :see_other
-            else
-              redirect_back(fallback_location: root_path, notice: 'Elemento borrado.', status: 303)
+          if redirect_url.present?
+            format.html do
+              redirect_to redirect_url, notice: msg, status: :see_other
             end
+          else
+            format.turbo_stream do
+              render turbo_stream: turbo_stream.remove(model)
+            end
+            format.html do
+              redirect_back(fallback_location: root_path, notice: msg, status: 303)
+            end
+            format.json { head :no_content }
           end
-          format.json { head :no_content }
         end
       else
         respond_to do |format|
@@ -168,11 +173,7 @@ module PgEngine
               render destroy_error_details_view
             else
               flash[:alert] = @error_message
-              # if redirect_url.present?
-              #   redirect_to redirect_url
-              # else
               redirect_back(fallback_location: root_path, status: 303)
-              # end
             end
           end
           format.json { render json: { error: @error_message }, status: :unprocessable_entity }
@@ -273,7 +274,8 @@ module PgEngine
 
     def do_sort(scope, field, direction)
       # TODO: restringir ciertos campos?
-      unless scope.model.column_names.include? field.to_s
+      unless scope.model.column_names.include?(field.to_s) ||
+             scope.model.respond_to?("order_by_#{field}")
         PgLogger.warn("No existe el campo \"#{field}\"", :warn)
         return scope
       end
@@ -281,7 +283,11 @@ module PgEngine
         PgLogger.warn("Direction not valid: \"#{direction}\"", :warn)
         return scope
       end
-      scope = scope.order(field => direction)
+      scope = if scope.model.respond_to? "order_by_#{field}"
+                scope.send "order_by_#{field}", direction
+              else
+                scope.order(field => direction)
+              end
       instance_variable_set(:@field, field)
       instance_variable_set(:@direction, direction)
       scope
