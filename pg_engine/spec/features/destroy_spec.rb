@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-include ActionView::RecordIdentifier
-
 describe 'Sign in', :js do
   shared_examples 'destroy from index' do
     subject do
       accept_confirm do
+        include ActionView::RecordIdentifier
+
         find("##{dom_id(cosa)} span[title=Eliminar] a").click
       end
       sleep 1
@@ -43,7 +43,7 @@ describe 'Sign in', :js do
       visit "/frontend/cosas/#{cosa.to_param}"
     end
 
-    it do
+    it do # rubocop:disable RSpec/MultipleExpectations
       subject
       expect(page).to have_current_path('/frontend/cosas')
       expect(page).to have_text('Coso borrado')
