@@ -7,3 +7,6 @@ es:
       cosa:
         one: Coso
         other: Cosos
+      categoria_de_cosa:
+        one: Categoría de cosa
+        other: Categorías de cosas
