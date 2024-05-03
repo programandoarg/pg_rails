@@ -8,7 +8,6 @@ describe 'Sign in', :js do
   shared_examples 'destroy from index' do
     subject do
       accept_confirm do
-
         find("##{dom_id(cosa)} span[title=Eliminar] a").click
       end
       sleep 1
