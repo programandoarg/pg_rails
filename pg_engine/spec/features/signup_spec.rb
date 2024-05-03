@@ -5,6 +5,14 @@ require 'rails_helper'
 describe 'Al Registrarse', :js do
   include ActiveJob::TestHelper
 
+  find_scroll = proc do |selector, options = {}|
+    elem = find(selector, **options.merge(visible: :all))
+    script = 'arguments[0].scrollIntoView({ behavior: "instant", block: "start", inline: "nearest" });'
+    page.execute_script(script, elem)
+    sleep 0.5
+    elem
+  end
+
   shared_examples 'sign_up' do
     subject do
       perform_enqueued_jobs do
@@ -14,7 +22,7 @@ describe 'Al Registrarse', :js do
         fill_in 'user_apellido', with: Faker::Name.name
         fill_in 'user_password', with: 'admin123'
         fill_in 'user_password_confirmation', with: 'admin123'
-        find('input[type=submit]').click
+        instance_exec('input[type=submit]', &find_scroll).click
         expect(page).to have_text('Se ha enviado un mensaje con un enlace')
       end
     end
@@ -28,7 +36,9 @@ describe 'Al Registrarse', :js do
     subject do
       fill_in 'user_nombre', with: 'despues'
       fill_in 'user_current_password', with: password
-      find('input[type=submit]').click
+      instance_exec('input[type=submit]', &find_scroll).click
+      # find('').click
+      sleep 1
     end
 
     let(:password) { 'pass1234' }

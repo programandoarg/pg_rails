@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 describe 'Sign in', :js do
+  include ActionView::RecordIdentifier
+
   shared_examples 'destroy from index' do
     subject do
       accept_confirm do
-        include ActionView::RecordIdentifier
 
         find("##{dom_id(cosa)} span[title=Eliminar] a").click
       end
