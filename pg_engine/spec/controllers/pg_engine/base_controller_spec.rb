@@ -49,6 +49,7 @@ describe DummyBaseController do
       subject
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'Ocurrió algo inesperado'
+      expect(response.body).to include '<html'
       expect(response.content_type).to include 'text/html'
     end
 
