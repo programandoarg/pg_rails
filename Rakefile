@@ -1,10 +1,8 @@
 require "bundler/setup"
 
-def playchord
-  if ENV['PLAYSOUND_CMD']
-    system ENV['PLAYSOUND_CMD']
-    # system 'play -n synth pl G2 pl B2 pl D3 pl G3 pl D4 pl G4 delay 0 .05 .1 .15 .2 .25 remix - fade 0 4 .1 norm -1'
-  end
+def playchord(status)
+  json_path = File.expand_path("spec/hooks/prepush-#{status}.json", ENV.fetch('PREPUSH_HOOK_JSON_DIR'))
+  system "curl -X POST -d \"@#{json_path}\" -H \"Content-Type: application/json\" #{ENV.fetch('PREPUSH_HOOK_URL')}"
 end
 
 APP_RAKEFILE = File.expand_path("spec/dummy/Rakefile", __dir__)
@@ -71,8 +69,9 @@ task :prepush do
   end
   Rake::Task['static_analysis'].invoke
   Rake::Task['test'].invoke
-ensure
-  playchord
+  playchord('success')
+rescue
+  playchord('failed')
 end
 
 desc 'Release all'
