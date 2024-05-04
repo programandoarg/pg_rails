@@ -22,7 +22,6 @@ module PgEngine
 
     protect_from_forgery with: :exception
 
-    rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
     rescue_from PgEngine::Error, with: :internal_error
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
     rescue_from Redirect do |e|
@@ -101,32 +100,13 @@ module PgEngine
 
     protected
 
-    # TODO: ver qué pasa en producción
-    # def default_url_options(options = {})
-    #   if Rails.env.production?
-    #     options.merge(protocol: 'https')
-    #   else
-    #     options
-    #   end
-    # end
-
-    # TODO!: ver qué onda esto, tiene sentido acá?
-    def fecha_invalida
-      respond_to do |format|
-        format.json do
-          render json: { error: 'Formato de fecha inválido' },
-                 status: :unprocessable_entity
-        end
-        format.html { go_back('Formato de fecha inválido') }
-      end
-    end
-
     def not_authorized
       respond_to do |format|
         format.json do
           render json: { error: 'Acceso no autorizado' },
                  status: :unprocessable_entity
         end
+        # TODO: responder a turbo_stream
         format.html do
           if request.path == root_path
             # TODO!: renderear un 500.html y pg_err
