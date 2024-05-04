@@ -48,17 +48,6 @@ end
 
 desc "Static analysis"
 task :static_analysis do
-  system!("overcommit --run")
-  system!("bundle exec brakeman -q --no-summary --skip-files node_modules/ --force")
-end
-
-desc "Brakeman interactive mode"
-task :brakeman do
-  system! "bundle exec brakeman -q --no-summary --skip-files node_modules/ -I --force"
-end
-
-desc 'Pre push tasks'
-task :prepush do
   if `git status -s` != ''
     changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
     system! 'git add .'
@@ -71,6 +60,17 @@ task :prepush do
     system! 'git add .'
     system! "git commit -m \"[auto commit] #{changes} (Lint on prepush)\""
   end
+  system!("overcommit --run")
+  system!("bundle exec brakeman -q --no-summary --skip-files node_modules/ --force")
+end
+
+desc "Brakeman interactive mode"
+task :brakeman do
+  system! "bundle exec brakeman -q --no-summary --skip-files node_modules/ -I --force"
+end
+
+desc 'Pre push tasks'
+task :prepush do
   Rake::Task['static_analysis'].invoke
   Rake::Task['test'].invoke
   playchord('success')
