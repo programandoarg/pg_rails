@@ -8,8 +8,9 @@
           = f.mensajes_de_error
 
           = hidden_field_tag :asociable, true if asociable
-          = f.input :nombre, input_html: { style: 'max-width: 22em' }
-          = f.input :email, input_html: { style: 'max-width: 23em' }
+          - unless user_signed_in?
+            = f.input :nombre, input_html: { style: 'max-width: 22em' }
+            = f.input :email, input_html: { style: 'max-width: 23em' }
           = f.input :telefono, hint: '(Opcional)', input_html: { style: 'max-width: 15em' }
           = f.input :mensaje, as: :text, input_html: { rows: 5 }
           .mt-2
