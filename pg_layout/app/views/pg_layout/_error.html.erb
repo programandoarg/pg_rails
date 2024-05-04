@@ -1,0 +1,13 @@
+<%# locals: (error_msg: nil) %>
+
+<div class="d-flex justify-content-around">
+  <div class="alert alert-danger d-flex align-items-center">
+    <div>
+      <span class="bi bi-emoji-dizzy fs-1 me-3"></span>
+      <%# <span class="bi bi-exclamation-triangle fs-1 me-3"></span> %>
+    </div>
+    <div>
+      <%= render partial: 'pg_layout/default_error_message' %>
+    </div>
+  </div>
+</div>
