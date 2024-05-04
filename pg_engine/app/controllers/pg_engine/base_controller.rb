@@ -22,10 +22,34 @@ module PgEngine
 
     protect_from_forgery with: :exception
 
-    rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
+    rescue_from PgEngine::Error, with: :internal_error
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
     rescue_from Redirect do |e|
       redirect_to e.url
+    end
+
+    def internal_error(error)
+      pg_err error
+
+      @error_msg = <<~HTML.html_safe # rubocop:disable Rails/OutputSafety
+        <div>
+          Ocurrió algo inesperado
+          <br>
+          Por favor, intentá nuevamente
+          <br>
+          o <a class="text-decoration-underline" href="#{new_public_mensaje_contacto_path}">ponete en contacto</a> y pronto lo resolveremos
+        </div>
+      HTML
+
+      respond_to do |format|
+        format.html do
+          render 'pg_layout/error', layout: 'pg_layout/containerized'
+        end
+        format.turbo_stream do
+          flash.now[:critical] = @error_msg
+          render turbo_stream: (turbo_stream.remove_all('.modal') + render_turbo_stream_flash_messages)
+        end
+      end
     end
 
     before_action do
@@ -47,8 +71,8 @@ module PgEngine
     layout 'pg_layout/base'
 
     # Los flash_types resultantes serían:
-    # [:alert, :notice, :warning, :success]
-    add_flash_types :warning, :success
+    # [:critical, :alert, :notice, :warning, :success]
+    add_flash_types :critical, :warning, :success
 
     before_action do
       console if dev_user_or_env? && (params[:show_web_console] || params[:wc])
@@ -76,32 +100,13 @@ module PgEngine
 
     protected
 
-    # TODO: ver qué pasa en producción
-    # def default_url_options(options = {})
-    #   if Rails.env.production?
-    #     options.merge(protocol: 'https')
-    #   else
-    #     options
-    #   end
-    # end
-
-    # TODO!: ver qué onda esto, tiene sentido acá?
-    def fecha_invalida
-      respond_to do |format|
-        format.json do
-          render json: { error: 'Formato de fecha inválido' },
-                 status: :unprocessable_entity
-        end
-        format.html { go_back('Formato de fecha inválido') }
-      end
-    end
-
     def not_authorized
       respond_to do |format|
         format.json do
           render json: { error: 'Acceso no autorizado' },
                  status: :unprocessable_entity
         end
+        # TODO: responder a turbo_stream
         format.html do
           if request.path == root_path
             # TODO!: renderear un 500.html y pg_err

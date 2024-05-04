@@ -17,6 +17,10 @@ module Public
     def new; end
 
     def create
+      if Current.user.present?
+        @mensaje_contacto.email = Current.user.email
+        @mensaje_contacto.nombre = Current.user.nombre_completo
+      end
       if @mensaje_contacto.save
         render turbo_stream: turbo_stream.update('mensaje_contacto', partial: 'gracias')
       else

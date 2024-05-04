@@ -4,9 +4,6 @@ module PgEngine
   module PrintHelper
     include ActionView::Helpers::NumberHelper
 
-    class FechaInvalidaError < PgEngine::Error
-    end
-
     def mostrar_con_link(objeto, options = {})
       return if objeto.blank?
 
@@ -42,42 +39,36 @@ module PgEngine
     end
 
     def dmy_time(date)
-      date = parsear_tiempo(date) if date.is_a? String
       return if date.blank?
 
       date.strftime('%d/%m/%Y %H:%M')
     end
 
     def dmy(date)
-      date = parsear_fecha(date) if date.is_a? String
       return if date.blank?
 
       date.strftime('%d/%m/%Y')
     end
 
     def ymd(date)
-      date = parsear_fecha(date) if date.is_a? String
       return if date.blank?
 
       date.strftime('%Y/%m/%d')
     end
 
     def dmyg(date)
-      date = parsear_fecha(date) if date.is_a? String
       return if date.blank?
 
       date.strftime('%d-%m-%Y')
     end
 
     def ymdg(date)
-      date = parsear_fecha(date) if date.is_a? String
       return if date.blank?
 
       date.strftime('%Y-%m-%d')
     end
 
     def myg(date)
-      date = parsear_fecha(date) if date.is_a? String
       return if date.blank?
 
       date.strftime('%m-%Y')
@@ -140,22 +131,6 @@ module PgEngine
           truncate_title(value.to_s.encode('UTF-8', invalid: :replace, undef: :replace))
         end
       end
-    end
-
-    def parsear_tiempo(datetime)
-      return nil if datetime.blank?
-
-      DateTime.parse(datetime)
-    rescue ArgumentError
-      raise FechaInvalidaError, datetime
-    end
-
-    def parsear_fecha(date)
-      return nil if date.blank?
-
-      Date.parse(date)
-    rescue ArgumentError
-      raise FechaInvalidaError, date
     end
 
     def show_percentage(value)
