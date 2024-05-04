@@ -1,11 +1,13 @@
 <%# locals: (error_msg: nil) %>
 
 <div>
-  <%= error_msg || 'Ocurrió algo inesperado' %>
-  <br>
+  <div class="mb-1">
+    <%= error_msg || 'Ocurrió algo inesperado' %>
+  </div>
   Por favor, intentá nuevamente
   <br>
-  o <a class="text-decoration-underline" href="<%= new_public_mensaje_contacto_path %>">dejanos un mensaje</a>
+  o <a class="text-decoration-underline" href="<%= new_public_mensaje_contacto_path %>">dejá un mensaje</a>
+  para que te avisemos
   <br>
-  y te avisaremos cuando el problema esté resuelto.
+  cuando el problema esté resuelto 🙏
 </div>
