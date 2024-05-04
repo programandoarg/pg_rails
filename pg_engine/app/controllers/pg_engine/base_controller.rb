@@ -30,20 +30,21 @@ module PgEngine
 
     rescue_from PgEngine::Error, with: :internal_error
 
-    def internal_error(e)
-      pg_err e
+    def internal_error(error)
+      pg_err error
+
       respond_to do |format|
         format.html do
           render 'pg_layout/error', layout: 'pg_layout/containerized'
         end
         format.turbo_stream do
-          html = <<~HTML.html_safe
+          html = <<~HTML.html_safe # rubocop:disable Rails/OutputSafety
             <div>
               Ocurrió algo inesperado
               <br>
               Por favor, intentá nuevamente
               <br>
-              o <a class="text-decoration-underline" href="#{ new_public_mensaje_contacto_path }">ponete en contacto</a> y pronto lo resolveremos
+              o <a class="text-decoration-underline" href="#{new_public_mensaje_contacto_path}">ponete en contacto</a> y pronto lo resolveremos
             </div>
           HTML
 
