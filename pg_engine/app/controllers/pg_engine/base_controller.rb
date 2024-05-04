@@ -28,6 +28,31 @@ module PgEngine
       redirect_to e.url
     end
 
+    rescue_from PgEngine::Error, with: :internal_error
+
+    def internal_error(e)
+      pg_err e
+      respond_to do |format|
+        format.html do
+          render 'pg_layout/error', layout: 'pg_layout/containerized'
+        end
+        format.turbo_stream do
+          html = <<~HTML.html_safe
+            <div>
+              Ocurrió algo inesperado
+              <br>
+              Por favor, intentá nuevamente
+              <br>
+              o <a class="text-decoration-underline" href="#{ new_public_mensaje_contacto_path }">ponete en contacto</a> y pronto lo resolveremos
+            </div>
+          HTML
+
+          flash.now[:critical] = html
+          render turbo_stream: (turbo_stream.remove_all('.modal') + render_turbo_stream_flash_messages)
+        end
+      end
+    end
+
     before_action do
       Current.user = current_user
     end
