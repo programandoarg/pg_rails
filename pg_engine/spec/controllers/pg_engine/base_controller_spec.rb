@@ -9,6 +9,10 @@ class DummyBaseController < PgEngine::BaseController
     raise Pundit::NotAuthorizedError
   end
 
+  def test_internal_error
+    raise PgEngine::Error
+  end
+
   def check_dev_user
     @dev_user_or_env = dev_user_or_env?
     @dev_user = dev_user?
@@ -20,11 +24,46 @@ end
 # rubocop:disable RSpec/FilePath
 # rubocop:disable RSpec/SpecFilePathFormat
 describe DummyBaseController do
+  render_views
+
   describe 'PgEngine::BaseController::Redirect' do
     before { get :action_with_redirect }
 
     it do
       expect(response).to redirect_to '/some_path'
+    end
+  end
+
+  describe 'internal_error' do
+    subject do
+      get :test_internal_error
+    end
+
+    around do |example|
+      PgEngine::PgLogger.raise_errors = false
+      example.run
+      PgEngine::PgLogger.raise_errors = true
+    end
+
+    it do
+      subject
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include 'Ocurrió algo inesperado'
+      expect(response.content_type).to include 'text/html'
+    end
+
+    context 'cuando acepta turbo stream' do
+      before do
+        request.headers['Accept'] = 'text/vnd.turbo-stream.html,text/html'
+      end
+
+      it do
+        subject
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to include 'text/vnd.turbo-stream.html'
+        expect(response.body).to include 'Ocurrió algo inesperado'
+        expect(response.body).to include '<turbo-stream action="remove" targets=".modal">'
+      end
     end
   end
 
