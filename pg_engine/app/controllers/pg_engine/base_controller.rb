@@ -47,8 +47,8 @@ module PgEngine
     layout 'pg_layout/base'
 
     # Los flash_types resultantes serían:
-    # [:alert, :notice, :warning, :success]
-    add_flash_types :warning, :success
+    # [:critical, :alert, :notice, :warning, :success]
+    add_flash_types :critical, :warning, :success
 
     before_action do
       console if dev_user_or_env? && (params[:show_web_console] || params[:wc])
