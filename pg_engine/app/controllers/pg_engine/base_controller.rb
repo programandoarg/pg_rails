@@ -23,12 +23,11 @@ module PgEngine
     protect_from_forgery with: :exception
 
     rescue_from PrintHelper::FechaInvalidaError, with: :fecha_invalida
+    rescue_from PgEngine::Error, with: :internal_error
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
     rescue_from Redirect do |e|
       redirect_to e.url
     end
-
-    rescue_from PgEngine::Error, with: :internal_error
 
     def internal_error(error)
       pg_err error
