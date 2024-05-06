@@ -17,15 +17,15 @@ module Users
     private
 
     def atributos_permitidos
-      %i[accepted_at delivered_at opened_at from_address from_name reply_to to subject body_input tags associated_id associated_type content_eml message_id mailer status_detail status]
+      %i[from_address from_name reply_to to subject body_input associated_id associated_type]
     end
 
     def atributos_para_buscar
-      %i[accepted_at delivered_at opened_at from_address from_name reply_to to subject body_input tags associated content_eml message_id mailer status_detail status]
+      %i[accepted_at delivered_at opened_at from_address from_name reply_to to subject body_input tags content_eml message_id mailer status_detail status]
     end
 
     def atributos_para_listar
-      %i[accepted_at delivered_at opened_at from_address from_name reply_to to subject body_input tags associated content_eml message_id mailer status_detail status]
+      %i[from_address to subject body_input tags associated status]
     end
 
     def atributos_para_mostrar

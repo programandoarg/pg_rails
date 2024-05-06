@@ -16,6 +16,9 @@ sidebar.signed_in:
     name: ActiveAdmin
     path: active_admin_root_path
   -
+    name: Emails
+    path: users_emails_path
+  -
     name: Users
     path: admin_users_path
   -

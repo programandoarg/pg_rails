@@ -42,8 +42,10 @@ class Email < ApplicationRecord
   belongs_to :creado_por, optional: true, class_name: 'User'
   belongs_to :actualizado_por, optional: true, class_name: 'User'
 
-  validates :from_address, :to, :status, presence: true
+  # TODO: y el fallido temporario?
+  enumerize :status, in: { pending: 0, blocked: 1, sent: 2, accepted: 3, delivered: 4, rejected: 5 }
 
+  validates :from_address, :to, :status, presence: true
 
   validate do
     if to.present? && !to.split(/[,;]/).all? { |dest| dest.match(/\A[^@\s]+@[^@\s]+\z/) }
@@ -57,6 +59,10 @@ class Email < ApplicationRecord
 
   validates :from_name, :subject, :to,
             format: { with: /\A[^\n<>&]*\z/, message: 'contiene caracteres inválidos' }
+
+  after_initialize do
+    self.from_address = ENV.fetch('DEFAULT_MAIL_FROM') if from_address.blank?
+  end
   # validates_format_of :subject, with: /\A[[[:alpha:]]\(\)\w\s.,;!¡?¿-]+\z/
   # def strip_all(input)
   #   return if input.blank?
@@ -70,15 +76,15 @@ class Email < ApplicationRecord
   #   input.gsub("\n", '<br>').html_safe # rubocop:disable Rails/OutputSafety
   # end
 
-  # def deliver_later
-  #   if valid?
-  #     begin
-  #       mailer_class.send(mailer_action).deliver_later
+  def deliver_later
+    if valid?
+      begin
+        mailer_class.send(mailer_action).deliver_later
 
-  #       true
-  #     end
-  #   else
-  #     false
-  #   end
-  # end
+        true
+      end
+    else
+      false
+    end
+  end
 end
