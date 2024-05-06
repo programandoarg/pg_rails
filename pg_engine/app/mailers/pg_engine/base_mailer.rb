@@ -2,12 +2,12 @@ module PgEngine
   class BaseMailer < ActionMailer::Base
     class MailNotDelivered < StandardError; end
 
-    before_action { @from_name = params[:from_name] }
+    before_action { @email = params[:email] }
 
-    default from: -> { email_address_with_name(ENV.fetch('DEFAULT_MAIL_FROM'), @from_name) },
-            reply_to: -> { params[:reply_to] },
-            subject: -> { params[:subject] },
-            to: -> { params[:to] }
+    default from: -> { email_address_with_name(@email.from_address, @email.from_name) },
+            reply_to: -> { @email.reply_to },
+            subject: -> { @email.subject },
+            to: -> { @email.to }
 
     layout 'pg_layout/mailer'
 
@@ -23,3 +23,4 @@ end
       si from está vacío
       si body está vacío
       si se lanza PgEngine::BaseMailer::MailNotDelivered
+=end
