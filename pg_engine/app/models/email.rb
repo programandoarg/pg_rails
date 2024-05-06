@@ -75,16 +75,4 @@ class Email < ApplicationRecord
 
   #   input.gsub("\n", '<br>').html_safe
   # end
-
-  def deliver_later
-    if valid?
-      begin
-        mailer_class.send(mailer_action).deliver_later
-
-        true
-      end
-    else
-      false
-    end
-  end
 end
