@@ -43,10 +43,10 @@ RSpec.describe Admin::UsersController do
     }
   end
 
-  let(:logger_user) { create :user, :admin }
+  let(:logged_user) { create :user, :admin }
 
   before do
-    sign_in logger_user
+    sign_in logged_user
   end
 
   describe 'GET #index' do
@@ -66,7 +66,7 @@ RSpec.describe Admin::UsersController do
 
       it do
         subject
-        expect(assigns(:collection)).to eq [logger_user]
+        expect(assigns(:collection)).to eq [logged_user]
       end
     end
   end
