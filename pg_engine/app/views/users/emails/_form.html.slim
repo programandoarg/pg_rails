@@ -1,0 +1,25 @@
+/ # locals: (object: nil, asociable: false)
+
+div style="max-width: 22em" data-controller="pg_form"
+  = pg_form_for(@email || object, asociable:) do |f|
+    = f.mensajes_de_error
+
+    = hidden_field_tag :asociable, true if asociable
+    = f.input :accepted_at
+    = f.input :delivered_at
+    = f.input :opened_at
+    = f.input :from_address
+    = f.input :from_name
+    = f.input :reply_to
+    = f.input :to
+    = f.input :subject
+    = f.input :body_input
+    = f.input :tags
+    = f.pg_associable :associated
+    = f.input :content_eml
+    = f.input :message_id
+    = f.input :mailer
+    = f.input :status_detail
+    = f.input :status
+    .mt-2
+    = f.button :submit

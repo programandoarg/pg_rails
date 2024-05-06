@@ -1,6 +1,9 @@
 include PgEngine::RouteHelpers
 
 Rails.application.routes.draw do
+  namespace :users do
+    pg_resource(:emails)
+  end
   namespace :public, path: '' do
     pg_resource(:mensaje_contactos, only: [:new, :create], path: 'contacto')
   end
