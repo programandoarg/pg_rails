@@ -27,26 +27,32 @@ require 'rails_helper'
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe Admin::UsersController do
+RSpec.describe Admin::EmailsController do
   render_views
-
   # This should return the minimal set of attributes required to create a valid
-  # User. As you add validations to User, be sure to
+  # Email. As you add validations to Email, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    attributes_for(:user)
+    attributes_for(:email)
   end
 
   let(:invalid_attributes) do
     {
-      email: nil
+      from_address: nil
     }
   end
 
-  let(:logged_user) { create :user, :admin }
+  let(:logged_user) { create :user, :developer }
 
   before do
-    sign_in logged_user
+    sign_in logged_user if logged_user.present?
+  end
+
+  describe 'routing' do
+    it 'routes GET index correctly' do
+      route = { get: '/a/emails' }
+      expect(route).to route_to(controller: 'admin/emails', action: 'index')
+    end
   end
 
   describe 'GET #index' do
@@ -54,27 +60,38 @@ RSpec.describe Admin::UsersController do
       get :index, params: {}
     end
 
-    let!(:user) { create :user }
+    before { create :email }
 
     it 'returns a success response' do
       subject
       expect(response).to be_successful
     end
 
-    context 'when está descartado' do
-      before { user.discard! }
+    context 'when user is not logged in' do
+      let(:logged_user) { nil }
 
-      it do
+      it 'redirects to login path' do
         subject
-        expect(assigns(:collection)).to eq [logged_user]
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    context 'when se pide el excel' do
+      subject do
+        get :index, params: {}, format: 'xlsx'
+      end
+
+      it 'returns a success response' do
+        subject
+        expect(response).to be_successful
       end
     end
   end
 
   describe 'GET #show' do
     it 'returns a success response' do
-      user = create(:user)
-      get :show, params: { id: user.to_param }
+      email = create(:email)
+      get :show, params: { id: email.to_param }
       expect(response).to be_successful
     end
   end
@@ -88,34 +105,34 @@ RSpec.describe Admin::UsersController do
 
   describe 'GET #edit' do
     it 'returns a success response' do
-      user = create(:user)
-      get :edit, params: { id: user.to_param }
+      email = create(:email)
+      get :edit, params: { id: email.to_param }
       expect(response).to be_successful
     end
   end
 
   describe 'POST #create' do
     context 'with valid params' do
-      it 'creates a new User' do
+      it 'creates a new Email' do
         expect do
-          post :create, params: { user: valid_attributes }
-        end.to change(User, :count).by(1)
+          post :create, params: { email: valid_attributes }
+        end.to change(Email, :count).by(1)
       end
 
-      it 'redirects to the created user' do
-        post :create, params: { user: valid_attributes }
-        expect(response).to redirect_to(User.last.decorate.target_object)
+      it 'redirects to the created email' do
+        post :create, params: { email: valid_attributes }
+        expect(response).to redirect_to([:admin, Email.last])
       end
     end
 
     context 'with invalid params' do
       it 'returns a unprocessable_entity response' do
-        post :create, params: { user: invalid_attributes }
+        post :create, params: { email: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'renders the new template' do
-        post :create, params: { user: invalid_attributes }
+        post :create, params: { email: invalid_attributes }
         expect(response).to render_template(:new)
       end
     end
@@ -124,33 +141,33 @@ RSpec.describe Admin::UsersController do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        attributes_for(:user)
+        attributes_for(:email)
       end
 
-      it 'updates the requested user' do
-        user = create(:user)
-        put :update, params: { id: user.to_param, user: new_attributes }
-        user.reload
-        expect(user.email).to eq new_attributes[:email]
+      it 'updates the requested email' do
+        email = create(:email)
+        put :update, params: { id: email.to_param, email: new_attributes }
+        email.reload
+        expect(email.from_address).to eq new_attributes[:from_address]
       end
 
-      it 'redirects to the user' do
-        user = create(:user)
-        put :update, params: { id: user.to_param, user: valid_attributes }
-        expect(response).to redirect_to(user.decorate.target_object)
+      it 'redirects to the email' do
+        email = create(:email)
+        put :update, params: { id: email.to_param, email: valid_attributes }
+        expect(response).to redirect_to([:admin, email])
       end
     end
 
     context 'with invalid params' do
       it 'returns a unprocessable_entity response' do
-        user = create(:user)
-        put :update, params: { id: user.to_param, user: invalid_attributes }
+        email = create(:email)
+        put :update, params: { id: email.to_param, email: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'renders the edit template' do
-        user = create(:user)
-        put :update, params: { id: user.to_param, user: invalid_attributes }
+        email = create(:email)
+        put :update, params: { id: email.to_param, email: invalid_attributes }
         expect(response).to render_template(:edit)
       end
     end
@@ -159,19 +176,14 @@ RSpec.describe Admin::UsersController do
   describe 'DELETE #destroy' do
     subject do
       request.headers['Accept'] = 'text/vnd.turbo-stream.html,text/html'
-      delete :destroy, params: { id: user.to_param, redirect_to: redirect_url }
+      delete :destroy, params: { id: email.to_param, redirect_to: redirect_url }
     end
 
-    let!(:user) { create :user }
+    let!(:email) { create :email }
     let(:redirect_url) { nil }
 
-    it 'destroys the requested user' do
-      expect { subject }.to change(User.kept, :count).by(-1)
-    end
-
-    it 'setea el discarded_at' do
-      subject
-      expect(user.reload.discarded_at).to be_present
+    it 'destroys the requested email' do
+      expect { subject }.to change(Email, :count).by(-1)
     end
 
     it 'quita el elemento de la lista' do
@@ -180,11 +192,11 @@ RSpec.describe Admin::UsersController do
     end
 
     context 'si hay redirect_to' do
-      let(:redirect_url) { admin_users_url }
+      let(:redirect_url) { admin_emails_url }
 
-      it 'redirects to the users list' do
+      it 'redirects to the emails list' do
         subject
-        expect(response).to redirect_to(admin_users_url)
+        expect(response).to redirect_to(admin_emails_url)
       end
     end
   end

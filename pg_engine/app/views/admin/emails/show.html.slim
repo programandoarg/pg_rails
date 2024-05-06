@@ -1,0 +1,24 @@
+- content_for :title do
+  = @email.to_s
+- content_for :actions do
+  = @email.destroy_link_redirect
+  .ms-1
+  = @email.edit_link
+
+table.table.table-borderless.table-sm.w-auto.mb-0.m-3
+  - atributos_para_mostrar.each do |att|
+    tr
+      th = @clase_modelo.human_attribute_name(att)
+      td = @email.send(att)
+  tr
+    th = t('attributes.creado_por')
+    td = @email.creado_por
+  tr
+    th = t('attributes.created_at')
+    td = @email.created_at
+  tr
+    th = t('attributes.actualizado_por')
+    td = @email.actualizado_por
+  tr
+    th = t('attributes.updated_at')
+    td = @email.updated_at

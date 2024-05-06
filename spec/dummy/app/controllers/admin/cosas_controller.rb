@@ -14,6 +14,10 @@ module Admin
 
     add_breadcrumb Cosa.nombre_plural, :admin_cosas_path
 
+    before_action(only: :show) do
+      CosaMailer.with(cosa: @cosa).cosa.deliver_later if params[:send_mail] == 'true'
+    end
+
     private
 
     def atributos_permitidos

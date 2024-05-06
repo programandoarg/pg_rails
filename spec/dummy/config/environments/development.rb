@@ -49,6 +49,16 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: Rails.application.credentials&.mailgun&.host,
+    port: 465,
+    user_name: Rails.application.credentials&.mailgun&.username,
+    password: Rails.application.credentials&.mailgun&.password,
+    authentication: :login,
+    enable_starttls: true,
+    ssl: true
+  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

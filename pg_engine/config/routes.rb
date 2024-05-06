@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   namespace :admin, path: 'a' do
+    pg_resource(:emails)
     pg_resource(:users)
     pg_resource(:accounts)
     pg_resource(:user_accounts)
