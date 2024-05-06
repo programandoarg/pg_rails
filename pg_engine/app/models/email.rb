@@ -49,6 +49,7 @@ class Email < ApplicationRecord
 
   validate do
     if to.present? && !to.split(/[,;]/).all? { |dest| dest.match(/\A[^@\s]+@[^@\s]+\z/) }
+      # FIXME: testear
       errors.add(:to, 'no es válido')
     end
   end
