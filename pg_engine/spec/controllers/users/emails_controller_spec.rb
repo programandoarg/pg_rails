@@ -121,7 +121,7 @@ RSpec.describe Users::EmailsController do
 
       it 'redirects to the created email' do
         post :create, params: { email: valid_attributes }
-        expect(response).to redirect_to(Email.last.decorate.target_object)
+        expect(response).to redirect_to([:users, Email.last])
       end
     end
 
@@ -154,7 +154,7 @@ RSpec.describe Users::EmailsController do
       it 'redirects to the email' do
         email = create(:email)
         put :update, params: { id: email.to_param, email: valid_attributes }
-        expect(response).to redirect_to(email.decorate.target_object)
+        expect(response).to redirect_to([:users, email])
       end
     end
 
