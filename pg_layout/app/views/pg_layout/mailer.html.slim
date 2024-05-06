@@ -1,0 +1,8 @@
+html
+  body style="font-family: sans-serif"
+    = yield
+
+    footer style="margin-top: 2em;"
+      - if @footer_href.present?
+        = link_to @footer_href, rel: 'noreferrer', target: :_blank do
+          = image_tag @footer_image_src, alt: @footer_image_alt
