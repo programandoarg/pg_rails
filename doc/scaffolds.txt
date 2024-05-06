@@ -24,3 +24,40 @@ be rails g pg_scaffold \
   --model-name=mensaje_contacto \
   --activeadmin \
   --no-trackeo-de-usuarios
+
+
+be rails g pg_scaffold \
+  users/email \
+  accepted_at:datetime \
+  delivered_at:datetime \
+  opened_at:datetime \
+  from_address:string{required} \
+  from_name:string \
+  reply_to:string \
+  to:string{required} \
+  subject:string \
+  body_input:string \
+  tags:string{array} \
+  associated:references{polymorphic} \
+  content_eml:string \
+  message_id:string \
+  mailer:string \
+  status_detail:string \
+  status:integer{required} \
+  --model-name=email \
+  --activeadmin
+
+
+
+    gmail_account_id  :integer
+    gmail_snippet string
+    gmail_message_id :string
+    gmail_history_id       :string
+    gmail_thread_id        :string
+
+    gmail_account
+      #  active     :boolean          default("true")
+      #  email      :string
+      #  nombre     :string
+      #  status     :integer
+      #  token      :string
