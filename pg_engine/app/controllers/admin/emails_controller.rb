@@ -2,8 +2,8 @@
 
 # generado con pg_rails
 
-module Users
-  class EmailsController < UsersController
+module Admin
+  class EmailsController < AdminController
     include PgEngine::Resource
 
     before_action { @clase_modelo = Email }
@@ -12,7 +12,7 @@ module Users
 
     before_action :set_instancia_modelo, only: %i[new create show edit update destroy]
 
-    add_breadcrumb Email.nombre_plural, :users_emails_path
+    add_breadcrumb Email.nombre_plural, :admin_emails_path
 
     private
 

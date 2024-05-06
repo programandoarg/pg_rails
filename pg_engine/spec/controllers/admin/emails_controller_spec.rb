@@ -27,7 +27,7 @@ require 'rails_helper'
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe Users::EmailsController do
+RSpec.describe Admin::EmailsController do
   render_views
   # This should return the minimal set of attributes required to create a valid
   # Email. As you add validations to Email, be sure to
@@ -50,8 +50,8 @@ RSpec.describe Users::EmailsController do
 
   describe 'routing' do
     it 'routes GET index correctly' do
-      route = { get: '/users/emails' }
-      expect(route).to route_to(controller: 'users/emails', action: 'index')
+      route = { get: '/a/emails' }
+      expect(route).to route_to(controller: 'admin/emails', action: 'index')
     end
   end
 
@@ -121,7 +121,7 @@ RSpec.describe Users::EmailsController do
 
       it 'redirects to the created email' do
         post :create, params: { email: valid_attributes }
-        expect(response).to redirect_to([:users, Email.last])
+        expect(response).to redirect_to([:admin, Email.last])
       end
     end
 
@@ -154,7 +154,7 @@ RSpec.describe Users::EmailsController do
       it 'redirects to the email' do
         email = create(:email)
         put :update, params: { id: email.to_param, email: valid_attributes }
-        expect(response).to redirect_to([:users, email])
+        expect(response).to redirect_to([:admin, email])
       end
     end
 
@@ -192,11 +192,11 @@ RSpec.describe Users::EmailsController do
     end
 
     context 'si hay redirect_to' do
-      let(:redirect_url) { users_emails_url }
+      let(:redirect_url) { admin_emails_url }
 
       it 'redirects to the emails list' do
         subject
-        expect(response).to redirect_to(users_emails_url)
+        expect(response).to redirect_to(admin_emails_url)
       end
     end
   end
