@@ -43,4 +43,42 @@ class Email < ApplicationRecord
   belongs_to :actualizado_por, optional: true, class_name: 'User'
 
   validates :from_address, :to, :status, presence: true
+
+
+  validate do
+    if to.present? && !to.split(/[,;]/).all? { |dest| dest.match(/\A[^@\s]+@[^@\s]+\z/) }
+      errors.add(:to, 'no es válido')
+    end
+  end
+
+  validates :subject, length: { within: 0..200 }
+  validates :from_name, length: { within: 0..80 }
+  validates :to, length: { within: 3..200 }
+
+  validates :from_name, :subject, :to,
+            format: { with: /\A[^\n<>&]*\z/, message: 'contiene caracteres inválidos' }
+  # validates_format_of :subject, with: /\A[[[:alpha:]]\(\)\w\s.,;!¡?¿-]+\z/
+  # def strip_all(input)
+  #   return if input.blank?
+
+  #   strip_tags(input.strip)
+  # end
+
+  # def convert_br(input)
+  #   return if input.blank?
+
+  #   input.gsub("\n", '<br>').html_safe # rubocop:disable Rails/OutputSafety
+  # end
+
+  # def deliver_later
+  #   if valid?
+  #     begin
+  #       mailer_class.send(mailer_action).deliver_later
+
+  #       true
+  #     end
+  #   else
+  #     false
+  #   end
+  # end
 end
