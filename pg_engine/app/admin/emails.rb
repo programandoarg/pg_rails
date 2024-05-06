@@ -1,5 +1,7 @@
 ActiveAdmin.register Email do
-  permit_params :accepted_at, :delivered_at, :opened_at, :from_address, :from_name, :reply_to, :to, :subject, :body_input, :tags, :associated_id, :associated_type, :content_eml, :message_id, :mailer, :status_detail, :status
+  permit_params :accepted_at, :delivered_at, :opened_at, :from_address, :from_name,
+                :reply_to, :to, :subject, :body_input, :tags, :associated_id,
+                :associated_type, :content_eml, :message_id, :mailer, :status_detail, :status
 
   index do
     selectable_column

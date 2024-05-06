@@ -2,12 +2,6 @@ require 'rails_helper'
 
 RSpec.describe CosaMailer do
   describe 'cosa' do
-    # let(:comprobante) { create :v_comprobante, :con_pdf }
-    # let(:subject) { Faker::Lorem.sentence } # rubocop:disable RSpec/SubjectDeclaration
-    # let(:to) { Faker::Internet.email }
-    # let(:from_name) { Faker::Name.name }
-    # let(:body) { Faker::Lorem.sentence }
-
     let(:cosa) { create :cosa }
     let(:email) { create :email }
 
@@ -25,10 +19,7 @@ RSpec.describe CosaMailer do
     # end
 
     it 'tiene attachment' do
-      # expect(mail.attachments.length).to eq 2
-      # expect(mail.attachments.length).to eq 2
-      byebug
-      mail.deliver
+      expect(mail.attachments.length).to eq 2
     end
   end
 end

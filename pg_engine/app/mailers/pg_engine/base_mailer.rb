@@ -1,5 +1,5 @@
 module PgEngine
-  class BaseMailer < ActionMailer::Base
+  class BaseMailer < ActionMailer::Base # rubocop:disable Rails/ApplicationMailer
     class MailNotDelivered < StandardError; end
 
     before_action { @email = params[:email] }
@@ -18,9 +18,7 @@ module PgEngine
   end
 end
 
-=begin
-  # TODO: testear
-      si from está vacío
-      si body está vacío
-      si se lanza PgEngine::BaseMailer::MailNotDelivered
-=end
+#   # TODO: testear
+#       si from está vacío
+#       si body está vacío
+#       si se lanza PgEngine::BaseMailer::MailNotDelivered

@@ -60,7 +60,7 @@ RSpec.describe Users::EmailsController do
       get :index, params: {}
     end
 
-    let!(:email) { create :email }
+    before { create :email }
 
     it 'returns a success response' do
       subject

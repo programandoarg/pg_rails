@@ -73,7 +73,7 @@ class Email < ApplicationRecord
   # def convert_br(input)
   #   return if input.blank?
 
-  #   input.gsub("\n", '<br>').html_safe # rubocop:disable Rails/OutputSafety
+  #   input.gsub("\n", '<br>').html_safe
   # end
 
   def deliver_later

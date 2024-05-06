@@ -21,7 +21,8 @@ module Users
     end
 
     def atributos_para_buscar
-      %i[accepted_at delivered_at opened_at from_address from_name reply_to to subject body_input tags content_eml message_id mailer status_detail status]
+      %i[accepted_at delivered_at opened_at from_address from_name reply_to to subject body_input tags content_eml
+         message_id mailer status_detail status]
     end
 
     def atributos_para_listar
@@ -29,7 +30,8 @@ module Users
     end
 
     def atributos_para_mostrar
-      %i[accepted_at delivered_at opened_at from_address from_name reply_to to subject body_input tags associated content_eml message_id mailer status_detail status]
+      %i[accepted_at delivered_at opened_at from_address from_name reply_to to subject body_input tags associated
+         content_eml message_id mailer status_detail status]
     end
   end
 end
