@@ -26,6 +26,8 @@ require "rails/generators/testing/assertions"
 require "fileutils"
 
 require 'pg_rails/capybara_support'
+require 'pg_rails/redis_support'
+require 'pg_rails/vcr_support'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -63,10 +65,6 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = false
-
-  # config.before(:each) do
-  #   Kredis.clear_all
-  # end
 
   config.before(:each) do
     DatabaseCleaner.clean_with(:truncation)

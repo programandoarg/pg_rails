@@ -3,10 +3,9 @@ require 'rails_helper'
 RSpec.describe CosaMailer do
   describe 'cosa' do
     let(:cosa) { create :cosa }
-    let(:email) { create :email }
 
-    let(:mail) do
-      described_class.with(email:, cosa:).cosa
+    let!(:mail) do
+      described_class.with(cosa:).cosa
     end
 
     # it 'renders the headers' do
@@ -19,7 +18,17 @@ RSpec.describe CosaMailer do
     # end
 
     it 'tiene attachment' do
-      expect(mail.attachments.length).to eq 2
+      expect(mail.attachments.length).to eq 1
+    end
+
+    context 'when its delivered' do
+      subject { mail.deliver }
+
+      let(:email_object) { mail['email'].unparsed_value }
+
+      it 'observed' do
+        expect { subject }.to(change { email_object.reload.message_id })
+      end
     end
   end
 end

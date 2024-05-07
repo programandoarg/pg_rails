@@ -15,6 +15,16 @@ module PgEngine
       # FIXME: marcar el Email en la DB como fallido
       pg_err err
     end
+
+    def mail
+      super.tap do |message|
+        # message.mailgun_options = {
+        #   'tag' => email.tags,
+        #   'tracking-opens' => true
+        # }
+        message['email'] = @email
+      end
+    end
   end
 end
 

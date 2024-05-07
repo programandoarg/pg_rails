@@ -1,0 +1,440 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.mailgun.net/v3/fakeapp.com.ar/events?begin=1715010162&end=1715096562&limit=300
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      User-Agent:
+      - rest-client/2.1.0 (linux x86_64) ruby/3.1.2p20
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - api.mailgun.net
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-store
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 07 May 2024 15:42:44 GMT
+      Server:
+      - TwistedWeb/22.10.0
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Xss-Protection:
+      - 1; mode=block
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "items": [
+            {
+              "timestamp": 1715014542.2477064,
+              "recipient-domain": "fakemail.com",
+              "ip": "66.102.8.333",
+              "event": "opened",
+              "recipient-provider": "fakemail",
+              "id": "mfq1JhfwSUivy3123JgWgXznBQ",
+              "campaigns": [],
+              "log-level": "info",
+              "tags": [],
+              "client-info": {
+                "client-name": "fakemailImageProxy",
+                "client-os": "Windows",
+                "user-agent": "Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko Firefox/11.0 (via ggpht.com GoogleImageProxy)",
+                "bot": "",
+                "client-type": "unknown",
+                "device-type": "desktop"
+              },
+              "geolocation": {
+                "country": "US",
+                "region": "NJ",
+                "city": "Saddle River",
+                "timezone": "America/New_York"
+              },
+              "message": {
+                "headers": {
+                  "message-id": "66352755e7cb8_52d881510815c1@fakeapp2024.mail"
+                }
+              },
+              "recipient": "natprobel@fakemail.com",
+              "user-variables": {}
+            },
+            {
+              "recipient-provider": "Google Workspace",
+              "user-variables": {},
+              "timestamp": 1715014847.394108,
+              "tags": [],
+              "log-level": "info",
+              "campaigns": [],
+              "id": "yLcfdkMvTYq-hFH_dFDOLQ",
+              "recipient-domain": "ofesso.com.ar",
+              "ip": "66.102.8.228",
+              "client-info": {
+                "bot": "",
+                "client-name": "fakemailImageProxy",
+                "device-type": "desktop",
+                "client-os": "Windows",
+                "client-type": "unknown",
+                "user-agent": "Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko Firefox/11.0 (via ggpht.com GoogleImageProxy)"
+              },
+              "recipient": "administracion@ofesso.com.ar",
+              "event": "opened",
+              "message": {
+                "headers": {
+                  "message-id": "6634fd8f6f0b2_48a0b14ec456338@fakeapp2024.mail"
+                }
+              },
+              "geolocation": {
+                "city": "Saddle River",
+                "region": "NJ",
+                "timezone": "America/New_York",
+                "country": "US"
+              }
+            },
+            {
+              "event": "accepted",
+              "recipient": "juan@example.com",
+              "originating-ip": "190.111.444.222",
+              "recipient-domain": "fakemail.com",
+              "id": "QvIBBkQmStuOjktTLkQzuA",
+              "tags": null,
+              "timestamp": 1715027741.704073,
+              "storage": {
+                "region": "us-west1",
+                "env": "production",
+                "key": "BAABAQWFWGMif97Z5cZO4p-cef7kYU_qZQ",
+                "url": "https://storage-us-west1.api.mailgun.net/v3/domains/fakeapp.com.ar/messages/BAABAQWFWGMif97Z5cZO4p-cef7kYU_qZQ"
+              },
+              "envelope": {
+                "sender": "testing@fakeapp.com.ar",
+                "transport": "smtp",
+                "targets": "juan@example.com"
+              },
+              "log-level": "info",
+              "user-variables": {},
+              "method": "SMTP",
+              "api-key-id": "postmaster@fakeapp.com.ar",
+              "message": {
+                "size": 6215,
+                "headers": {
+                  "subject": "La cosa por mail",
+                  "message-id": "66393f1bc7d4_47a5108ec1628f@notebook.mail",
+                  "from": "PgRails <testing@fakeapp.com.ar>",
+                  "to": "juan@example.com"
+                },
+                "attachments": [
+                  {
+                    "size": 4390,
+                    "content-type": "image/png",
+                    "filename": "footer-mail-dark-light.png"
+                  },
+                  {
+                    "size": 294,
+                    "content-type": "application/json",
+                    "filename": "cosa_31.json"
+                  }
+                ]
+              },
+              "flags": {
+                "is-authenticated": true,
+                "is-test-mode": false
+              }
+            },
+            {
+              "event": "delivered",
+              "campaigns": [],
+              "recipient": "juan@example.com",
+              "recipient-domain": "fakemail.com",
+              "id": "BDfMEgMIR1S8gstkDgb80Q",
+              "tags": [],
+              "timestamp": 1715027742.6347377,
+              "delivery-status": {
+                "mx-host": "fakemail-smtp-in.l.google.com",
+                "session-seconds": 0.915,
+                "attempt-no": 1,
+                "code": 250,
+                "description": "",
+                "certificate-verified": true,
+                "tls": true,
+                "enhanced-code": "",
+                "message": "OK",
+                "utf8": true
+              },
+              "storage": {
+                "region": "us-west1",
+                "env": "production",
+                "key": "123123-cef7kYU_qZQ",
+                "url": "https://mailgun.net/v3/domains/fakeapp.com.ar/messages/123123-cef7kYU_qZQ"
+              },
+              "envelope": {
+                "sender": "testing@fakeapp.com.ar",
+                "transport": "smtp",
+                "sending-ip": "111.61.151.246",
+                "targets": "juan@example.com"
+              },
+              "log-level": "info",
+              "user-variables": {},
+              "message": {
+                "size": 6215,
+                "headers": {
+                  "subject": "La cosa por mail",
+                  "message-id": "66393f1bc7d4_47a5108ec1628f@notebook.mail",
+                  "from": "PgRails <testing@fakeapp.com.ar>",
+                  "to": "juan@example.com"
+                },
+                "attachments": [
+                  {
+                    "size": 4390,
+                    "content-type": "image/png",
+                    "filename": "footer-mail-dark-light.png"
+                  },
+                  {
+                    "size": 294,
+                    "content-type": "application/json",
+                    "filename": "cosa_31.json"
+                  }
+                ]
+              },
+              "recipient-provider": "fakemail",
+              "flags": {
+                "is-authenticated": true,
+                "is-system-test": false,
+                "is-routed": false,
+                "is-test-mode": false
+              }
+            },
+            {
+              "campaigns": [],
+              "ip": "74.125.216.65",
+              "recipient-provider": "fakemail",
+              "recipient-domain": "fakemail.com",
+              "recipient": "juan@example.com",
+              "log-level": "info",
+              "id": "GYvaGVSRRWKj4FOgaUyffg",
+              "event": "opened",
+              "tags": [],
+              "client-info": {
+                "client-os": "Windows",
+                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246 Mozilla/5.0",
+                "device-type": "desktop",
+                "client-type": "browser",
+                "client-name": "Edge",
+                "bot": ""
+              },
+              "geolocation": {
+                "city": "Unknown",
+                "country": "US",
+                "region": "Unknown",
+                "timezone": "Unknown"
+              },
+              "user-variables": {},
+              "message": {
+                "headers": {
+                  "message-id": "66393f1bc7d4_47a5108ec1628f@notebook.mail"
+                }
+              },
+              "timestamp": 1715027743.948767
+            },
+            {
+              "timestamp": 1715036756.5437145,
+              "tags": null,
+              "originating-ip": "33.247.22.11",
+              "event": "accepted",
+              "method": "SMTP",
+              "user-variables": {},
+              "id": "fDirgU7cTsyDkTxcNs4Wqw",
+              "flags": {
+                "is-test-mode": false,
+                "is-authenticated": true
+              },
+              "api-key-id": "postmaster@fakeapp.com.ar",
+              "envelope": {
+                "targets": "juan@example.com",
+                "sender": "testing@fakeapp.com.ar",
+                "transport": "smtp"
+              },
+              "storage": {
+                "key": "123123123123213213",
+                "region": "us-west1",
+                "env": "production",
+                "url": "https://api.mailgun.net/v3/domains/fakeapp.com.ar/messages/123123123123213213"
+              },
+              "recipient-domain": "fakemail.com",
+              "log-level": "info",
+              "recipient": "juan@example.com",
+              "message": {
+                "size": 1276,
+                "attachments": [
+                  {
+                    "size": 290,
+                    "filename": "cosa_59.json",
+                    "content-type": "application/json"
+                  }
+                ],
+                "headers": {
+                  "to": "juan@example.com",
+                  "message-id": "66396251d1fc8_a50910158146ef@notebook.mail",
+                  "subject": "La cosa por mail",
+                  "from": "Juan <testing@fakeapp.com.ar>"
+                }
+              }
+            },
+            {
+              "flags": {
+                "is-routed": false,
+                "is-test-mode": false,
+                "is-system-test": false,
+                "is-authenticated": true
+              },
+              "recipient-domain": "fakemail.com",
+              "envelope": {
+                "targets": "juan@example.com",
+                "transport": "smtp",
+                "sender": "testing@fakeapp.com.ar",
+                "sending-ip": "333.135.228.16"
+              },
+              "campaigns": [],
+              "id": "cfrnM_FjQ9aOe6mJANasdas",
+              "storage": {
+                "region": "us-west1",
+                "key": "BAABAQUNUPkaXwIzkSFIyK3dUjcV9Kt7Zg",
+                "env": "production",
+                "url": "https://storage-us-west1.api.mailgun.net/v3/domains/fakeapp.com.ar/messages/BAABAQUNUPkaXwIzkSFIyK3dUjcV9Kt7Zg"
+              },
+              "event": "delivered",
+              "tags": [],
+              "recipient-provider": "fakemail",
+              "recipient": "juan@example.com",
+              "delivery-status": {
+                "mx-host": "fakemail-smtp-in.l.google.com",
+                "tls": true,
+                "attempt-no": 1,
+                "enhanced-code": "",
+                "code": 250,
+                "certificate-verified": true,
+                "session-seconds": 0.938,
+                "description": "",
+                "message": "OK",
+                "utf8": true
+              },
+              "timestamp": 1715036757.5042615,
+              "message": {
+                "attachments": [
+                  {
+                    "filename": "cosa_59.json",
+                    "size": 290,
+                    "content-type": "application/json"
+                  }
+                ],
+                "size": 1276,
+                "headers": {
+                  "from": "Juan <testing@fakeapp.com.ar>",
+                  "to": "juan@example.com",
+                  "message-id": "66396251d1fc8_a50910158146ef@notebook.mail",
+                  "subject": "La cosa por mail"
+                }
+              },
+              "user-variables": {},
+              "log-level": "info"
+            },
+            {
+              "log-level": "info",
+              "campaigns": [],
+              "ip": "66.222.83.43",
+              "geolocation": {
+                "city": "Unknown",
+                "region": "Unknown",
+                "country": "US",
+                "timezone": "Unknown"
+              },
+              "recipient": "juan@example.com",
+              "timestamp": 1715036907.8507078,
+              "recipient-provider": "fakemail",
+              "event": "opened",
+              "user-variables": {},
+              "tags": [],
+              "message": {
+                "headers": {
+                  "message-id": "66396251d1fc8_a50910158146ef@notebook.mail"
+                }
+              },
+              "recipient-domain": "fakemail.com",
+              "client-info": {
+                "client-os": "Windows",
+                "client-name": "fakemailImageProxy",
+                "client-type": "unknown",
+                "user-agent": "Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko Firefox/11.0 (via ggpht.com GoogleImageProxy)",
+                "bot": "",
+                "device-type": "desktop"
+              },
+              "id": "1-RxBxZw123SAW2hSwyRNqu2w"
+            }
+          ],
+          "paging": {
+          }
+        }
+  recorded_at: Tue, 07 May 2024 15:42:44 GMT
+- request:
+    method: get
+    uri: https://api.mailgun.net/v3/fakeapp.com.ar/events?begin=1714923762&end=1715010162&limit=300
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*"
+      User-Agent:
+      - rest-client/2.1.0 (linux x86_64) ruby/3.1.2p20
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - api.mailgun.net
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Origin:
+      - "*"
+      Cache-Control:
+      - no-store
+      Content-Length:
+      - '1676'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 07 May 2024 15:42:45 GMT
+      Server:
+      - TwistedWeb/22.10.0
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+      X-Xss-Protection:
+      - 1; mode=block
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "items": [],
+          "paging": {
+          }
+        }
+  recorded_at: Tue, 07 May 2024 15:42:45 GMT
+recorded_with: VCR 6.2.0

@@ -83,3 +83,10 @@ task :release_all do
   Rake::Task['release'].invoke
   system! "npm pack --pack-destination pkg && npm publish"
 end
+
+desc 'Alias for `rails routes`, to Annotate to use.'
+task :routes do
+  require_relative "spec/dummy/config/environment"
+  require 'rails/commands/routes/routes_command'
+  Rails::Command::RoutesCommand.new.perform
+end

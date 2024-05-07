@@ -19,3 +19,5 @@ ActionMailer::MailDeliveryJob.rescue_from EOFError,
                                       OpenSSL::SSL::SSLError do |e|
   raise MailDeliveryTemporalError, e
 end
+
+ActionMailer::Base.register_observer(PgEngine::EmailObserver)

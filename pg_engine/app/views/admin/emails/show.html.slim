@@ -22,3 +22,8 @@ table.table.table-borderless.table-sm.w-auto.mb-0.m-3
   tr
     th = t('attributes.updated_at')
     td = @email.updated_at
+
+h4 Logs
+- @email.logs.to_a.each do |log|
+  - json = JSON.parse(log)
+  p = json['event']

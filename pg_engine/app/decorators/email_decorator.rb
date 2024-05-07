@@ -13,4 +13,8 @@ class EmailDecorator < PgEngine::BaseDecorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
+
+  def content_eml_link
+    link_to 'Download', helpers.content_eml_admin_email_path(object), target: :_blank, rel: :noopener
+  end
 end

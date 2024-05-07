@@ -98,8 +98,15 @@ Gem::Specification.new do |spec|
   # Use Redis adapter to run Action Cable in production
   spec.add_dependency 'redis', '~> 5.1'
 
+  spec.add_dependency "kredis", "~> 1.7.0"
+  spec.add_dependency 'mailgun-ruby', '~> 1.2.14'
+
   ### Development dependencies
   #---------------------------
+  # VCR
+  spec.add_development_dependency 'vcr', "~> 6.2.0"
+  spec.add_development_dependency 'webmock', "~> 3.20.0"
+
   # Misc
   spec.add_development_dependency 'letter_opener', "~> 1.8.1"
   spec.add_development_dependency 'overcommit', "~> 0.61.0"
