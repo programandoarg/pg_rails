@@ -103,6 +103,10 @@ Gem::Specification.new do |spec|
 
   ### Development dependencies
   #---------------------------
+  # VCR
+  spec.add_development_dependency 'vcr', "~> 6.2.0"
+  spec.add_development_dependency 'webmock', "~> 3.20.0"
+
   # Misc
   spec.add_development_dependency 'letter_opener', "~> 1.8.1"
   spec.add_development_dependency 'overcommit', "~> 0.61.0"
