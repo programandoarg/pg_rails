@@ -39,6 +39,8 @@ class Email < ApplicationRecord
 
   self.filter_attributes = [:content_eml]
 
+  has_one_attached :encoded_eml
+
   belongs_to :associated, polymorphic: true, optional: true
 
   belongs_to :creado_por, optional: true, class_name: 'User'
@@ -68,16 +70,6 @@ class Email < ApplicationRecord
   after_initialize do
     self.from_address = ENV.fetch('DEFAULT_MAIL_FROM') if from_address.blank?
   end
+
   # validates_format_of :subject, with: /\A[[[:alpha:]]\(\)\w\s.,;!¡?¿-]+\z/
-  # def strip_all(input)
-  #   return if input.blank?
-
-  #   strip_tags(input.strip)
-  # end
-
-  # def convert_br(input)
-  #   return if input.blank?
-
-  #   input.gsub("\n", '<br>').html_safe
-  # end
 end

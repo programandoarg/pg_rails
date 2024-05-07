@@ -12,13 +12,14 @@ module PgEngine
       message_id = message.message_id
       mailer = message.delivery_handler.to_s
       status = get_status(message)
-      content_eml = message.encoded
       return if message['email'].blank?
 
       # El objeto Email ya estaba creado. Agarro ese objeto y le actualizo las cosas
       email = message['email'].unparsed_value
 
-      email.update_columns(message_id:, mailer:, status:, content_eml:) # rubocop:disable Rails/SkipsModelValidations
+      email.encoded_eml.attach({ io: StringIO.new(message.encoded), filename: "email-#{email.id}.eml" })
+
+      email.update_columns(message_id:, mailer:, status:) # rubocop:disable Rails/SkipsModelValidations
       # else
       # TODO: crear email
       # pg_warn 'El mail no tenía objeto Email asociado, se creó uno on the fly.', :warn
