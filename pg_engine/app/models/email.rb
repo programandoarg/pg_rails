@@ -8,14 +8,13 @@
 #  accepted_at        :datetime
 #  associated_type    :string           indexed => [associated_id]
 #  body_input         :string
-#  content_eml        :string
 #  delivered_at       :datetime
 #  from_address       :string           not null
 #  from_name          :string
 #  mailer             :string
 #  opened_at          :datetime
 #  reply_to           :string
-#  status             :integer          default(0), not null
+#  status             :integer          default("pending"), not null
 #  status_detail      :string
 #  subject            :string
 #  tags               :string           is an Array
@@ -32,10 +31,11 @@
 #  fk_rails_...  (actualizado_por_id => users.id)
 #  fk_rails_...  (creado_por_id => users.id)
 #
-# generado con pg_rails
 
 class Email < ApplicationRecord
   audited
+
+  has_one_attached :encoded_eml
 
   belongs_to :associated, polymorphic: true, optional: true
 
@@ -66,16 +66,6 @@ class Email < ApplicationRecord
   after_initialize do
     self.from_address = ENV.fetch('DEFAULT_MAIL_FROM') if from_address.blank?
   end
+
   # validates_format_of :subject, with: /\A[[[:alpha:]]\(\)\w\s.,;!¡?¿-]+\z/
-  # def strip_all(input)
-  #   return if input.blank?
-
-  #   strip_tags(input.strip)
-  # end
-
-  # def convert_br(input)
-  #   return if input.blank?
-
-  #   input.gsub("\n", '<br>').html_safe
-  # end
 end

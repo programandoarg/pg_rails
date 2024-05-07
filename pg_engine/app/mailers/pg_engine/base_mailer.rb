@@ -11,13 +11,19 @@ module PgEngine
 
     layout 'pg_layout/mailer'
 
+    # default delivery_method: :smtp
+
+    # TODO: rescue from StandardError? from PgEngine::Error?
+
     rescue_from MailNotDelivered do |err|
       # FIXME: marcar el Email en la DB como fallido
       pg_err err
     end
 
-    def mail
-      super.tap do |message|
+    protected
+
+    def mail(*args)
+      super(*args).tap do |message|
         # message.mailgun_options = {
         #   'tag' => email.tags,
         #   'tracking-opens' => true

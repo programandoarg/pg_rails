@@ -3,12 +3,19 @@ class CosaMailer < ApplicationMailer
     @cosa = params[:cosa]
     @email = Email.create(
       from_name: @cosa.nombre,
-      from_address: 'testing@facturabien.com.ar',
-      to: 'mrosso10@gmail.com',
+      from_address: 'testing@example.com.ar',
+      to: 'example@example.org',
       subject: 'La cosa por mail',
       associated: @cosa
     )
-    # @body = params[:body]
+    @body = <<~DOC
+      multi
+           line
+
+      <script>alert("aaa")</script>
+
+        fin
+    DOC
 
     # unless @comprobante.estado_emision.emitido?
     #   raise PgEngine::BaseMailer::MailNotDelivered, 'el comprobante no está emitido'

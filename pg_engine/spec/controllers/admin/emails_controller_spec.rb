@@ -55,19 +55,6 @@ RSpec.describe Admin::EmailsController do
     end
   end
 
-  describe 'GET #content_eml' do
-    subject do
-      get :content_eml, params: { id: email.id }
-    end
-
-    let(:email) { create :email }
-
-    it do
-      subject
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
   describe 'GET #index' do
     subject do
       get :index, params: {}
@@ -104,6 +91,7 @@ RSpec.describe Admin::EmailsController do
   describe 'GET #show' do
     it 'returns a success response' do
       email = create(:email)
+      email.encoded_eml.attach({ io: StringIO.new(Faker::Lorem.sentence), filename: 'email.eml' })
       get :show, params: { id: email.to_param }
       expect(response).to be_successful
     end

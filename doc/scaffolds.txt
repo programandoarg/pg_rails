@@ -39,7 +39,6 @@ be rails g pg_scaffold \
   body_input:string \
   tags:string{array} \
   associated:references{polymorphic} \
-  content_eml:string \
   message_id:string \
   mailer:string \
   status_detail:string \
