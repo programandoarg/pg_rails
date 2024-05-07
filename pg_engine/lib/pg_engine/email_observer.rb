@@ -38,7 +38,7 @@ module PgEngine
     end
 
     def self.associated(message)
-      return unless message['associated'].present?
+      return if message['associated'].blank?
 
       message['associated'].unparsed_value
     end
@@ -48,18 +48,14 @@ module PgEngine
     end
 
     def self.get_observations(message)
-      return unless message['observations'].present?
+      return if message['observations'].blank?
 
       message['observations'].unparsed_value
     end
 
     def self.get_content(message)
       multipart = message.body.parts.find { |p| p.content_type.match(/multipart/).present? }
-      part = if multipart.present?
-               multipart
-             else
-               message
-             end
+      part = multipart.presence || message
       get_html_or_text(part)
     rescue StandardError => e
       pg_err e

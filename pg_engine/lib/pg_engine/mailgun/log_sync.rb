@@ -8,7 +8,6 @@ module PgEngine
   module Mailgun
     class LogSync
       def self.download
-
         domain = ENV.fetch('MAILGUN_DOMAIN')
 
         key = Rails.application.credentials.dig(:mailgun, :api_key)
@@ -16,7 +15,7 @@ module PgEngine
         items = []
         end_time = DateTime.now
         start_time = DateTime.now - 3.days
-        range = 1.days
+        range = 1.day
         current = end_time - range
         loop do
           get = "#{domain}/events?begin=#{current.to_i}&end=#{(current + range).to_i}&limit=300"
@@ -40,20 +39,20 @@ module PgEngine
         json = []
         dir = File.expand_path 'log/mailgun_logs', Rails.root
         Dir["#{dir}/*.json"].each do |file|
-          json.push *JSON.parse(File.read(file))
+          json.push(*JSON.parse(File.read(file)))
         end
 
         json.each do |i|
           # [
-          #   Time.at(i["timestamp"]).strftime('%y-%m-%d %H:%M %z'), 
+          #   Time.at(i["timestamp"]).strftime('%y-%m-%d %H:%M %z'),
           #   i["message"]["headers"]["message-id"],
           #   # i["message"]["headers"]["message-id"][3..15],
-          #   i["event"], 
+          #   i["event"],
           #   i["recipient"],
           #   i["message"]["headers"]["from"],
           #   i["message"]["headers"]["subject"],
           # ]
-          message_id = i["message"]["headers"]["message-id"]
+          message_id = i['message']['headers']['message-id']
           email = Email.where(message_id:).first
           if email
             email.logs << i.to_json

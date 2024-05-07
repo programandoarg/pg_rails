@@ -14,7 +14,7 @@ class EmailDecorator < PgEngine::BaseDecorator
   #     end
   #   end
 
-  def content_eml_f
-    "<pre>#{raw(content_eml)}</pre>".html_safe
+  def content_eml_link
+    link_to 'Download', helpers.content_eml_admin_email_path(object), target: :_blank
   end
 end

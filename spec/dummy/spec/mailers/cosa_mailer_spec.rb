@@ -27,7 +27,7 @@ RSpec.describe CosaMailer do
       let(:email_object) { mail['email'].unparsed_value }
 
       it 'observed' do
-        expect { subject }.to change { email_object.reload.message_id }
+        expect { subject }.to(change { email_object.reload.message_id })
       end
     end
   end

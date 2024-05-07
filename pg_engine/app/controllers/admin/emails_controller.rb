@@ -10,9 +10,13 @@ module Admin
 
     before_action(only: :index) { authorize Email }
 
-    before_action :set_instancia_modelo, only: %i[new create show edit update destroy]
+    before_action :set_instancia_modelo, only: %i[new create show edit update destroy content_eml]
 
     add_breadcrumb Email.nombre_plural, :admin_emails_path
+
+    def content_eml
+      send_data @email.content_eml, filename: "email_#{@email.id}.txt", disposition: :inline
+    end
 
     private
 
@@ -31,8 +35,7 @@ module Admin
 
     def atributos_para_mostrar
       %i[message_id status status_detail accepted_at delivered_at opened_at from_address
-         from_name reply_to to subject body_input tags associated
-         content_eml_f mailer]
+         from_name reply_to to subject body_input tags associated mailer content_eml_link]
     end
   end
 end
