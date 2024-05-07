@@ -35,7 +35,9 @@
 # generado con pg_rails
 
 class Email < ApplicationRecord
-  audited
+  audited except: %i[content_eml]
+
+  self.filter_attributes = [:content_eml]
 
   belongs_to :associated, polymorphic: true, optional: true
 
