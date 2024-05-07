@@ -30,8 +30,9 @@ module Admin
     end
 
     def atributos_para_mostrar
-      %i[accepted_at delivered_at opened_at from_address from_name reply_to to subject body_input tags associated
-         content_eml message_id mailer status_detail status]
+      %i[message_id status status_detail accepted_at delivered_at opened_at from_address
+         from_name reply_to to subject body_input tags associated
+         content_eml_f mailer]
     end
   end
 end

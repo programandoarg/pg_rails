@@ -5,4 +5,7 @@ html
     footer style="margin-top: 2em;"
       - if @footer_href.present?
         = link_to @footer_href, rel: 'noreferrer', target: :_blank do
-          = image_tag @footer_image_src, alt: @footer_image_alt
+          - if @footer_image_src.present?
+            = image_tag @footer_image_src, alt: @footer_image_alt
+          - else
+            = @footer_image_alt

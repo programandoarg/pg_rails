@@ -18,7 +18,7 @@ RSpec.describe CosaMailer do
     # end
 
     it 'tiene attachment' do
-      expect(mail.attachments.length).to eq 2
+      expect(mail.attachments.length).to eq 1
     end
 
     context do

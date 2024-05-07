@@ -13,4 +13,8 @@ class EmailDecorator < PgEngine::BaseDecorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
+
+  def content_eml_f
+    "<pre>#{raw(content_eml)}</pre>".html_safe
+  end
 end

@@ -42,6 +42,8 @@ class Email < ApplicationRecord
   belongs_to :creado_por, optional: true, class_name: 'User'
   belongs_to :actualizado_por, optional: true, class_name: 'User'
 
+  kredis_unique_list :logs
+
   # TODO: y el fallido temporario?
   enumerize :status, in: { pending: 0, blocked: 1, sent: 2, accepted: 3, delivered: 4, rejected: 5 }
 
