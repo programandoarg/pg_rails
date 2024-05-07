@@ -64,9 +64,9 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false
 
-  # config.before(:each) do
-  #   Kredis.clear_all
-  # end
+  config.before(:each) do
+    Kredis.clear_all
+  end
 
   config.before(:each) do
     DatabaseCleaner.clean_with(:truncation)
