@@ -28,8 +28,4 @@ class EmailPolicy < ApplicationPolicy
   # def acceso_total?
   #   user.developer?
   # end
-
-  def content_eml?
-    acceso_total?
-  end
 end

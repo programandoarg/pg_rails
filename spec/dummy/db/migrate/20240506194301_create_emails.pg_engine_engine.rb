@@ -15,7 +15,6 @@ class CreateEmails < ActiveRecord::Migration[7.1]
       t.string :body_input
       t.string :tags, array: true
       t.references :associated, polymorphic: true, index: true
-      t.string :content_eml
       t.string :message_id
       t.string :mailer
       t.string :status_detail

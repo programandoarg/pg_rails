@@ -15,7 +15,6 @@ FactoryBot.define do
     body_input { Faker::Lorem.sentence }
     # tags { Faker::Lorem.sentence }
     # associated
-    # content_eml { Faker::Lorem.sentence }
     # message_id { Faker::Lorem.sentence }
     # mailer { Faker::Lorem.sentence }
     # status_detail { Faker::Lorem.sentence }

@@ -9,11 +9,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   namespace :admin, path: 'a' do
-    pg_resource(:emails) do
-      member do
-        get :content_eml
-      end
-    end
+    pg_resource(:emails)
     pg_resource(:users)
     pg_resource(:accounts)
     pg_resource(:user_accounts)
@@ -98,7 +94,6 @@ end
 #                                              POST   /users/unlock(.:format)                                                                           devise/unlocks#create
 #                     abrir_modal_admin_emails GET    /a/emails/abrir_modal(.:format)                                                                   admin/emails#abrir_modal
 #                          buscar_admin_emails POST   /a/emails/buscar(.:format)                                                                        admin/emails#buscar
-#                      content_eml_admin_email GET    /a/emails/:id/content_eml(.:format)                                                               admin/emails#content_eml
 #                                 admin_emails GET    /a/emails(.:format)                                                                               admin/emails#index
 #                                              POST   /a/emails(.:format)                                                                               admin/emails#create
 #                              new_admin_email GET    /a/emails/new(.:format)                                                                           admin/emails#new

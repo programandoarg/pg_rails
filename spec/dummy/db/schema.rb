@@ -132,7 +132,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_06_194301) do
     t.string "tags", array: true
     t.string "associated_type"
     t.bigint "associated_id"
-    t.string "content_eml"
     t.string "message_id"
     t.string "mailer"
     t.string "status_detail"

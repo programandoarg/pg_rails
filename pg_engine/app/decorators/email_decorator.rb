@@ -14,7 +14,7 @@ class EmailDecorator < PgEngine::BaseDecorator
   #     end
   #   end
 
-  def content_eml_link
-    link_to 'Download', helpers.content_eml_admin_email_path(object), target: :_blank, rel: :noopener
+  def encoded_eml_link
+    link_to 'Download', helpers.rails_blob_path(object.encoded_eml), target: :_blank, rel: :noopener
   end
 end

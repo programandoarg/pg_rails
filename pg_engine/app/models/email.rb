@@ -8,14 +8,13 @@
 #  accepted_at        :datetime
 #  associated_type    :string           indexed => [associated_id]
 #  body_input         :string
-#  content_eml        :string
 #  delivered_at       :datetime
 #  from_address       :string           not null
 #  from_name          :string
 #  mailer             :string
 #  opened_at          :datetime
 #  reply_to           :string
-#  status             :integer          default(0), not null
+#  status             :integer          default("pending"), not null
 #  status_detail      :string
 #  subject            :string
 #  tags               :string           is an Array
@@ -32,13 +31,8 @@
 #  fk_rails_...  (actualizado_por_id => users.id)
 #  fk_rails_...  (creado_por_id => users.id)
 #
-# generado con pg_rails
 
 class Email < ApplicationRecord
-  audited except: %i[content_eml]
-
-  self.filter_attributes = [:content_eml]
-
   has_one_attached :encoded_eml
 
   belongs_to :associated, polymorphic: true, optional: true
