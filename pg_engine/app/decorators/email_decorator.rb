@@ -15,6 +15,6 @@ class EmailDecorator < PgEngine::BaseDecorator
   #   end
 
   def content_eml_link
-    link_to 'Download', helpers.content_eml_admin_email_path(object), target: :_blank
+    link_to 'Download', helpers.content_eml_admin_email_path(object), target: :_blank, rel: :noopener
   end
 end

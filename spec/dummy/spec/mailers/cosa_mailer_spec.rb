@@ -21,7 +21,7 @@ RSpec.describe CosaMailer do
       expect(mail.attachments.length).to eq 1
     end
 
-    context do
+    context 'when its delivered' do
       subject { mail.deliver }
 
       let(:email_object) { mail['email'].unparsed_value }
