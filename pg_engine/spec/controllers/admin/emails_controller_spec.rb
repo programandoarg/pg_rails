@@ -91,6 +91,7 @@ RSpec.describe Admin::EmailsController do
   describe 'GET #show' do
     it 'returns a success response' do
       email = create(:email)
+      email.encoded_eml.attach({ io: StringIO.new(Faker::Lorem.sentence), filename: 'email.eml' })
       get :show, params: { id: email.to_param }
       expect(response).to be_successful
     end

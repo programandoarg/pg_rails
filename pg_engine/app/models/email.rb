@@ -33,6 +33,8 @@
 #
 
 class Email < ApplicationRecord
+  audited
+
   has_one_attached :encoded_eml
 
   belongs_to :associated, polymorphic: true, optional: true
