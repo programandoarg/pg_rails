@@ -28,7 +28,7 @@ RSpec.describe CosaMailer do
 
       it 'observed' do
         expect { subject }.to change { email_object.reload.message_id }
-                              .and(change { email_object.encoded_eml.present? }.from(false).to(true))
+          .and(change { email_object.encoded_eml.present? }.from(false).to(true))
       end
     end
   end
