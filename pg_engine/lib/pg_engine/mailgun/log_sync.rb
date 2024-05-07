@@ -28,16 +28,21 @@ module PgEngine
           break if current < start_time
         end
 
-        dir = File.expand_path 'log/mailgun_logs', Rails.root
-
         FileUtils.mkdir_p(dir)
 
         File.write("#{dir}/#{domain}-#{Time.zone.now.strftime('%Y-%m-%d_%H.%M.%S')}.json", items.flatten.to_json)
       end
 
+      def self.dir
+        @dir ||= if Rails.env.test?
+                   File.expand_path 'tmp/mailgun_logs', Rails.root
+                 else
+                   File.expand_path 'log/mailgun_logs', Rails.root
+                 end
+      end
+
       def self.sync_redis
         json = []
-        dir = File.expand_path 'log/mailgun_logs', Rails.root
         Dir["#{dir}/*.json"].each do |file|
           json.push(*JSON.parse(File.read(file)))
         end

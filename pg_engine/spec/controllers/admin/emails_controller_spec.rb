@@ -55,6 +55,19 @@ RSpec.describe Admin::EmailsController do
     end
   end
 
+  describe 'GET #content_eml' do
+    subject do
+      get :content_eml, params: { id: email.id }
+    end
+
+    let(:email) { create :email }
+
+    it do
+      subject
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   describe 'GET #index' do
     subject do
       get :index, params: {}
