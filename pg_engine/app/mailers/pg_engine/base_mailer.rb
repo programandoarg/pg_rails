@@ -11,6 +11,8 @@ module PgEngine
 
     layout 'pg_layout/mailer'
 
+    # TODO: rescue from StandardError? from PgEngine::Error?
+
     rescue_from MailNotDelivered do |err|
       # FIXME: marcar el Email en la DB como fallido
       pg_err err
