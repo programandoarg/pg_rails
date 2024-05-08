@@ -30,6 +30,16 @@ RSpec.describe CosaMailer do
         expect { subject }.to change { email_object.reload.message_id }
           .and(change { email_object.encoded_eml.present? }.from(false).to(true))
       end
+
+      context 'cuando falla el observer' do
+        before do
+          allow_any_instance_of(Email).to receive(:encoded_eml).and_raise(StandardError)
+        end
+
+        it 'observed' do
+          expect { subject }.to change { email_object.reload.message_id }
+        end
+      end
     end
   end
 end
