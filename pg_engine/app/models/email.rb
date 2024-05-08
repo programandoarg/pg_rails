@@ -45,7 +45,7 @@ class Email < ApplicationRecord
   kredis_unique_list :logs
 
   # TODO: y el fallido temporario?
-  enumerize :status, in: { pending: 0, blocked: 1, sent: 2, accepted: 3, delivered: 4, rejected: 5 }
+  enumerize :status, in: { pending: 0, failed: 1, sent: 2, accepted: 3, delivered: 4, rejected: 5 }
 
   validates :from_address, :to, :status, presence: true
 

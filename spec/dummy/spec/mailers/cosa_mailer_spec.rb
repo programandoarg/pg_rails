@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe CosaMailer do
   describe 'cosa' do
     let(:cosa) { create :cosa }
-
+    let(:raise_error) { nil }
     let!(:mail) do
-      described_class.with(cosa:).cosa
+      described_class.with(cosa:, raise_error:).cosa
     end
 
     # it 'renders the headers' do
@@ -29,6 +29,25 @@ RSpec.describe CosaMailer do
       it 'observed' do
         expect { subject }.to change { email_object.reload.message_id }
           .and(change { email_object.encoded_eml.present? }.from(false).to(true))
+      end
+
+      context 'cuando falla el observer' do
+        before do
+          allow_any_instance_of(Email).to receive(:encoded_eml).and_raise(StandardError)
+        end
+
+        it 'observed' do
+          expect { subject }.to(change { email_object.reload.message_id })
+        end
+      end
+
+      context 'cuando falla el mailer' do
+        let(:raise_error) { true }
+
+        it 'marca el mail como no_enviado' do
+          subject
+          expect(Email.first.status).to eq 'failed'
+        end
       end
     end
   end

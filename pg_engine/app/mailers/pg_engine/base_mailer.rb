@@ -13,11 +13,9 @@ module PgEngine
 
     # default delivery_method: :smtp
 
-    # TODO: rescue from StandardError? from PgEngine::Error?
-
     rescue_from MailNotDelivered do |err|
-      # FIXME: marcar el Email en la DB como fallido
-      pg_err err
+      pg_warn err, :error
+      @email.update_columns(status: :failed, status_detail: err.to_s) # rubocop:disable Rails/SkipsModelValidations
     end
 
     protected
