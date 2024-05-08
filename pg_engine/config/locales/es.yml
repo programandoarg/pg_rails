@@ -81,8 +81,11 @@ es:
     attributes:
       user:
         remember_me: Mantener sesión abierta
-
-
+      email:
+        from_name: Remitente
+        to: Destinatario
+        subject: Asunto
+        body_input: Mensaje
 
 
 # es:
