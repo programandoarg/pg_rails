@@ -37,7 +37,7 @@ RSpec.describe CosaMailer do
         end
 
         it 'observed' do
-          expect { subject }.to change { email_object.reload.message_id }
+          expect { subject }.to(change { email_object.reload.message_id })
         end
       end
     end
