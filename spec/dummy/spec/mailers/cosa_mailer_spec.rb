@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe CosaMailer do
   describe 'cosa' do
     let(:cosa) { create :cosa }
-
+    let(:raise_error) { nil }
     let!(:mail) do
-      described_class.with(cosa:).cosa
+      described_class.with(cosa:, raise_error:).cosa
     end
 
     # it 'renders the headers' do
@@ -42,9 +42,7 @@ RSpec.describe CosaMailer do
       end
 
       context 'cuando falla el mailer' do
-        let!(:mail) do
-          described_class.with(cosa:, raise_error: true).cosa
-        end
+        let(:raise_error) { true }
 
         it 'marca el mail como no_enviado' do
           subject

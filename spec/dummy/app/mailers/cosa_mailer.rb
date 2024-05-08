@@ -9,9 +9,7 @@ class CosaMailer < ApplicationMailer
       associated: @cosa
     )
 
-    if params[:raise_error]
-      raise PgEngine::BaseMailer::MailNotDelivered, 'falló el mailer'
-    end
+    raise PgEngine::BaseMailer::MailNotDelivered, 'falló el mailer' if params[:raise_error]
 
     @body = <<~DOC
       multi

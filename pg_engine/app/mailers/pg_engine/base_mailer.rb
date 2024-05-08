@@ -15,7 +15,7 @@ module PgEngine
 
     rescue_from MailNotDelivered do |err|
       pg_warn err, :error
-      @email.update_columns(status: :failed, status_detail: err.to_s)
+      @email.update_columns(status: :failed, status_detail: err.to_s) # rubocop:disable Rails/SkipsModelValidations
     end
 
     protected
