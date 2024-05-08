@@ -66,6 +66,10 @@ class User < ApplicationRecord
     !persisted? || !password.nil? || !password_confirmation.nil?
   end
 
+  def remember_me
+    true
+  end
+
   scope :query, ->(param) { where('email ILIKE ?', "%#{param}%") }
 
   def to_s
