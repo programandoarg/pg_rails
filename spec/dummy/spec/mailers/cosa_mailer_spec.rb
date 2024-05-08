@@ -13,10 +13,6 @@ RSpec.describe CosaMailer do
     #     .and(satisfy('have from_name') { |m| m.header['From'].value.include?(from_name) })
     # end
 
-    # it 'renders the body' do
-    #   expect(mail.body.encoded).to match(body)
-    # end
-
     it 'tiene attachment' do
       expect(mail.attachments.length).to eq 1
     end
@@ -29,6 +25,12 @@ RSpec.describe CosaMailer do
       it 'observed' do
         expect { subject }.to change { email_object.reload.message_id }
           .and(change { email_object.encoded_eml.present? }.from(false).to(true))
+      end
+
+      it 'renders the body' do
+        subject
+
+        expect(mail.body.encoded).to include(root_url(m: email_object.hashid))
       end
 
       context 'cuando falla el observer' do

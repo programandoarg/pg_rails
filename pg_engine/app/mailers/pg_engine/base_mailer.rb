@@ -15,12 +15,15 @@ module PgEngine
 
     rescue_from StandardError do |err|
       pg_warn err, :error
-      @email.update_columns(status: :failed, status_detail: err.to_s) # rubocop:disable Rails/SkipsModelValidations
+      if @email.present?
+        @email.update_columns(status: :failed, status_detail: err.to_s) # rubocop:disable Rails/SkipsModelValidations
+      end
     end
 
     protected
 
     def mail(*args)
+      @footer_href = root_url(m: @email.hashid)
       super(*args).tap do |message|
         # message.mailgun_options = {
         #   'tag' => email.tags,
@@ -35,4 +38,3 @@ end
 #   # TODO: testear
 #       si from está vacío
 #       si body está vacío
-#       si se lanza PgEngine::BaseMailer::MailNotDelivered

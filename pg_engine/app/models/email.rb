@@ -33,6 +33,7 @@
 #
 
 class Email < ApplicationRecord
+  include Hashid::Rails
   audited
 
   has_one_attached :encoded_eml
