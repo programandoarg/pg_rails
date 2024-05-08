@@ -20,13 +20,7 @@ class CosaMailer < ApplicationMailer
         fin
     DOC
 
-    # unless @comprobante.estado_emision.emitido?
-    #   raise PgEngine::BaseMailer::MailNotDelivered, 'el comprobante no está emitido'
-    # end
-
     attachments["cosa_#{@cosa.id}.json"] = @cosa.to_json
-
-    # @tracking_ref = @comprobante.hashid
 
     mail
   end
