@@ -40,6 +40,17 @@ RSpec.describe CosaMailer do
           expect { subject }.to(change { email_object.reload.message_id })
         end
       end
+
+      context 'cuando falla el mailer' do
+        let!(:mail) do
+          described_class.with(cosa:, raise_error: true).cosa
+        end
+
+        it 'marca el mail como no_enviado' do
+          subject
+          expect(Email.first.status).to eq 'failed'
+        end
+      end
     end
   end
 end
