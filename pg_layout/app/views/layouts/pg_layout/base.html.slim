@@ -8,7 +8,8 @@ html
       title = t('app_name')
       - begin
         = render partial: 'layouts/favicon'
-      - rescue ActionView::MissingTemplate
+      - rescue ActionView::MissingTemplate => e
+        - pg_err e
 
     - if @turbo_no_cache
       meta name="turbo-cache-control" content="no-cache"
