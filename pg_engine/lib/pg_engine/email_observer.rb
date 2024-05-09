@@ -10,8 +10,6 @@ module PgEngine
         email = message['email'].unparsed_value
         email.update_columns(message_id:, mailer:, status:) # rubocop:disable Rails/SkipsModelValidations
       else
-        # FIXME: testear
-        pg_warn 'El mail no tenía objeto Email asociado.', :warn
         to = [message.to].flatten.join(', ')
         from = [message.from].flatten.join(', ')
         email = Email.create!(message_id:, subject: message.subject, to:, mailer:, status:, from_address: from,
