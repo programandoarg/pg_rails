@@ -5,10 +5,6 @@ require 'devise'
 module PgEngine
   # Checks the scope in the given environment and returns the associated failure app.
   class DeviseFailureApp < Devise::FailureApp
-    # def self.call(env)
-    #   super(env)
-    # end
-
     def respond
       if warden_message == :unconfirmed
         # FIXME: testear
