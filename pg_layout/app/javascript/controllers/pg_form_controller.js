@@ -16,9 +16,9 @@ export default class extends Controller {
       const baseAlert = document.querySelector('.alert-danger')
       if (!invalidField && !baseAlert) {
         const errorTitle = this.element.querySelector('.error-title')
-        // FIXME: testear con capybara
+        // TODO!: testear con capybara
         errorTitle.innerText = 'Lo lamentamos mucho pero ocurrió algo inesperado. Por favor, intentá nuevamente o ponete en contacto con nosotros.'
-        // FIXME: link a contacto
+        // TODO!: link a contacto
         const form = this.element.querySelector('form')
         const errorMsg = `${form.id} - ${form.action} - ${form.dataset.errors}`
         console.error(errorMsg)
