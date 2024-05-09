@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-require 'devise'
-
 module PgEngine
-  # Checks the scope in the given environment and returns the associated failure app.
   class DeviseFailureApp < Devise::FailureApp
     def respond
       if warden_message == :unconfirmed
