@@ -20,8 +20,6 @@ module PgEngine
     def index
       @collection = filtros_y_policy atributos_para_buscar
       @collection = sort_collection(@collection)
-      @records_filtered = policy_scope(clase_modelo).any? if @collection.empty?
-      # FIXME: si hay pero en páginas anteriores, mostrar texto correspondiente
       pg_respond_index
     end
 
@@ -208,6 +206,7 @@ module PgEngine
 
     def render_listing
       @collection = @collection.page(params[:page]).per(current_page_size)
+      @records_filtered = default_scope_for_current_model.any? if @collection.empty?
     end
 
     def buscar_instancia
@@ -270,6 +269,12 @@ module PgEngine
       scope = policy_scope(clase_modelo)
 
       @filtros.filtrar(scope)
+    end
+
+    def default_scope_for_current_model
+      PgEngine::FiltrosBuilder.new(
+        self, clase_modelo, []
+      ).filtrar(policy_scope(clase_modelo))
     end
 
     def do_sort(scope, field, direction)
