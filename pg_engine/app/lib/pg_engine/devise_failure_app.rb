@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'devise'
 
 module PgEngine
@@ -25,7 +26,7 @@ module PgEngine
     end
 
     def render_unconfirmed
-      self.content_type = "text/vnd.turbo-stream.html"
+      self.content_type = 'text/vnd.turbo-stream.html'
       self.status = 200
       self.response_body = <<~HTML
         <turbo-stream action="update" target="flash">
