@@ -92,7 +92,7 @@ module PgEngine
     def print_currency(number, simbolo: '$', precision: nil)
       return if number.blank?
 
-      # FIXME: testear
+      # TODO!: testear
       precision ||= if (number % 0.01).positive?
                       3
                     else

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     confirmations: 'users/confirmations',
     registrations: 'users/registrations'
-  }
+  }, failure_app: PgEngine::DeviseFailureApp
   namespace :admin, path: 'a' do
     pg_resource(:emails)
     pg_resource(:users)

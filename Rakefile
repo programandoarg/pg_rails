@@ -66,7 +66,7 @@ end
 
 desc "Brakeman interactive mode"
 task :brakeman do
-  system! "bundle exec brakeman -q --no-summary --skip-files node_modules/ -I --force"
+  system "bundle exec brakeman -q --no-summary --skip-files node_modules/ -I --force"
 end
 
 desc 'Pre push tasks'
