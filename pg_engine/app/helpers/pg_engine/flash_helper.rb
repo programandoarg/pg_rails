@@ -6,7 +6,7 @@ module PgEngine
 
     def render_turbo_stream_title
       # rubocop:disable Rails/SkipsModelValidations
-      turbo_stream.update_all 'title', "#{breadcrumbs.last&.name} - #{Rails.application.class.module_parent_name}"
+      turbo_stream.update_all 'title', "#{breadcrumbs.last&.name} - #{I18n.t('app_name')}"
       # rubocop:enable Rails/SkipsModelValidations
     end
 

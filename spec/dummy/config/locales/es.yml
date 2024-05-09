@@ -1,4 +1,5 @@
 es:
+  app_name: PgRails!
   activerecord:
     # attributes:
     #   user:
