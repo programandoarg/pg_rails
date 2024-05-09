@@ -7,7 +7,6 @@ module PgEngine
   class DeviseFailureApp < Devise::FailureApp
     def respond
       if warden_message == :unconfirmed
-        # FIXME: testear
         render_unconfirmed
       else
         super
