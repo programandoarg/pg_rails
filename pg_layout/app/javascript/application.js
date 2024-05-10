@@ -46,8 +46,15 @@ document.addEventListener('turbo:before-cache', () => {
 })
 
 function bindToasts () {
-  const toastElList = document.querySelectorAll('.toast:not(.hide):not(.show)')
-  Array.from(toastElList).map(toastEl => new bootstrap.Toast(toastEl).show())
+  const toastQuery = '.pg-toast:not(.hide):not(.show)'
+
+  const toastElList = document.querySelectorAll(toastQuery)
+  Array.from(toastElList).map(toastEl => { 
+    new bootstrap.Toast(toastEl).show()
+    toastEl.addEventListener('hidden.bs.toast', () => {
+      toastEl.remove()
+    })
+  })
 
   // Select the node that will be observed for mutations
   const targetNode = document.getElementById('flash')
@@ -60,8 +67,13 @@ function bindToasts () {
     for (const mutation of mutationList) {
       if (mutation.type === 'childList') {
         // console.log('A child node has been added or removed.')
-        const toastElList = document.querySelectorAll('.toast:not(.hide):not(.show)')
-        Array.from(toastElList).map(toastEl => new bootstrap.Toast(toastEl).show())
+        const toastElList = document.querySelectorAll(toastQuery)
+        Array.from(toastElList).map(toastEl => {
+          new bootstrap.Toast(toastEl).show()
+          toastEl.addEventListener('hidden.bs.toast', () => {
+            toastEl.remove()
+          })
+        })
       } else if (mutation.type === 'attributes') {
         // console.log(`The ${mutation.attributeName} attribute was modified.`)
       }
