@@ -311,6 +311,7 @@ module PgEngine
         direction = options[:default].first[1]
         do_sort(scope, field, direction)
       else
+        # FIXME: sort by id desc?
         scope
       end
     end
