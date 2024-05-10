@@ -5,7 +5,7 @@ import { fadeOut, fadeIn } from './../utils/utils'
 export default class extends Controller {
   connect () {
     if (document.getElementById('sidebar').classList.contains('opened')) {
-      let brand = document.querySelector('.navbar .navbar-brand')
+      const brand = document.querySelector('.navbar .navbar-brand')
       if (brand) brand.style.visibility = 'hidden'
     }
   }
