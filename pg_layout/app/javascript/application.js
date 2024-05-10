@@ -49,7 +49,7 @@ function bindToasts () {
   const toastQuery = '.pg-toast:not(.hide):not(.show)'
 
   const toastElList = document.querySelectorAll(toastQuery)
-  Array.from(toastElList).map(toastEl => { 
+  Array.from(toastElList).each(toastEl => {
     new bootstrap.Toast(toastEl).show()
     toastEl.addEventListener('hidden.bs.toast', () => {
       toastEl.remove()
@@ -68,7 +68,7 @@ function bindToasts () {
       if (mutation.type === 'childList') {
         // console.log('A child node has been added or removed.')
         const toastElList = document.querySelectorAll(toastQuery)
-        Array.from(toastElList).map(toastEl => {
+        Array.from(toastElList).each(toastEl => {
           new bootstrap.Toast(toastEl).show()
           toastEl.addEventListener('hidden.bs.toast', () => {
             toastEl.remove()
