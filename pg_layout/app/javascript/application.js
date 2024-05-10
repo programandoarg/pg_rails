@@ -33,8 +33,8 @@ Rollbar.configure({
   }
 })
 
-document.addEventListener('turbo:load', bindToasts)
-document.addEventListener('turbo:render', bindToasts)
+document.addEventListener('turbo:load', bindAndObserveToasts)
+document.addEventListener('turbo:render', bindAndObserveToasts)
 
 document.addEventListener('turbo:before-cache', () => {
   document.querySelectorAll('.offcanvas-backdrop').forEach((el) => {
@@ -45,7 +45,7 @@ document.addEventListener('turbo:before-cache', () => {
   })
 })
 
-function bindToasts () {
+function bindToastElements () {
   const toastQuery = '.pg-toast:not(.hide):not(.show)'
 
   const toastElList = document.querySelectorAll(toastQuery)
@@ -55,6 +55,10 @@ function bindToasts () {
       toastEl.remove()
     })
   })
+}
+
+function bindAndObserveToasts () {
+  bindToastElements()
 
   // Select the node that will be observed for mutations
   const targetNode = document.getElementById('flash')
@@ -66,16 +70,7 @@ function bindToasts () {
   const callback = (mutationList, observer) => {
     for (const mutation of mutationList) {
       if (mutation.type === 'childList') {
-        // console.log('A child node has been added or removed.')
-        const toastElList = document.querySelectorAll(toastQuery)
-        Array.from(toastElList).each(toastEl => {
-          new bootstrap.Toast(toastEl).show()
-          toastEl.addEventListener('hidden.bs.toast', () => {
-            toastEl.remove()
-          })
-        })
-      } else if (mutation.type === 'attributes') {
-        // console.log(`The ${mutation.attributeName} attribute was modified.`)
+        bindToastElements()
       }
     }
   }
