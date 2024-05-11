@@ -34,6 +34,8 @@ module PgEngine
                     obj
                   end
         notify(mensaje, :error)
+      rescue StandardError => e
+        Rails.logger.error("ERROR al loguear error: #{e}")
       end
 
       def warn(obj, type = :error)
@@ -43,6 +45,8 @@ module PgEngine
                     obj
                   end
         notify(mensaje, type)
+      rescue StandardError => e
+        Rails.logger.error("ERROR al loguear error: #{e}")
       end
 
       private
