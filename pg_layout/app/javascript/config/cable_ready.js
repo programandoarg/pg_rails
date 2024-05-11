@@ -1,5 +1,6 @@
 import consumer from '../channels/consumer'
 import CableReady from 'cable_ready'
+import Rollbar from 'rollbar'
 
 const anycable = consumer.cable
 

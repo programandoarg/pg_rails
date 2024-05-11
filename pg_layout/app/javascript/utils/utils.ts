@@ -19,32 +19,32 @@ export function numberWithDots (x) {
 }
 
 export function flashMessage (message, flashType = 'warning', toast = false) {
-  let el = document.createElement('div')
-  let toastClasses = toast ? 'position-absolute pg-toast' : ''
+  const el = document.createElement('div')
+  const toastClasses = toast ? 'position-absolute pg-toast' : ''
   let iconClasses
   let alertClassSuffix
   switch (flashType) {
     case 'critical':
-      iconClasses = "bi bi-exclamation-triangle-fill me-3 fs-2"
+      iconClasses = 'bi bi-exclamation-triangle-fill me-3 fs-2'
       alertClassSuffix = 'danger'
-      break;
+      break
     case 'alert':
-      iconClasses = "bi bi-exclamation-triangle-fill me-2"
+      iconClasses = 'bi bi-exclamation-triangle-fill me-2'
       alertClassSuffix = 'danger'
-      break;
+      break
     case 'warning':
-      iconClasses = "bi bi-exclamation-circle me-2"
+      iconClasses = 'bi bi-exclamation-circle me-2'
       alertClassSuffix = 'warning'
-      break;
+      break
     case 'success':
-      iconClasses = "bi bi-check-lg me-2"
+      iconClasses = 'bi bi-check-lg me-2'
       alertClassSuffix = 'success'
-      break;
+      break
     case 'notice':
     default:
-      iconClasses = "bi bi-info-circle me-2"
+      iconClasses = 'bi bi-info-circle me-2'
       alertClassSuffix = 'info'
-      break;
+      break
   }
 
   el.innerHTML = `
