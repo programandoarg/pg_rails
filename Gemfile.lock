@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pg_rails (7.0.8.pre.alpha.65)
+    pg_rails (7.0.8.pre.alpha.66)
       activeadmin (~> 3.2.0)
       anycable (= 1.5.0)
       anycable-rails (~> 1.5.1)
