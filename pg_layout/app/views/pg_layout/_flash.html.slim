@@ -2,22 +2,4 @@
 - flash_to_show = flash.select { |fm| fm[0].to_sym.in?(ApplicationController._flash_types) && fm[1].present? }
 / slim-lint:enable LineLength
 - flash_to_show.each do |flash_type, message|
-  .alert.alert-dismissible[
-    class="mt-2 d-flex align-items-center alert-#{flash_type_to_class(flash_type)}"
-    data-turbo-temporary="true"
-    aria-live="assertive" aria-atomic="true" role="alert"
-  ]
-    - case flash_type
-    - when 'critical'
-      / .bi.bi-emoji-dizzy.me-3.fs-2
-      .bi.bi-exclamation-triangle-fill.me-3.fs-2
-    - when 'alert'
-      .bi.bi-exclamation-triangle-fill.me-2
-    - when 'warning'
-      .bi.bi-exclamation-circle.me-2
-    - when 'success'
-      .bi.bi-check-lg.me-2
-    - when 'notice'
-      .bi.bi-info-circle.me-2
-    = message
-    button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+  = render partial: 'pg_layout/flash_inner', locals: { flash_type:, message:, toast: flash[:toast] }
