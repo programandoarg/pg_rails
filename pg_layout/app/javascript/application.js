@@ -49,11 +49,11 @@ function bindToastElements () {
   const toastQuery = '.pg-toast:not(.hide):not(.show)'
 
   const toastElList = document.querySelectorAll(toastQuery)
-  Array.from(toastElList).each(toastEl => {
-    new bootstrap.Toast(toastEl).show()
+  Array.from(toastElList).map(toastEl => {
     toastEl.addEventListener('hidden.bs.toast', () => {
       toastEl.remove()
     })
+    return new bootstrap.Toast(toastEl).show()
   })
 }
 
