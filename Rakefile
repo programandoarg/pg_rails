@@ -43,6 +43,7 @@ end
 
 desc "Testear sin spring"
 task :rspec do
+  system! "bundle exec rake assets:precompile"
   system! "CI=true bundle exec rspec #{PATHS_TO_TEST}"
 end
 
