@@ -5,8 +5,9 @@ class PgFormBuilder < SimpleForm::FormBuilder
   include PgEngine::ErrorHelper
 
   def default_prefix(attribute_name)
-    at_name = object.class.human_attribute_name(attribute_name.to_s).downcase
-    "#{articulo(attribute_name)} #{at_name}"
+    attribute_name = attribute_name.to_s.sub /_id\z/, ''
+    at_name_human = object.class.human_attribute_name(attribute_name).downcase
+    "#{articulo(attribute_name)} #{at_name_human}"
   end
 
   def articulo(attribute_name)
