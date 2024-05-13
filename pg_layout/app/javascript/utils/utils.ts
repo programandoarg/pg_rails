@@ -49,7 +49,7 @@ export function flashMessage (message, flashType = 'warning', toast = false) {
 
   el.innerHTML = `
     <div class="alert alert-dismissible mt-2 d-flex align-items-center alert-${alertClassSuffix} ${toastClasses}"
-      data-turbo-temporary="true" data-bs-autohide="false" aria-live="assertive" aria-atomic="true" role="alert">
+      data-turbo-temporary="true" data-bs-autohide="true" aria-live="assertive" aria-atomic="true" role="alert">
 
       <span class="${iconClasses}"></span>
       ${message}
