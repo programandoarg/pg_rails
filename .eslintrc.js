@@ -4,7 +4,13 @@ module.exports = {
         "es2021": true
     },
     "extends": "standard",
-    "ignorePatterns": [".eslintrc.js", "vendor/**/*", "node_modules/**/*"],
+    "ignorePatterns": [
+        ".eslintrc.js",
+        "vendor/**/*",
+        "spec/dummy/public/assets/**/*",
+        "pg_rails/dist/**/*",
+        "node_modules/**/*"
+    ],
     "overrides": [
         {
           "files": ["*.ts", "*.tsx"],

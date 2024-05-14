@@ -47,7 +47,7 @@ describe DummyBaseController do
 
     it do
       subject
-      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:internal_server_error)
       expect(response.body).to include 'Ocurrió algo inesperado'
       expect(response.body).to include '<html'
       expect(response.content_type).to include 'text/html'
@@ -60,7 +60,7 @@ describe DummyBaseController do
 
       it do
         subject
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(:internal_server_error)
         expect(response.content_type).to include 'text/vnd.turbo-stream.html'
         expect(response.body).to include 'Ocurrió algo inesperado'
         expect(response.body).to include '<turbo-stream action="remove" targets=".modal">'
@@ -93,7 +93,7 @@ describe DummyBaseController do
 
       it do
         subject
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(:unprocessable_entity)
         expect(response.body).to eq 'Acceso no autorizado'
         expect(controller).not_to be_user_signed_in
       end

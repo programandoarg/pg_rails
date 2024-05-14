@@ -29,3 +29,5 @@ spec/dummy/routes.txt
 bin/dist
 
 master.key
+
+spec/dummy/public/assets

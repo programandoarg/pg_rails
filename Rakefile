@@ -34,16 +34,12 @@ desc "Preparar y testear"
 task :test do
   system! "yarn install"
   system! "bundle exec rake db:test:prepare"
-  # system! "yarn build"
-  # system! "yarn build:css"
-  system! "yarn dummy:build"
-  system! "yarn dummy:build:css"
   Rake::Task['rspec'].invoke
 end
 
 desc "Testear sin spring"
 task :rspec do
-  system! "bundle exec rake assets:precompile"
+  system! "bundle exec rake app:assets:precompile"
   system! "CI=true bundle exec rspec #{PATHS_TO_TEST}"
 end
 
