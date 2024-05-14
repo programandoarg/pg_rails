@@ -31,15 +31,17 @@ task :test_spring do |t, args|
 end
 
 desc "Preparar y testear"
-task :test do
+task :test_prepare do
   system! "yarn install"
   system! "bundle exec rake db:test:prepare"
+  system!("yarn build")
+  system!("yarn build:css")
+  system! "bundle exec rake app:assets:precompile"
   Rake::Task['rspec'].invoke
 end
 
 desc "Testear sin spring"
 task :rspec do
-  system! "bundle exec rake app:assets:precompile"
   system! "CI=true bundle exec rspec #{PATHS_TO_TEST}"
 end
 
@@ -48,14 +50,14 @@ task :static_analysis do
   if `git status -s` != ''
     changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
     system! 'git add .'
-    system! "git commit -m \"[auto commit] #{changes} (Some changes that wasn't commited on prepush)\""
+    system! "git commit -m \"[autocommit] #{changes} (Some changes that wasn't commited on prepush)\""
   end
   system! 'bundle exec rubocop -a'
   system! 'npx --no-install eslint --fix .'
   if `git status -s` != ''
     changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
     system! 'git add .'
-    system! "git commit -m \"[auto commit] #{changes} (Lint on prepush)\""
+    system! "git commit -m \"[autolint] #{changes} (Lint on prepush)\""
   end
   system!("overcommit --run")
   system!("bundle exec brakeman -q --no-summary --skip-files node_modules/ --force")
