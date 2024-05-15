@@ -218,7 +218,6 @@ RSpec.describe <%= controller_class_name %>Controller do
 <% else -%>
         put :update, params: { id: <%= file_name %>.to_param, <%= nombre_tabla_completo_singular %>: valid_attributes }
 <% end -%>
-        # FIXME: revisar
         expect(response).to redirect_to([:<%= ns_prefix.first %>, <%= file_name %>])
       end
     end
