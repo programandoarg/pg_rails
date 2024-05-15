@@ -3,7 +3,7 @@
 	[
 		{
 			"path": ".",
-			"binary_file_patterns": ["tmp/*", "log/*", "node_modules/*", "coverage/*", "*.js.map"]
+			"binary_file_patterns": ["tmp/*", "log/*", "node_modules/*", "coverage/*", "*.js.map", "spec/dummy/public/assets"]
 		}
 	]
 }
