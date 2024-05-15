@@ -80,7 +80,7 @@ es:
   activerecord:
     attributes:
       user:
-        remember_me: Mantener sesión abierta en este navegador
+        remember_me: Recordarme en este navegador
       email:
         from_name: Remitente
         to: Destinatario
