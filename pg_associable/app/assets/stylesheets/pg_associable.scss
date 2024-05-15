@@ -31,7 +31,7 @@
       display: none;
     }
     input[type=text] {
-      background-color: white;
+      background-color: #{$body-bg};
       padding-right: 2em;
     }
     &.filled {
@@ -84,7 +84,7 @@
   box-shadow: 0px 9px 13px -3px rgba(0, 0, 0, 0.5);
   // position: absolute;
   // z-index: 1;
-  background-color: white;
+  background-color: #{$body-bg};
   border: 1px solid #a7b7bb;
   border-top: none;
   border-radius: 4px;
