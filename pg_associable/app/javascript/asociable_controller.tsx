@@ -9,6 +9,7 @@ export default class extends Controller {
   subWrapper = null
   elemId = null
   input = null
+  originalPlaceholder = null
 
   connect () {
     // ID único para identificar el campo y el modal
@@ -32,6 +33,7 @@ export default class extends Controller {
     this.resetResultados()
 
     const input = this.element.querySelector('input[type=text]')
+    this.originalPlaceholder = input.placeholder
     if (input.value) {
       this.element.classList.add('filled')
       input.setAttribute('readonly', 'true')
@@ -54,11 +56,12 @@ export default class extends Controller {
     }, 200)
 
     this.input.addEventListener('blur', () => {
-      this.input.placeholder = ''
+      this.input.placeholder = this.originalPlaceholder
       setTimeout(() => {
         if (!this.element.classList.contains('filled')) {
-          this.input.value = ''
-          this.resetResultados()
+          this.completarCampo(null)
+          // this.input.value = ''
+          // this.resetResultados()
         }
       }, 200)
     })
@@ -86,16 +89,32 @@ export default class extends Controller {
       if (this.input.value.length === 0) {
         this.escribiAlgo()
       }
-      if (e.keyCode === 13) {
-        doSearchBounce(true)
+
+      if ([37, 38, 39, 40].includes(e.keyCode)) {
+        // Arrow keys, do nothing
       } else {
-        doSearchBounce()
+        if ([27].includes(e.keyCode)) {
+          // ESC
+          document.activeElement?.blur && document.activeElement.blur()
+        } else {
+          if (e.keyCode === 13) { // Enter
+            doSearchBounce(true)
+          } else {
+            doSearchBounce()
+          }
+        }
       }
     }
     this.input.onkeydown = (e) => {
-      if (e.keyCode === 13) {
+      console.log(e.keyCode)
+      if (e.keyCode === 13) { // Enter
         e.preventDefault()
         return false
+      }
+      if (this.element.classList.contains('filled')) {
+        if (e.keyCode === 8 || e.keyCode === 46) { // Supr or Backspace
+          this.completarCampo(null)
+        }
       }
     }
     this.setMaxHeight()
@@ -175,7 +194,7 @@ export default class extends Controller {
   }
 
   escribiAlgo () {
-    this.input.placeholder = 'Escribí algo para buscar'
+    this.input.placeholder = this.element.dataset.placeholder || 'Escribí algo para buscar'
   }
 
   buscando () {
