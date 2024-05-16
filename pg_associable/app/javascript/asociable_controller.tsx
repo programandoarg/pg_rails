@@ -30,8 +30,7 @@ export default class extends Controller {
     result.appendChild(this.subWrapper)
     this.input.parentNode.appendChild(result)
 
-    const callback = (mutationList, observer) => {
-      console.log(mutationList)
+    const callback = (mutationList, _observer) => {
       for (const mutation of mutationList) {
         if (mutation.type === 'childList') {
           this.autoScroll()
@@ -41,7 +40,6 @@ export default class extends Controller {
     const observer = new MutationObserver(callback)
     const config = { attributes: false, childList: true, subtree: true }
     observer.observe(this.subWrapper, config)
-
 
     this.resetResultados()
 
