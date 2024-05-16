@@ -30,7 +30,7 @@ export default class extends Controller {
     result.appendChild(this.subWrapper)
     this.input.parentNode.appendChild(result)
 
-    const callback = (mutationList, _observer) => {
+    const callback = (mutationList) => {
       for (const mutation of mutationList) {
         if (mutation.type === 'childList') {
           this.autoScroll()
