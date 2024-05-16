@@ -238,13 +238,11 @@ export default class extends Controller {
     }
     this.lastValue = this.input.value
 
-    const timerId = setTimeout(() => {
-      this.buscando()
-    }, 200)
-    document.addEventListener('turbo:before-stream-render', function () {
-      clearTimeout(timerId)
-      // TODO: testear
-    }, { once: true })
+    this.buscando()
+    // TODO: hacer bien el clearTimeout con la respuesta del server
+    // const timerId = setTimeout(() => {
+    //   this.buscando()
+    // }, 200)
     const elem = (
       <form method="post" action={this.input.dataset.urlSearch} data-turbo-stream="true">
         <input type="hidden" name="id" value={this.elemId} />
