@@ -9,6 +9,7 @@ export default class extends Controller {
   subWrapper = null
   elemId = null
   input = null
+  originalPlaceholder = null
 
   connect () {
     // ID único para identificar el campo y el modal
@@ -29,9 +30,21 @@ export default class extends Controller {
     result.appendChild(this.subWrapper)
     this.input.parentNode.appendChild(result)
 
+    const callback = (mutationList) => {
+      for (const mutation of mutationList) {
+        if (mutation.type === 'childList') {
+          this.autoScroll()
+        }
+      }
+    }
+    const observer = new MutationObserver(callback)
+    const config = { attributes: false, childList: true, subtree: true }
+    observer.observe(this.subWrapper, config)
+
     this.resetResultados()
 
     const input = this.element.querySelector('input[type=text]')
+    this.originalPlaceholder = input.placeholder
     if (input.value) {
       this.element.classList.add('filled')
       input.setAttribute('readonly', 'true')
@@ -54,51 +67,64 @@ export default class extends Controller {
     }, 200)
 
     this.input.addEventListener('blur', () => {
-      this.input.placeholder = ''
-      setTimeout(() => {
-        if (!this.element.classList.contains('filled')) {
-          this.input.value = ''
-          this.resetResultados()
-        }
-      }, 200)
+      this.input.placeholder = this.originalPlaceholder
     })
     this.input.onfocus = () => {
       this.input.select()
       if (this.input.value.length === 0) {
         this.escribiAlgo()
       }
-
-      if (!this.element.closest('.modal')) {
-        const wHeight = window.visualViewport.height
-        const scrollTop = document.scrollingElement.scrollTop
-        const viewPortBottom = scrollTop + wHeight
-        const swHeight = parseInt(this.subWrapper.style.maxHeight) + 20
-        const elementTop = this.element.getBoundingClientRect().top + scrollTop
-        const inputBottom = this.input.getBoundingClientRect().bottom + scrollTop
-        const swBottom = inputBottom + swHeight
-
-        if (swBottom > viewPortBottom) {
-          document.scrollingElement.scroll({ top: elementTop })
-        }
-      }
+      this.autoScroll()
     }
     this.input.onkeyup = (e) => {
       if (this.input.value.length === 0) {
         this.escribiAlgo()
       }
-      if (e.keyCode === 13) {
-        doSearchBounce(true)
+
+      if ([37, 38, 39, 40].includes(e.keyCode)) {
+        // Arrow keys, do nothing
       } else {
-        doSearchBounce()
+        if ([27].includes(e.keyCode)) {
+          // ESC
+          document.activeElement?.blur && document.activeElement.blur()
+        } else {
+          if (e.keyCode === 13) { // Enter
+            doSearchBounce(true)
+          } else {
+            doSearchBounce()
+          }
+        }
       }
     }
     this.input.onkeydown = (e) => {
-      if (e.keyCode === 13) {
+      console.log(e.keyCode)
+      if (e.keyCode === 13) { // Enter
         e.preventDefault()
         return false
       }
+      if (this.element.classList.contains('filled')) {
+        if (e.keyCode === 8 || e.keyCode === 46) { // Supr or Backspace
+          this.completarCampo(null)
+        }
+      }
     }
     this.setMaxHeight()
+  }
+
+  autoScroll () {
+    if (!this.element.closest('.modal')) {
+      const wHeight = window.visualViewport.height
+      const scrollTop = document.scrollingElement.scrollTop
+      const viewPortBottom = scrollTop + wHeight
+      const swHeight = parseInt(this.subWrapper.getBoundingClientRect().height) + 20
+      const inputBottom = this.input.getBoundingClientRect().bottom + scrollTop
+      const swBottom = inputBottom + swHeight
+
+      if (swBottom > viewPortBottom) {
+        const offset = swBottom - viewPortBottom
+        document.scrollingElement.scroll({ top: scrollTop + offset })
+      }
+    }
   }
 
   resetResultados () {
@@ -146,6 +172,9 @@ export default class extends Controller {
       if (maxHeight < 200) {
         maxHeight = 200
       }
+      if (maxHeight > 400) {
+        maxHeight = 400
+      }
       if (bodyHeight < inputY + maxHeight) {
         document.body.style.height = `${inputY + maxHeight}px`
       }
@@ -175,7 +204,7 @@ export default class extends Controller {
   }
 
   escribiAlgo () {
-    this.input.placeholder = 'Escribí algo para buscar'
+    this.input.placeholder = this.element.dataset.placeholder || 'Escribí algo para buscar'
   }
 
   buscando () {
@@ -207,13 +236,11 @@ export default class extends Controller {
     }
     this.lastValue = this.input.value
 
-    const timerId = setTimeout(() => {
-      this.buscando()
-    }, 200)
-    document.addEventListener('turbo:before-stream-render', function () {
-      clearTimeout(timerId)
-      // TODO: testear
-    }, { once: true })
+    this.buscando()
+    // TODO: hacer bien el clearTimeout con la respuesta del server
+    // const timerId = setTimeout(() => {
+    //   this.buscando()
+    // }, 200)
     const elem = (
       <form method="post" action={this.input.dataset.urlSearch} data-turbo-stream="true">
         <input type="hidden" name="id" value={this.elemId} />

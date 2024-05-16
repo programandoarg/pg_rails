@@ -71,7 +71,7 @@ end
 desc 'Pre push tasks'
 task :prepush do
   Rake::Task['static_analysis'].invoke
-  Rake::Task['test'].invoke
+  Rake::Task['test_prepare'].invoke
   playchord('success')
 rescue
   playchord('failed')

@@ -7,6 +7,8 @@ div style="max-width: 22em" data-controller="cosa"
     = hidden_field_tag :asociable, true if asociable
     = f.input :nombre
     = f.input :tipo
-    = f.pg_associable :categoria_de_cosa, preload: CategoriaDeCosa.limit(2)
+    = f.pg_associable :categoria_de_cosa,
+                      preload: CategoriaDeCosa.limit(2), placeholder: 'el placeholder',
+                      wrapper_html: { 'xdata-placeholder': 'dale, escribí' }
     .mt-2
     = f.button :submit
