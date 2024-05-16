@@ -50,6 +50,9 @@ module PgAssociable
 
     def clase_asociacion(atributo)
       asociacion = object.class.reflect_on_all_associations.find { |a| a.name == atributo.to_sym }
+
+      raise PgEngine::Error, "no existe la asociación para el atributo: #{atributo}" if asociacion.blank?
+
       nombre_clase = asociacion.options[:class_name]
       nombre_clase = asociacion.name.to_s.camelize if nombre_clase.nil?
       Object.const_get(nombre_clase)
