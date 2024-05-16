@@ -21,7 +21,7 @@ module PgEngine
     def render_unconfirmed
       self.content_type = 'text/vnd.turbo-stream.html'
       self.status = 200
-      # FIXME: poner data-turbo-temporary?
+      # TODO: poner data-turbo-temporary?
       self.response_body = <<~HTML
         <turbo-stream action="update" target="flash">
           <template>
