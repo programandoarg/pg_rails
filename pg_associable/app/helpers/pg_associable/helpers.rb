@@ -13,10 +13,11 @@ module PgAssociable
     def pg_respond_buscar
       partial = 'pg_associable/resultados_inline'
       resultados_prefix = 'resultados-inline'
-      @collection = policy_scope(@clase_modelo).kept.query(params[:query]).limit(MAX_RESULTS)
+      query = params[:query]
+      @collection = policy_scope(@clase_modelo).kept.query(query).limit(MAX_RESULTS)
       render turbo_stream:
         turbo_stream.update("#{resultados_prefix}-#{params[:id]}",
-                            partial:, locals: { collection: @collection })
+                            partial:, locals: { collection: @collection, query: })
     end
   end
 end

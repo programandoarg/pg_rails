@@ -1,3 +1,4 @@
+/ # locals: (collection:, query:)
 .resultados.inline tabindex="-1"
   ul.list-group.list-group-flush
     - if collection.any?
@@ -7,4 +8,4 @@
                   data: { action: 'asociable#selectItem',
                           id: object.id, object: object.decorate.to_json }
     - else
-      li.list-group-item No hay resultados para "#{params[:query]}"
+      li.list-group-item No hay resultados para "#{query}"
