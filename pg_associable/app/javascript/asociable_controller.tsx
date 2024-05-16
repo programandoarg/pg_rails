@@ -30,6 +30,19 @@ export default class extends Controller {
     result.appendChild(this.subWrapper)
     this.input.parentNode.appendChild(result)
 
+    const callback = (mutationList, observer) => {
+      console.log(mutationList)
+      for (const mutation of mutationList) {
+        if (mutation.type === 'childList') {
+          this.autoScroll()
+        }
+      }
+    }
+    const observer = new MutationObserver(callback)
+    const config = { attributes: false, childList: true, subtree: true }
+    observer.observe(this.subWrapper, config)
+
+
     this.resetResultados()
 
     const input = this.element.querySelector('input[type=text]')
@@ -70,20 +83,7 @@ export default class extends Controller {
       if (this.input.value.length === 0) {
         this.escribiAlgo()
       }
-
-      if (!this.element.closest('.modal')) {
-        const wHeight = window.visualViewport.height
-        const scrollTop = document.scrollingElement.scrollTop
-        const viewPortBottom = scrollTop + wHeight
-        const swHeight = parseInt(this.subWrapper.style.maxHeight) + 20
-        const elementTop = this.element.getBoundingClientRect().top + scrollTop
-        const inputBottom = this.input.getBoundingClientRect().bottom + scrollTop
-        const swBottom = inputBottom + swHeight
-
-        if (swBottom > viewPortBottom) {
-          document.scrollingElement.scroll({ top: elementTop })
-        }
-      }
+      this.autoScroll()
     }
     this.input.onkeyup = (e) => {
       if (this.input.value.length === 0) {
@@ -118,6 +118,22 @@ export default class extends Controller {
       }
     }
     this.setMaxHeight()
+  }
+
+  autoScroll () {
+    if (!this.element.closest('.modal')) {
+      const wHeight = window.visualViewport.height
+      const scrollTop = document.scrollingElement.scrollTop
+      const viewPortBottom = scrollTop + wHeight
+      const swHeight = parseInt(this.subWrapper.getBoundingClientRect().height) + 20
+      const inputBottom = this.input.getBoundingClientRect().bottom + scrollTop
+      const swBottom = inputBottom + swHeight
+
+      if (swBottom > viewPortBottom) {
+        const offset = swBottom - viewPortBottom
+        document.scrollingElement.scroll({ top: scrollTop + offset })
+      }
+    }
   }
 
   resetResultados () {
@@ -164,6 +180,9 @@ export default class extends Controller {
       maxHeight = bodyHeight - inputY
       if (maxHeight < 200) {
         maxHeight = 200
+      }
+      if (maxHeight > 400) {
+        maxHeight = 400
       }
       if (bodyHeight < inputY + maxHeight) {
         document.body.style.height = `${inputY + maxHeight}px`
