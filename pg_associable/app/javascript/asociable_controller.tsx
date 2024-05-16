@@ -70,13 +70,6 @@ export default class extends Controller {
 
     this.input.addEventListener('blur', () => {
       this.input.placeholder = this.originalPlaceholder
-      setTimeout(() => {
-        if (!this.element.classList.contains('filled')) {
-          this.completarCampo(null)
-          // this.input.value = ''
-          // this.resetResultados()
-        }
-      }, 200)
     })
     this.input.onfocus = () => {
       this.input.select()
