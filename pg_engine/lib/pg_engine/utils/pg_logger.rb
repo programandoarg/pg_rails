@@ -54,7 +54,7 @@ module PgEngine
       private
 
       def log_stdout?
-        ENV['LOG_TO_STDOUT']
+        ENV.fetch('LOG_TO_STDOUT', nil)
       end
 
       def handle_error_de_error(error)
