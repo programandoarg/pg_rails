@@ -53,8 +53,12 @@ module PgEngine
 
       private
 
+      def log_stdout?
+        ENV['LOG_TO_STDOUT']
+      end
+
       def handle_error_de_error(error)
-        puts Rainbow("ERROR al loguear error: #{error}").bold.red if Rails.env.test?
+        puts Rainbow("ERROR al loguear error: #{error}").bold.red if log_stdout?
         Rails.logger.error("ERROR al loguear error: #{error}")
       end
 
@@ -63,7 +67,7 @@ module PgEngine
         Rails.logger.send(type, titulo(mensaje, type))
         Rails.logger.send(type, detalles(type))
         Rollbar.send(type, "#{mensaje}\n\n#{bktrc.join("\n")}")
-        if Rails.env.test?
+        if log_stdout?
           puts titulo(mensaje, type)
           puts detalles(type)
         end
