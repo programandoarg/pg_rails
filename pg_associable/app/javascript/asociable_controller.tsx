@@ -128,6 +128,7 @@ export default class extends Controller {
   }
 
   resetResultados () {
+    this.lastValue = null
     const rows = []
     if (this.element.dataset.puedeCrear) {
       rows.push(
