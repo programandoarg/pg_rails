@@ -5,7 +5,7 @@
 require 'rails_helper'
 
 RSpec.describe Cosa do
-  include ActionView::RecordIdentifier 
+  include ActionView::RecordIdentifier
 
   let(:cosa) { create(:cosa) }
 
@@ -18,6 +18,6 @@ RSpec.describe Cosa do
   end
 
   it 'el dom_id' do
-    expect(dom_id(cosa.decorate)).to match /\Acosa_/
+    expect(dom_id(cosa.decorate)).to match(/\Acosa_/)
   end
 end
