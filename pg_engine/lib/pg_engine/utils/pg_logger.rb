@@ -28,14 +28,16 @@ module PgEngine
       def error(obj)
         raise obj if raise_errors
 
-        mensaje = if obj.is_a?(Exception) && obj.backtrace.present?
-                    "#{obj.inspect}\nBacktrace:\n#{cleaner.clean(obj.backtrace).join("\n")}"
-                  else
-                    obj
-                  end
-        notify(mensaje, :error)
-      rescue StandardError => e
-        Rails.logger.error("ERROR al loguear error: #{e}")
+        begin
+          mensaje = if obj.is_a?(Exception) && obj.backtrace.present?
+                      "#{obj.inspect}\nBacktrace:\n#{cleaner.clean(obj.backtrace).join("\n")}"
+                    else
+                      obj
+                    end
+          notify(mensaje, :error)
+        rescue StandardError => e
+          handle_error_de_error(e)
+        end
       end
 
       def warn(obj, type = :error)
@@ -46,16 +48,27 @@ module PgEngine
                   end
         notify(mensaje, type)
       rescue StandardError => e
-        Rails.logger.error("ERROR al loguear error: #{e}")
+        handle_error_de_error(e)
       end
 
       private
+
+      def handle_error_de_error(e)
+        if Rails.env.test?
+          puts Rainbow("ERROR al loguear error: #{e}").bold.red
+        end
+        Rails.logger.error("ERROR al loguear error: #{e}")
+      end
 
       # TODO: loguear time
       def notify(mensaje, type)
         Rails.logger.send(type, titulo(mensaje, type))
         Rails.logger.send(type, detalles(type))
         Rollbar.send(type, "#{mensaje}\n\n#{bktrc.join("\n")}")
+        if Rails.env.test?
+          puts titulo(mensaje, type)
+          puts detalles(type)
+        end
         nil
       end
 
