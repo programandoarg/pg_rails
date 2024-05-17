@@ -101,6 +101,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency "kredis", "~> 1.7.0"
   spec.add_dependency 'mailgun-ruby', '~> 1.2.14'
 
+  # Full text search
+  spec.add_dependency 'pg_search', "~> 2.3.6"
+
   ### Development dependencies
   #---------------------------
   # VCR

@@ -26,6 +26,7 @@ PATH
       mailgun-ruby (~> 1.2.14)
       nokogiri (~> 1.16)
       pg (~> 1.5.4)
+      pg_search (~> 2.3.6)
       puma (~> 6.4)
       pundit (~> 2.3.1)
       rails (~> 7.1.3.2)
@@ -365,6 +366,9 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.4)
+    pg_search (2.3.6)
+      activerecord (>= 5.2)
+      activesupport (>= 5.2)
     psych (5.1.2)
       stringio
     public_suffix (5.0.4)
