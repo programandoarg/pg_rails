@@ -2,7 +2,7 @@
 
 # generado con pg_rails
 
-class CategoriaDeCosaDecorator < PgEngine::BaseDecorator
+class CategoriaDeCosaDecorator < PgEngine::BaseRecordDecorator
   delegate_all
 
   def nombre_f

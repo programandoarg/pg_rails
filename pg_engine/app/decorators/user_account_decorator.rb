@@ -2,7 +2,7 @@
 
 # generado con pg_rails
 
-class UserAccountDecorator < PgEngine::BaseDecorator
+class UserAccountDecorator < PgEngine::BaseRecordDecorator
   delegate_all
 
   def profiles

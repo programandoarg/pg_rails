@@ -10,4 +10,8 @@ RSpec.describe Cosa do
   it 'se persiste' do
     expect(cosa).to be_persisted
   end
+
+  it 'usa el BaseRecordDecorator' do
+    expect(cosa.decorate.class).to eq PgEngine::BaseRecordDecorator
+  end
 end

@@ -4,11 +4,11 @@ module PgEngine
   module FormHelper
     def pg_form_for(object, *args, &)
       resource = object
-      if object.is_a? PgEngine::BaseDecorator
+      if object.is_a? PgEngine::BaseRecordDecorator
         object = object.target_object
       elsif object.is_a?(PgEngine::BaseRecord) &&
             object.decorator_class.present? &&
-            object.decorator_class < PgEngine::BaseDecorator
+            object.decorator_class < PgEngine::BaseRecordDecorator
         object = object.decorate.target_object
       end
       # byebug

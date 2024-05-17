@@ -2,7 +2,7 @@
 
 # generado con pg_rails
 
-class EmailDecorator < PgEngine::BaseDecorator
+class EmailDecorator < PgEngine::BaseRecordDecorator
   delegate_all
 
   # Define presentation-specific methods here. Helpers are accessed through
