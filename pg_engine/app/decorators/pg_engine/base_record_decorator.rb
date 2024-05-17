@@ -12,6 +12,12 @@ module PgEngine
 
     delegate_all
 
+    # Polemic, draper lo implementa con el propio decorator, pero necesito
+    # que sea el ActiveRecord para que funcione el dom_id
+    def to_model
+      object
+    end
+
     def as_json(options = {})
       object.as_json(options).tap { |o| o[:to_s] = to_s }
     end
