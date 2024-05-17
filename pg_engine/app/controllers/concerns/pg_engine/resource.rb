@@ -281,11 +281,11 @@ module PgEngine
       # TODO: restringir ciertos campos?
       unless scope.model.column_names.include?(field.to_s) ||
              scope.model.respond_to?("order_by_#{field}")
-        PgLogger.warn("No existe el campo \"#{field}\"", :warn)
+        pg_warn("No existe el campo \"#{field}\"")
         return scope
       end
       unless direction.to_sym.in? %i[asc desc]
-        PgLogger.warn("Direction not valid: \"#{direction}\"", :warn)
+        pg_warn("Direction not valid: \"#{direction}\"")
         return scope
       end
       scope = if scope.model.respond_to? "order_by_#{field}"
@@ -297,7 +297,7 @@ module PgEngine
       instance_variable_set(:@direction, direction)
       scope
     rescue ArgumentError => e
-      PgLogger.warn(e, :warn)
+      pg_warn(e)
       scope
     end
 

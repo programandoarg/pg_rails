@@ -10,4 +10,8 @@ RSpec.describe CategoriaDeCosa do
   it 'se persiste' do
     expect(categoria_de_cosa).to be_persisted
   end
+
+  it 'usa una subclase de BaseRecordDecorator' do
+    expect(categoria_de_cosa.decorate.class).to be < PgEngine::BaseRecordDecorator
+  end
 end

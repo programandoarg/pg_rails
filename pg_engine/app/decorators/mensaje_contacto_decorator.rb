@@ -2,7 +2,7 @@
 
 # generado con pg_rails
 
-class MensajeContactoDecorator < PgEngine::BaseDecorator
+class MensajeContactoDecorator < PgEngine::BaseRecordDecorator
   delegate_all
 
   # Define presentation-specific methods here. Helpers are accessed through

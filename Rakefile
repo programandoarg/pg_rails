@@ -27,7 +27,7 @@ PATHS_TO_TEST='spec pg_scaffold/spec pg_associable/spec pg_engine/spec pg_layout
 
 desc "Testear rápido"
 task :test_spring do |t, args|
-  system! "bundle exec spring rspec #{PATHS_TO_TEST} #{args.to_a.join(' ')}"
+  system! "bundle exec spring rspec --fail-fast #{PATHS_TO_TEST} #{args.to_a.join(' ')}"
 end
 
 desc "Preparar y testear"
@@ -38,11 +38,12 @@ task :test_prepare do
   system!("yarn build:css")
   system! "bundle exec rake app:assets:precompile"
   Rake::Task['rspec'].invoke
+  system! "bundle exec rake app:assets:clobber"
 end
 
 desc "Testear sin spring"
 task :rspec do
-  system! "CI=true bundle exec rspec #{PATHS_TO_TEST}"
+  system! "CI=true bundle exec rspec --fail-fast #{PATHS_TO_TEST}"
 end
 
 desc "Static analysis"

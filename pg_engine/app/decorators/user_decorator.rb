@@ -2,7 +2,7 @@
 
 # generado con pg_rails
 
-class UserDecorator < PgEngine::BaseDecorator
+class UserDecorator < PgEngine::BaseRecordDecorator
   delegate_all
 
   def default_module
