@@ -238,7 +238,8 @@ export default class extends Controller {
     this.lastValue = this.input.value
 
     this.buscando()
-    // TODO: hacer bien el clearTimeout con la respuesta del server
+    // TODO: hacer bien el clearTimeout con la respuesta del server, ya sea por turbo stream o por cable ready
+    // IMPORTANTE: además, un timeout por si nunca llega la respuesta
     // const timerId = setTimeout(() => {
     //   this.buscando()
     // }, 200)
