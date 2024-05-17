@@ -39,12 +39,6 @@ describe DummyBaseController do
       get :test_internal_error
     end
 
-    around do |example|
-      PgEngine::PgLogger.raise_errors = false
-      example.run
-      PgEngine::PgLogger.raise_errors = true
-    end
-
     it do
       subject
       expect(response).to have_http_status(:internal_server_error)

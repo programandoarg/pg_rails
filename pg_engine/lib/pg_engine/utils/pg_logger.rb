@@ -4,93 +4,89 @@ require 'rainbow'
 
 # TODO: poder pasar blocks
 
-def pg_err(obj)
-  PgEngine::PgLogger.error(obj)
+def pg_err(*args)
+  pg_log(:error, *args)
 end
 
-def pg_warn(obj, type = :error)
-  PgEngine::PgLogger.warn(obj, type)
+def pg_warn(*args)
+  pg_log(:warn, *args)
 end
 
-def pg_log(obj, type = :debug)
-  PgEngine::PgLogger.warn("#{obj.inspect} (#{obj.class})", type)
+def pg_info(*args)
+  pg_log(:info, *args)
+end
+
+def pg_debug(*args)
+  pg_log(:debug, *args)
+end
+
+def pg_log(*args)
+  PgEngine::PgLogger.log(*args)
 end
 
 module PgEngine
   class PgLogger
-    # Generalmente en test queremos que se lancen los errores, salvo
-    # cuando estamos testeando casos de error puntuales.
-    @raise_errors = Rails.env.test?
-
     class << self
-      attr_accessor :raise_errors
-
-      def error(obj)
-        raise obj if raise_errors
-
-        begin
-          mensaje = if obj.is_a?(Exception) && obj.backtrace.present?
-                      "#{obj.inspect}\nBacktrace:\n#{cleaner.clean(obj.backtrace).join("\n")}"
-                    else
-                      obj
-                    end
-          notify(mensaje, :error)
-        rescue StandardError => e
-          handle_error_de_error(e)
-        end
-      end
-
-      def warn(obj, type = :error)
-        mensaje = if obj.is_a?(Exception) && obj.backtrace.present?
-                    "#{obj.inspect}\nBacktrace:\n#{cleaner.clean(obj.backtrace).join("\n")}"
-                  else
-                    obj
-                  end
-        notify(mensaje, type)
-      rescue StandardError => e
-        handle_error_de_error(e)
+      def log(type, *args)
+        notify_all(build_msg(*args), type)
       end
 
       private
 
-      def log_stdout?
-        ENV.fetch('LOG_TO_STDOUT', nil)
-      end
-
-      def handle_error_de_error(error)
-        puts Rainbow("ERROR al loguear error: #{error}").bold.red if log_stdout?
-        Rails.logger.error("ERROR al loguear error: #{error}")
-      end
-
-      # TODO: loguear time
-      def notify(mensaje, type)
-        Rails.logger.send(type, titulo(mensaje, type))
-        Rails.logger.send(type, detalles(type))
-        Rollbar.send(type, "#{mensaje}\n\n#{bktrc.join("\n")}")
-        if log_stdout?
-          puts titulo(mensaje, type)
-          puts detalles(type)
-        end
+      def notify_all(mensaje, type)
+        send_to_logger(mensaje, type)
+        send_to_rollbar(mensaje, type)
+        send_to_stdout(mensaje, type) if ENV.fetch('LOG_TO_STDOUT', nil)
         nil
       end
 
-      def titulo(mensaje, type)
-        Rainbow("#{type.to_s.upcase}: #{mensaje}").bold.send(color_for(type))
+      # Senders
+
+      def send_to_stdout(mensaje, type)
+        puts rainbow_wrap(mensaje, type)
       end
 
-      def detalles(type)
-        Rainbow("  called in #{bktrc[0]}").send(color_for(type))
+      def send_to_rollbar(mensaje, type)
+        Rollbar.send(type, mensaje)
+        # Rollbar.send(type, "#{mensaje}\n\n#{bktrc.join("\n")}")
+      rescue StandardError => e
+        send_to_logger("Error notifying Rollbar #{e}", :error)
       end
 
-      def cleaner
-        bc = ActiveSupport::BacktraceCleaner.new
-        bc.add_filter   { |line| line.gsub(%r{.*pg_rails/}, '') }
-        bc.add_silencer { |line| /pg_logger/.match?(line) }
-        bc
+      def send_to_logger(mensaje, type)
+        Rails.logger.send(type, rainbow_wrap(mensaje, type))
       end
 
-      def bktrc
-        cleaner.clean(caller)
+      # Format
+
+      # TODO: loguear time
+      def build_msg(*args)
+        first = args.first
+        if first.is_a?(Exception) && first.backtrace.present?
+          <<~STR
+            #{titulo(*args)}
+            Exception Backtrace:
+              #{cleaner.clean(first.backtrace).join("\n")}
+            Caller Backtrace:
+              #{cleaner.clean(caller).join("\n")}
+          STR
+        else
+          <<~STR
+            #{titulo(*args)}
+            Caller Backtrace:
+              #{cleaner.clean(caller).join("\n")}
+          STR
+        end
+      rescue StandardError
+        send_to_logger('ERROR: PgLogger error building msg', :error)
+      end
+
+      def titulo(*args)
+        args.map { |obj| "#{obj.inspect} (#{obj.class})" }.join("\n")
+      end
+
+      def rainbow_wrap(mensaje, type)
+        Rainbow(mensaje).bold.send(color_for(type))
       end
 
       def color_for(type)
@@ -105,15 +101,15 @@ module PgEngine
           :red
         end
       end
+
+      # Backtrace helpers
+
+      def cleaner
+        bc = ActiveSupport::BacktraceCleaner.new
+        bc.add_filter   { |line| line.gsub(%r{.*pg_rails/}, '') }
+        bc.add_silencer { |line| /pg_logger/.match?(line) }
+        bc
+      end
     end
   end
 end
-
-# DEPRECATED
-# Muestro el caller[1] para saber dónde se llamó a la función deprecada
-# def deprecated(mensaje)
-#   titulo = Rainbow("  WARNING en #{caller[1]}").yellow.bold
-#   detalles = Rainbow("  #{mensaje}").yellow
-#   Rails.logger.warn("#{titulo}\n#{detalles}")
-#   Rollbar.warning("#{mensaje}\n\n#{caller.join("\n")}")
-# end
