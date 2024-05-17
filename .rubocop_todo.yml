@@ -17,7 +17,7 @@ Lint/SuppressedException:
 Metrics/AbcSize:
   Exclude:
     - 'pg_engine/app/controllers/concerns/pg_engine/resource.rb'
-    - 'pg_engine/app/decorators/pg_engine/base_decorator.rb'
+    - 'pg_engine/app/decorators/pg_engine/base_record_decorator.rb'
     - 'pg_engine/app/helpers/pg_engine/form_helper.rb'
     - 'pg_engine/app/helpers/pg_engine/index_helper.rb'
     - 'pg_engine/app/helpers/pg_engine/print_helper.rb'
@@ -89,7 +89,7 @@ Naming/VariableNumber:
 Rails/OutputSafety:
   Exclude:
     - 'pg_associable/app/inputs/pg_associable_input.rb'
-    - 'pg_engine/app/decorators/pg_engine/base_decorator.rb'
+    - 'pg_engine/app/decorators/pg_engine/base_record_decorator.rb'
     - 'pg_engine/app/helpers/pg_engine/index_helper.rb'
     - 'pg_engine/app/helpers/pg_engine/print_helper.rb'
     - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
@@ -101,7 +101,7 @@ Rails/OutputSafety:
 Layout/LineLength:
   Exclude:
     - 'pg_associable/app/inputs/pg_associable_input.rb'
-    - 'pg_engine/app/decorators/pg_engine/base_decorator.rb'
+    - 'pg_engine/app/decorators/pg_engine/base_record_decorator.rb'
     - 'pg_engine/app/lib/pg_engine/filtros_builder.rb'
     - 'pg_engine/config/simple_form/simple_form_bootstrap.rb'
     - 'pg_engine/lib/pg_engine/configuracion.rb'
