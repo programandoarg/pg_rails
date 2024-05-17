@@ -53,11 +53,9 @@ module PgEngine
 
       private
 
-      def handle_error_de_error(e)
-        if Rails.env.test?
-          puts Rainbow("ERROR al loguear error: #{e}").bold.red
-        end
-        Rails.logger.error("ERROR al loguear error: #{e}")
+      def handle_error_de_error(error)
+        puts Rainbow("ERROR al loguear error: #{error}").bold.red if Rails.env.test?
+        Rails.logger.error("ERROR al loguear error: #{error}")
       end
 
       # TODO: loguear time
