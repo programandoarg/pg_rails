@@ -9,6 +9,12 @@ module PgAssociable
     MAXIMO_PARA_SELECT = 10
     # TODO: si está entre 10 y 50, habilitar un buscador por js
 
+    def pg_associable_pro(atributo, options = {})
+      return input(atributo, options) if options[:disabled]
+
+      select_pro(atributo, options, nil)
+    end
+
     def pg_associable(atributo, options = {})
       return input(atributo, options) if options[:disabled]
 

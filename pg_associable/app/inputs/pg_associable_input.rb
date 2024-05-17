@@ -15,8 +15,8 @@ class PgAssociableInput < SimpleForm::Inputs::StringInput
 
   def input(wrapper_options = nil)
     atributo = attribute_name.to_s.gsub('_id', '')
-    url_modal = namespaced_path(clase_asociacion(atributo), prefix: :abrir_modal)
-    url_search = namespaced_path(clase_asociacion(atributo), prefix: :buscar)
+    url_modal = options[:modal_url] || namespaced_path(clase_asociacion(atributo), prefix: :abrir_modal)
+    url_search = options[:buscar_url] || namespaced_path(clase_asociacion(atributo), prefix: :buscar)
 
     input_html_options[:data] = { url_search:, url_modal: }
     input_html_options[:type] = 'text'
