@@ -38,6 +38,7 @@ task :test_prepare do
   system!("yarn build:css")
   system! "bundle exec rake app:assets:precompile"
   Rake::Task['rspec'].invoke
+  system! "bundle exec rake app:assets:clobber"
 end
 
 desc "Testear sin spring"
