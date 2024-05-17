@@ -8,7 +8,7 @@ module PgEngine
         object = object.target_object
       elsif object.is_a?(PgEngine::BaseRecord) &&
             object.decorator_class.present? &&
-            object.decorator_class < PgEngine::BaseRecordDecorator
+            object.decorator_class <= PgEngine::BaseRecordDecorator
         object = object.decorate.target_object
       end
       # byebug
