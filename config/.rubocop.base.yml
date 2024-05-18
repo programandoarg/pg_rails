@@ -71,6 +71,7 @@ AllCops:
   Exclude:
     - '*.gemspec'
     - 'bin/**/*'
+    - 'doc/**/*'
     - 'Capfile'
     - 'config.ru'
     - 'config/**/*'
