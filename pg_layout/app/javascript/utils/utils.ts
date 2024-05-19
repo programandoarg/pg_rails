@@ -21,6 +21,7 @@ export function numberWithDots (x) {
 export function flashMessage (message, flashType = 'warning', toast = false) {
   const el = document.createElement('div')
   const toastClasses = toast ? 'position-absolute pg-toast' : ''
+  // FIXME: los toasts que sean sticky o fixed. las alerts tambien?
   let iconClasses
   let alertClassSuffix
   switch (flashType) {
