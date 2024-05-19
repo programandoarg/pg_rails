@@ -45,7 +45,8 @@ export default class extends Controller {
 
     const input = this.element.querySelector('input[type=text]')
     this.originalPlaceholder = input.placeholder
-    if (input.value) {
+    const hiddenField = this.element.querySelector('input[type=hidden]')
+    if (hiddenField.value) {
       this.element.classList.add('filled')
       input.setAttribute('readonly', 'true')
     }
@@ -64,7 +65,7 @@ export default class extends Controller {
     }
     const doSearchBounce = debounce((force) => {
       this.doSearch(force)
-    }, 200)
+    }, 900)
 
     this.input.addEventListener('blur', () => {
       this.input.placeholder = this.originalPlaceholder
@@ -211,7 +212,7 @@ export default class extends Controller {
   buscando () {
     this.subWrapper.innerHTML = renderToStaticMarkup(
       <div className="resultados" tabIndex={-1}>
-        <div className="fst-italic text-secondary">Buscando...</div>
+        <div className="fst-italic text-secondary px-3">Buscando...</div>
       </div>
     )
   }

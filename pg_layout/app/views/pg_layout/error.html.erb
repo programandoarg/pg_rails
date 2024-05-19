@@ -1,2 +1,2 @@
-<%# Se renderea en el rescue de base_controller %>
-<%= render partial: 'pg_layout/error' %>
+<%# Para usar como respuesta con layout en controllers %>
+<%= render partial: 'pg_layout/error', locals: { error_msg: @error_msg } %>

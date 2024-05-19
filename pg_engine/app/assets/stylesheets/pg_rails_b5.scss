@@ -102,3 +102,13 @@ input[type=datetime-local], input[type=datetime] {
     padding: 0.725rem $alert-padding-x;
   }
 }
+
+// Switcher (ver switcher_controller.js)
+.switcher > * {
+  display: none;
+}
+
+// Flash
+#flash .alert {
+  box-shadow: 0px 9px 13px -3px rgba(0, 0, 0, 0.5);
+}

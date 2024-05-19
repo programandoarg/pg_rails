@@ -32,10 +32,17 @@ module PgEngine
     end
 
     def print_cuit(cuit_number)
-      return '' if cuit_number.blank?
-
-      str = cuit_number.to_s
-      "#{str[0..1]}-#{str[2..9]}-#{str[10]}"
+      str = cuit_number.to_s.gsub(/[^\d]/, '')
+      if str.length == 11
+        "#{str[0..1]}-#{str[2..9]}-#{str[10]}"
+      else
+        cuit_number
+      end
+    rescue StandardError => e
+      # :nocov:
+      pg_err e
+      cuit_number
+      # :nocov:
     end
 
     def dmy_time(date)
@@ -93,10 +100,10 @@ module PgEngine
       return if number.blank?
 
       # TODO!: testear
-      precision ||= if (number % 0.01).positive?
-                      3
+      precision ||= if (number % 1).positive?
+                      (number * 100 % 1).positive? ? 3 : 2
                     else
-                      (number % 1).positive? ? 2 : 0
+                      0
                     end
 
       "#{simbolo} #{number_with_precision(number, delimiter: '.', separator: ',',

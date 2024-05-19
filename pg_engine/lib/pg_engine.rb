@@ -49,6 +49,7 @@ require 'hashid/rails'
 require 'redis'
 require 'kredis'
 require 'mailgun-ruby'
+require 'pg_search'
 
 if Rails.env.local?
   require 'letter_opener'
