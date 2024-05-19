@@ -37,6 +37,9 @@ document.addEventListener('turbo:load', bindAndObserveToasts)
 document.addEventListener('turbo:render', bindAndObserveToasts)
 
 document.addEventListener('turbo:before-cache', () => {
+  document.querySelectorAll('#flash .alert').forEach((el) => {
+    el.remove()
+  })
   document.querySelectorAll('.offcanvas-backdrop').forEach((el) => {
     el.remove()
   })
