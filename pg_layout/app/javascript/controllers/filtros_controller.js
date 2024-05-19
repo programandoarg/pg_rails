@@ -13,7 +13,7 @@ export default class extends Controller {
   }
 
   cambiarTexto () {
-    if (this.element.getAttribute('aria-expanded') == 'true') {
+    if (this.element.getAttribute('aria-expanded') === 'true') {
       this.textEl.textContent = this.element.dataset.expandedText
     } else {
       this.textEl.textContent = this.originalText
