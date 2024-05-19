@@ -10,6 +10,14 @@ export default class extends Controller {
         }
       })
     })
+    this.element.querySelectorAll('.btn-check').forEach((slct) => {
+      slct.addEventListener('change', (e) => {
+        let invalid = e.target.closest('.is-invalid')
+        if (invalid) {
+          invalid.classList.remove('is-invalid')
+        }
+      })
+    })
     const errorTitle = this.element.querySelector('.error-title')
     if (errorTitle) {
       const invalidField = document.querySelector('.is-invalid')

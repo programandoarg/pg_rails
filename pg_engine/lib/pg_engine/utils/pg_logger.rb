@@ -5,6 +5,8 @@ require 'rainbow'
 # TODO: poder pasar blocks
 
 def pg_err(*args)
+  raise args.first if ENV.fetch('RAISE_ERRORS', false) && args.first.is_a?(Exception)
+  byebug if ENV.fetch('BYEBUG_ERRORS', false)
   pg_log(:error, *args)
 end
 

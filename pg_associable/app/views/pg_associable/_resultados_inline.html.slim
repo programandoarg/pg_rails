@@ -1,4 +1,4 @@
-/ # locals: (collection:, query:)
+/ # locals: (collection:, query:, field_name: nil)
 .resultados.inline tabindex="-1"
   ul.list-group.list-group-flush
     - if collection.any?
@@ -6,6 +6,6 @@
         = link_to object.to_s, 'javascript:void(0)',
                   class: 'list-group-item',
                   data: { action: 'asociable#selectItem',
-                          id: object.id, object: object.decorate.to_json }
+                          id: object.id, object: object.decorate.to_json, field_name: }
     - else
-      li.px-3.py-1 No hay resultados para "#{query}"
+      li.px-3.py-1 style="font-size: 0.85em" No hay resultados para "#{query}"
