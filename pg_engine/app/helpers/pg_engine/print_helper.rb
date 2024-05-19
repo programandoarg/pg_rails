@@ -32,13 +32,17 @@ module PgEngine
     end
 
     def print_cuit(cuit_number)
-      return '' if cuit_number.blank?
-
-      str = cuit_number.to_s
-      "#{str[0..1]}-#{str[2..9]}-#{str[10]}"
+      str = cuit_number.to_s.gsub(/[^\d]/, '')
+      if str.length == 11
+        "#{str[0..1]}-#{str[2..9]}-#{str[10]}"
+      else
+        cuit_number
+      end
     rescue StandardError => e
+      # :nocov:
       pg_err e
       cuit_number
+      # :nocov:
     end
 
     def dmy_time(date)
