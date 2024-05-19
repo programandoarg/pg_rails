@@ -102,3 +102,8 @@ input[type=datetime-local], input[type=datetime] {
     padding: 0.725rem $alert-padding-x;
   }
 }
+
+// Switcher (ver switcher_controller.js)
+.switcher > * {
+  display: none;
+}
