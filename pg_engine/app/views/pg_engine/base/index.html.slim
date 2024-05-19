@@ -2,11 +2,12 @@
 - content_for :actions do
   - if @filtros.present?
     button.btn.btn-sm.btn-outline-primary[type="button" data-bs-toggle="collapse"
-                                  data-bs-target="#filtros" aria-expanded="false"
-                                  aria-controls="filtros"]
+                                  data-bs-target="#filtros" aria-expanded="#{any_filter? ? 'true' : 'false'}"
+                                  aria-controls="filtros" data-controller="filtros" data-expanded-text="Ocultar filtros"]
       span.bi.bi-funnel-fill
-      span.d-none.d-sm-inline  Filtrar
-      <!-- FIXME: cuando se despliega, cambiar texto a "Ocultar filtros" -->
+      span.d-none.d-sm-inline
+        | &nbsp
+        span.text Filtrar
     .ms-1
   = @clase_modelo.new.decorate.new_link
 
@@ -21,6 +22,9 @@
           .col-auto
             = button_tag class: 'btn btn-sm btn-primary col-auto' do
               span.bi.bi-search
+              span.d-none.d-sm-inline
+                | &nbsp
+                span.text Buscar
           .col-auto
             = link_to namespaced_path(@clase_modelo, clean: true),
                       class: 'btn btn-sm btn-secondary col-auto' do
