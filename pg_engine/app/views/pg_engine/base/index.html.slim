@@ -1,9 +1,11 @@
 - content_for(:title, @clase_modelo.nombre_plural)
 - content_for :actions do
   - if @filtros.present?
-    button.btn.btn-sm.btn-outline-primary[type="button" data-bs-toggle="collapse"
-                                  data-bs-target="#filtros" aria-expanded="#{any_filter? ? 'true' : 'false'}"
-                                  aria-controls="filtros" data-controller="filtros" data-expanded-text="Ocultar filtros"]
+    button.btn.btn-sm.btn-outline-primary[
+      type="button" data-bs-toggle="collapse"
+      data-bs-target="#filtros" aria-expanded="#{any_filter? ? 'true' : 'false'}"
+      aria-controls="filtros" data-controller="filtros" data-expanded-text="Ocultar filtros"
+    ]
       span.bi.bi-funnel-fill
       span.d-none.d-sm-inline
         | &nbsp
