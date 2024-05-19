@@ -27,7 +27,7 @@ class PgFormBuilder < SimpleForm::FormBuilder
   end
 
   def mensajes_de_error
-    # TODO: poner data-turbo-temporary?
+    # TODO: quitar en before-cache?
     title = error_notification(message: mensaje, class: 'text-danger mb-2 error-title') if mensaje
 
     base_errors = object.errors[:base]
