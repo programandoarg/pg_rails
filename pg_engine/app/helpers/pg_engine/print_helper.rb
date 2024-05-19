@@ -36,6 +36,9 @@ module PgEngine
 
       str = cuit_number.to_s
       "#{str[0..1]}-#{str[2..9]}-#{str[10]}"
+    rescue StandardError => e
+      pg_err e
+      cuit_number
     end
 
     def dmy_time(date)
@@ -93,10 +96,10 @@ module PgEngine
       return if number.blank?
 
       # TODO!: testear
-      precision ||= if (number % 0.01).positive?
-                      3
+      precision ||= if (number % 1).positive?
+                      (number * 100 % 1).positive? ? 3 : 2
                     else
-                      (number % 1).positive? ? 2 : 0
+                      0
                     end
 
       "#{simbolo} #{number_with_precision(number, delimiter: '.', separator: ',',
