@@ -53,8 +53,7 @@ module PgEngine
       end
     end
 
-    # FIXME: default: text: ' Modificar', klass: 'btn-warning')
-    def edit_link(text: '', klass: 'btn-light')
+    def edit_link(text: ' Modificar', klass: 'btn-warning')
       return unless Pundit.policy!(Current.user, object).edit?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Modificar' do
