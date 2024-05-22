@@ -79,7 +79,6 @@ export default class extends Controller {
       if (this.savedInputState && !this.input.value) {
         this.input.value = this.savedInputState
       }
-      this.savedInputState = 
       this.input.select()
       if (this.input.value.length === 0) {
         this.escribiAlgo()
@@ -264,7 +263,7 @@ export default class extends Controller {
     const timerErrorId = setTimeout(() => {
       this.mostrarError()
     }, 15000)
-    let timeouts = `${timerBuscandoId},${timerErrorId}`
+    const timeouts = `${timerBuscandoId},${timerErrorId}`
 
     const elem = (
       <form method="post" action={this.input.dataset.urlSearch} data-turbo-stream="true">
@@ -285,11 +284,10 @@ export default class extends Controller {
     const textField = this.element.querySelector('input[type=text]')
     const hiddenField = this.element.querySelector('input[type=hidden]')
 
-    if (target && target.dataset.fieldName)
-      hiddenField.name = target.dataset.fieldName
+    if (target && target.dataset.fieldName) { hiddenField.name = target.dataset.fieldName }
 
     if (target) {
-      let object = JSON.parse(target.dataset.object)
+      const object = JSON.parse(target.dataset.object)
       hiddenField.value = object.id
       textField.value = object.to_s
       textField.setAttribute('readonly', 'true')

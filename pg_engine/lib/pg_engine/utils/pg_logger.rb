@@ -6,7 +6,9 @@ require 'rainbow'
 
 def pg_err(*args)
   raise args.first if ENV.fetch('RAISE_ERRORS', false) && args.first.is_a?(Exception)
-  byebug if ENV.fetch('BYEBUG_ERRORS', false)
+
+  byebug if ENV.fetch('BYEBUG_ERRORS', false) # rubocop:disable Lint/Debugger
+
   pg_log(:error, *args)
 end
 

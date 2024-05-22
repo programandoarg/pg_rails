@@ -12,7 +12,7 @@ export default class extends Controller {
     })
     this.element.querySelectorAll('.btn-check').forEach((slct) => {
       slct.addEventListener('change', (e) => {
-        let invalid = e.target.closest('.is-invalid')
+        const invalid = e.target.closest('.is-invalid')
         if (invalid) {
           invalid.classList.remove('is-invalid')
         }
