@@ -265,7 +265,7 @@ export default class extends Controller {
       this.buscando()
     }, 200)
     // console.log(`setTimeOut ${timerBuscandoId}`)
-    document.addEventListener('turbo:before-stream-render', (i) => {
+    document.addEventListener('turbo:before-stream-render', () => {
       // console.log(`clear before stream render ${timerBuscandoId}`)
       clearTimeout(timerBuscandoId)
     }, { once: true })
@@ -290,6 +290,7 @@ export default class extends Controller {
   }
 
   completarCampo (target) {
+    // FIXME: savedInputState = null
     const textField = this.element.querySelector('input[type=text]')
     const hiddenField = this.element.querySelector('input[type=hidden]')
 

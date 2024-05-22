@@ -20,6 +20,9 @@ module PgEngine
     end
 
     initializer 'configurar_pg_rails' do
+      # Ensure required env variables are set
+      ENV.fetch('DEFAULT_MAIL_FROM')
+      ENV.fetch('DEFAULT_MAIL_FROM_NAME')
       # SimpleForm
       require "#{PgEngine::Engine.root}/config/simple_form/simple_form"
       require "#{PgEngine::Engine.root}/config/simple_form/simple_form_bootstrap"

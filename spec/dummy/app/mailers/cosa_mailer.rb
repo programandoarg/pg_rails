@@ -1,7 +1,7 @@
 class CosaMailer < ApplicationMailer
   def cosa
     @cosa = params[:cosa]
-    @email = Email.create(
+    @email_object = Email.create(
       from_name: @cosa.nombre,
       from_address: 'testing@example.com.ar',
       to: 'example@example.org',
@@ -9,7 +9,7 @@ class CosaMailer < ApplicationMailer
       associated: @cosa
     )
 
-    raise PgEngine::BaseMailer::MailNotDelivered, 'falló el mailer' if params[:raise_error]
+    raise PgEngine::BaseMailer::MailNotDelivered, 'falló el mailer' if params[:should_raise_error]
 
     @body = <<~DOC
       multi
@@ -23,5 +23,15 @@ class CosaMailer < ApplicationMailer
     attachments["cosa_#{@cosa.id}.json"] = @cosa.to_json
 
     mail
+  end
+
+  def cosa_sin_email_object(to)
+    raise PgEngine::BaseMailer::MailNotDelivered, 'falló el mailer' if params[:should_raise_error]
+
+    if to.present?
+      mail(to:)
+    else
+      mail
+    end
   end
 end

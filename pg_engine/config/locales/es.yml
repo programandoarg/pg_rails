@@ -77,6 +77,28 @@ es:
         sign_up: Crear una cuenta
         forgot_your_password: ¿Olvidaste tu contraseña?
         didn_t_receive_confirmation_instructions: ¿No recibiste las instrucciones para confirmar tu cuenta?
+    mailer:
+      confirmation_instructions:
+        action: Confirmá tu cuenta
+        greeting: "Hola %{recipient}"
+        instruction: 'por favor, confirmá tu cuenta haciendo click en el siguiente enlace:'
+        subject: Confirmación de cuenta
+      email_changed:
+        greeting: "Hola %{recipient}"
+        message: Estamos contactando contigo para notificarte que tu email ha sido cambiado a %{email}.
+        message_unconfirmed: Nos estamos contactando contigo para notificarte que tu correo se está cambiando a %{email}.
+        subject: Email cambiado
+      password_change:
+        greeting: "Hola %{recipient}"
+        message: Lo estamos contactando para notificarle que su contraseña ha sido cambiada.
+        subject: Contraseña cambiada
+      reset_password_instructions:
+        action: Cambiar mi contraseña
+        greeting: "Hola %{recipient}"
+        instruction: "Para cambiar tu contraseña ingresá al siguiente link:"
+        instruction_2: Si no solicitaste cambiar tu contraseña, podés ignorar este correo.
+        instruction_3: Tu contraseña no será cambiada hasta que accedas al link y crees una nueva.
+        subject: Recuperación de contraseña
   activerecord:
     attributes:
       user:

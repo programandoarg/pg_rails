@@ -6,18 +6,18 @@ module PgEngine
       message_id = message.message_id
       mailer = message.delivery_handler.to_s
       status = get_status(message)
-      if message['email'].present?
-        email = message['email'].unparsed_value
-        email.update_columns(message_id:, mailer:, status:) # rubocop:disable Rails/SkipsModelValidations
+      if message['email_object'].present?
+        email_object = message['email_object'].unparsed_value
+        email_object.update_columns(message_id:, mailer:, status:) # rubocop:disable Rails/SkipsModelValidations
       else
         to = [message.to].flatten.join(', ')
         from = [message.from].flatten.join(', ')
-        email = Email.create!(message_id:, subject: message.subject, to:, mailer:, status:, from_address: from,
-                              from_name: '')
+        email_object = Email.create!(message_id:, subject: message.subject, to:, mailer:, status:, from_address: from,
+                                     from_name: '')
       end
-      email.encoded_eml.attach({ io: StringIO.new(message.encoded), filename: "email-#{email.id}.eml" })
+      email_object.encoded_eml.attach({ io: StringIO.new(message.encoded), filename: "email-#{email_object.id}.eml" })
     rescue StandardError => e
-      pg_warn e, :error
+      pg_err e
     end
 
     def self.get_status(message)
