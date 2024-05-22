@@ -4,16 +4,16 @@ module PgEngine
 
     before_action { @email_object = params[:email_object] }
 
-    default from: -> (_mailer) {
-              if @email_object.present?
-                email_address_with_name(@email_object.from_address, @email_object.from_name)
-              else
-                email_address_with_name(ENV.fetch('DEFAULT_MAIL_FROM'), ENV.fetch('DEFAULT_MAIL_FROM_NAME'))
-              end
-            },
-            reply_to: -> (_mailer) { @email_object.reply_to if @email_object.present? },
-            subject: -> (_mailer) { @email_object.subject if @email_object.present? },
-            to: -> (_mailer) { @email_object.to if @email_object.present? }
+    default from: lambda { |_mailer|
+                    if @email_object.present?
+                      email_address_with_name(@email_object.from_address, @email_object.from_name)
+                    else
+                      email_address_with_name(ENV.fetch('DEFAULT_MAIL_FROM'), ENV.fetch('DEFAULT_MAIL_FROM_NAME'))
+                    end
+                  },
+            reply_to: ->(_mailer) { @email_object.reply_to if @email_object.present? },
+            subject: ->(_mailer) { @email_object.subject if @email_object.present? },
+            to: ->(_mailer) { @email_object.to if @email_object.present? }
 
     layout 'pg_layout/mailer'
 
