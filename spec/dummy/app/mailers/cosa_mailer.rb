@@ -1,7 +1,7 @@
 class CosaMailer < ApplicationMailer
   def cosa
     @cosa = params[:cosa]
-    @email = Email.create(
+    @email_object = Email.create(
       from_name: @cosa.nombre,
       from_address: 'testing@example.com.ar',
       to: 'example@example.org',
