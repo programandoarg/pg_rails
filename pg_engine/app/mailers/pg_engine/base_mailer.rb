@@ -35,7 +35,7 @@ module PgEngine
         #   'tag' => email.tags,
         #   'tracking-opens' => true
         # }
-        message['email'] = @email_object if @email_object.present?
+        message['email_object'] = @email_object if @email_object.present?
       end
     end
   end
