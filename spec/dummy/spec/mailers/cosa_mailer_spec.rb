@@ -1,11 +1,57 @@
 require 'rails_helper'
 
 RSpec.describe CosaMailer do
+  describe 'cosa_sin_email_object' do
+    subject { mail.deliver }
+
+    let(:should_raise_error) { nil }
+    let(:to) { 'fake@fake.com' }
+
+    let!(:mail) do
+      described_class.with(should_raise_error:).cosa_sin_email_object(to)
+    end
+
+    it 'renders the body' do
+      subject
+
+      expect(mail.body.encoded).to include 'Sin email object'
+    end
+
+    context 'cuando falla el observer' do
+      before do
+        allow_any_instance_of(Email).to receive(:encoded_eml).and_raise(StandardError)
+      end
+
+      it 'observed' do
+        expect { subject }.to change(Email, :count).by(1)
+      end
+    end
+
+    context 'cuando falla el mailer' do
+      let(:should_raise_error) { true }
+
+      it 'no se crea ningún email' do
+        # Estaría bueno que quede un registro, igual
+        subject
+
+        expect(Email.count).to eq 0
+      end
+    end
+
+    context 'cuando el "to" está vacío' do
+      let(:to) { nil }
+
+      it 'tira error' do
+        expect { subject }.to raise_error(ArgumentError)
+      end
+    end
+  end
+
   describe 'cosa' do
     let(:cosa) { create :cosa }
-    let(:raise_error) { nil }
+    let(:should_raise_error) { nil }
     let!(:mail) do
-      described_class.with(cosa:, raise_error:).cosa
+      described_class.with(cosa:, should_raise_error:).cosa
     end
 
     # it 'renders the headers' do
@@ -44,7 +90,7 @@ RSpec.describe CosaMailer do
       end
 
       context 'cuando falla el mailer' do
-        let(:raise_error) { true }
+        let(:should_raise_error) { true }
 
         it 'marca el mail como no_enviado' do
           subject
