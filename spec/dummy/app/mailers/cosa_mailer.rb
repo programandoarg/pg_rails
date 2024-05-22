@@ -29,7 +29,7 @@ class CosaMailer < ApplicationMailer
     raise PgEngine::BaseMailer::MailNotDelivered, 'falló el mailer' if params[:should_raise_error]
 
     if to.present?
-      mail(to: to)
+      mail(to:)
     else
       mail
     end
