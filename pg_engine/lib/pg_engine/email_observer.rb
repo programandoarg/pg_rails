@@ -13,7 +13,7 @@ module PgEngine
         to = [message.to].flatten.join(', ')
         from = [message.from].flatten.join(', ')
         email_object = Email.create!(message_id:, subject: message.subject, to:, mailer:, status:, from_address: from,
-                              from_name: '')
+                                     from_name: '')
       end
       email_object.encoded_eml.attach({ io: StringIO.new(message.encoded), filename: "email-#{email_object.id}.eml" })
     rescue StandardError => e
