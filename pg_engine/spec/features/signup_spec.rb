@@ -23,7 +23,7 @@ describe 'Al Registrarse', :js do
         fill_in 'user_password', with: 'admin123'
         fill_in 'user_password_confirmation', with: 'admin123'
         instance_exec('input[type=submit]', &find_scroll).click
-        expect(page).to have_text('Se ha enviado un mensaje con un enlace')
+        expect(page).to have_text('Te enviamos un correo electrónico con instrucciones')
       end
     end
 
