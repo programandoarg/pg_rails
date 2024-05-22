@@ -8,6 +8,12 @@ Lint/UselessAssignment:
   Exclude:
     - "**/*.slim*"
 
+RSpec/Focus:
+  Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
 FactoryBot/AssociationStyle:
   Enabled: false
 
