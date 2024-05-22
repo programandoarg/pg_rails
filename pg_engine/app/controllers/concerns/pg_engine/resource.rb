@@ -92,7 +92,6 @@ module PgEngine
           if params[:asociable]
             format.turbo_stream do
               render turbo_stream:
-                # rubocop:disable Rails/SkipsModelValidations
                 turbo_stream.update_all('.modal.show .pg-associable-form', <<~HTML
                   <div data-modal-target="response" data-response='#{object.decorate.to_json}'></div>
                 HTML
