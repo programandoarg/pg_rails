@@ -97,13 +97,7 @@ task :frepush do
     system "git commit -m \"[unfocus] #{changes}\""
   end
 
-  system "bundle exec rubocop -a"
-  system 'npx --no-install eslint --fix .'
-  if `git status -s` != ''
-    changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
-    system 'git add .'
-    system "git commit -m \"[autolint] #{changes}\""
-  end
+  Rake::Task['static_analysis'].invoke
 
   playchord('success')
 rescue
