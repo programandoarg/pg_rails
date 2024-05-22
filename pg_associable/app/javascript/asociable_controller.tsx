@@ -290,6 +290,7 @@ export default class extends Controller {
   }
 
   completarCampo (target) {
+    // FIXME: savedInputState = null
     const textField = this.element.querySelector('input[type=text]')
     const hiddenField = this.element.querySelector('input[type=hidden]')
 
