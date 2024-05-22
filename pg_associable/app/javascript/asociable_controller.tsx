@@ -172,15 +172,18 @@ export default class extends Controller {
   }
 
   mostrarError () {
-    // TODO: link a contacto
-    this.subWrapper.innerHTML = renderToStaticMarkup(
-      <div className="resultados" tabIndex={-1}>
-        <div className="text-center p-2 text-danger d-flex align-items-center">
-          <i className="bi-exclamation-circle me-2"></i>
-          Ocurrió algo inesperado. Por favor, intentá nuevamente o ponete en contacto con nosotros.
+    if (this.element.querySelector('.resultados .spinner-border')) {
+      Rollbar.error('Time out de asociable.js')
+      // TODO: link a contacto
+      this.subWrapper.innerHTML = renderToStaticMarkup(
+        <div className="resultados" tabIndex={-1}>
+          <div className="text-center p-2 text-danger d-flex align-items-center">
+            <i className="bi-exclamation-circle me-2"></i>
+            Ocurrió algo inesperado. Por favor, intentá nuevamente o ponete en contacto con nosotros.
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 
   setMaxHeight () {
@@ -258,8 +261,14 @@ export default class extends Controller {
     this.lastValue = this.input.value
 
     const timerBuscandoId = setTimeout(() => {
+      // console.log(`timed out ${timerBuscandoId}`)
       this.buscando()
     }, 200)
+    // console.log(`setTimeOut ${timerBuscandoId}`)
+    document.addEventListener('turbo:before-stream-render', (i) => {
+      // console.log(`clear before stream render ${timerBuscandoId}`)
+      clearTimeout(timerBuscandoId)
+    }, { once: true })
     const timerErrorId = setTimeout(() => {
       this.mostrarError()
     }, 15000)
