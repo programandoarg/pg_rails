@@ -1,12 +1,7 @@
-# FIXME: check on load env presents
-# DEFAULT_MAIL_FROM_NAME
-# DEFAULT_MAIL_FROM
-
 module PgEngine
   class BaseMailer < ActionMailer::Base # rubocop:disable Rails/ApplicationMailer
     class MailNotDelivered < StandardError; end
 
-    # FIXME: usar otra key
     before_action { @email_object = params[:email_object] }
 
     default from: -> (_mailer) {
