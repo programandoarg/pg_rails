@@ -5,7 +5,13 @@ require 'rainbow'
 # TODO: poder pasar blocks
 
 def pg_err(*args)
-  raise args.first if ENV.fetch('RAISE_ERRORS', false) && args.first.is_a?(Exception)
+  if ENV.fetch('RAISE_ERRORS', false)
+    if args.first.is_a?(Exception)
+      raise args.first
+    else
+      raise StandardError, args
+    end
+  end
 
   byebug if ENV.fetch('BYEBUG_ERRORS', false) # rubocop:disable Lint/Debugger
 
