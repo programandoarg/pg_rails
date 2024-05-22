@@ -36,6 +36,8 @@ class Email < ApplicationRecord
   include Hashid::Rails
   audited
 
+  attr_accessor :require_body_input
+
   has_one_attached :encoded_eml
 
   belongs_to :associated, polymorphic: true, optional: true
@@ -60,6 +62,9 @@ class Email < ApplicationRecord
   validates :subject, length: { within: 0..200 }
   validates :from_name, length: { within: 0..80 }
   validates :to, length: { within: 3..200 }
+
+  validates :body_input, length: { minimum: 10 }, if: -> { require_body_input }
+  validates :body_input, presence: true, if: -> { require_body_input }
 
   validates :from_name, :subject, :to,
             format: { with: /\A[^\n<>&]*\z/, message: 'contiene caracteres inválidos' }

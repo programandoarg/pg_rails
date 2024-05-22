@@ -68,8 +68,8 @@ describe PgEngine::Resource do
       let(:param) { :categoria_de_cosa }
 
       before do
-        cosa_pri.categoria_de_cosa.update_column(:nombre, 'a') # rubocop:disable Rails/SkipsModelValidations
-        cosa_ult.categoria_de_cosa.update_column(:nombre, 'z') # rubocop:disable Rails/SkipsModelValidations
+        cosa_pri.categoria_de_cosa.update_column(:nombre, 'a')
+        cosa_ult.categoria_de_cosa.update_column(:nombre, 'z')
       end
 
       context 'si es asc' do

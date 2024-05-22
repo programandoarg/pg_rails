@@ -91,7 +91,7 @@ module PgEngine
 
     protected
 
-    def not_authorized
+    def not_authorized(_arg_required_for_active_admin)
       respond_to do |format|
         format.json do
           render json: { error: 'Acceso no autorizado' },

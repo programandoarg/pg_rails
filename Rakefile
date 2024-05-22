@@ -78,6 +78,32 @@ rescue
   playchord('failed')
 end
 
+desc 'Fast pre push tasks'
+task :frepush do
+  if `git status -s` != ''
+    changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
+    system 'git add .'
+    system "git commit -m \"[autocommit] #{changes}\""
+  end
+
+  focuss = ENV['ALL'] ? '' : '-t focus'
+  system! "LCOV=true DRIVER=selenium_chrome_headless_iphone bundle exec rspec --fail-fast #{focuss}"
+  system! "undercover --compare origin/master"
+  system! "rubocop --only RSpec/Focus -A"
+
+  if `git status -s` != ''
+    changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
+    system 'git add .'
+    system "git commit -m \"[unfocus] #{changes}\""
+  end
+
+  Rake::Task['static_analysis'].invoke
+
+  playchord('success')
+rescue
+  playchord('failed')
+end
+
 desc 'Release all'
 task :release_all do
   Rake::Task['release'].invoke

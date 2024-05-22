@@ -21,9 +21,7 @@ module PgEngine
 
     rescue_from StandardError do |err|
       pg_err err
-      if @email_object.present?
-        @email_object.update_columns(status: :failed, status_detail: err.to_s) # rubocop:disable Rails/SkipsModelValidations
-      end
+      @email_object.update_columns(status: :failed, status_detail: err.to_s) if @email_object.present?
     end
 
     protected

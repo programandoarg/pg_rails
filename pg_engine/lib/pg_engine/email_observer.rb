@@ -8,7 +8,7 @@ module PgEngine
       status = get_status(message)
       if message['email_object'].present?
         email_object = message['email_object'].unparsed_value
-        email_object.update_columns(message_id:, mailer:, status:) # rubocop:disable Rails/SkipsModelValidations
+        email_object.update_columns(message_id:, mailer:, status:)
       else
         to = [message.to].flatten.join(', ')
         from = [message.from].flatten.join(', ')

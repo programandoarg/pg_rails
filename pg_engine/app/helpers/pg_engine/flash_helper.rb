@@ -6,7 +6,6 @@ module PgEngine
 
     def render_turbo_stream_title
       title = [breadcrumbs.last&.name, I18n.t('app_name')].compact.join(' - ')
-      # rubocop:disable Rails/SkipsModelValidations
       turbo_stream.update_all 'title', title
       # rubocop:enable Rails/SkipsModelValidations
     end

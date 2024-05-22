@@ -65,6 +65,7 @@ es:
       timeout: ''
       unauthenticated: ''
     registrations:
+      signed_up_but_unconfirmed: Te enviamos un correo electrónico con instrucciones para confirmar tu cuenta.
       new:
         sign_up: Crear una cuenta
     passwords:
