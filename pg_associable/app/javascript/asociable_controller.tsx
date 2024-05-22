@@ -172,6 +172,18 @@ export default class extends Controller {
     )
   }
 
+  mostrarError () {
+    // TODO: link a contacto
+    this.subWrapper.innerHTML = renderToStaticMarkup(
+      <div className="resultados" tabIndex={-1}>
+        <div className="text-center p-2 text-danger d-flex align-items-center">
+          <i className="bi-exclamation-circle me-2"></i>
+          Ocurrió algo inesperado. Por favor, intentá nuevamente o ponete en contacto con nosotros.
+        </div>
+      </div>
+    )
+  }
+
   setMaxHeight () {
     let maxHeight
     if (!this.element.closest('.modal')) {
@@ -218,10 +230,9 @@ export default class extends Controller {
   }
 
   buscando () {
-    // FIXME: spinner
     this.subWrapper.innerHTML = renderToStaticMarkup(
-      <div className="resultados" tabIndex={-1}>
-        <div className="fst-italic text-secondary px-3">Buscando...</div>
+      <div className="resultados text-center p-2" tabIndex={-1}>
+        <span className="spinner-border" role="status"></span>
       </div>
     )
   }
@@ -247,16 +258,19 @@ export default class extends Controller {
     }
     this.lastValue = this.input.value
 
-    this.buscando()
-    // TODO: hacer bien el clearTimeout con la respuesta del server, ya sea por turbo stream o por cable ready
-    // IMPORTANTE: además, un timeout por si nunca llega la respuesta
-    // const timerId = setTimeout(() => {
-    //   this.buscando()
-    // }, 200)
+    const timerBuscandoId = setTimeout(() => {
+      this.buscando()
+    }, 200)
+    const timerErrorId = setTimeout(() => {
+      this.mostrarError()
+    }, 15000)
+    let timeouts = `${timerBuscandoId},${timerErrorId}`
+
     const elem = (
       <form method="post" action={this.input.dataset.urlSearch} data-turbo-stream="true">
         <input type="hidden" name="id" value={this.elemId} />
         <input type="hidden" name="query" value={this.input.value} />
+        <input type="hidden" name="timeout_id" value={timeouts} />
         <input type="hidden" name="puede_crear" value={this.element.dataset.puedeCrear} />
       </form>
     )

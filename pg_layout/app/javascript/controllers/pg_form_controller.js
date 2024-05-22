@@ -25,7 +25,7 @@ export default class extends Controller {
       if (!invalidField && !baseAlert) {
         const errorTitle = this.element.querySelector('.error-title')
         // TODO!: testear con capybara
-        errorTitle.innerText = 'Lo lamentamos mucho pero ocurrió algo inesperado. Por favor, intentá nuevamente o ponete en contacto con nosotros.'
+        errorTitle.innerText = 'Ocurrió algo inesperado. Por favor, intentá nuevamente o ponete en contacto con nosotros.'
         // TODO!: link a contacto
         const form = this.element.querySelector('form')
         const errorMsg = `${form.id} - ${form.action} - ${form.dataset.errors}`

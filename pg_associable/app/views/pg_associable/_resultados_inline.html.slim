@@ -1,5 +1,7 @@
-/ # locals: (collection:, query:, field_name: nil)
+/ # locals: (collection:, query:, field_name: nil, timeout_id: nil)
 .resultados.inline tabindex="-1"
+  - if timeout_id.present?
+    div data-controller="clear-timeout" data-timeout-id="#{timeout_id}"
   ul.list-group.list-group-flush
     - if collection.any?
       - collection.each do |object|
