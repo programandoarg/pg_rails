@@ -17,7 +17,7 @@ module PgEngine
       end
       email.encoded_eml.attach({ io: StringIO.new(message.encoded), filename: "email-#{email.id}.eml" })
     rescue StandardError => e
-      pg_warn e, :error
+      pg_err e
     end
 
     def self.get_status(message)
