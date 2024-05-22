@@ -10,6 +10,7 @@ export default class extends Controller {
   elemId = null
   input = null
   originalPlaceholder = null
+  savedInputState = null
 
   connect () {
     // ID único para identificar el campo y el modal
@@ -69,8 +70,15 @@ export default class extends Controller {
 
     this.input.addEventListener('blur', () => {
       this.input.placeholder = this.originalPlaceholder
+      if (!this.element.classList.contains('filled')) {
+        this.savedInputState = this.input.value
+        this.input.value = null
+      }
     })
     this.input.onfocus = () => {
+      if (this.savedInputState && !this.input.value) {
+        this.input.value = this.savedInputState
+      }
       this.input.select()
       if (this.input.value.length === 0) {
         this.escribiAlgo()
@@ -98,7 +106,6 @@ export default class extends Controller {
       }
     }
     this.input.onkeydown = (e) => {
-      console.log(e.keyCode)
       if (e.keyCode === 13) { // Enter
         e.preventDefault()
         return false
@@ -164,6 +171,18 @@ export default class extends Controller {
     )
   }
 
+  mostrarError () {
+    // TODO: link a contacto
+    this.subWrapper.innerHTML = renderToStaticMarkup(
+      <div className="resultados" tabIndex={-1}>
+        <div className="text-center p-2 text-danger d-flex align-items-center">
+          <i className="bi-exclamation-circle me-2"></i>
+          Ocurrió algo inesperado. Por favor, intentá nuevamente o ponete en contacto con nosotros.
+        </div>
+      </div>
+    )
+  }
+
   setMaxHeight () {
     let maxHeight
     if (!this.element.closest('.modal')) {
@@ -211,15 +230,15 @@ export default class extends Controller {
 
   buscando () {
     this.subWrapper.innerHTML = renderToStaticMarkup(
-      <div className="resultados" tabIndex={-1}>
-        <div className="fst-italic text-secondary px-3">Buscando...</div>
+      <div className="resultados text-center p-2" tabIndex={-1}>
+        <span className="spinner-border" role="status"></span>
       </div>
     )
   }
 
   selectItem (e) {
     if (e.target.dataset.object) {
-      this.completarCampo(JSON.parse(e.target.dataset.object))
+      this.completarCampo(e.target)
     } else {
       this.completarCampo(null)
     }
@@ -238,16 +257,19 @@ export default class extends Controller {
     }
     this.lastValue = this.input.value
 
-    this.buscando()
-    // TODO: hacer bien el clearTimeout con la respuesta del server, ya sea por turbo stream o por cable ready
-    // IMPORTANTE: además, un timeout por si nunca llega la respuesta
-    // const timerId = setTimeout(() => {
-    //   this.buscando()
-    // }, 200)
+    const timerBuscandoId = setTimeout(() => {
+      this.buscando()
+    }, 200)
+    const timerErrorId = setTimeout(() => {
+      this.mostrarError()
+    }, 15000)
+    const timeouts = `${timerBuscandoId},${timerErrorId}`
+
     const elem = (
       <form method="post" action={this.input.dataset.urlSearch} data-turbo-stream="true">
         <input type="hidden" name="id" value={this.elemId} />
         <input type="hidden" name="query" value={this.input.value} />
+        <input type="hidden" name="timeout_id" value={timeouts} />
         <input type="hidden" name="puede_crear" value={this.element.dataset.puedeCrear} />
       </form>
     )
@@ -258,10 +280,14 @@ export default class extends Controller {
     form.remove()
   }
 
-  completarCampo (object) {
+  completarCampo (target) {
     const textField = this.element.querySelector('input[type=text]')
     const hiddenField = this.element.querySelector('input[type=hidden]')
-    if (object) {
+
+    if (target && target.dataset.fieldName) { hiddenField.name = target.dataset.fieldName }
+
+    if (target) {
+      const object = JSON.parse(target.dataset.object)
       hiddenField.value = object.id
       textField.value = object.to_s
       textField.setAttribute('readonly', 'true')

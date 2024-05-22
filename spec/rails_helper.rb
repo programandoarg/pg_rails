@@ -1,10 +1,21 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 
 require 'simplecov'
+
+if ENV.fetch('LCOV', false)
+  require 'simplecov-lcov'
+  require 'undercover'
+
+  SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+  SimpleCov.formatter = SimpleCov::Formatter::LcovFormatter
+end
+
 SimpleCov.start 'rails' do
   add_filter do |src|
     src.filename =~ /pg_engine\/app\/admin/
   end
+  add_filter %r{^/app/admin/}
+  enable_coverage(:branch) # Report branch coverage to trigger branch-level undercover warnings
 end
 
 require 'spec_helper'
