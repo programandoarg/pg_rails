@@ -1,0 +1,16 @@
+/ # locals: (object: nil, asociable: false)
+
+div style="max-width: 22em" data-controller="pg_form"
+  = pg_form_for(@email_log || object, asociable:) do |f|
+    = f.mensajes_de_error
+
+    = hidden_field_tag :asociable, true if asociable
+    = f.pg_associable :email
+    = f.input :log_id
+    = f.input :event
+    = f.input :log_level
+    = f.input :severity
+    = f.input :timestamp
+    = f.input :message_id
+    .mt-2
+    = f.button :submit

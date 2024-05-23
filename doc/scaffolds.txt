@@ -60,3 +60,18 @@ be rails g pg_scaffold \
       #  nombre     :string
       #  status     :integer
       #  token      :string
+
+
+
+be rails g pg_scaffold \
+  admin/email_log \
+  email:references \
+  log_id:string \
+  event:string \
+  log_level:string \
+  severity:string \
+  timestamp:bigint \
+  message_id:string \
+  --model-name=email_log \
+  --activeadmin \
+  --no-trackeo-de-usuarios
