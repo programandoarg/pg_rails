@@ -21,7 +21,8 @@ module PgEngine
     end
 
     def self.get_status(message)
-      message.perform_deliveries ? :sent : :blocked
+      # TODO: habría que dar algún detalle de por uqé se bloqueó
+      message.perform_deliveries ? :sent : :failed
     end
   end
 end
