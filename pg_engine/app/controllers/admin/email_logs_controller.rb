@@ -16,7 +16,9 @@ module Admin
 
     before_action do
       @actions = [
-        ["Mailgun sync: #{ENV['MAILGUN_DOMAIN']}", mailgun_sync_admin_email_logs_path, 'data-turbo-method': :post, class: 'me-2 btn btn-primary btn-sm']
+        ["Mailgun sync: #{ENV.fetch('MAILGUN_DOMAIN', nil)}", mailgun_sync_admin_email_logs_path, {
+          'data-turbo-method': :post, class: 'me-2 btn btn-primary btn-sm'
+        }]
       ]
     end
 
