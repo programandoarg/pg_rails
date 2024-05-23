@@ -18,7 +18,8 @@ module PgEngine
 
         loop do
           get = "#{domain}/events?begin=#{current.to_i}&end=#{(current + range).to_i}&limit=300"
-          result = mg_client.get(get).to_h!
+          result = mg_client.get(get)
+          result.to_h!
           items.push(*result.body['items'])
           current -= range
 
