@@ -28,22 +28,34 @@ module PgEngine
           break if current < start_time
         end
 
-        FileUtils.mkdir_p(dir)
+        FileUtils.mkdir_p(inbox_dir)
 
-        File.write("#{dir}/#{domain}-#{Time.zone.now.strftime('%Y-%m-%d_%H.%M.%S')}.json", items.flatten.to_json)
+        File.write("#{inbox_dir}/#{domain}_#{Time.zone.now.strftime('%Y-%m-%d_%H.%M.%S')}.json", items.flatten.to_json)
       end
 
-      def self.dir
-        @dir ||= if Rails.env.test?
-                   File.expand_path 'tmp/mailgun_logs', Rails.root
-                 else
-                   File.expand_path 'log/mailgun_logs', Rails.root
-                 end
+      def self.base_dir
+        @base_dir ||= if Rails.env.test?
+                        File.expand_path 'tmp/mailgun_logs', Rails.root
+                      else
+                        File.expand_path 'log/mailgun_logs', Rails.root
+                      end
+      end
+
+      def self.inbox_dir
+        @inbox_dir ||= File.expand_path 'inbox/', base_dir
+      end
+
+      def self.processed_dir
+        @processed_dir ||= File.expand_path 'processed/', base_dir
+      end
+
+      def self.digest_dir
+        @digest_dir ||= File.expand_path 'digest/', base_dir
       end
 
       def self.sync_redis
         json = []
-        Dir["#{dir}/*.json"].each do |file|
+        Dir["#{inbox_dir}/*.json"].each do |file|
           json.push(*JSON.parse(File.read(file)))
         end
 
@@ -65,6 +77,18 @@ module PgEngine
             pg_warn "No existe el mail con message_id = #{message_id}", :warn
           end
         end
+      end
+
+      def self.digest_all
+        FileUtils.mkdir_p(processed_dir)
+        FileUtils.mkdir_p(digest_dir)
+        Dir["#{inbox_dir}/*.json"].each do |file|
+          digest(file)
+        end
+      end
+
+      def self.digest(file)
+        FileUtils.mv(file, processed_dir)
       end
     end
   end
