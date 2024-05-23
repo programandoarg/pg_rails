@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-fdescribe Public::WebhooksController do
+describe Public::WebhooksController do
   describe '#mailgun' do
     subject do
       post :mailgun, body:, as: :json
