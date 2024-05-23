@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'fileutils'
 
 describe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_download',
-                                             match_requests_on: %i[method host] } do
+                                            match_requests_on: %i[method host] } do
   let(:instancia) { described_class }
 
   describe '#download' do
