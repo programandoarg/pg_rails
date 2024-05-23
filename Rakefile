@@ -78,6 +78,18 @@ rescue
   playchord('failed')
 end
 
+desc 'Unfocus specs'
+task :unfocus do
+  system! "rubocop --only RSpec/Focus -A"
+  if `git status -s` != ''
+    changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
+    system 'git add .'
+    system "git commit -m \"[unfocus] #{changes}\""
+  end
+
+  Rake::Task['static_analysis'].invoke
+end
+
 desc 'Fast pre push tasks'
 task :frepush do
   if `git status -s` != ''
