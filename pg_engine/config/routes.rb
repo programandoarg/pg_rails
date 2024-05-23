@@ -107,6 +107,17 @@ end
 #                                              PATCH  /a/emails/:id(.:format)                                                                           admin/emails#update
 #                                              PUT    /a/emails/:id(.:format)                                                                           admin/emails#update
 #                                              DELETE /a/emails/:id(.:format)                                                                           admin/emails#destroy
+#                 abrir_modal_admin_email_logs GET    /a/email_logs/abrir_modal(.:format)                                                               admin/email_logs#abrir_modal
+#                      buscar_admin_email_logs POST   /a/email_logs/buscar(.:format)                                                                    admin/email_logs#buscar
+#                mailgun_sync_admin_email_logs POST   /a/email_logs/mailgun_sync(.:format)                                                              admin/email_logs#mailgun_sync
+#                             admin_email_logs GET    /a/email_logs(.:format)                                                                           admin/email_logs#index
+#                                              POST   /a/email_logs(.:format)                                                                           admin/email_logs#create
+#                          new_admin_email_log GET    /a/email_logs/new(.:format)                                                                       admin/email_logs#new
+#                         edit_admin_email_log GET    /a/email_logs/:id/edit(.:format)                                                                  admin/email_logs#edit
+#                              admin_email_log GET    /a/email_logs/:id(.:format)                                                                       admin/email_logs#show
+#                                              PATCH  /a/email_logs/:id(.:format)                                                                       admin/email_logs#update
+#                                              PUT    /a/email_logs/:id(.:format)                                                                       admin/email_logs#update
+#                                              DELETE /a/email_logs/:id(.:format)                                                                       admin/email_logs#destroy
 #                      abrir_modal_admin_users GET    /a/users/abrir_modal(.:format)                                                                    admin/users#abrir_modal
 #                           buscar_admin_users POST   /a/users/buscar(.:format)                                                                         admin/users#buscar
 #                                  admin_users GET    /a/users(.:format)                                                                                admin/users#index
@@ -170,6 +181,15 @@ end
 #                  active_admin_audited_audits GET    /active_admin/audited_audits(.:format)                                                            active_admin/audited_audits#index
 #                   active_admin_audited_audit GET    /active_admin/audited_audits/:id(.:format)                                                        active_admin/audited_audits#show
 #                       active_admin_dashboard GET    /active_admin/dashboard(.:format)                                                                 active_admin/dashboard#index
+#         batch_action_active_admin_email_logs POST   /active_admin/email_logs/batch_action(.:format)                                                   active_admin/email_logs#batch_action
+#                      active_admin_email_logs GET    /active_admin/email_logs(.:format)                                                                active_admin/email_logs#index
+#                                              POST   /active_admin/email_logs(.:format)                                                                active_admin/email_logs#create
+#                   new_active_admin_email_log GET    /active_admin/email_logs/new(.:format)                                                            active_admin/email_logs#new
+#                  edit_active_admin_email_log GET    /active_admin/email_logs/:id/edit(.:format)                                                       active_admin/email_logs#edit
+#                       active_admin_email_log GET    /active_admin/email_logs/:id(.:format)                                                            active_admin/email_logs#show
+#                                              PATCH  /active_admin/email_logs/:id(.:format)                                                            active_admin/email_logs#update
+#                                              PUT    /active_admin/email_logs/:id(.:format)                                                            active_admin/email_logs#update
+#                                              DELETE /active_admin/email_logs/:id(.:format)                                                            active_admin/email_logs#destroy
 #             batch_action_active_admin_emails POST   /active_admin/emails/batch_action(.:format)                                                       active_admin/emails#batch_action
 #                          active_admin_emails GET    /active_admin/emails(.:format)                                                                    active_admin/emails#index
 #                           active_admin_email GET    /active_admin/emails/:id(.:format)                                                                active_admin/emails#show
