@@ -3,6 +3,7 @@ include PgEngine::RouteHelpers
 Rails.application.routes.draw do
   namespace :public, path: '' do
     pg_resource(:mensaje_contactos, only: [:new, :create], path: 'contacto')
+    post 'webhook/mailgun', to: 'webhooks#mailgun'
   end
   devise_for :users, controllers: {
     confirmations: 'users/confirmations',
