@@ -87,7 +87,7 @@ task :frepush do
   end
 
   focuss = ENV['ALL'] ? '' : '-t focus'
-  system! "LCOV=true DRIVER=selenium_chrome_headless_iphone bundle exec rspec --fail-fast #{focuss}"
+  system! "LCOV=true DRIVER=selenium_chrome_headless_iphone bundle exec rspec #{PATHS_TO_TEST} --fail-fast #{focuss}"
   system! "undercover --compare origin/master"
   system! "rubocop --only RSpec/Focus -A"
 
