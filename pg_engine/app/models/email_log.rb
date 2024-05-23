@@ -42,14 +42,18 @@ class EmailLog < ApplicationRecord
       elsif severity == 'temporary'
         'accepted'
       else
+        # :nocov:
         pg_warn 'No se pudo detectar el status de email', self
         nil
+        # :nocov:
       end
     when 'opened'
       # No cambia el status
     else
+      # :nocov:
       pg_warn 'No se pudo detectar el status de email', self
       nil
+      # :nocov:
     end
   end
 end

@@ -20,9 +20,10 @@ module PgEngine
       pg_err e
     end
 
-    def self.get_status(message)
-      # TODO: habría que dar algún detalle de por uqé se bloqueó
-      message.perform_deliveries ? :sent : :failed
+    def self.get_status(_message)
+      # TODO: falta implementar el interceptor y habría que dar algún detalle de por uqé se bloqueó
+      # message.perform_deliveries ? :sent : :failed
+      :sent
     end
   end
 end

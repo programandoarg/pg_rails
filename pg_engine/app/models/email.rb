@@ -79,7 +79,8 @@ class Email < ApplicationRecord
     statuses = email_logs.map(&:status_for_email).compact
 
     # Aprovechando que los values de status están dispuestos de manera "cronologica"
-    if new_status = statuses.map { |st| Email.status.find_value(st)&.value }.max
+    new_status = statuses.map { |st| Email.status.find_value(st).value }.max
+    if new_status
       self.status = new_status
       if changed?
         self.audit_comment = 'Actualizando status desde logs'
