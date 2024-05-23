@@ -54,7 +54,7 @@ RSpec.fdescribe Admin::EmailLogsController do
       get :index, params: {}
     end
 
-    let!(:email_log) { create :email_log }
+    before { create :email_log }
 
     it 'returns a success response' do
       subject

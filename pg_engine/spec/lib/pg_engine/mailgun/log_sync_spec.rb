@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'fileutils'
 
 fdescribe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_download',
-                                            match_requests_on: %i[method host] } do
+                                             match_requests_on: %i[method host] } do
   let(:instancia) { described_class }
 
   describe '#download' do
@@ -44,19 +44,23 @@ fdescribe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_do
       JSON
     end
 
-    it do
-      expect { subject }.to change(EmailLog, :count).by(1)
-    end
-
-    it do
-      expect(subject).to have_attributes(
+    let(:expected_attributes) do
+      {
         log_id: 'log_2',
         event: 'delivered',
         log_level: 'info',
         severity: 'temporary',
         timestamp: 1_715_014_542,
         message_id: 'msgid@fakeapp2024.mail'
-      )
+      }
+    end
+
+    it do
+      expect { subject }.to change(EmailLog, :count).by(1)
+    end
+
+    it do
+      expect(subject).to have_attributes(expected_attributes)
     end
 
     context 'cuando se asocia a un email' do

@@ -8,8 +8,6 @@ module PgEngine
   module Mailgun
     class LogSync
       def self.download # rubocop:disable Metrics/AbcSize
-        domain = ENV.fetch('MAILGUN_DOMAIN')
-
         key = Rails.application.credentials.dig(:mailgun, :api_key)
         mg_client = ::Mailgun::Client.new(key)
         items = []
@@ -17,22 +15,18 @@ module PgEngine
         start_time = DateTime.now - 3.days
         range = 1.day
         current = end_time - range
+
         loop do
           get = "#{domain}/events?begin=#{current.to_i}&end=#{(current + range).to_i}&limit=300"
-          result = mg_client.get(get)
-          result.to_h!
-          items.push(result.body['items'])
-          # puts "Current: #{current}. Items count: #{result.body['items'].length}"
+          result = mg_client.get(get).to_h!
+          items.push(*result.body['items'])
           current -= range
 
           break if current < start_time
         end
 
-        FileUtils.mkdir_p(log_dir)
+        write_log(items)
 
-        items = items.flatten
-
-        File.write("#{log_dir}/#{domain}_#{Time.zone.now.strftime('%Y-%m-%d_%H.%M.%S')}.json", items.to_json)
         items.each do |item|
           digest(item)
         end
@@ -52,6 +46,15 @@ module PgEngine
         )
       rescue StandardError => e
         pg_err e, item
+      end
+
+      def self.write_log(items)
+        FileUtils.mkdir_p(log_dir)
+        File.write("#{log_dir}/#{domain}_#{Time.zone.now.strftime('%Y-%m-%d_%H.%M.%S')}.json", items.to_json)
+      end
+
+      def self.domain
+        ENV.fetch('MAILGUN_DOMAIN')
       end
 
       def self.log_dir
