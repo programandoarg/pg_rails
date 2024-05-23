@@ -14,6 +14,19 @@ module Admin
 
     add_breadcrumb EmailLog.nombre_plural, :admin_email_logs_path
 
+    before_action do
+      @actions = [
+        ["Mailgun sync: #{ENV['MAILGUN_DOMAIN']}", mailgun_sync_admin_email_logs_path, 'data-turbo-method': :post, class: 'me-2 btn btn-primary btn-sm']
+      ]
+    end
+
+    def mailgun_sync
+      @new_items = PgEngine::Mailgun::LogSync.download
+      flash[:success] = "#{@new_items.length} nuevos items"
+
+      redirect_to admin_email_logs_path
+    end
+
     private
 
     def atributos_permitidos

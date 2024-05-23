@@ -42,6 +42,21 @@ RSpec.fdescribe Admin::EmailLogsController do
     sign_in logged_user if logged_user.present?
   end
 
+  describe '#mailgun_sync' do
+    subject do
+      post :mailgun_sync
+    end
+
+    before do
+      allow(PgEngine::Mailgun::LogSync).to receive(:download).and_return([])
+    end
+
+    it do
+      subject
+      expect(response).to have_http_status(:redirect)
+    end
+  end
+
   describe 'routing' do
     it 'routes GET index correctly' do
       route = { get: '/a/email_logs' }

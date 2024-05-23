@@ -63,6 +63,17 @@ fdescribe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_do
       expect(subject).to have_attributes(expected_attributes)
     end
 
+    context 'ya existe el log' do
+      subject do
+        instancia.digest(JSON.parse(log_data))
+        instancia.digest(JSON.parse(log_data))
+      end
+
+      it 'solo lo crea una vez' do
+        expect { subject }.to change(EmailLog, :count).by(1)
+      end
+    end
+
     context 'cuando se asocia a un email' do
       let!(:email) { create :email, message_id: 'msgid@fakeapp2024.mail' }
 

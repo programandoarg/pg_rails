@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   }, failure_app: PgEngine::DeviseFailureApp
   namespace :admin, path: 'a' do
     pg_resource(:emails)
-    pg_resource(:email_logs)
+    pg_resource(:email_logs) do
+      collection do
+        post :mailgun_sync
+      end
+    end
     pg_resource(:users)
     pg_resource(:accounts)
     pg_resource(:user_accounts)

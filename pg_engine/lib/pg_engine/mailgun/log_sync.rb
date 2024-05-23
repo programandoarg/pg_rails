@@ -28,13 +28,15 @@ module PgEngine
 
         write_log(items)
 
-        items.each do |item|
+        items.map do |item|
           digest(item)
-        end
+        end.compact
       end
 
       def self.digest(item)
         message_id = item['message']['headers']['message-id']
+
+        return if EmailLog.exists?(log_id: item['id'])
 
         EmailLog.create!(
           email: Email.where(message_id:).first,
