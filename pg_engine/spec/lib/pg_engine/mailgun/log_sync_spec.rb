@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'fileutils'
 
-describe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_download',
+fdescribe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_download',
                                             match_requests_on: %i[method host] } do
   let(:instancia) { described_class }
 
@@ -17,14 +17,14 @@ describe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_dow
     let!(:email) { create :email, message_id: '66393f1bc7d4_47a5108ec1628f@notebook.mail' }
 
     it do
-      expect { subject }.to (change { email.logs.count }.from(0).to(3))
-                                  .and(change(EmailLog, :count).to(99))
+      expect { subject }.to (change { email.email_logs.count }.from(0).to(3))
+                                  .and(change(EmailLog, :count).to(8))
     end
   end
 
   describe '#digest' do
     subject do
-      instancia.digest(log_data)
+      instancia.digest(JSON.parse(log_data))
     end
 
     let(:log_data) do
@@ -48,7 +48,7 @@ describe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_dow
       expect { subject }.to change(EmailLog, :count).by(1)
     end
 
-    fit do
+    it do
       expect(subject).to have_attributes(
         log_id: 'log_2',
         event: 'delivered',
@@ -59,6 +59,26 @@ describe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_dow
       )
     end
 
-    pending 'cuando se asocia a un email'
+    context 'cuando se asocia a un email' do
+      let!(:email) { create :email, message_id: 'msgid@fakeapp2024.mail' }
+
+      it do
+        expect(subject.email).to eq email
+      end
+
+      it 'changes email status' do
+        expect { subject }.to change { email.reload.status }.to 'delivered'
+      end
+    end
+
+    context 'cuando hay errores' do
+      subject do
+        instancia.digest({})
+      end
+
+      it do
+        expect { subject }.not_to change(EmailLog, :count)
+      end
+    end
   end
 end
