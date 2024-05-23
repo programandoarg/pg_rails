@@ -25,4 +25,31 @@ class EmailLog < ApplicationRecord
   audited
 
   belongs_to :email, optional: true
+
+  after_create_commit do
+    email.update_status! if email.present?
+  end
+
+  def status_for_email
+    case event
+    when 'accepted'
+      'accepted'
+    when 'delivered'
+      'delivered'
+    when 'failed'
+      if severity == 'permanent'
+        'rejected'
+      elsif severity == 'temporary'
+        'accepted'
+      else
+        pg_warn 'No se pudo detectar el status de email', self
+        nil
+      end
+    when 'opened'
+      # No cambia el status
+    else
+      pg_warn 'No se pudo detectar el status de email', self
+      nil
+    end
+  end
 end
