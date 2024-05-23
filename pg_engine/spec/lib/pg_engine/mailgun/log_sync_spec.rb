@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'fileutils'
 
-fdescribe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_download',
+describe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_download',
                                             match_requests_on: %i[method host] } do
   let(:instancia) { described_class }
 
@@ -48,14 +48,17 @@ fdescribe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_do
       expect { subject }.to change(EmailLog, :count).by(1)
     end
 
-    it do
+    fit do
       expect(subject).to have_attributes(
-        id: 'log_2',
+        log_id: 'log_2',
         event: 'delivered',
         log_level: 'info',
         severity: 'temporary',
+        timestamp: 1715014542,
         message_id: 'msgid@fakeapp2024.mail'
       )
     end
+
+    pending 'cuando se asocia a un email'
   end
 end

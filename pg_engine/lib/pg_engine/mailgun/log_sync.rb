@@ -45,50 +45,60 @@ module PgEngine
         @inbox_dir ||= File.expand_path 'inbox/', base_dir
       end
 
-      def self.processed_dir
-        @processed_dir ||= File.expand_path 'processed/', base_dir
-      end
+      # def self.processed_dir
+      #   @processed_dir ||= File.expand_path 'processed/', base_dir
+      # end
 
-      def self.digest_dir
-        @digest_dir ||= File.expand_path 'digest/', base_dir
-      end
+      # def self.digest_dir
+      #   @digest_dir ||= File.expand_path 'digest/', base_dir
+      # end
 
-      def self.sync_redis
-        json = []
-        Dir["#{inbox_dir}/*.json"].each do |file|
-          json.push(*JSON.parse(File.read(file)))
-        end
+      # def self.sync_redis
+      #   json = []
+      #   Dir["#{inbox_dir}/*.json"].each do |file|
+      #     json.push(*JSON.parse(File.read(file)))
+      #   end
 
-        json.each do |i|
-          # [
-          #   Time.at(i["timestamp"]).strftime('%y-%m-%d %H:%M %z'),
-          #   i["message"]["headers"]["message-id"],
-          #   # i["message"]["headers"]["message-id"][3..15],
-          #   i["event"],
-          #   i["recipient"],
-          #   i["message"]["headers"]["from"],
-          #   i["message"]["headers"]["subject"],
-          # ]
-          message_id = i['message']['headers']['message-id']
-          email = Email.where(message_id:).first
-          if email
-            email.logs << i.to_json
-          else
-            pg_warn "No existe el mail con message_id = #{message_id}", :warn
-          end
-        end
-      end
+      #   json.each do |i|
+      #     # [
+      #     #   Time.at(i["timestamp"]).strftime('%y-%m-%d %H:%M %z'),
+      #     #   i["message"]["headers"]["message-id"],
+      #     #   # i["message"]["headers"]["message-id"][3..15],
+      #     #   i["event"],
+      #     #   i["recipient"],
+      #     #   i["message"]["headers"]["from"],
+      #     #   i["message"]["headers"]["subject"],
+      #     # ]
+      #     message_id = i['message']['headers']['message-id']
+      #     email = Email.where(message_id:).first
+      #     if email
+      #       email.logs << i.to_json
+      #     else
+      #       pg_warn "No existe el mail con message_id = #{message_id}", :warn
+      #     end
+      #   end
+      # end
 
       def self.digest_all
-        FileUtils.mkdir_p(processed_dir)
-        FileUtils.mkdir_p(digest_dir)
-        Dir["#{inbox_dir}/*.json"].each do |file|
-          digest(file)
-        end
+        # FileUtils.mkdir_p(processed_dir)
+        # FileUtils.mkdir_p(digest_dir)
+        # Dir["#{inbox_dir}/*.json"].each do |file|
+        #   digest(file)
+        # end
       end
 
-      def self.digest(file)
-        FileUtils.mv(file, processed_dir)
+      def self.digest(log_data)
+        json = JSON.parse(log_data)
+        EmailLog.create!(
+          log_id: json['id'],
+          event: json['event'],
+          log_level: json['log-level'],
+          severity: json['severity'],
+          timestamp: json['timestamp'],
+          message_id: json['message']['headers']['message-id'], # FIXME: handle error
+        )
+      rescue JSON::JSONError => e
+        pg_err e
       end
     end
   end
