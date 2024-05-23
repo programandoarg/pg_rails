@@ -89,12 +89,14 @@ task :frepush do
   focuss = ENV['ALL'] ? '' : '-t focus'
   system! "LCOV=true DRIVER=selenium_chrome_headless_iphone bundle exec rspec #{PATHS_TO_TEST} --fail-fast #{focuss}"
   system! "undercover --compare origin/master"
-  system! "rubocop --only RSpec/Focus -A"
 
-  if `git status -s` != ''
-    changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
-    system 'git add .'
-    system "git commit -m \"[unfocus] #{changes}\""
+  if !ENV['KEEP_FOCUS']
+    system! "rubocop --only RSpec/Focus -A"
+    if `git status -s` != ''
+      changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
+      system 'git add .'
+      system "git commit -m \"[unfocus] #{changes}\""
+    end
   end
 
   Rake::Task['static_analysis'].invoke
