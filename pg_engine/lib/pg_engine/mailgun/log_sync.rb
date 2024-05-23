@@ -48,7 +48,7 @@ module PgEngine
           log_level: item['log-level'],
           severity: item['severity'],
           timestamp: item['timestamp'],
-          message_id:,
+          message_id:
         )
       rescue StandardError => e
         pg_err e, item
@@ -56,12 +56,12 @@ module PgEngine
 
       def self.log_dir
         @log_dir ||= if Rails.env.test?
-                        File.expand_path 'tmp/mailgun_logs', Rails.root
-                      else
-                        # :nocov:
-                        File.expand_path 'log/mailgun_logs', Rails.root
-                        # :nocov:
-                      end
+                       File.expand_path 'tmp/mailgun_logs', Rails.root
+                     else
+                       # :nocov:
+                       File.expand_path 'log/mailgun_logs', Rails.root
+                       # :nocov:
+                     end
       end
     end
   end

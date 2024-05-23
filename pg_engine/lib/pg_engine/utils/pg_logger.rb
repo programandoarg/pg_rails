@@ -7,11 +7,10 @@ require 'rainbow'
 def pg_err(*args)
   if ENV.fetch('RAISE_ERRORS', false)
     # :nocov:
-    if args.first.is_a?(Exception)
-      raise args.first
-    else
-      raise StandardError, args
-    end
+    raise args.first if args.first.is_a?(Exception)
+
+    raise StandardError, args
+
     # :nocov:
   end
 

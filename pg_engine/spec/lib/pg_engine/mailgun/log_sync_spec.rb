@@ -5,7 +5,6 @@ fdescribe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_do
                                             match_requests_on: %i[method host] } do
   let(:instancia) { described_class }
 
-
   describe '#download' do
     subject do
       instancia.download
@@ -18,8 +17,8 @@ fdescribe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_do
     let!(:email) { create :email, message_id: '66393f1bc7d4_47a5108ec1628f@notebook.mail' }
 
     it do
-      expect { subject }.to (change { email.email_logs.count }.from(0).to(3))
-                                  .and(change(EmailLog, :count).to(8))
+      expect { subject }.to change { email.email_logs.count }.from(0).to(3)
+                                                             .and(change(EmailLog, :count).to(8))
     end
   end
 
@@ -55,7 +54,7 @@ fdescribe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_do
         event: 'delivered',
         log_level: 'info',
         severity: 'temporary',
-        timestamp: 1715014542,
+        timestamp: 1_715_014_542,
         message_id: 'msgid@fakeapp2024.mail'
       )
     end

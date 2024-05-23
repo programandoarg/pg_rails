@@ -80,12 +80,12 @@ class Email < ApplicationRecord
 
     # Aprovechando que los values de status están dispuestos de manera "cronologica"
     new_status = statuses.map { |st| Email.status.find_value(st).value }.max
-    if new_status
-      self.status = new_status
-      if changed?
-        self.audit_comment = 'Actualizando status desde logs'
-        save!
-      end
-    end
+    return unless new_status
+
+    self.status = new_status
+    return unless changed?
+
+    self.audit_comment = 'Actualizando status desde logs'
+    save!
   end
 end
