@@ -28,11 +28,11 @@ module PgEngine
           break if current < start_time
         end
 
-        FileUtils.mkdir_p(inbox_dir)
+        FileUtils.mkdir_p(log_dir)
 
         items = items.flatten
 
-        File.write("#{inbox_dir}/#{domain}_#{Time.zone.now.strftime('%Y-%m-%d_%H.%M.%S')}.json", items.to_json)
+        File.write("#{log_dir}/#{domain}_#{Time.zone.now.strftime('%Y-%m-%d_%H.%M.%S')}.json", items.to_json)
         items.each do |item|
           digest(item)
         end
@@ -54,16 +54,14 @@ module PgEngine
         pg_err e, item
       end
 
-      def self.base_dir
-        @base_dir ||= if Rails.env.test?
+      def self.log_dir
+        @log_dir ||= if Rails.env.test?
                         File.expand_path 'tmp/mailgun_logs', Rails.root
                       else
+                        # :nocov:
                         File.expand_path 'log/mailgun_logs', Rails.root
+                        # :nocov:
                       end
-      end
-
-      def self.inbox_dir
-        @inbox_dir ||= File.expand_path 'inbox/', base_dir
       end
     end
   end
