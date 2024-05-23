@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.fdescribe CosaMailer do
+RSpec.describe CosaMailer do
   describe 'cosa_sin_email_object' do
     subject { mail.deliver }
 

@@ -4,7 +4,7 @@
 
 require 'rails_helper'
 
-RSpec.fdescribe EmailLog do
+RSpec.describe EmailLog do
   let(:email_log) { create(:email_log) }
 
   it 'se persiste' do

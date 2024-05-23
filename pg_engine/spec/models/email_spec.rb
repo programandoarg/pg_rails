@@ -4,7 +4,7 @@
 
 require 'rails_helper'
 
-RSpec.fdescribe Email do
+RSpec.describe Email do
   let(:email) { create(:email) }
 
   it 'se persiste' do

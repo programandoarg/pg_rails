@@ -27,7 +27,7 @@ require 'rails_helper'
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.fdescribe Admin::EmailLogsController do
+RSpec.describe Admin::EmailLogsController do
   render_views
   # This should return the minimal set of attributes required to create a valid
   # EmailLog. As you add validations to EmailLog, be sure to
