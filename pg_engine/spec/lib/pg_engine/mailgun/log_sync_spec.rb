@@ -5,13 +5,14 @@ fdescribe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_do
                                             match_requests_on: %i[method host] } do
   let(:instancia) { described_class }
 
-  before do
-    FileUtils.rm_r(instancia.base_dir) if File.exists? instancia.base_dir
-  end
 
   describe '#download' do
     subject do
       instancia.download
+    end
+
+    after do
+      FileUtils.rm_r(instancia.log_dir)
     end
 
     let!(:email) { create :email, message_id: '66393f1bc7d4_47a5108ec1628f@notebook.mail' }
