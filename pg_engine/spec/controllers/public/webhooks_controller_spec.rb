@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+RSpec::Matchers.define_negated_matcher :not_change, :change
+
 def build_body(log_id, signature, timestamp)
   <<~JSON
     {
