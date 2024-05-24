@@ -18,12 +18,11 @@ module Public
       if PgEngine::Mailgun::LogSync.digest(params['event-data'])
         head :ok
       else
-        # Si por algún motivo no se guarda el log, mando internal server error
-        # para que mailgun reintente luego
-        # Para que no intente más hay que mandar un :not_acceptable (406)
+        # Si no se guardó el log es porque ya existía un log con ese ID
+        # Mando :not_acceptable (406) para que Mailgun no vuelva a intentar
         # https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#webhooks
-        pg_warn 'webhook internal server error', params
-        head :internal_server_error
+        pg_warn 'ya existía un log con ese id, raaaaro', params
+        head :not_acceptable
       end
     end
 
