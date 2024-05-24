@@ -11,9 +11,7 @@ module PgEngine
 
       class PgHaveLogged < Base
         def matches?(proc)
-          unless Proc === proc
-            raise ArgumentError, "have_logged only support block expectations"
-          end
+          raise ArgumentError, 'have_logged only support block expectations' unless proc.is_a?(Proc)
 
           original_logged_messages = Set.new(PgEngine::PgLogger.test_logged_messages)
           proc.call
@@ -62,4 +60,3 @@ module PgEngine
   end
 end
 # :nocov:
-

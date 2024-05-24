@@ -30,7 +30,7 @@ fdescribe Public::WebhooksController do
   include ActiveSupport::Testing::TimeHelpers
 
   around do |example|
-    travel_to Time.at(1716564587) do
+    travel_to Time.at(1_716_564_587) do
       example.run
     end
   end
@@ -66,7 +66,7 @@ fdescribe Public::WebhooksController do
       end
 
       fit do
-        expect { subject }.to have_errored('internal server error') \
+        expect { subject }.to have_errored('internal server error')
           .and(have_errored('no me sirve'))
       end
     end
@@ -117,12 +117,12 @@ fdescribe Public::WebhooksController do
     end
 
     context 'cuando ya se usó el token' do
-      before do
-        post :mailgun, body: build_body(log_id, signature, timestamp), as: :json
-      end
-
       subject do
         post :mailgun, body: build_body('otro id', signature, timestamp), as: :json
+      end
+
+      before do
+        post :mailgun, body: build_body(log_id, signature, timestamp), as: :json
       end
 
       it_behaves_like 'todo bien pero no guarda el log'

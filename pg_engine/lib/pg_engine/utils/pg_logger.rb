@@ -127,7 +127,7 @@ module PgEngine
       def cleaner
         bc = ActiveSupport::BacktraceCleaner.new
         bc.remove_silencers!
-        pattern = /\A[^\/]+ \([\w.]+\) /
+        pattern = %r{\A[^/]+ \([\w.]+\) }
         bc.add_silencer { |line| pattern.match?(line) && !line.match?(/pg_contable|pg_rails/) }
         bc.add_silencer { |line| /pg_logger/.match?(line) }
         bc
