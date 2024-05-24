@@ -29,11 +29,7 @@ end
 fdescribe Public::WebhooksController do
   include ActiveSupport::Testing::TimeHelpers
 
-  around do |example|
-    travel_to Time.at(1_716_564_587) do
-      example.run
-    end
-  end
+  before { travel_to Time.zone.at(1_716_564_587) }
 
   describe '#mailgun' do
     subject do

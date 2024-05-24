@@ -45,7 +45,7 @@ module Public
     end
 
     def timestamp_not_too_far(timestamp)
-      if (Time.at(timestamp.to_i) - Time.now).abs > 1.hour
+      if (Time.zone.at(timestamp.to_i) - Time.zone.now).abs > 1.hour
         pg_warn 'Mailgun Webhook: refusing due to timestamp too far'
         head :ok
 
