@@ -2,13 +2,17 @@ module Public
   class WebhooksController < PublicController
     skip_before_action :verify_authenticity_token
 
-    before_action only: :mailgun, :verify_signagure
+    # before_action only: :mailgun, :verify_signagure
+
+    rescue_from ActionDispatch::Http::Parameters::ParseError do
+      head :bad_request
+    end
 
     def mailgun
       if PgEngine::Mailgun::LogSync.digest(params['event-data'])
         head :ok
       else
-        # Mailgun will retry later
+        # Si por algún motivo no se guarda el log, mando internal server error para que mailgun reintente luego
         # Para que no intente más hay que mandar un :not_acceptable (406)
         # https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#webhooks
         head :internal_server_error

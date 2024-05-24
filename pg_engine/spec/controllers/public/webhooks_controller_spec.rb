@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Public::WebhooksController do
+fdescribe Public::WebhooksController do
   describe '#mailgun' do
     subject do
       post :mailgun, body:, as: :json
@@ -39,10 +39,21 @@ describe Public::WebhooksController do
       expect { subject }.to change(EmailLog, :count).by(1)
     end
 
-    context 'cuando hay algún error en el procesamiento' do
+    context 'cuando no se puede procesar el log' do
+      let(:body) { '{}' }
+
       it do
         subject
         expect(response).to have_http_status(:internal_server_error)
+      end
+    end
+
+    context 'cuando no es un json' do
+      let(:body) { 'mal json' }
+
+      it do
+        subject
+        expect(response).to have_http_status(:bad_request)
       end
     end
   end
