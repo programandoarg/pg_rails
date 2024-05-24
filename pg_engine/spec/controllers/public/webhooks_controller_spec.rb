@@ -24,7 +24,7 @@ def build_body(log_id, signature, timestamp)
   JSON
 end
 
-describe Public::WebhooksController do
+fdescribe Public::WebhooksController do
   include ActiveSupport::Testing::TimeHelpers
 
   around do |example|
