@@ -38,5 +38,12 @@ describe Public::WebhooksController do
     it do
       expect { subject }.to change(EmailLog, :count).by(1)
     end
+
+    context 'cuando hay algún error en el procesamiento' do
+      it do
+        subject
+        expect(response).to have_http_status(:internal_server_error)
+      end
+    end
   end
 end
