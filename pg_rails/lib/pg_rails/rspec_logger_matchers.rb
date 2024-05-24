@@ -1,3 +1,4 @@
+# :nocov:
 module PgEngine
   module Matchers
     module PgLogger
@@ -60,3 +61,5 @@ module PgEngine
     end
   end
 end
+# :nocov:
+
