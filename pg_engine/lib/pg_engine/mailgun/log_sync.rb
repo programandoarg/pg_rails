@@ -47,8 +47,6 @@ module PgEngine
           timestamp: item['timestamp'],
           message_id:
         )
-      rescue StandardError => e
-        pg_err e, item
       end
 
       def self.write_log(items)
