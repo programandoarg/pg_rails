@@ -105,6 +105,10 @@ describe Public::WebhooksController do
       end
 
       it_behaves_like 'todo bien pero no guarda el log'
+
+      fit do
+        expect { subject }.to have_warned('refusing used token')
+      end
     end
 
     context 'cuando la timestamp está muy lejos' do
