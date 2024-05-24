@@ -5,7 +5,6 @@ module Public
     before_action :verify_signagure, only: :mailgun
 
     rescue_from StandardError do
-      byebug
       pg_err 'webhook internal server error', request.body.read
       head :internal_server_error
     end

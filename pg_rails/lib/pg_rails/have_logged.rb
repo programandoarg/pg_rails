@@ -37,7 +37,7 @@ module PgEngine
             if @new_messages.any?
               msg << "\nLogged messages:"
               @new_messages.each do |level, message|
-                msg << "\n  #{level}: #{message.split("\n").first}"
+                msg << "\n  #{level}: #{message[0..200]}"
               end
             end
           end

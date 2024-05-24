@@ -56,17 +56,17 @@ describe Public::WebhooksController do
     end
 
     context 'cuando no se puede procesar el log' do
-      let(:body) { '{}' }
+      let(:body) { '{ "este json": "no me sirve" }' }
 
       it do
         subject
         expect(response).to have_http_status(:internal_server_error)
       end
 
-      # fit do
-      #   expect { subject }.to pg_have_logged
-      #   expect(response).to have_http_status(:internal_server_error)
-      # end
+      fit do
+        expect { subject }.to have_errored('internal server error') \
+          .and(have_errored('no me sirve'))
+      end
     end
 
     context 'cuando no es un json' do
@@ -75,6 +75,10 @@ describe Public::WebhooksController do
       it do
         subject
         expect(response).to have_http_status(:bad_request)
+      end
+
+      fit do
+        expect { subject }.to have_warned('parser error').and(have_warned('mal json'))
       end
     end
 
@@ -93,6 +97,10 @@ describe Public::WebhooksController do
       let(:signature) { 'no válida' }
 
       it_behaves_like 'todo bien pero no guarda el log'
+
+      fit do
+        expect { subject }.to have_warned('refusing invalid signature')
+      end
     end
 
     context 'cuando ya se usó el token' do
