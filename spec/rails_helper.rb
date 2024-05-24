@@ -39,7 +39,7 @@ require "fileutils"
 require 'pg_rails/capybara_support'
 require 'pg_rails/redis_support'
 require 'pg_rails/vcr_support'
-require 'pg_rails/have_logged'
+require 'pg_rails/rspec_logger_matchers'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

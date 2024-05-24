@@ -11,7 +11,7 @@ module PgEngine
       class PgHaveLogged < Base
         def matches?(proc)
           unless Proc === proc
-            raise ArgumentError, "have_logged only support block expectations" 
+            raise ArgumentError, "have_logged only support block expectations"
           end
 
           original_logged_messages = Set.new(PgEngine::PgLogger.test_logged_messages)
@@ -33,7 +33,9 @@ module PgEngine
         end
 
         def failure_message
-          "expected to #{@level || log} #{@text.present? ? "with text: #{@text}" : ''}".tap do |msg| 
+          "expected to #{@level || log}".tap do |msg|
+            msg << "with text: #{@text}" if @text.present?
+          end.tap do |msg|
             if @new_messages.any?
               msg << "\nLogged messages:"
               @new_messages.each do |level, message|
