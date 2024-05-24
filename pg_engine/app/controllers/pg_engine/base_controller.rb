@@ -40,6 +40,9 @@ module PgEngine
           render turbo_stream: (turbo_stream.remove_all('.modal') + render_turbo_stream_flash_messages),
                  status: :internal_server_error
         end
+        format.any do
+          head :internal_server_error
+        end
       end
     end
 
