@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-def build_body(id, signature, timestamp)
+def build_body(log_id, signature, timestamp)
   <<~JSON
     {
       "signature": {
@@ -12,7 +12,7 @@ def build_body(id, signature, timestamp)
         "timestamp": 1715014542.2477064,
         "ip": "66.102.8.333",
         "event": "delivered",
-        "id": "#{id}",
+        "id": "#{log_id}",
         "severity":"temporary",
         "log-level": "info",
         "message": {
@@ -39,11 +39,11 @@ describe Public::WebhooksController do
     end
 
     let(:signature) { 'c524037907046276117758afae8a340e77a43a6e48eb35a9521426e7a3ff675b' }
-    let(:id) { 'log_2' }
+    let(:log_id) { 'log_2' }
     let(:timestamp) { '1716564587' }
 
     let(:body) do
-      build_body(id, signature, timestamp)
+      build_body(log_id, signature, timestamp)
     end
 
     it do
@@ -55,7 +55,7 @@ describe Public::WebhooksController do
       expect { subject }.to change(EmailLog, :count).by(1)
     end
 
-    context 'cuando no se puede procesar el log' do
+    context 'cuando tira internal server error' do
       let(:body) { '{ "este json": "no me sirve" }' }
 
       it do
@@ -82,6 +82,17 @@ describe Public::WebhooksController do
       end
     end
 
+    context 'cuando ya existe un log con ese ID' do
+      before do
+        create(:email_log, log_id:)
+      end
+
+      it do
+        expect { subject }.to have_warned('ya existía un log con ese id')
+          .and(not_change(EmailLog, :count))
+      end
+    end
+
     shared_context 'todo bien pero no guarda el log' do
       it 'responds ok' do
         subject
@@ -105,7 +116,7 @@ describe Public::WebhooksController do
 
     context 'cuando ya se usó el token' do
       before do
-        post :mailgun, body: build_body(id, signature, timestamp), as: :json
+        post :mailgun, body: build_body(log_id, signature, timestamp), as: :json
       end
 
       subject do
