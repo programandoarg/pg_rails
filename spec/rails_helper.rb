@@ -39,6 +39,7 @@ require "fileutils"
 require 'pg_rails/capybara_support'
 require 'pg_rails/redis_support'
 require 'pg_rails/vcr_support'
+require 'pg_rails/have_logged'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -113,6 +114,7 @@ RSpec.configure do |config|
   config.include Rails::Generators::Testing::SetupAndTeardown, type: :generator
   config.include Rails::Generators::Testing::Assertions, type: :generator
   config.include FileUtils, type: :generator
+  config.include PgEngine::Matchers
 
   # config.include ActiveSupport::Testing::TimeHelpers
 end

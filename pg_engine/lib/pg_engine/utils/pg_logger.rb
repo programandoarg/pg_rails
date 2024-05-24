@@ -37,6 +37,10 @@ end
 
 module PgEngine
   class PgLogger
+    def self.test_logged_messages
+      @@test_logged_messages ||= []
+    end
+
     class << self
       def log(type, *args)
         notify_all(build_msg(*args), type)
@@ -48,6 +52,7 @@ module PgEngine
         send_to_logger(mensaje, type)
         send_to_rollbar(mensaje, type)
         send_to_stdout(mensaje, type) if ENV.fetch('LOG_TO_STDOUT', nil)
+        save_internal(mensaje, type) if Rails.env.test?
         nil
       end
 
@@ -66,6 +71,10 @@ module PgEngine
 
       def send_to_logger(mensaje, type)
         Rails.logger.send(type, rainbow_wrap(mensaje, type))
+      end
+
+      def save_internal(mensaje, type)
+        PgEngine::PgLogger.test_logged_messages << [type, mensaje]
       end
 
       # Format
