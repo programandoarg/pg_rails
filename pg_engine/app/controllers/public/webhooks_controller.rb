@@ -2,7 +2,7 @@ module Public
   class WebhooksController < PublicController
     skip_before_action :verify_authenticity_token
 
-    before_action :verify_signagure, only: :mailgun
+    before_action :verify_signature, only: :mailgun
 
     rescue_from StandardError do
       pg_err 'webhook internal server error', request.body.read
@@ -20,7 +20,7 @@ module Public
       else
         # Si no se guardó el log es porque ya existía un log con ese ID
         # Mando :not_acceptable (406) para que Mailgun no vuelva a intentar
-        # https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/#webhooks
+        # https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages
         pg_warn 'ya existía un log con ese id, raaaaro', params
         head :not_acceptable
       end
@@ -55,7 +55,7 @@ module Public
       end
     end
 
-    def verify_signagure
+    def verify_signature
       timestamp = params['signature']['timestamp']
       token = params['signature']['token']
       signature = params['signature']['signature']
