@@ -12,13 +12,14 @@ module PgEngine
 
       class PgHaveLogged < Base
         def matches?(proc)
-          raise ArgumentError, 'have_logged only support block expectations' unless proc.is_a?(Proc)
+          msg = 'have_logged only support block expectations'
+          raise ArgumentError, msg unless proc.is_a?(Proc)
 
-          original_logged_messages = Set.new(PgEngine::PgLogger.test_logged_messages)
+          original_messages = Set.new(PgEngine::PgLogger.test_logged_messages)
           proc.call
           logged_messages = Set.new(PgEngine::PgLogger.test_logged_messages)
 
-          @new_messages = logged_messages - original_logged_messages
+          @new_messages = logged_messages - original_messages
           @new_messages.any? do |level, message|
             if @text.present? && @level.present?
               level == @level && message.include?(@text)
