@@ -4,7 +4,7 @@ module PgEngine
     module PgLogger
       class Base < RSpec::Rails::Matchers::BaseMatcher
         def initialize(text, level)
-          super
+          super()
           @text = text
           @level = level
         end
