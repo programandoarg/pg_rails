@@ -38,7 +38,7 @@ end
 module PgEngine
   class PgLogger
     def self.test_logged_messages
-      @@test_logged_messages ||= []
+      @test_logged_messages ||= []
     end
 
     class << self

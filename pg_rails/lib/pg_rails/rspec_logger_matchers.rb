@@ -4,6 +4,7 @@ module PgEngine
     module PgLogger
       class Base < RSpec::Rails::Matchers::BaseMatcher
         def initialize(text, level)
+          super
           @text = text
           @level = level
         end
@@ -32,15 +33,13 @@ module PgEngine
         end
 
         def failure_message
-          "expected to #{@level || log}".tap do |msg|
-            msg << "with text: #{@text}" if @text.present?
-          end.tap do |msg|
-            if @new_messages.any?
-              msg << "\nLogged messages:"
-              @new_messages.each do |level, message|
-                msg << "\n  #{level}: #{message[0..200]}"
-              end
-            end
+          msg = "expected to #{@level || log}"
+          msg << "with text: #{@text}" if @text.present?
+          return unless @new_messages.any?
+
+          msg << "\nLogged messages:"
+          @new_messages.each do |level, message|
+            msg << "\n  #{level}: #{message[0..200]}"
           end
         end
 
@@ -50,11 +49,11 @@ module PgEngine
       end
     end
 
-    def have_errored(text = nil)
+    def have_errored(text = nil) # rubocop:disable Naming/PredicateName
       PgLogger::PgHaveLogged.new(text, :error)
     end
 
-    def have_warned(text = nil)
+    def have_warned(text = nil) # rubocop:disable Naming/PredicateName
       PgLogger::PgHaveLogged.new(text, :warn)
     end
   end
