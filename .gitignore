@@ -31,3 +31,5 @@ bin/dist
 master.key
 
 spec/dummy/public/assets
+
+Session.vim

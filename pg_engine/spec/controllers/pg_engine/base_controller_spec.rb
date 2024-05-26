@@ -60,6 +60,17 @@ describe DummyBaseController do
         expect(response.body).to include '<turbo-stream action="remove" targets=".modal">'
       end
     end
+
+    context 'cuando acepta json' do
+      before do
+        request.headers['Accept'] = 'application/json'
+      end
+
+      fit do
+        subject
+        expect(response).to have_http_status(:internal_server_error)
+      end
+    end
   end
 
   describe 'not_authorized' do

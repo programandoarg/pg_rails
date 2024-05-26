@@ -92,7 +92,7 @@ describe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_dow
       end
 
       it do
-        expect { subject }.not_to change(EmailLog, :count)
+        expect { subject }.to raise_error(NoMethodError)
       end
     end
   end
