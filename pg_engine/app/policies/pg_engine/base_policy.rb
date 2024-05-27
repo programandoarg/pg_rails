@@ -10,9 +10,7 @@ module PgEngine
     end
 
     def index?
-      raise "esta policy se llama con la clase modelo y no con #{record.class}" unless record.class
-
-      base_access_to_collection? || Pundit.policy_scope!(user, record).any?
+      base_access_to_collection?
     end
 
     def show?
