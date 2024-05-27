@@ -20,15 +20,23 @@ module PgEngine
       end
 
       def classes
-        ActiveRecord::Base.descendants - ignored_classes
+        all = ActiveRecord::Base.descendants.select { |m| m.table_name.present? }
+        all - ignored_classes
       end
 
       def ignored_classes
         [
+          ActionText::Record,
+          ActionMailbox::Record,
+          ActiveAdmin::Comment,
           ActiveStorage::Record,
           PgEngine::BaseRecord,
-          ActiveAdmin::Comment,
           Audited::Audit,
+          ActionText::RichText,
+          ActionText::EncryptedRichText,
+          ActionMailbox::InboundEmail,
+          ActiveStorage::VariantRecord,
+          ActiveStorage::Attachment,
           ActiveStorage::Blob,
           ApplicationRecord
         ]

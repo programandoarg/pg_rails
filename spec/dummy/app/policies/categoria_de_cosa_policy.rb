@@ -25,7 +25,11 @@ class CategoriaDeCosaPolicy < ApplicationPolicy
   #   acceso_total? && !record.readonly?
   # end
 
-  def acceso_total?
+  def base_access_to_record?
+    true
+  end
+
+  def base_access_to_collection?
     true
   end
 end

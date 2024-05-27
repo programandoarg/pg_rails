@@ -21,6 +21,7 @@ module PgEngine
 
     rescue_from StandardError do |err|
       pg_err err
+      # TODO: agregar un backtrace
       @email_object.update_columns(status: :failed, status_detail: err.to_s) if @email_object.present?
     end
 

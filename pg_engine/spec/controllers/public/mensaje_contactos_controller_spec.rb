@@ -42,12 +42,6 @@ RSpec.describe Public::MensajeContactosController do
     }
   end
 
-  let(:logged_user) { create :user, :developer }
-
-  before do
-    sign_in logged_user if logged_user.present?
-  end
-
   describe 'routing' do
     it 'routes GET index correctly' do
       route = { get: '/contacto/new' }

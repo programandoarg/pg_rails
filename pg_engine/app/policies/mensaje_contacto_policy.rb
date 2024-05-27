@@ -25,7 +25,7 @@ class MensajeContactoPolicy < ApplicationPolicy
   #   acceso_total? && !record.readonly?
   # end
 
-  def acceso_total?
+  def puede_crear?
     true
   end
 end

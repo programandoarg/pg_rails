@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PgEngine
-  class ApplicationPolicy
+  class BasePolicy
     attr_reader :user, :record
 
     def initialize(user, record)
@@ -9,19 +9,13 @@ module PgEngine
       @record = record
     end
 
-    def editar_en_lugar?
-      puede_editar?
-    end
-
     def index?
-      raise "esta policy se llama con la clase modelo y no con #{record.class}" unless record.class
-
-      acceso_total? || Pundit.policy_scope!(user, record).any?
+      base_access_to_collection?
     end
 
     def show?
       # scope.where(id: record.id).exists?
-      acceso_total?
+      base_access_to_record?
     end
 
     def create?
@@ -57,7 +51,7 @@ module PgEngine
       end
 
       def resolve
-        if policy.acceso_total?
+        if policy.base_access_to_collection?
           scope.all
         else
           scope.none
@@ -72,29 +66,31 @@ module PgEngine
     end
 
     def puede_editar?
-      acceso_total?
+      base_access_to_record?
     end
 
     def puede_crear?
-      acceso_total?
+      base_access_to_collection?
     end
 
     def puede_borrar?
-      acceso_total?
+      base_access_to_record?
     end
 
     def export?
-      acceso_total?
+      base_access_to_collection?
     end
 
-    def acceso_total?
+    def base_access_to_record?
+      user&.developer?
+    end
+
+    def base_access_to_collection?
       user&.developer?
     end
 
     def objeto_borrado?
-      if record.respond_to?(:deleted?)
-        record.deleted?
-      elsif record.respond_to?(:discarded?)
+      if record.respond_to?(:discarded?)
         record.discarded?
       else
         false
