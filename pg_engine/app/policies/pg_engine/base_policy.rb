@@ -14,7 +14,6 @@ module PgEngine
     end
 
     def show?
-      # scope.where(id: record.id).exists?
       base_access_to_record?
     end
 
