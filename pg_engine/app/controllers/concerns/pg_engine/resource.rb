@@ -229,6 +229,8 @@ module PgEngine
         instancia_modelo.assign_attributes(modelo_params) if action_name.in? %w[update]
       end
 
+      # FIXME: estaría bueno delegar directamente a pundit, pero habría que 
+      # arreglar tema policies
       Current.user&.developer? || authorize(instancia_modelo)
 
       # TODO: problema en create y update cuando falla la validacion

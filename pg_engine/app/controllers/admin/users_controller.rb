@@ -28,6 +28,7 @@ module Admin
       pg_respond_update
     end
 
+    # TODO: sacar este método a otro lado, que no sea AdminController
     skip_before_action :authenticate_user!, only: [:login_as]
 
     # :nocov:
