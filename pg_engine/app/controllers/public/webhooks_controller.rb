@@ -4,8 +4,8 @@ module Public
 
     before_action :verify_signature, only: :mailgun
 
-    rescue_from StandardError do
-      pg_err 'webhook internal server error', request.body.read
+    rescue_from StandardError do |err|
+      pg_err err, 'webhook internal server error', request.body.read
       head :internal_server_error
     end
 
@@ -21,7 +21,7 @@ module Public
         # Si no se guardó el log es porque ya existía un log con ese ID
         # Mando :not_acceptable (406) para que Mailgun no vuelva a intentar
         # https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages
-        pg_warn 'ya existía un log con ese id, raaaaro', params
+        pg_warn 'ya existía un log con ese id, raaaaro', request.body.read
         head :not_acceptable
       end
     end
@@ -34,7 +34,7 @@ module Public
 
     def not_used_token(token)
       if used_tokens.elements.include?(token)
-        pg_warn 'Mailgun Webhook: refusing used token'
+        pg_warn 'Mailgun Webhook: refusing used token', request.body.read
         head :ok
 
         false
@@ -46,7 +46,7 @@ module Public
 
     def timestamp_not_too_far(timestamp)
       if (Time.zone.at(timestamp.to_i) - Time.zone.now).abs > 1.hour
-        pg_warn 'Mailgun Webhook: refusing due to timestamp too far'
+        pg_warn 'Mailgun Webhook: refusing due to timestamp too far', request.body.read
         head :ok
 
         false
@@ -65,12 +65,13 @@ module Public
       return unless timestamp_not_too_far(timestamp)
       return unless hexdigest != signature
 
-      pg_warn 'Mailgun Webhook: refusing invalid signature'
+      pg_warn 'Mailgun Webhook: refusing invalid signature', request.body.read
       head :ok
     end
 
     def encode(data)
       webhook_secret_key = Rails.application.credentials.dig(:mailgun, :webhook_secret_key)
+      # TODO: raise if nil
       OpenSSL::HMAC.hexdigest('sha256', webhook_secret_key, data)
     end
   end
