@@ -3,6 +3,8 @@
 # generado con pg_rails
 
 class EmailDecorator < PgEngine::BaseRecordDecorator
+  include PgEngine::EmailsHelper
+
   delegate_all
 
   # Define presentation-specific methods here. Helpers are accessed through
@@ -13,6 +15,24 @@ class EmailDecorator < PgEngine::BaseRecordDecorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
+
+  def status_f
+    stc = email_status_badge_class(object)
+    content_tag :span, id: dom_id(object, :status), class: "badge align-content-center #{stc}" do
+      status_text
+    end
+  end
+
+  def status_text
+    {
+      'pending' => 'Enviando',
+      'failed' => 'Falló',
+      'sent' => 'Enviando',
+      'accepted' => 'Enviando',
+      'delivered' => 'Entregado',
+      'rejected' => 'Falló',
+    }[object.status]
+  end
 
   def encoded_eml_link
     return if object.encoded_eml.blank?

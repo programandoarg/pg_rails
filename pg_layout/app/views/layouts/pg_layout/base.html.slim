@@ -59,7 +59,7 @@ html
               nav aria-label="breadcrumb"
                 = render_breadcrumbs
               / = render_breadcrumbs builder: ::Bootstrap4BreadcrumbsBuilder
-              .btn-toolbar
+              .btn-toolbar.gap-1
                 = yield(:actions)
             hr.my-0
           - content = content_for?(:content) ? yield(:content) : yield
