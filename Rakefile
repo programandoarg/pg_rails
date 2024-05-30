@@ -100,7 +100,8 @@ task :frepush do
 
   focuss = ENV['ALL'] ? '' : '-t focus'
   spring = ENV['SPRING'] ? 'spring' : ''
-  command = spring.present? ? 'rspec' : 'parallel_rspec'
+  # command = spring.present? ? 'rspec' : 'parallel_rspec'
+  command = 'rspec'
   system! "LCOV=true bundle exec #{spring} #{command} #{PATHS_TO_TEST} --fail-fast #{focuss}"
 
   system! "undercover --compare origin/master"
