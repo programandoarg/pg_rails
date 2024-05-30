@@ -103,7 +103,7 @@ task :frepush do
   command = spring.present? ? 'rspec' : 'parallel_rspec'
   system! "LCOV=true bundle exec #{spring} #{command} #{PATHS_TO_TEST} --fail-fast #{focuss}"
 
-  system! "undercover --compare origin/main"
+  system! "undercover --compare origin/master"
 
   if !ENV['KEEP_FOCUS']
     system! "rubocop --only RSpec/Focus -A"
