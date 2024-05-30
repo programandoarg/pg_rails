@@ -1,7 +1,9 @@
-if (!window.Stimulus) {
-  console.error('window.Stimulus must be set')
-}
+import { Application } from '@hotwired/stimulus'
 
-const application = window.Stimulus
+const application = Application.start()
+
+// Configure Stimulus development experience
+application.debug = false
+window.Stimulus = application
 
 export { application }
