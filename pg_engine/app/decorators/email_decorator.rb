@@ -47,6 +47,6 @@ class EmailDecorator < PgEngine::BaseRecordDecorator
     return if object.encoded_eml.blank?
 
     link_to 'Download', helpers.rails_blob_path(object.encoded_eml),
-                        target: :_blank, rel: :noopener
+            target: :_blank, rel: :noopener
   end
 end
