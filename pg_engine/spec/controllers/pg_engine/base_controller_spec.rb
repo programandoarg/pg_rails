@@ -66,7 +66,7 @@ describe DummyBaseController do
         request.headers['Accept'] = 'application/json'
       end
 
-      fit do
+      it do
         subject
         expect(response).to have_http_status(:internal_server_error)
       end
