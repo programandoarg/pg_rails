@@ -14,9 +14,39 @@ class EmailDecorator < PgEngine::BaseRecordDecorator
   #     end
   #   end
 
+  def status_f
+    klass = "badge align-content-center #{status_badge_class}"
+    content_tag :span, id: dom_id(object, :status), class: klass do
+      status_text
+    end
+  end
+
+  def status_text
+    {
+      'pending' => 'Enviando',
+      'failed' => 'Falló',
+      'sent' => 'Enviando',
+      'accepted' => 'Enviando',
+      'delivered' => 'Entregado',
+      'rejected' => 'Falló'
+    }[object.status]
+  end
+
+  def status_badge_class
+    {
+      'pending' => 'text-bg-warning',
+      'failed' => 'text-bg-danger',
+      'sent' => 'text-bg-warning',
+      'accepted' => 'text-bg-warning',
+      'delivered' => 'text-bg-success',
+      'rejected' => 'text-bg-danger'
+    }[object.status]
+  end
+
   def encoded_eml_link
     return if object.encoded_eml.blank?
 
-    link_to 'Download', helpers.rails_blob_path(object.encoded_eml), target: :_blank, rel: :noopener
+    link_to 'Download', helpers.rails_blob_path(object.encoded_eml),
+            target: :_blank, rel: :noopener
   end
 end

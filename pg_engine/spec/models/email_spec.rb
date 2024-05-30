@@ -5,7 +5,7 @@
 require 'rails_helper'
 
 RSpec.describe Email do
-  let(:email) { create(:email) }
+  let(:email) { create(:email, status: :pending) }
 
   it 'se persiste' do
     expect(email).to be_persisted

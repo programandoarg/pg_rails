@@ -75,7 +75,7 @@ describe PgEngine::Mailgun::LogSync, vcr: { cassette_name: 'mailgun/log_sync_dow
     end
 
     context 'cuando se asocia a un email' do
-      let!(:email) { create :email, message_id: 'msgid@fakeapp2024.mail' }
+      let!(:email) { create :email, status: :pending, message_id: 'msgid@fakeapp2024.mail' }
 
       it do
         expect(subject.email).to eq email

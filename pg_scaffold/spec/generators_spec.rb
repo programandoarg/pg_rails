@@ -4,7 +4,8 @@ require 'generators/pg_rspec/scaffold/scaffold_generator'
 require 'generators/pg_decorator/pg_decorator_generator'
 require 'generators/pg_active_record/model/model_generator'
 
-DESTINATION_PATH = File.expand_path('./../../tmp/generator_testing', __dir__)
+TEST_ENV_NUMBER = ENV.fetch('TEST_ENV_NUMBER', '')
+DESTINATION_PATH = File.expand_path("./../../tmp/generator_testing#{TEST_ENV_NUMBER}", __dir__)
 
 describe 'Generators', type: :generator do
   describe 'PgDecoratorGenerator' do

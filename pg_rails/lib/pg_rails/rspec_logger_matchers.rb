@@ -36,12 +36,13 @@ module PgEngine
         def failure_message
           msg = "expected to #{@level || log}"
           msg << "with text: #{@text}" if @text.present?
-          return unless @new_messages.any?
+          return msg unless @new_messages.any?
 
           msg << "\nLogged messages:"
           @new_messages.each do |level, message|
             msg << "\n  #{level}: #{message[0..200]}"
           end
+          msg
         end
 
         def supports_block_expectations?

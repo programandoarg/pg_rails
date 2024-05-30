@@ -39,6 +39,7 @@ class Navbar
         show: item['policy'] ? eval(item['policy']) : true
       }
     rescue StandardError => e
+      # FIXME: que rompa los tests
       # TODO!: testear
       pg_err e, item
       return []

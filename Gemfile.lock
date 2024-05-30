@@ -364,6 +364,8 @@ GEM
       iniparse (~> 1.4)
       rexml (~> 3.2)
     parallel (1.24.0)
+    parallel_tests (4.7.1)
+      parallel
     parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
@@ -602,6 +604,7 @@ DEPENDENCIES
   faker (~> 3.2.3)
   letter_opener (~> 1.8.1)
   overcommit (~> 0.61.0)
+  parallel_tests
   pg_rails!
   rails-controller-testing (~> 1.0.5)
   rspec-rails (~> 6.0.4)

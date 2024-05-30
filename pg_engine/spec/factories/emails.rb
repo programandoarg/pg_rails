@@ -13,6 +13,7 @@ FactoryBot.define do
     to { Faker::Internet.email }
     subject { Faker::Lorem.sentence }
     body_input { Faker::Lorem.sentence }
+    status { Email.status.values.sample }
     # tags { Faker::Lorem.sentence }
     # associated
     # message_id { Faker::Lorem.sentence }

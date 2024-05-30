@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Sign in', :js do
+describe 'Sign in' do
   include ActionView::RecordIdentifier
 
   shared_examples 'destroy from index' do
@@ -50,21 +50,21 @@ describe 'Sign in', :js do
     end
   end
 
-  # Capybara.drivers.keys
-  drivers = %i[
-    selenium_headless
-    selenium_chrome_headless
-    selenium_chrome_headless_notebook
-    selenium_chrome_headless_iphone
-  ]
-  # drivers = %i[selenium_chrome_headless_notebook]
-  # drivers = %i[selenium_chrome_debugger]
-  # drivers = %i[selenium]
-  # drivers = %i[selenium_chrome]
+  # drivers = %i[
+  #   selenium_headless
+  #   selenium_chrome_headless
+  #   selenium_chrome_headless_notebook
+  #   selenium_chrome_headless_iphone
+  # ]
+  drivers = %i[selenium_chrome_headless_iphone]
   drivers = [ENV['DRIVER'].to_sym] if ENV['DRIVER'].present?
 
   drivers.each do |driver|
-    context("with driver '#{driver}'", driver:) do
+    context("with driver '#{driver}'") do
+      before do
+        driven_by driver
+      end
+
       it_behaves_like 'destroy from index'
       it_behaves_like 'destroy from show'
     end

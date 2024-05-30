@@ -15,3 +15,5 @@ application.register('fadein_onload', FadeinOnloadController)
 application.register('clear-timeout', ClearTimeoutController)
 application.register('switcher', SwitcherController)
 application.register('filtros', FiltrosController)
+
+// TODO: testear con capybara todo lo que se pueda

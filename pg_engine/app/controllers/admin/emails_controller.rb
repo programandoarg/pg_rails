@@ -17,7 +17,7 @@ module Admin
     private
 
     def atributos_permitidos
-      %i[from_address from_name reply_to to subject body_input associated_id associated_type]
+      %i[status from_address from_name reply_to to subject body_input associated_id associated_type]
     end
 
     def atributos_para_buscar

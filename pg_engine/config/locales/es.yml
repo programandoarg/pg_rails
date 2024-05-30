@@ -11,8 +11,15 @@ es:
     confirmed_at: Fecha de confirmación
     actualizado_por: Actualizado por
     creado_por: Creado por
-  ancestry:
-    exclude_self: No puede ser hijx de si mismx
+  enumerize:
+    email:
+      status:
+        pending: Enviando
+        failed: Falló
+        sent: Enviando
+        accepted: Aceptado
+        delivered: Entregado
+        rejected: Rechazado
   simple_form:
     "yes": 'Sí'
     "no": 'No'
