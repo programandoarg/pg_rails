@@ -99,8 +99,11 @@ task :frepush do
   end
 
   focuss = ENV['ALL'] ? '' : '-t focus'
-  system! "LCOV=true DRIVER=selenium_chrome_headless_iphone bundle exec rspec #{PATHS_TO_TEST} --fail-fast #{focuss}"
-  system! "undercover --compare origin/master"
+  spring = ENV['SPRING'] ? 'spring' : ''
+  command = spring.present? ? 'rspec' : 'parallel_rspec'
+  system! "LCOV=true bundle exec #{spring} #{command} #{PATHS_TO_TEST} --fail-fast #{focuss}"
+
+  system! "undercover --compare origin/main"
 
   if !ENV['KEEP_FOCUS']
     system! "rubocop --only RSpec/Focus -A"

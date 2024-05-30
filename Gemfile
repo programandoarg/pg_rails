@@ -12,3 +12,7 @@ gemspec
 # your gem to rubygems.org.
 
 gem "bootsnap", require: false
+
+group :development, :test do
+  gem 'parallel_tests'
+end
