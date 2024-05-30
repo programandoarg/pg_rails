@@ -1,0 +1,5 @@
+development: &development
+  url: <%= PgEngine.redis_url %>
+  timeout: 1
+test:
+  <<: *development

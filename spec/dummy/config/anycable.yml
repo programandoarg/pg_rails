@@ -24,6 +24,8 @@ default: &default
   # redis_url: "redis://localhost:6379/1"
   # jwt_id_key: ENV.fetch('ANYCABLE_JWT_ID_KEY')
 
+  redis_url: <%= PgEngine.redis_url %>
+
 development:
   <<: *default
 
