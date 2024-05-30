@@ -36,6 +36,10 @@ class Email < ApplicationRecord
   include Hashid::Rails
   audited
 
+  after_commit do
+    associated.email_updated(self) if associated.respond_to? :email_updated
+  end
+
   attr_accessor :require_body_input
 
   has_one_attached :encoded_eml
@@ -63,7 +67,6 @@ class Email < ApplicationRecord
   validates :from_name, length: { within: 0..80 }
   validates :to, length: { within: 3..200 }
 
-  validates :body_input, length: { minimum: 10 }, if: -> { require_body_input }
   validates :body_input, presence: true, if: -> { require_body_input }
 
   validates :from_name, :subject, :to,
