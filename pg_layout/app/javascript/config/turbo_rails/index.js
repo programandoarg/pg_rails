@@ -3,7 +3,7 @@
 
 import './set_consumer'
 
-import "@hotwired/turbo-rails"
+import '@hotwired/turbo-rails'
 
 // TODO: testear con capybara
 document.addEventListener('turbo:before-cache', () => {
@@ -17,7 +17,6 @@ document.addEventListener('turbo:before-cache', () => {
     el.classList.remove('show')
   })
 })
-
 
 // document.addEventListener('turbo:before-stream-render', function () { console.log('turbo:before-stream-render') })
 // document.addEventListener('turbo:render', function () { console.log('turbo:render') })

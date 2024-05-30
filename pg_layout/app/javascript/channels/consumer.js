@@ -8,7 +8,7 @@ let cableProtocol = document.head.querySelector('meta[name=actioncable-protocol]
 cableProtocol = cableProtocol && cableProtocol.content
 cableProtocol = cableProtocol || 'actioncable-v1-ext-json'
 
-let consumer = createConsumer({
+const consumer = createConsumer({
   protocol: cableProtocol
 })
 

@@ -30,7 +30,7 @@ class EmailDecorator < PgEngine::BaseRecordDecorator
       'sent' => 'Enviando',
       'accepted' => 'Enviando',
       'delivered' => 'Entregado',
-      'rejected' => 'Falló',
+      'rejected' => 'Falló'
     }[object.status]
   end
 
