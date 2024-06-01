@@ -10,11 +10,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }, failure_app: PgEngine::DeviseFailureApp
   namespace :admin, path: 'a' do
-    pg_resource(:emails) do
-      collection do
-        get 'send'
-      end
-    end
+    pg_resource(:emails)
     pg_resource(:email_logs) do
       collection do
         post :mailgun_sync
