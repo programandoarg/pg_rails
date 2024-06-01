@@ -15,7 +15,8 @@ module Admin
     add_breadcrumb Email.nombre_plural, :admin_emails_path
 
     def new
-      render template: 'admin/emails/_send', layout: 'pg_layout/containerized'
+      render template: 'admin/emails/_send', locals: { email: @email },
+             layout: 'pg_layout/containerized'
     end
 
     def create
@@ -29,7 +30,8 @@ module Admin
         redirect_to @email.decorate.target_object
       else
         render template: 'admin/emails/_send',
-               layout: 'pg_layout/containerized', status: :unprocessable_entity
+               layout: 'pg_layout/containerized', status: :unprocessable_entity,
+               locals: { email: @email }
       end
     end
 

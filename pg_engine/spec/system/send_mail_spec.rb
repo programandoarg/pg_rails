@@ -22,7 +22,7 @@ fdescribe 'Enviar email' do
   end
 
   before do
-    driven_by :selenium
+    driven_by ENV['DRIVER']&.to_sym || :selenium_chrome_headless_iphone
     login_as create(:user, :developer)
     visit '/a/emails/new'
   end
