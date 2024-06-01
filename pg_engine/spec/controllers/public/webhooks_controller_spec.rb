@@ -26,7 +26,7 @@ def build_body(log_id, signature, timestamp)
   JSON
 end
 
-fdescribe Public::WebhooksController do
+describe Public::WebhooksController do
   include ActiveSupport::Testing::TimeHelpers
 
   before { travel_to Time.zone.at(1_716_564_587) }
@@ -61,7 +61,7 @@ fdescribe Public::WebhooksController do
         expect(response).to have_http_status(:internal_server_error)
       end
 
-      fit do
+      it do
         expect { subject }.to have_errored('internal server error')
           .and(have_errored('no me sirve'))
       end
@@ -75,7 +75,7 @@ fdescribe Public::WebhooksController do
         expect(response).to have_http_status(:bad_request)
       end
 
-      fit do
+      it do
         expect { subject }.to have_warned('parser error').and(have_warned('mal json'))
       end
     end
@@ -107,7 +107,7 @@ fdescribe Public::WebhooksController do
 
       it_behaves_like 'todo bien pero no guarda el log'
 
-      fit do
+      it do
         expect { subject }.to have_warned('refusing invalid signature')
       end
     end
@@ -123,7 +123,7 @@ fdescribe Public::WebhooksController do
 
       it_behaves_like 'todo bien pero no guarda el log'
 
-      fit do
+      it do
         expect { subject }.to have_warned('refusing used token')
       end
     end
@@ -134,7 +134,7 @@ fdescribe Public::WebhooksController do
 
       it_behaves_like 'todo bien pero no guarda el log'
 
-      fit do
+      it do
         expect { subject }.to have_warned('refusing due to timestamp')
       end
     end

@@ -96,4 +96,10 @@ module PgEngine
     db = (env_value.nil? ? 1 : (env_value.presence || 1)).to_i - 1
     "redis://127.0.0.1:6379/#{db}"
   end
+
+  GOOGLE_FONTS_URL =
+    <<~URL.chomp
+      https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;\
+      0,500;0,700;1,300;1,400;1,500;1,700&display=swap
+    URL
 end
