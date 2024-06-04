@@ -33,10 +33,12 @@ module PgEngine
 
       respond_to do |format|
         format.html do
-          render 'pg_layout/error', layout: 'pg_layout/containerized', status: :internal_server_error
+          render InternalErrorComponent.alert_wrapped(view_context),
+                  layout: 'pg_layout/centered'
         end
         format.turbo_stream do
-          flash.now[:critical] = self.class.render(partial: 'pg_layout/default_error_message')
+          flash.now[:critical] = InternalErrorComponent.new.render_in(view_context)
+
           render turbo_stream: (turbo_stream.remove_all('.modal') + render_turbo_stream_flash_messages),
                  status: :internal_server_error
         end
