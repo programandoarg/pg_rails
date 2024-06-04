@@ -1,5 +1,8 @@
 / slim-lint:disable LineLength
 - flash_to_show = flash.select { |fm| fm[0].to_sym.in?(ApplicationController._flash_types) && fm[1].present? }
 / slim-lint:enable LineLength
+
+- toast = flash[:toast]
 - flash_to_show.each do |flash_type, message|
-  = render partial: 'pg_layout/flash_inner', locals: { flash_type:, message:, toast: flash[:toast] }
+  = render AlertComponent.new(type: flash_type, toast:, dismissible: true) do
+    = message
