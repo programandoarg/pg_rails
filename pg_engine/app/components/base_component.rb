@@ -5,6 +5,8 @@ class BaseComponent < ViewComponent::Base
   end
 
   def self.alert_type
+    # :nocov:
     raise 'implement in subclass'
+    # :nocov:
   end
 end
