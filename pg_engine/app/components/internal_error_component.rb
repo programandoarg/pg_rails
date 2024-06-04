@@ -1,7 +1,6 @@
-class InternalErrorComponent < ViewComponent::Base
-  def self.alert_wrapped(view_context)
-    AlertComponent.new(type: :critical)
-                  .with_content(new.render_in(view_context))
+class InternalErrorComponent < BaseComponent
+  def self.alert_type
+    :critical
   end
 
   erb_template <<~ERB
