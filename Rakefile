@@ -92,28 +92,28 @@ end
 
 desc 'Fast pre push tasks'
 task :frepush do
-  if `git status -s` != ''
-    changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
-    system 'git add .'
-    system "git commit -m \"[autocommit] #{changes}\""
-  end
+  # if `git status -s` != ''
+  #   changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
+  #   system 'git add .'
+  #   system "git commit -m \"[autocommit] #{changes}\""
+  # end
 
   focuss = ENV['ALL'] ? '' : '-t focus'
   spring = ENV['SPRING'] ? 'spring' : ''
   # command = spring.present? ? 'rspec' : 'parallel_rspec'
   command = 'rspec'
-  system! "LCOV=true bundle exec #{spring} #{command} #{PATHS_TO_TEST} --fail-fast #{focuss}"
+  system! "LCOV=true CI=true bundle exec #{spring} #{command} #{PATHS_TO_TEST} --fail-fast #{focuss}"
 
   system! "undercover --compare origin/master"
 
-  if !ENV['KEEP_FOCUS']
-    system! "rubocop --only RSpec/Focus -A"
-    if `git status -s` != ''
-      changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
-      system 'git add .'
-      system "git commit -m \"[unfocus] #{changes}\""
-    end
-  end
+  # if !ENV['KEEP_FOCUS']
+  #   system! "rubocop --only RSpec/Focus -A"
+  #   if `git status -s` != ''
+  #     changes = `git diff --name-only`.split("\n").map {|f| f.split('/').last }.join(' ')
+  #     system 'git add .'
+  #     system "git commit -m \"[unfocus] #{changes}\""
+  #   end
+  # end
 
   Rake::Task['static_analysis'].invoke
 
