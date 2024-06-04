@@ -11,22 +11,17 @@ class AlertComponent < ViewComponent::Base
       ('position-absolute pg-toast' if @toast)
     ].join(' ')
     # TODO!: raise if type invalid?
+    super
   end
 
   def icon_class
-    case @type
-    when 'critical'
-      "bi-emoji-dizzy me-3 fs-2"
-      # "bi-exclamation-triangle-fill me-3 fs-2"
-    when 'alert'
-      "bi-exclamation-triangle-fill me-2"
-    when 'warning'
-      "bi-exclamation-circle me-2"
-    when 'success'
-      "bi-check-lg me-2"
-    when 'notice'
-      "bi-info-circle me-2"
-    end
+    {
+      'critical' => 'bi-emoji-dizzy me-3 fs-2',
+      'alert' => 'bi-exclamation-triangle-fill me-2',
+      'warning' => 'bi-exclamation-circle me-2',
+      'success' => 'bi-check-lg me-2',
+      'notice' => 'bi-info-circle me-2'
+    }[@type]
   end
 
   def flash_type_to_class

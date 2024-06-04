@@ -91,12 +91,12 @@ module PgEngine
 
     protected
 
-    def render_my_component(component, status)
+    def render_my_component(component, status) # rubocop:disable Metrics/AbcSize
       respond_to do |format|
         format.html do
           render component.alert_wrapped(view_context),
-                  layout: 'pg_layout/centered',
-                  status:
+                 layout: 'pg_layout/centered',
+                 status:
         end
 
         format.turbo_stream do
