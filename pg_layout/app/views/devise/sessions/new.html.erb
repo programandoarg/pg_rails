@@ -1,6 +1,7 @@
 <h2><%= t(".sign_in") %></h2>
 
-<%= render partial: 'pg_layout/flash_container' %>
+<%= render FlashContainerComponent.new %>
+
 <%= pg_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="form-inputs">
     <%= f.input :email,

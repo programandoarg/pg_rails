@@ -63,8 +63,10 @@ html
                 = yield(:actions)
             hr.my-0
           - content = content_for?(:content) ? yield(:content) : yield
-          - unless content.include? 'flash-wrapper'
-            = render partial: 'pg_layout/flash_container'
+          - unless content.include? 'flash-container'
+            = render FlashContainerComponent.new
+            / TODO: si hay varios flashes toast, se superponen. habría que 
+                    hacer un container con position absolute para los toasts
           = content
           div style="width:100%; height: 10em"
     = render_turbo_stream_title
