@@ -3,7 +3,7 @@
 class AlertComponent < ViewComponent::Base
   def initialize(type:, toast: false, dismissible: true)
     @type = type.to_s
-    unless @type.in? %w[critical alert warning success notice]
+    unless @type.in? ApplicationController._flash_types.map(&:to_s)
       raise PgEngine::Error, 'el type no es válido'
     end
 
@@ -39,7 +39,9 @@ class AlertComponent < ViewComponent::Base
     when 'success'
       'success'
     else
-      @type
+      # :nocov:
+      pg_err 'no debería pasar'
+      # :nocov:
     end
   end
 end

@@ -19,9 +19,7 @@
           span = type
     .col
       = render AlertComponent.new(type:, toast: true) do
-        span
-          = type
-          |< toast!
+        span Los toasts van a desaparecer
 = render AlertComponent.new(type: :critical) \
           .with_content(InternalErrorComponent.new.render_in(self))
 br
