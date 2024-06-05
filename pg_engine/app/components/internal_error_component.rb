@@ -1,4 +1,9 @@
 class InternalErrorComponent < BaseComponent
+  def initialize(error_msg: nil)
+    @error_msg = error_msg
+    super
+  end
+
   def self.alert_type
     :critical
   end
