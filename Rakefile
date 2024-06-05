@@ -99,11 +99,10 @@ task :frepush do
   #   system "git commit -m \"[autocommit] #{changes}\""
   # end
 
-  focuss = ENV['ALL'] ? '' : '-t focus'
-  spring = ENV['SPRING'] ? 'spring' : ''
+  focuss = ENV['FOCUS'] ? '-t focus' : ''
   # command = spring.present? ? 'rspec' : 'parallel_rspec'
   command = 'rspec'
-  system! "LCOV=true CI=true bundle exec #{spring} #{command} #{PATHS_TO_TEST} --fail-fast #{focuss}"
+  system! "LCOV=true EAGER_LOAD=true bundle exec #{command} #{PATHS_TO_TEST} --fail-fast #{focuss}"
 
   system! "undercover --compare origin/master"
 
@@ -124,8 +123,7 @@ rescue
 end
 
 desc 'Release all'
-task :release_all do
-  Rake::Task['release'].invoke
+task :release_all do Rake::Task['release'].invoke
   system! "npm pack --pack-destination pkg && npm publish"
 end
 
