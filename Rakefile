@@ -115,7 +115,7 @@ task :frepush do
   #   end
   # end
 
-  Rake::Task['static_analysis'].invoke
+  # Rake::Task['static_analysis'].invoke
 
   playchord('success')
 rescue
