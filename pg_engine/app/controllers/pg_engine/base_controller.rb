@@ -34,13 +34,13 @@ module PgEngine
     def internal_error(error)
       pg_err error
 
-      render_my_component(InternalErrorComponent, :internal_server_error)
+      render_my_component(InternalErrorComponent.new, :internal_server_error)
     end
 
     def invalid_authenticity_token(err)
       pg_warn err
 
-      render_my_component(BadRequestComponent, :bad_request)
+      render_my_component(BadRequestComponent.new, :bad_request)
     end
 
     before_action do
@@ -91,7 +91,7 @@ module PgEngine
 
     protected
 
-    def render_my_component(component, status) # rubocop:disable Metrics/AbcSize
+    def render_my_component(component, status)
       respond_to do |format|
         format.html do
           render component.alert_wrapped(view_context),
@@ -100,7 +100,7 @@ module PgEngine
         end
 
         format.turbo_stream do
-          flash.now[component.alert_type] = component.new.render_in(view_context)
+          flash.now[component.alert_type] = component.render_in(view_context)
 
           render turbo_stream: (turbo_stream.remove_all('.modal') +
                                 render_turbo_stream_flash_messages),

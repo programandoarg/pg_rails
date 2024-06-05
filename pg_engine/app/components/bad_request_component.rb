@@ -1,5 +1,5 @@
 class BadRequestComponent < BaseComponent
-  def self.alert_type
+  def alert_type
     :alert
   end
 

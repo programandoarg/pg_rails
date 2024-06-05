@@ -4,7 +4,7 @@ class InternalErrorComponent < BaseComponent
     super
   end
 
-  def self.alert_type
+  def alert_type
     :critical
   end
 
