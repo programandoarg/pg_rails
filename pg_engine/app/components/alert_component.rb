@@ -3,6 +3,10 @@
 class AlertComponent < ViewComponent::Base
   def initialize(type:, toast: false, dismissible: true)
     @type = type.to_s
+    unless @type.in? %w[critical alert warning success notice]
+      raise PgEngine::Error, 'el type no es válido'
+    end
+
     @toast = toast
     @dismissible = dismissible
     @klass = [
@@ -10,7 +14,7 @@ class AlertComponent < ViewComponent::Base
       ('alert-dismissible' if @dismissible),
       ('position-absolute pg-toast' if @toast)
     ].join(' ')
-    # TODO!: raise if type invalid?
+
     super
   end
 

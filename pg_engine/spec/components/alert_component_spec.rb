@@ -18,6 +18,14 @@ RSpec.describe AlertComponent, type: :component do
   end
 
   it do
-    expect(subject).to include 'pasaron cosas'
+    expect(subject).to have_text 'pasaron cosas'
+  end
+
+  context 'cuando el type no es válido' do
+    let(:type) { %w[info danger].sample }
+    
+    it do
+      expect { subject }.to raise_error(PgEngine::Error)
+    end
   end
 end
