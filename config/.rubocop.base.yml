@@ -22,6 +22,8 @@ RSpec/AnyInstance:
 
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
 
 RSpec/ContextWording:
   Enabled: false

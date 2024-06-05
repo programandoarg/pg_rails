@@ -3,9 +3,12 @@
 class AlertComponent < ViewComponent::Base
   def initialize(type:, toast: false, dismissible: true)
     @type = type.to_s
+
+    # rubocop:disable Style/IfUnlessModifier
     unless @type.in? ApplicationController._flash_types.map(&:to_s)
       raise PgEngine::Error, 'el type no es válido'
     end
+    # rubocop:enable Style/IfUnlessModifier
 
     @toast = toast
     @dismissible = dismissible

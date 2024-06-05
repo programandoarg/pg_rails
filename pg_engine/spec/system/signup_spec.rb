@@ -50,7 +50,7 @@ describe 'Al Registrarse' do
       visit '/users/edit'
     end
 
-    it do # rubocop:disable RSpec/MultipleExpectations
+    it do
       expect { subject }.to change { user.reload.nombre }.to('despues')
       expect(page).to have_text('Tu cuenta se ha actualizado')
     end
