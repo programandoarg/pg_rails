@@ -23,6 +23,9 @@ module PgEngine
     protect_from_forgery with: :exception
 
     rescue_from StandardError, with: :internal_error
+    rescue_from ActionController::InvalidAuthenticityToken,
+                with: :invalid_authenticity_token
+
     rescue_from Pundit::NotAuthorizedError, with: :not_authorized
     rescue_from Redirect do |e|
       redirect_to e.url
@@ -31,19 +34,13 @@ module PgEngine
     def internal_error(error)
       pg_err error
 
-      respond_to do |format|
-        format.html do
-          render 'pg_layout/error', layout: 'pg_layout/containerized', status: :internal_server_error
-        end
-        format.turbo_stream do
-          flash.now[:critical] = self.class.render(partial: 'pg_layout/default_error_message')
-          render turbo_stream: (turbo_stream.remove_all('.modal') + render_turbo_stream_flash_messages),
-                 status: :internal_server_error
-        end
-        format.any do
-          head :internal_server_error
-        end
-      end
+      render_my_component(InternalErrorComponent, :internal_server_error)
+    end
+
+    def invalid_authenticity_token(err)
+      pg_warn err
+
+      render_my_component(BadRequestComponent, :bad_request)
     end
 
     before_action do
@@ -93,6 +90,28 @@ module PgEngine
     end
 
     protected
+
+    def render_my_component(component, status) # rubocop:disable Metrics/AbcSize
+      respond_to do |format|
+        format.html do
+          render component.alert_wrapped(view_context),
+                 layout: 'pg_layout/centered',
+                 status:
+        end
+
+        format.turbo_stream do
+          flash.now[component.alert_type] = component.new.render_in(view_context)
+
+          render turbo_stream: (turbo_stream.remove_all('.modal') +
+                                render_turbo_stream_flash_messages),
+                 status:
+        end
+
+        format.any do
+          head status
+        end
+      end
+    end
 
     def not_authorized(_arg_required_for_active_admin)
       respond_to do |format|

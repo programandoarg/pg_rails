@@ -1,0 +1,6 @@
+- content_for :content do
+  .container-fluid.pt-3
+    .text-center
+      = content_for?(:centered_content) ? yield(:centered_content) : yield
+
+= render template: 'layouts/pg_layout/base'

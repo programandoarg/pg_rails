@@ -43,7 +43,7 @@ describe 'Sign in' do
       visit "/frontend/cosas/#{cosa.to_param}"
     end
 
-    it do # rubocop:disable RSpec/MultipleExpectations
+    it do
       subject
       expect(page).to have_current_path('/frontend/cosas')
       expect(page).to have_text('Coso borrado')

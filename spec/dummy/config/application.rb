@@ -15,6 +15,9 @@ module Dummy
     # For compatibility with applications that use this config
     config.action_controller.include_all_helpers = true
 
+    config.view_component.preview_paths <<
+      "#{PgEngine::Engine.root}/spec/components/previews"
+
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.

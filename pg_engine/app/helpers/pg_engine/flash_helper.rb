@@ -9,20 +9,5 @@ module PgEngine
       turbo_stream.update_all 'title', title
       # rubocop:enable Rails/SkipsModelValidations
     end
-
-    def flash_type_to_class(flash_type)
-      case flash_type
-      when 'notice'
-        'info'
-      when 'critical', 'alert'
-        'danger'
-      when 'warning'
-        'warning'
-      when 'success'
-        'success'
-      else
-        flash_type
-      end
-    end
   end
 end

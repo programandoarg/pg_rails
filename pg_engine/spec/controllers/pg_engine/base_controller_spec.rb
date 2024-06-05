@@ -20,10 +20,9 @@ class DummyBaseController < PgEngine::BaseController
   end
 end
 
-# rubocop:disable RSpec/MultipleExpectations
 # rubocop:disable RSpec/FilePath
 # rubocop:disable RSpec/SpecFilePathFormat
-describe DummyBaseController do
+fdescribe DummyBaseController do
   render_views
 
   describe 'PgEngine::BaseController::Redirect' do

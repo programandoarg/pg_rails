@@ -50,6 +50,7 @@ require 'redis'
 require 'kredis'
 require 'mailgun-ruby'
 require 'pg_search'
+require 'view_component'
 
 if Rails.env.local?
   require 'letter_opener'

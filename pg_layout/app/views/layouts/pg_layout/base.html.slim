@@ -45,13 +45,15 @@ html
       }
 
   body
-    = render partial: 'pg_layout/sidebar_mobile'
+    - sidebar_present = @navbar.present? && @sidebar != false
+    - if sidebar_present
+      = render partial: 'pg_layout/sidebar_mobile'
 
-    div class="#{ @sidebar == false ? '' : 'with-sidebar' }"
-      - unless @sidebar == false
+    div class="#{ 'with-sidebar' if sidebar_present }"
+      - if sidebar_present
         = render partial: 'pg_layout/sidebar'
       div
-        = render partial: 'pg_layout/navbar'
+        = render partial: 'pg_layout/navbar' if @navbar.present?
         div
           - if user_signed_in? && breadcrumbs.any?
             .d-flex.align-items-center.justify-content-between.px-3.py-1.d-print-none[
@@ -63,8 +65,10 @@ html
                 = yield(:actions)
             hr.my-0
           - content = content_for?(:content) ? yield(:content) : yield
-          - unless content.include? 'flash-wrapper'
-            = render partial: 'pg_layout/flash_container'
+          - unless content.include? 'flash-container'
+            = render FlashContainerComponent.new
+            / TODO: si hay varios flashes toast, se superponen. habría que
+                    hacer un container con position absolute para los toasts
           = content
           div style="width:100%; height: 10em"
     = render_turbo_stream_title

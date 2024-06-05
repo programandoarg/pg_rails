@@ -1,0 +1,29 @@
+= render FlashContainerComponent.new do
+  = render AlertComponent.new(type: :critical, toast: false) do
+    | Mal las cosas
+  = render AlertComponent.new(type: :success, toast: false) do
+    | Un simple flash success
+  = render AlertComponent.new(type: :alert, toast: true) \
+            .with_content(BadRequestComponent.new.render_in(self))
+.row
+  .col Dismissible
+  .col No dismissible
+  .col
+    div Toasts
+    p cuando se agregan dinámicamente, tienen que estar dentro de #flash
+- %i[alert warning notice success critical].each do |type|
+  .row
+    - [true, false].each do |dismissible|
+      .col
+        = render AlertComponent.new(type:, dismissible:) do
+          span = type
+    .col
+      = render AlertComponent.new(type:, toast: true) do
+        span Los toasts van a desaparecer
+= render AlertComponent.new(type: :critical) \
+          .with_content(InternalErrorComponent.new.render_in(self))
+br
+= render AlertComponent.new(type: :alert) \
+          .with_content(BadRequestComponent.new.render_in(self))
+
+div style="margin-top: 40em" cosas

@@ -2,7 +2,6 @@ class ApplicationController < PgEngine::BaseController
   include ActionView::Helpers::AssetTagHelper
 
   before_action do
-    # flash.now[:critical] = self.class.render(partial: 'pg_layout/default_error_message')
     # flash.now[:toast] = true
     @navbar.logo = ApplicationController.render(
       partial: 'layouts/logo', locals: { image_url: 'logo-navbar-1.png', href: root_path }
