@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   #   raise 'RubyGems 2.0 or newer is required to protect against ' \
   #     'public gem pushes.'
   # end
-  spec.add_dependency 'rails', "~> 7.1.3.2"
+  spec.add_dependency 'rails', "~> 7.1.3.4"
   spec.add_dependency 'anycable', "= 1.5.0"
   spec.add_dependency 'anycable-rails', "~> 1.5.1"
   spec.add_dependency 'anycable-rails-jwt', "~> 0.2.0"
@@ -88,7 +88,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'turbo-rails', "~> 2.0"
 
-  spec.add_dependency 'activeadmin', "~> 3.2.0"
+  spec.add_dependency 'activeadmin', "~> 3.2.2"
 
   spec.add_dependency 'sassc', "~> 2.4.0"
 
