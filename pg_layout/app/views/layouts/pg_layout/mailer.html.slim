@@ -2,8 +2,8 @@ html
   body style="font-family: sans-serif"
     = yield
 
-    footer style="margin-top: 2em;"
-      - if @footer_href.present?
+    - if @footer_href.present?
+      footer style="margin-top: 2em;"
         = link_to @footer_href, rel: 'noreferrer', target: :_blank do
           - if @footer_image_src.present?
             = image_tag @footer_image_src, alt: @footer_image_alt
