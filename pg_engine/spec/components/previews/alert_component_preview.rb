@@ -5,4 +5,6 @@ class AlertComponentPreview < ViewComponent::Preview
   def default; end
 
   def dismisible; end
+
+  def colours; end
 end
