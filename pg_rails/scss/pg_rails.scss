@@ -11,11 +11,15 @@ $teal:    #20c997 !default;
 $cyan:    #0dcaf0 !default;
 
 // Overriding some of the default colours
+$yellow:       #ffb401;
 $orange:       #e35b17;
 $red:          #a70101;
 
-$warning:      $orange;
+$warning:      $yellow;
 $info:         #87accc;
+
+$warning-text-emphasis:  $orange;
+$danger-text-emphasis:   #910303;
 
 $font-size-base: 0.9rem;
 $enable-validation-icons:       false;
