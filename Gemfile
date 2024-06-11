@@ -16,3 +16,5 @@ gem "bootsnap", require: false
 group :development, :test do
   gem 'parallel_tests'
 end
+
+gem "noticed", "~> 2.3"

@@ -361,6 +361,8 @@ GEM
     nio4r (2.7.0)
     nokogiri (1.16.5-x86_64-linux)
       racc (~> 1.4)
+    noticed (2.3.2)
+      rails (>= 6.1.0)
     orm_adapter (0.5.0)
     overcommit (0.61.0)
       childprocess (>= 0.6.3, < 5)
@@ -610,6 +612,7 @@ DEPENDENCIES
   factory_bot_rails (~> 6.4.3)
   faker (~> 3.2.3)
   letter_opener (~> 1.8.1)
+  noticed (~> 2.3)
   overcommit (~> 0.61.0)
   parallel_tests
   pg_rails!
