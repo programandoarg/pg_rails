@@ -11,7 +11,7 @@ end
 
 newversion = ARGV[0] || raise('usage: bumpto version')
 
-MAIN_BRANCH = 'master'
+MAIN_BRANCH = 'main'
 current_branch = `git branch --show-current`
 
 if current_branch != "#{MAIN_BRANCH}\n" && !ENV['DONT_REBASE']
@@ -38,7 +38,7 @@ system! "git commit -m 'Version #{newversion}'"
 system! 'bundle exec rake release_all'
 
 proj = ENV['UPGRADE_PROJECT_AFTER_PGRAILS']
-if proj
+if proj && proj.length > 0 && !ENV['SKIP_AFTER']
   SECONDS = 30
   puts "Dandole tiempo a rubygems para que actualice para actualizar #{proj}"
   SECONDS.times.each do |i|

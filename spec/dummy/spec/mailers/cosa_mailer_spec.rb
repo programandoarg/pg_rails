@@ -76,7 +76,7 @@ RSpec.describe CosaMailer do
       it 'renders the body' do
         subject
 
-        expect(mail.body.encoded).to include(root_url(m: email_object.hashid))
+        expect(mail.body.encoded).to include(root_url)
       end
 
       context 'cuando falla el observer' do

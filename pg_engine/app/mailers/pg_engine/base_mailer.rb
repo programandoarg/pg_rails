@@ -28,7 +28,6 @@ module PgEngine
     protected
 
     def mail(*args)
-      @footer_href = root_url(m: @email_object&.hashid)
       super(*args).tap do |message|
         # message.mailgun_options = {
         #   'tag' => email.tags,

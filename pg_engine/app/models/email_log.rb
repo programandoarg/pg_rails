@@ -19,7 +19,6 @@
 #
 #  fk_rails_...  (email_id => emails.id)
 #
-# generado con pg_rails
 
 class EmailLog < ApplicationRecord
   audited

@@ -104,7 +104,7 @@ task :frepush do
   command = 'rspec'
   system! "LCOV=true EAGER_LOAD=true bundle exec #{command} #{PATHS_TO_TEST} --fail-fast #{focuss}"
 
-  system! "undercover --compare origin/master"
+  system! "undercover --compare origin/main"
 
   # if !ENV['KEEP_FOCUS']
   #   system! "rubocop --only RSpec/Focus -A"
