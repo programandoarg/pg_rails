@@ -38,6 +38,7 @@ class User < ApplicationRecord
 
   has_many :user_accounts
   has_many :accounts, through: :user_accounts
+  has_many :notifications, as: :recipient, class_name: 'Noticed::Notification'
 
   validates :nombre, :apellido, presence: true
 

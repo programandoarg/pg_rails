@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-<%= @breakpoint_navbar_expand %>" data-bs-theme="dark">
   <div class="container-fluid">
     <% unless @sidebar == false %>
-      <button data-controller="navbar" data-action="navbar#expandNavbar" class="btn btn-outline-light me-2 d-none d-<%= @breakpoint_navbar_expand %>-inline-block">
+      <button data-controller="navbar" data-action="navbar#expandNavbar"
+              class="btn btn-outline-light me-2 d-none d-<%= @breakpoint_navbar_expand %>-inline-block">
         <i class="bi <%= @navbar_chevron_class %>"></i>
       </button>
 
@@ -9,12 +10,25 @@
     <% @navbar.extensiones.each do |extension| %>
       <%= extension %>
     <% end %>
+    <button type="button" class="btn btn-primary btn-sm position-relative noticed">
+      <i class="bi-bell-fill fs-5 text-light"></i>
+      <% if @unread_notifications %>
+        <span class="position-absolute p-1 bg-danger bg-gradient rounded-circle start-50 unread">
+          <span class="visually-hidden">New alerts</span>
+        </span>
+      <% end %>
+    </button>
     <%= @navbar.logo if @navbar.logo.present? %>
-    <button class="btn btn-outline-light d-inline-block d-<%= @breakpoint_navbar_expand %>-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+    <button class="btn btn-outline-light d-inline-block d-<%= @breakpoint_navbar_expand %>-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
       <i class="bi bi-list"></i>
     </button>
   </div>
 </nav>
+
+<%= render NotificationComponent.with_collection(@notifications) if @notifications&.any? %>
 
 <style type="text/css" media="(max-width: 767px)">
   .navbar .navbar-brand {

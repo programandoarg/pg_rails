@@ -17,7 +17,11 @@ class SimpleUserNotifier < ApplicationNotifier
   # deliver_by :custom do |config|
   #   config.class = "MyDeliveryMethod"
   # end
-
+  notification_methods do
+    def message
+      params[:message]
+    end
+  end
   # Add required params
   #
   required_param :message
