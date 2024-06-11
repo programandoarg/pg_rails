@@ -46,7 +46,8 @@ commands:
       - run:
           name: Set Up Database
           command: |
-            bundle exec rails db:schema:load
+            #bundle exec rails db:schema:load
+            RAILS_ENV=test bundle exec rails db:migrate
 orbs:
   browser-tools: circleci/browser-tools@1.4
   node: circleci/node@5.2.0
@@ -94,7 +95,6 @@ jobs:
           command: |
             ./cc-test-reporter before-build
             export PARALLEL_TEST_PROCESSORS=4
-            #RAILS_ENV=test bundle exec rails db:migrate
             yarn install
             yarn build
             yarn build:css
