@@ -1,6 +1,6 @@
 # To deliver this notification:
 #
-# SimpleUserNotifier.with(record: @post, message: "New post").deliver(User.all)
+# SimpleUserNotifier.with(message: "New post").deliver(User.all, enqueue_job: false)
 
 class SimpleUserNotifier < ApplicationNotifier
   # Add your delivery methods

@@ -81,8 +81,8 @@ module PgEngine
       end
 
       if Current.user.present?
-        @notifications = Current.user.notifications
-        @unread_notifications = @notifications.unread.any?
+        @notifications = Current.user.notifications.order(id: :desc)
+        @unseen_notifications = @notifications.unseen.any?
       end
     end
 

@@ -1,5 +1,8 @@
 @use 'sass:color';
 
+@import 'notifications';
+
+
 :root,
 [data-bs-theme=light] {
   --bs-form-invalid-color: #b50000;

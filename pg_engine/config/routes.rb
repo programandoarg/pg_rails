@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     confirmations: 'users/confirmations',
     registrations: 'users/registrations'
   }, failure_app: PgEngine::DeviseFailureApp
+  namespace :users, path: 'u' do
+    post 'notifications/mark_as_seen', to: 'notifications#mark_as_seen'
+  end
   namespace :admin, path: 'a' do
     pg_resource(:emails)
     pg_resource(:email_logs) do

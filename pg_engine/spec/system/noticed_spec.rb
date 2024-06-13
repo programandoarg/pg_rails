@@ -15,18 +15,18 @@ describe 'Notifications' do
   context 'no notifications' do
     it do
       subject
-      expect(page).to have_no_css('.noticed .unread')
+      expect(page).to have_no_css('.noticed .unseen')
     end
   end
 
-  context 'with unread notifications' do
+  context 'with unseen notifications' do
     before do
       SimpleUserNotifier.with(message: 'probandooo').deliver(User.all)
     end
 
     it do
       subject
-      expect(page).to have_css('.noticed .unread')
+      expect(page).to have_css('.noticed .unseen')
     end
   end
 

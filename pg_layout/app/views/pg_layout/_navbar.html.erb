@@ -10,14 +10,16 @@
     <% @navbar.extensiones.each do |extension| %>
       <%= extension %>
     <% end %>
-    <button type="button" class="btn btn-primary btn-sm position-relative noticed">
-      <i class="bi-bell-fill fs-5 text-light"></i>
-      <% if @unread_notifications %>
-        <span class="position-absolute p-1 bg-danger bg-gradient rounded-circle start-50 unread">
-          <span class="visually-hidden">New alerts</span>
-        </span>
-      <% end %>
-    </button>
+    <% if Current.user.present? %>
+      <button type="button" class="btn btn-primary btn-sm position-relative"
+                            data-bs-toggle="collapse" data-bs-target="#notifications-collapse">
+        <i class="bi-bell-fill fs-5 text-light"></i>
+        <% if @unseen_notifications %>
+          <span class="position-absolute p-1 xbg-danger bg-gradient rounded-circle start-50 notifications-unseen-mark">
+          </span>
+        <% end %>
+      </button>
+    <% end %>
     <%= @navbar.logo if @navbar.logo.present? %>
     <button class="btn btn-outline-light d-inline-block d-<%= @breakpoint_navbar_expand %>-none"
             type="button"
@@ -27,8 +29,24 @@
     </button>
   </div>
 </nav>
-
-<%= render NotificationComponent.with_collection(@notifications) if @notifications&.any? %>
+<div class="collapse" id="notifications-collapse" data-controller="notifications">
+  <div id="notifications">
+    <div id="notifications-inner">
+      <% if @notifications.any? %>
+        <%= render NotificationComponent.with_collection(@notifications) if @notifications&.any? %>
+      <% else %>
+        <span class="text-light">
+          No hay notificaciones
+        </span>
+      <% end %>
+      <div class="text-center">
+        <button type="button" class="btn btn-link text-light btn-sm" data-bs-toggle="collapse" data-bs-target="#notifications-collapse">
+          <i class="bi-chevron-up fs-3"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <style type="text/css" media="(max-width: 767px)">
   .navbar .navbar-brand {
