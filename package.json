@@ -1,6 +1,6 @@
 {
   "name": "pg_rails",
-  "version": "7.0.8-alpha.97",
+  "version": "7.0.8-alpha.98",
   "dependencies": {
     "@anycable/web": "0.8.0",
     "@rails/request.js": "^0.0.9",
