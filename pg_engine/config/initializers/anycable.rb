@@ -10,4 +10,7 @@ if defined?(AnyCable::Rails)
   AnyCable::Rails::Rack.middleware.use Warden::Manager do |config|
     Devise.warden_config = config
   end
+
+  # Lo dejo comentado porque no sé si hará falta
+  # AnyCable::Rails.extend_adapter!(ActionCable.server.pubsub) unless AnyCable::Rails.enabled?
 end
