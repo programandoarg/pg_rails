@@ -106,6 +106,9 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'view_component', '~> 3.12.1'
 
+  # Notifications
+  spec.add_dependency 'noticed', '~> 2.3'
+
   ### Development dependencies
   #---------------------------
   # VCR
