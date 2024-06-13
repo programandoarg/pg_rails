@@ -27,6 +27,8 @@ describe 'Notifications' do
     it do
       subject
       expect(page).to have_css('.notifications-unseen-mark')
+      find('.bi-bell-fill').click
+      expect(page).to have_no_css('.notifications-unseen-mark', wait: 5)
     end
   end
 
