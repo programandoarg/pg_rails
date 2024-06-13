@@ -1,0 +1,49 @@
+#notifications {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+  background-color: #6a2a05;
+  padding: 1.5em 5px;
+}
+
+#notifications-inner {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+.notification {
+  border: 1px solid #0003;
+  border-radius: 2px;
+  position: relative;
+  padding: 0.3em 2.5em;
+  xpadding-left: 2.5em;
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+.notification:not(.unseen) {
+  xcolor: #646464;
+}
+.notification.unseen {
+  background-color: rgb(230, 225, 251);
+}
+.notification.unseen::before {
+  content: '';
+  padding: 5px;
+  left: 1em;
+  vertical-align: middle;
+  position: absolute;
+  background-color: #079510;
+  border-radius: 50%;
+}
+.notifications-unseen-mark {
+  border: 1px solid #ffffff9d;
+  //background-color: #ea3d2b !important;
+  background-color: #079510;
+}
+.notification--time {
+  font-size: 0.8em;
+  min-width: 6em;
+}

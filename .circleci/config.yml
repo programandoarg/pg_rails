@@ -93,8 +93,19 @@ jobs:
           name: Run tests
           command: |
             ./cc-test-reporter before-build
-            bundle exec rake test_prepare
-            ./cc-test-reporter after-build --coverage-input-type simplecov --exit-code $?
+            export PARALLEL_TEST_PROCESSORS=4
+            #RAILS_ENV=test bundle exec rails db:migrate
+            yarn install
+            yarn build
+            yarn build:css
+            bundle exec rake app:assets:precompile
+            export LCOV=true
+            # bundle exec parallel_rspec --runtime-log spec/parallel_runtime_rspec.log
+            bundle exec rspec spec pg_scaffold/spec pg_associable/spec pg_engine/spec pg_layout
+            gem install undercover
+            undercover --compare origin/main
+            cp coverage/lcov/project.lcov coverage/lcov.info
+            ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $?
 workflows:
   build-test:
     jobs:

@@ -79,6 +79,11 @@ module PgEngine
       if Rollbar.configuration.enabled && Rails.application.credentials.rollbar.present?
         @rollbar_token = Rails.application.credentials.rollbar.access_token_client
       end
+
+      if Current.user.present?
+        @notifications = Current.user.notifications.order(id: :desc)
+        @unseen_notifications = @notifications.unseen.any?
+      end
     end
 
     def mobile_device?
