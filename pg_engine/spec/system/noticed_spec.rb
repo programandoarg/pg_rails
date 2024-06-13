@@ -15,7 +15,7 @@ describe 'Notifications' do
   context 'no notifications' do
     it do
       subject
-      expect(page).to have_no_css('.noticed .unseen')
+      expect(page).to have_no_css('.notifications-unseen-mark')
     end
   end
 
@@ -26,7 +26,7 @@ describe 'Notifications' do
 
     it do
       subject
-      expect(page).to have_css('.noticed .unseen')
+      expect(page).to have_css('.notifications-unseen-mark')
     end
   end
 
