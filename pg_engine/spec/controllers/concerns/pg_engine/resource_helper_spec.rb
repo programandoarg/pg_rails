@@ -3,6 +3,25 @@ require 'rails_helper'
 describe PgEngine::Resource do
   let(:instancia) { Admin::CategoriaDeCosasController.new }
 
+  describe '#buscar_instancia cuando no existe el record' do
+    subject do
+      instancia.send(:buscar_instancia)
+    end
+
+    let(:request) { double }
+
+    before do
+      allow(request).to receive_messages(filtered_parameters: { id: 321 },
+                                         parameters: { id: 321 })
+      allow(instancia).to receive(:request).and_return(request)
+      instancia.set_clase_modelo
+    end
+
+    fit do
+      expect(subject).to raise_error(PgEngine::PageNotFoundError)
+    end
+  end
+
   describe '#buscar_instancia' do
     subject do
       instancia.send(:buscar_instancia)

@@ -22,7 +22,7 @@ end
 
 # rubocop:disable RSpec/FilePath
 # rubocop:disable RSpec/SpecFilePathFormat
-fdescribe DummyBaseController do
+describe DummyBaseController do
   render_views
 
   describe 'PgEngine::BaseController::Redirect' do

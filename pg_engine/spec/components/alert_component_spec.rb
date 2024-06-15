@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.fdescribe AlertComponent, type: :component do
+RSpec.describe AlertComponent, type: :component do
   subject do
     render_inline(alert).to_html
   end

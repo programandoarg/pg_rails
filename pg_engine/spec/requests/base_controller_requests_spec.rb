@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-fdescribe 'Base requests' do
+describe 'Base requests' do
   describe 'invalid authenticity token' do
     subject { get '/admin/cosas', headers: }
 

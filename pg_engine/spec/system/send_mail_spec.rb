@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-fdescribe 'Enviar email' do
+describe 'Enviar email' do
   include ActiveJob::TestHelper
 
   subject do

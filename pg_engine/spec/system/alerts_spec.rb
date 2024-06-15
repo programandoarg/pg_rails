@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-fdescribe 'Alertas' do
+describe 'Alertas' do
   before do
     driven_by ENV['DRIVER']&.to_sym || :selenium_chrome_headless_iphone
   end
