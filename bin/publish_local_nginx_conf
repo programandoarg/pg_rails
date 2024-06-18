@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+sudo su -c 'APP_ROOT=`pwd`/spec/dummy envsubst < config/nginx.local.conf > /etc/nginx/sites-enabled/pg_rails.conf'
+

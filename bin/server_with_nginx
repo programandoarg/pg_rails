@@ -1,0 +1,2 @@
+#!/bin/bash
+bundle exec puma -b unix://tmp/local.sock -v --debug --dir spec/dummy
