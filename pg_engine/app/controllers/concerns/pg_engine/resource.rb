@@ -218,6 +218,8 @@ module PgEngine
       else
         @clase_modelo.find(params[:id])
       end
+    rescue ActiveRecord::RecordNotFound
+      raise PgEngine::PageNotFoundError
     end
 
     def set_instancia_modelo

@@ -2,6 +2,10 @@ include PgEngine::RouteHelpers
 
 Rails.application.routes.draw do
   get "pg_engine/health" => "pg_engine/health#show", as: :pg_engine_health_check
+
+  get '404', to: 'pg_engine/base#page_not_found'
+  get '500', to: 'pg_engine/base#internal_error'
+
   namespace :public, path: '' do
     pg_resource(:mensaje_contactos, only: [:new, :create], path: 'contacto')
     post 'webhook/mailgun', to: 'webhooks#mailgun'

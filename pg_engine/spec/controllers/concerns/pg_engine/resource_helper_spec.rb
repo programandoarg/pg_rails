@@ -18,7 +18,7 @@ describe PgEngine::Resource do
     end
 
     fit do
-      expect(subject).to raise_error(PgEngine::PageNotFoundError)
+      expect { subject }.to raise_error(PgEngine::PageNotFoundError)
     end
   end
 

@@ -13,6 +13,10 @@ module PgEngine
       g.fallbacks[:pg_active_record] = :active_record
     end
 
+    initializer 'pg_engine.set_exceptions_app' do
+      Rails.application.config.exceptions_app = Rails.application.routes
+    end
+
     initializer 'pg_engine.set_factory_paths', after: 'factory_bot.set_factory_paths' do
       # Para que tome las factories de pg_engine/spec/factories
       # además de las de dummy/spec/factories
