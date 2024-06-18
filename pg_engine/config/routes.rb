@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get '404', to: 'pg_engine/base#page_not_found'
   get '500', to: 'pg_engine/base#internal_error'
+  get 'internal_error_but_with_status200', to: 'pg_engine/base#internal_error_but_with_status200'
 
   namespace :public, path: '' do
     pg_resource(:mensaje_contactos, only: [:new, :create], path: 'contacto')

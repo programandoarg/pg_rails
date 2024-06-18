@@ -48,6 +48,11 @@ module PgEngine
       render_my_component(PageNotFoundComponent.new, :not_found)
     end
 
+    # Para cachear el html y guardarlo en public/500.html
+    def internal_error_but_with_status200
+      render_my_component(InternalErrorComponent.new, :ok)
+    end
+
     before_action do
       Current.user = current_user
     end
