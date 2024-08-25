@@ -3,8 +3,8 @@ module PgAssociable
     MAX_RESULTS = 8
 
     def pg_respond_abrir_modal
-      content = FormModalComponent.new(@clase_modelo.new.decorate)
-                                  .render_in(view_context)
+      src = @clase_modelo.new.decorate.new_object_url
+      content = ModalContentComponent.new(src:).render_in(view_context)
       modal = AsociableModalComponent.new(modal_id: params[:id]).with_content(content)
       render turbo_stream: turbo_stream.append_all('body', modal)
     end

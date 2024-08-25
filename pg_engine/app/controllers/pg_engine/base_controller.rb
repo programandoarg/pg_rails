@@ -3,6 +3,10 @@
 module PgEngine
   # rubocop:disable Rails/ApplicationController
   class BaseController < ActionController::Base
+    before_action do
+      Current.controller = self
+    end
+
     # rubocop:enable Rails/ApplicationController
     include Pundit::Authorization
     include PrintHelper
@@ -10,6 +14,7 @@ module PgEngine
     include FlashHelper
     include RouteHelper
     include PgAssociable::Helpers
+    include FrameHelper
 
     class Redirect < PgEngine::Error
       attr_accessor :url

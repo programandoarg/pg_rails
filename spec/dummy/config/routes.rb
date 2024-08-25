@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   end
   namespace :admin do
     pg_resource(:cosas)
-    pg_resource(:categoria_de_cosas)
+    pg_resource(:categoria_de_cosas) do
+      pg_resource(:cosas)
+    end
   end
   root "admin/categoria_de_cosas#index"
 

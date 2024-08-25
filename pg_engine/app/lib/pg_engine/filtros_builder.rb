@@ -64,11 +64,12 @@ module PgEngine
       @filtros[campo][:scope_asociacion] = block
     end
 
+    # FIXME: deprecar
     def filtrar(query, parametros = nil)
-      parametros = parametros_controller if parametros.nil?
+      parametros_controller if parametros.nil?
 
       # Filtro soft deleted
-      query = query.kept if query.respond_to?(:kept) && parametros[:archived] != 'true'
+      query = query.kept if query.respond_to?(:kept)
 
       query
     end

@@ -169,6 +169,11 @@ export default class extends Controller {
         </ul>
       </div>
     )
+
+    // Quito el modal
+    if (this.modalOutlets.length > 0) {
+      this.modalOutlet.remove()
+    }
   }
 
   mostrarError () {

@@ -3,7 +3,7 @@
     .d-flex.align-items-center.px-3.py-2
       .px-2.d-none.d-sm-inline-block
         span.bi.bi-funnel-fill
-      = helpers.search_form_for @q, url: url_for, html: { 'data-turbo-action': :advance } do |f|
+      = helpers.search_form_for @q, url: url_for do |f|
         .row.g-1
           .col
             .row.g-1

@@ -14,6 +14,8 @@ module PgEngine
     before_update :setear_actualizado_por
 
     class << self
+      # This is a per class variable, all subclasses of BaseRecord inherit it
+      # and the values are independent between all of them
       attr_accessor :default_modal
     end
 

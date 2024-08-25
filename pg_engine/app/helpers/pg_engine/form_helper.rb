@@ -2,10 +2,6 @@
 
 module PgEngine
   module FormHelper
-    def using_modal?
-      @using_modal || controller.instance_variable_get(:@using_modal)
-    end
-
     # rubocop:disable Metrics/CyclomaticComplexity
     def pg_form_for(object, *args, &block_passed)
       resource = object
@@ -39,7 +35,6 @@ module PgEngine
       block_with_additives = lambda do |f|
         ret = ''.html_safe
         ret += f.mensajes_de_error if options[:render_errors]
-        # ret += hidden_field_tag(:using_modal, true) if using_modal?
         ret += capture(f, &block_passed)
         ret
       end

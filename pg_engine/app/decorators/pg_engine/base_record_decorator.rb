@@ -64,28 +64,24 @@ module PgEngine
     def edit_link(text: ' Modificar', klass: 'btn-warning')
       return unless Pundit.policy!(Current.user, object).edit?
 
-      start_modal = !helpers.using_modal? && object.class.default_modal
-
       helpers.content_tag :span, rel: :tooltip, title: 'Modificar' do
-        helpers.link_to edit_object_url + url_suffix(start_modal:), class: "btn btn-sm #{klass}",
-                                                                    'data-turbo-stream': start_modal do
+        helpers.link_to edit_object_url,
+                        class: "btn btn-sm #{klass}",
+                        'data-turbo-frame': 'modal_content',
+                        'data-turbo-stream': true do
           helpers.content_tag(:span, nil, class: clase_icono('pencil')) + text
         end
       end
     end
 
-    def url_suffix(start_modal: nil)
-      start_modal ? '?start_modal=true' : ''
-    end
-
     def show_link(text: '', klass: 'btn-light')
       return unless Pundit.policy!(Current.user, object).show?
 
-      start_modal = !helpers.using_modal? && object.class.default_modal
-
       helpers.content_tag :span, rel: :tooltip, title: 'Ver' do
-        helpers.link_to object_url + url_suffix(start_modal:), class: "btn btn-sm #{klass}",
-                                                               'data-turbo-stream': start_modal do
+        helpers.link_to object_url,
+                        class: "btn btn-sm #{klass}",
+                        'data-turbo-frame': 'modal_content',
+                        'data-turbo-stream': true do
           helpers.content_tag(:span, nil, class: clase_icono('eye-fill')) + text
         end
       end
@@ -105,11 +101,11 @@ module PgEngine
     def new_link(klass: 'btn-warning')
       return unless Pundit.policy!(Current.user, object).new?
 
-      start_modal = !helpers.using_modal? && object.class.default_modal
-
       helpers.content_tag :span, rel: :tooltip, title: submit_default_value do
-        helpers.link_to(new_object_url + url_suffix(start_modal:), class: "btn btn-sm #{klass}",
-                                                                   'data-turbo-stream': start_modal) do
+        helpers.link_to(new_object_url,
+                        class: "btn btn-sm #{klass}",
+                        'data-turbo-frame': 'modal_content',
+                        'data-turbo-stream': true) do
           helpers.content_tag(:span, nil,
                               class: clase_icono('plus').to_s) + "<span class='d-none d-sm-inline'> #{submit_default_value}</span>".html_safe
         end
@@ -128,13 +124,21 @@ module PgEngine
       helpers.url_for(target_object)
     end
 
+    def nested_record
+      # TODO: esto es raro
+      return if Current.controller&.nested_record.nil? ||
+                Current.controller.nested_record.instance_of?(object.class)
+
+      Current.controller.nested_record
+    end
+
     def target_object
-      pg_namespace.present? ? [pg_namespace, object] : object
+      [pg_namespace, nested_record, object].compact
     end
 
     def target_new
       mod_name_sing = object.class.model_name.singular.to_sym
-      pg_namespace.present? ? [:new, pg_namespace, mod_name_sing] : [:new, mod_name_sing]
+      [:new, pg_namespace, nested_record, mod_name_sing]
     end
 
     def target_index

@@ -5,17 +5,11 @@
 module Admin
   class CategoriaDeCosasController < AdminController
     include PgEngine::Resource
-
-    before_action :set_clase_modelo
-    def set_clase_modelo
-      @clase_modelo = CategoriaDeCosa
-    end
+    self.clase_modelo = CategoriaDeCosa
 
     before_action(only: :index) { authorize CategoriaDeCosa }
 
     before_action :set_instancia_modelo, only: %i[new create show edit update destroy]
-
-    add_breadcrumb CategoriaDeCosa.nombre_plural, :admin_categoria_de_cosas_path
 
     private
 
