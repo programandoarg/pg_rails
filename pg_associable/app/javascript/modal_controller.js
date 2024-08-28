@@ -32,21 +32,26 @@ export default class extends Controller {
       this.back(ev)
     })
 
-    this.element.addEventListener('pg:refresh-frame', (ev) => {
-      this.back(ev)
-    })
-
     this.element.addEventListener('pg:record-updated', (ev) => {
       this.back(ev)
     })
 
     this.element.addEventListener('pg:record-destroyed', (ev) => {
-      this.back(ev)
+      this.remove()
     })
 
     document.addEventListener('turbo:before-cache', () => {
       this.element.remove()
     }, { once: true })
+  }
+
+  reloadTop () {
+    const topFrame = document.querySelector("#top")
+    if (topFrame.attributes['src']) {
+      topFrame.reload()
+    } else {
+      topFrame.setAttribute('src', window.location)
+    }
   }
 
   back (ev) {
@@ -58,8 +63,11 @@ export default class extends Controller {
       frame.src = url
       frame.innerHTML = '<div style="min-height: 30em">Cargando...</div>'
       ev.stopPropagation()
+      this.reloadTop()
     } else {
       this.modalPuntero.hide()
+      this.reloadTop()
+      ev.stopPropagation()
     }
   }
 

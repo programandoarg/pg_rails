@@ -126,7 +126,8 @@ module PgEngine
 
     def nested_record
       # TODO: esto es raro
-      return if Current.controller&.nested_record.nil? ||
+      return if !Current.controller.respond_to?(:nested_record) ||
+                Current.controller.nested_record.nil? ||
                 Current.controller.nested_record.instance_of?(object.class)
 
       Current.controller.nested_record

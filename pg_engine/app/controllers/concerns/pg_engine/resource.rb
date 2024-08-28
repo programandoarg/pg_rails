@@ -275,7 +275,7 @@ module PgEngine
       if destroy_model(model)
         if turbo_frame?
           body = <<~HTML.html_safe
-            <pg-event data-event-name="pg:refresh-frame" data-turbo-temporary>
+            <pg-event data-event-name="pg:record-destroyed" data-turbo-temporary>
             </pg-event>
           HTML
           render turbo_stream: turbo_stream.append(current_turbo_frame, body)

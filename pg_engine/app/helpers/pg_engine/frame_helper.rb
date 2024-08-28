@@ -26,9 +26,11 @@ module PgEngine
     end
 
     def embed_index(object, key)
-      turbo_frame_tag "embedded--#{key}",
-                      refresh: :morph, src: url_for([pg_namespace, object, key]) do
-        content_tag(:p, class: 'p text-body-secondary text-center') { 'Cargando...' }
+      content_tag(:div, 'data-controller': 'embedded-frame') do
+        turbo_frame_tag "embedded--#{key}",
+                        refresh: :morph, src: url_for([pg_namespace, object, key]) do
+          content_tag(:p, class: 'p text-body-secondary text-center') { 'Cargando...' }
+        end
       end
     end
   end
