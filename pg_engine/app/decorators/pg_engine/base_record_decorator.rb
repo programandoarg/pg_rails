@@ -49,7 +49,7 @@ module PgEngine
       end
     end
 
-    def destroy_link(confirm_text: '¿Estás seguro?', klass: 'btn-light', redirect_to: nil)
+    def destroy_link(confirm_text: '¿Confirmás que querés borrar el registro?', klass: 'btn-light', redirect_to: nil)
       return unless Pundit.policy!(Current.user, object).destroy?
 
       helpers.content_tag :span, rel: :tooltip, title: 'Eliminar' do

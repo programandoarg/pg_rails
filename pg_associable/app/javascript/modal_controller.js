@@ -28,8 +28,10 @@ export default class extends Controller {
         const newObject = JSON.parse(el.dataset.response)
         this.asociableOutlet.completarCampo(newObject)
         ev.stopPropagation()
+        this.modalPuntero.hide()
+      } else {
+        this.back(ev)
       }
-      this.back(ev)
     })
 
     this.element.addEventListener('pg:record-updated', (ev) => {
@@ -45,9 +47,28 @@ export default class extends Controller {
     }, { once: true })
   }
 
+  maximize (ev) {
+    const dialog = this.element.querySelector('.modal-dialog')
+    dialog.classList.toggle('modal-fullscreen')
+    const button = ev.currentTarget
+    const icon = button.querySelector('i')
+    icon.classList.toggle('bi-fullscreen')
+    icon.classList.toggle('bi-fullscreen-exit')
+
+    const tooltip = this.application.getControllerForElementAndIdentifier(button, 'tooltip')
+    if (tooltip) {
+      tooltip.hide()
+      if (icon.classList.contains('bi-fullscreen')) {
+        tooltip.setContent('Maximizar')
+      } else {
+        tooltip.setContent('Restaurar')
+      }
+    }
+  }
+
   reloadTop () {
-    const topFrame = document.querySelector("#top")
-    if (topFrame.attributes['src']) {
+    const topFrame = document.querySelector('#top')
+    if (topFrame.attributes.src) {
       topFrame.reload()
     } else {
       topFrame.setAttribute('src', window.location)
@@ -56,7 +77,6 @@ export default class extends Controller {
 
   back (ev) {
     this.history.pop()
-    // FIXME: esto no funciona, si voy al edit y luego al show y luego al destroy, vuelve al edit
     if (this.history.length > 0) {
       const url = this.history[this.history.length - 1]
       const frame = this.element.querySelector('#modal_content')

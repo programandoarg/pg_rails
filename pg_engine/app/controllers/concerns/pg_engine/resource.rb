@@ -2,7 +2,7 @@ module PgEngine
   module Resource
     def self.included(clazz)
       class << clazz
-        attr_accessor :nested_class, :nested_key, :clase_modelo
+        attr_accessor :nested_class, :nested_key, :clase_modelo, :skip_default_breadcrumb
       end
       clazz.delegate :nested_key, :nested_class, :clase_modelo, to: clazz
 
@@ -21,16 +21,18 @@ module PgEngine
         @clase_modelo = clase_modelo
 
         # FIXME: refactorear
-        if nested_record.present?
-          unless frame_embedded?
-            add_breadcrumb nested_record, nested_record.decorate.target_object
-          end
-          add_breadcrumb @clase_modelo.nombre_plural
-        elsif !modal_targeted?
-          if @clase_modelo.present?
-            add_breadcrumb @clase_modelo.nombre_plural, url_for([pg_namespace, nested_record, @clase_modelo])
-          else
-            pg_warn '@clase_modelo is nil'
+        unless clazz.skip_default_breadcrumb
+          if nested_record.present?
+            unless frame_embedded?
+              add_breadcrumb nested_record.decorate.to_s_short, nested_record.decorate.target_object
+            end
+            add_breadcrumb @clase_modelo.nombre_plural
+          elsif !modal_targeted?
+            if @clase_modelo.present?
+              add_breadcrumb @clase_modelo.nombre_plural, url_for([pg_namespace, nested_record, @clase_modelo])
+            else
+              pg_warn '@clase_modelo is nil'
+            end
           end
         end
       end
@@ -122,7 +124,8 @@ module PgEngine
 
     def new
       if can_open_modal?
-        component = ModalContentComponent.new(src: url_for)
+        path = [request.path, request.query_string].compact.join('?')
+        component = ModalContentComponent.new(src: path)
         respond_with_modal(component)
       else
         add_breadcrumb instancia_modelo.submit_default_value
@@ -131,12 +134,13 @@ module PgEngine
 
     def edit
       if can_open_modal?
-        component = ModalContentComponent.new(src: url_for)
+        path = [request.path, request.query_string].compact.join('?')
+        component = ModalContentComponent.new(src: path)
         respond_with_modal(component)
       else
         add_breadcrumb instancia_modelo.to_s_short,
                        instancia_modelo.target_object
-        add_breadcrumb 'Editando'
+        add_breadcrumb 'Modificando'
       end
     end
 
@@ -160,17 +164,30 @@ module PgEngine
     end
 
     def available_page_sizes
-      [10, 20, 30, 50, 100].push(current_page_size).uniq.sort
+      [5, 10, 20, 30, 50, 100].push(current_page_size).uniq.sort
     end
 
     def show_filters_by_default?
-      # FIXME: change "top" to "main"
-      !turbo_frame? || current_turbo_frame == 'top'
+      true
+    end
+
+    def filters_applied?
+      params[RansackMemory::Core.config[:param].presence || :q].present?
+    end
+
+    def session_key_identifier
+      ::RansackMemory::Core.config[:session_key_format]
+                           .gsub('%controller_name%', controller_path.parameterize.underscore)
+                           .gsub('%action_name%', action_name)
+                           .gsub('%request_format%', request.format.symbol.to_s)
+                           .gsub('%turbo_frame%', request.headers['Turbo-Frame'] || 'top')
+      # FIXME: rename to main?
     end
 
     def show_filters?
-      cur_route = pg_current_route
-      idtf = cur_route[:controller] + '#' + cur_route[:action] + '#open-filters'
+      return true if filters_applied?
+
+      idtf = "show-filters_#{session_key_identifier}"
 
       if params[:ocultar_filtros]
         session[idtf] = false
@@ -186,16 +203,16 @@ module PgEngine
     end
 
     def current_page_size
-      if params[:page_size].present?
-        session[page_size_session_key] = params[:page_size].to_i
+      aux = params[:page_size].presence&.to_i
+      if aux.present? && aux.positive?
+        session[page_size_session_key] = aux
       end
 
       session[page_size_session_key].presence || default_page_size
     end
 
     def page_size_session_key
-      # FIXME: change 'top' to 'main'?
-      "#{controller_name}/#{action_name}/#{current_turbo_frame || 'top'}/page_size"
+      "page_size_#{session_key_identifier}"
     end
 
     def default_page_size
@@ -205,19 +222,26 @@ module PgEngine
     def pg_respond_update
       object = instancia_modelo
       if (@saved = object.save)
-        if in_modal?
-          body = <<~HTML.html_safe
-            <pg-event data-event-name="pg:record-updated" data-turbo-temporary
-              data-response='#{object.decorate.to_json}'></pg-event>
-          HTML
-          render html: ModalContentComponent.new.with_content(body)
-                                            .render_in(view_context)
-        else
-          redirect_to object.decorate.target_object
+        respond_to do |format|
+          format.html do
+            if in_modal?
+              body = <<~HTML.html_safe
+                <pg-event data-event-name="pg:record-updated" data-turbo-temporary
+                  data-response='#{object.decorate.to_json}'></pg-event>
+              HTML
+              render html: ModalContentComponent.new.with_content(body)
+                                                .render_in(view_context)
+            else
+              redirect_to object.decorate.target_object
+            end
+          end
+          format.json do
+            render json: object.decorate.as_json
+          end
         end
       else
         add_breadcrumb instancia_modelo.decorate.to_s_short, instancia_modelo.decorate.target_object
-        add_breadcrumb 'Editando'
+        add_breadcrumb 'Modificado'
         # TODO: esto solucionaría el problema?
         # self.instancia_modelo = instancia_modelo.decorate
         #
@@ -260,7 +284,8 @@ module PgEngine
 
     def pg_respond_show
       if can_open_modal?
-        component = ModalContentComponent.new(src: url_for)
+        path = [request.path, request.query_string].compact.join('?')
+        component = ModalContentComponent.new(src: path)
         respond_with_modal(component)
       else
         add_breadcrumb instancia_modelo.to_s_short, instancia_modelo.target_object
@@ -324,7 +349,12 @@ module PgEngine
     end
 
     def render_listing
-      @collection = @collection.page(params[:page]).per(current_page_size)
+      total = @collection.count
+      current_page = params[:page].presence&.to_i || 1
+      if current_page_size * (current_page - 1) > total
+        current_page = (total.to_f / current_page_size).ceil
+      end
+      @collection = @collection.page(current_page).per(current_page_size)
       @records_filtered = default_scope_for_current_model.any? if @collection.empty?
     end
 

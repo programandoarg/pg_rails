@@ -62,15 +62,35 @@ html
           = turbo_frame_tag current_turbo_frame || 'top',
               **{ 'data-turbo-action': (turbo_frame? ? nil : :advance) }.compact do
             - if user_signed_in? && breadcrumbs.any?
-              .d-flex.px-3.py-1.d-print-none[
-                class="bg-primary-subtle align-items-center justify-content-between"
-                style="min-height: 2.5em;"]
-                nav aria-label="breadcrumb"
-                  = render_breadcrumbs
-                / = render_breadcrumbs builder: ::Bootstrap4BreadcrumbsBuilder
-                .btn-toolbar.gap-1
-                  = yield(:actions)
-              hr.my-0
+              .d-flex.d-print-none
+                .d-flex.flex-grow-1.px-3.py-1[
+                  class="#{nav_bg} align-items-center justify-content-between"
+                  style="min-height: 2.5em;"]
+                  nav aria-label="breadcrumb"
+                    - unless frame_embedded?
+                      i.bi-segmented-nav.me-2
+                    = render_breadcrumbs
+                  .btn-toolbar.gap-1
+                    = yield(:actions)
+                - if using_modal?
+                  .px-3.d-flex.align-items-center.border.border-start-0
+                    = button_tag type: :button, class: 'btn btn-sm btn-link',
+                                 data: { action: 'modal#maximize',
+                                         controller: :tooltip, 'bs-title': 'Maximizar' } do
+                      i.bi-fullscreen
+                    = link_to request.url,
+                              class: 'btn btn-sm btn-link',
+                              data: { controller: :tooltip,
+                                      'turbo-frame': :_top,
+                                      'bs-title': 'Reemplazar ventana principal' } do
+                      i.bi-box-arrow-up-right
+                    = button_tag type: :button, class: 'btn btn-sm btn-link',
+                                 data: { controller: :tooltip,
+                                         'bs-title': 'Cerrar', 'bs-dismiss': :modal },
+                                         'aria-label': 'Close' do
+                      i.bi-x-lg
+
+              / hr.my-0
             - content = content_for?(:content) ? yield(:content) : yield
             - if (!turbo_frame? || current_turbo_frame == 'default') && \
                    content.exclude?('flash-container')
@@ -88,3 +108,8 @@ html
           = render partial: 'layouts/footer'
           div style="width:100%; height: 10em"
     = render_turbo_stream_title
+
+css:
+  nav[aria-label=breadcrumb] a {
+    font-weight: bold;
+  }

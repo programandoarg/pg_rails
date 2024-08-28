@@ -30,7 +30,7 @@ document.addEventListener('turbo:before-fetch-request', (ev) => {
   // Si es POST, quito la opción text/vnd.turbo-stream.html para que
   // on successful redirect no haya posibilidad de que se abra un modal
   if (ev.detail.fetchOptions.method === 'post') {
-    ev.detail.fetchOptions.headers.Accept = "text/html, application/xhtml+xml"
+    ev.detail.fetchOptions.headers.Accept = 'text/html, application/xhtml+xml'
   }
 
   if (document.querySelector('.modal.show')) {

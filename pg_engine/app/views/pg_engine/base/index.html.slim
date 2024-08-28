@@ -18,8 +18,7 @@ div
   - if @collection.any?
     .table-responsive
       table.table.table-sm.listado.xpg-revert-width.xborder-end
-        - unless frame_embedded?
-          caption.ps-3 = page_entries_info @collection
+        caption.ps-3 = page_entries_info @collection
         thead.table-light
           tr
             - atributos_para_listar.each do |att|
@@ -42,21 +41,20 @@ div
 
     .d-flex.justify-content-center
       = paginate(@collection)
-    - unless frame_embedded?
-      .d-flex.align-items-center.justify-content-center.opacity-50
-        label.me-2 Filas por página:
-        ul.list-group.list-group-horizontal
-          - available_page_sizes.each do |page_size|
-            = link_to page_size,
-              url_for(page_size:),
-              class: "list-group-item py-0 px-1 #{'active' if current_page_size == page_size}"
+    .d-flex.align-items-center.justify-content-center.opacity-50
+      label.me-2 Filas por página:
+      ul.list-group.list-group-horizontal
+        - available_page_sizes.each do |page_size|
+          = link_to page_size,
+            url_for(page_size:),
+            class: "list-group-item py-0 px-1 #{'active' if current_page_size == page_size}"
   - elsif @records_filtered
     - i18n_key = "#{controller_key}.#{action_name}.index.empty_but_filtered"
     p.m-3
       = t(i18n_key, default: :'.empty_but_filtered', model: @clase_modelo.nombre_plural.downcase)
       | :
       span.ms-2
-      = clear_filter(title: 'Limpiar búsqueda')
+      = link_to 'Limpiar búsqueda', url_for + '?cancel_filter=true'
   - else
     - i18n_key = "#{controller_key}.#{action_name}.index.empty"
     p.m-3 = t(i18n_key, default: :'.empty', model: @clase_modelo.nombre_plural.downcase)

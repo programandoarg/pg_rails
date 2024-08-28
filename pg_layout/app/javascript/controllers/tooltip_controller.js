@@ -20,6 +20,14 @@ export default class extends Controller {
     }
   }
 
+  setContent (content) {
+    this.tooltip.setContent({ '.tooltip-inner': content })
+  }
+
+  hide () {
+    this.tooltip.hide()
+  }
+
   disconnect () {
     if (this.tooltip) {
       this.tooltip.dispose()
