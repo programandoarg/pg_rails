@@ -28,7 +28,7 @@ export default class extends Controller {
         const newObject = JSON.parse(el.dataset.response)
         this.asociableOutlet.completarCampo(newObject)
         ev.stopPropagation()
-        this.modalPuntero.hide()
+        this.remove()
       } else {
         this.back(ev)
       }
