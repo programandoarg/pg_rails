@@ -216,22 +216,13 @@ module PgEngine
     end
 
     def not_authorized(_arg_required_for_active_admin)
-      respond_to do |format|
-        format.json do
-          render json: { error: 'Acceso no autorizado' },
-                 status: :unprocessable_entity
-        end
-        # TODO: responder a turbo_stream
-        format.html do
-          if request.path == root_path
-            # TODO!: renderear un 500.html y pg_err
-            sign_out(Current.user) if Current.user.present?
-            render plain: 'Acceso no autorizado', status: :unprocessable_entity
-          else
-            go_back('Acceso no autorizado')
-          end
-        end
-      end
+      pg_warn <<~STRING
+        Acceso no autorizado.
+        User: #{Current.user.inspect}
+        Request: #{request.inspect}
+      STRING
+
+      render_my_component(BadUserInputComponent.new(error_msg: 'Acceso no autorizado'), :unauthorized)
     end
 
     def go_back(message = nil, type: :alert)

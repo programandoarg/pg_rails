@@ -257,7 +257,9 @@ module PgEngine
       if (@saved = object.save)
         respond_to do |format|
           format.html do
-            if in_modal?
+            if params[:inline_attribute].present?
+              render InlineShowComponent.new(object, params[:inline_attribute]), layout: false
+            elsif in_modal?
               body = <<~HTML.html_safe
                 <pg-event data-event-name="pg:record-updated" data-turbo-temporary
                   data-response='#{object.decorate.to_json}'></pg-event>
@@ -272,6 +274,9 @@ module PgEngine
             render json: object.decorate.as_json
           end
         end
+      elsif params[:inline_attribute].present?
+        render InlineEditComponent.new(object, params[:inline_attribute]),
+               layout: false, status: :unprocessable_entity
       else
         add_breadcrumb instancia_modelo.decorate.to_s_short, instancia_modelo.decorate.target_object
         add_breadcrumb 'Modificando'
@@ -409,16 +414,15 @@ module PgEngine
     def set_instancia_modelo
       if action_name.in? %w[new create]
         self.instancia_modelo = clase_modelo.new(modelo_params)
+        authorize(instancia_modelo)
         if nested_id.present?
           instancia_modelo.send("#{nested_key}=", nested_id)
         end
       else
         self.instancia_modelo = buscar_instancia
-
+        authorize(instancia_modelo)
         instancia_modelo.assign_attributes(modelo_params) if action_name.in? %w[update]
       end
-
-      authorize(instancia_modelo)
 
       # TODO: problema en create y update cuando falla la validacion
       # Reproducir el error antes de arreglarlo

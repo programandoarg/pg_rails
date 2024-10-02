@@ -1,3 +1,4 @@
+# TODO: rename to WarningComponent or sth
 class BadUserInputComponent < BaseComponent
   def initialize(error_msg:)
     @error_msg = error_msg

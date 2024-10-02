@@ -51,9 +51,11 @@ module PgAssociable
         options.deep_merge!({ wrapper_html: { 'data-preload': collection.decorate.to_json } })
       end
       # TODO: usar una clase más precisa para el modal?
+      #       quizás sea este el motivo por el cual no funciona el multimodal
       options.deep_merge!({ wrapper_html: { data: { controller: 'asociable',
                                                     'asociable-modal-outlet': '.modal' } } })
       options[:as] = 'pg_associable'
+
       association atributo, options
     end
 

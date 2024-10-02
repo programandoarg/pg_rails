@@ -73,9 +73,10 @@ input[type=datetime-local], input[type=datetime] {
   display: flex;
   justify-content: flex-end;
   gap: 4px;
-}
-.listado .btn-sm {
-  padding: 0em 0.3em;
+
+  .btn-sm {
+    padding: 0em 0.3em;
+  }
 }
 
 .list-group-item {
@@ -198,4 +199,22 @@ input[type=datetime-local], input[type=datetime] {
     cursor: default;
   }
   --fc-neutral-bg-color: none;
+}
+
+// Inline edit
+
+.inline-edit {
+  // text-decoration: underline;
+  // text-decoration-style: dotted;
+  // text-decoration-color: #262626;
+
+  a:hover {
+    i {
+      color: black;
+    }
+  }
+
+  input[type=text] {
+    min-width: 22em;
+  }
 }

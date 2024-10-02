@@ -34,6 +34,7 @@ class CategoriaDeCosa < ApplicationRecord
   include Hashid::Rails
 
   self.default_modal = true
+  self.inline_editable_fields = %i[nombre tipo fecha tiempo creado_por]
 
   belongs_to :creado_por, optional: true, class_name: 'User'
   belongs_to :actualizado_por, optional: true, class_name: 'User'

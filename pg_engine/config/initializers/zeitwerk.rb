@@ -6,3 +6,5 @@ Rails.autoloaders.main.ignore(
   "#{PgEngine::Engine.root}/app/overrides",
   "#{PgEngine::Engine.root}/app/views"
 )
+
+Rails.autoloaders.main.collapse("#{PgEngine::Engine.root}/app/components/inline_edit")

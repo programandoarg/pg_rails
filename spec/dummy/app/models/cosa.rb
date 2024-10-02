@@ -32,6 +32,7 @@ class Cosa < ApplicationRecord
   include Discard::Model
 
   self.default_modal = true
+  self.inline_editable_fields = %i[nombre tipo categoria_de_cosa]
 
   # Conviene tener account_id en todos los modelos aunque estén
   # el tenant sea deducible a través de sus asociaciones (ej:
@@ -48,7 +49,7 @@ class Cosa < ApplicationRecord
   scope :kept, -> { undiscarded.joins(:categoria_de_cosa).merge(CategoriaDeCosa.kept) }
 
   def kept?
-    undiscarded? && categoria_de_cosa.kept?
+    undiscarded? && (categoria_de_cosa.blank? || categoria_de_cosa.kept?)
   end
 
   enumerize :tipo, in: { completar: 0, los: 1, valores: 2 }

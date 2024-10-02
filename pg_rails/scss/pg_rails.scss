@@ -89,7 +89,7 @@ $light-border-emphasis:   shade-color($light, 60%);
   border: 1px solid $light-border-emphasis;
 }
 
-.listado tr:has(td:hover):has(.bi-eye-fill) td {
-	background-color: #f2f2f2;
-	cursor: pointer;
-}
+// .listado tr:has(td:hover):has(.bi-eye-fill) td {
+// 	background-color: #f2f2f2;
+// 	cursor: pointer;
+// }

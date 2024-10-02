@@ -15,6 +15,9 @@ class <%= class_name %> < <%= parent_class_name.classify %>
   <%- if options[:discard] -%>
   include Discard::Model
   <%- end -%>
+
+  self.default_modal = true
+  self.inline_editable_fields = %i[<%= attributes.map(&:name).join(' ') %>]
   <%- if attributes.any?(&:reference?) -%>
 
     <%- attributes.select(&:reference?).each do |attribute| -%>

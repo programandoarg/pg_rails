@@ -26,6 +26,24 @@ class PgFormBuilder < SimpleForm::FormBuilder
     super
   end
 
+  def field(attribute_name, options = {}, &)
+    model = convert_to_model(object)
+
+    if find_on_all_associations(model.class, attribute_name).present?
+      pg_associable(attribute_name, options)
+    else
+      input(attribute_name, options, &)
+    end
+  end
+
+  def find_on_all_associations(klass, campo)
+    return unless klass.respond_to? :reflect_on_all_associations
+
+    klass.reflect_on_all_associations.find do |a|
+      a.name == campo.to_sym
+    end
+  end
+
   def mensajes_de_error
     # TODO: quitar en before-cache?
     title = error_notification(message: mensaje, class: 'text-danger mb-2 error-title') if mensaje

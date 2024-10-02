@@ -9,7 +9,7 @@ table.table.table-borderless.table-sm.w-auto.mb-0.m-3
   - atributos_para_mostrar.each do |att|
     tr
       th = @clase_modelo.human_attribute_name(att)
-      td = @cosa.send(att)
+      td = render InlineShowComponent.new(@cosa.object, att)
   tr
     th = t('attributes.creado_por')
     td = @cosa.creado_por

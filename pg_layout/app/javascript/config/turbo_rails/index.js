@@ -23,8 +23,10 @@ document.addEventListener('turbo:before-cache', () => {
   })
 })
 
-document.addEventListener('turbo:frame-missing', (ev) => {
-  Rollbar.error('Turbo Frame missing')
+document.addEventListener('turbo:frame-missing', async (ev) => {
+  const text = await ev.detail.response.text()
+  Rollbar.error('turbo:frame-missing', text, ev.detail)
+  console.error('turbo:frame-missing', text, ev.detail)
   ev.preventDefault()
   const html = `
     <div>

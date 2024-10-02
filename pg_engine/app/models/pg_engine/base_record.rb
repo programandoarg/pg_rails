@@ -16,7 +16,11 @@ module PgEngine
     class << self
       # This is a per class variable, all subclasses of BaseRecord inherit it
       # BUT **the values are independent between all of them**
-      attr_accessor :default_modal
+      attr_accessor :default_modal, :inline_editable_fields
+
+      def inline_editable?(attribute)
+        inline_editable_fields.present? && inline_editable_fields.include?(attribute.to_sym)
+      end
     end
 
     # ransacker :search do |parent|

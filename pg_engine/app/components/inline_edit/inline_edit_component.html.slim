@@ -1,0 +1,14 @@
+= helpers.turbo_frame_tag(@frame_id, class: 'inline-edit')
+  = helpers.pg_form_for(@model, render_errors: false, wrapper_mappings: @wrapper_mappings,
+                        html: { class: 'd-flex align-items-start gap-1' }) do |f|
+    = hidden_field_tag :inline_attribute, @attribute
+
+    = f.field @attribute, label: false, html5: true
+
+    = button_tag class: 'btn btn-sm btn-primary',
+                 data: { controller: 'tooltip', 'bs-title': 'Guardar' } do
+      i.bi.bi-check-lg
+    = link_to users_inline_show_path(model: @model.to_gid, attribute: @attribute),
+              class: 'btn btn-sm btn-secondary',
+              data: { controller: 'tooltip', 'bs-title': 'Cancelar' } do
+      i.bi.bi-x-lg

@@ -84,22 +84,7 @@ describe DummyBaseController do
 
     it do
       subject
-      expect(response).to redirect_to root_path
-      expect(flash[:alert]).to eq 'Acceso no autorizado'
-      expect(controller).to be_user_signed_in
-    end
-
-    context 'cuando ocurre en el root_path' do
-      before do
-        allow_any_instance_of(ActionController::TestRequest).to receive(:path).and_return(root_path)
-      end
-
-      it do
-        subject
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to eq 'Acceso no autorizado'
-        expect(controller).not_to be_user_signed_in
-      end
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 

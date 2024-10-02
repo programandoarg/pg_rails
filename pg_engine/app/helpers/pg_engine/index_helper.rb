@@ -4,7 +4,7 @@ module PgEngine
   module IndexHelper
     def column_for(object, attribute)
       content_tag :td, **column_options_for(object, attribute) do
-        object.send(attribute).to_s
+        render InlineShowComponent.new(object.object, attribute)
       end
     end
 

@@ -118,8 +118,8 @@ module PgEngine
       end
     end
 
-    def edit_object_url
-      helpers.url_for([:edit, target_object].flatten)
+    def edit_object_url(**args)
+      helpers.url_for([:edit, target_object, **args].flatten)
     end
 
     def new_object_url

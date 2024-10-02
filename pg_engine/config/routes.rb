@@ -21,6 +21,10 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }, failure_app: PgEngine::DeviseFailureApp
   namespace :users, path: 'u' do
+    scope controller: 'inline_edit', path: 'inline', as: :inline do
+      get 'edit'
+      get 'show'
+    end
     get 'dashboard', to: 'dashboard#dashboard'
     post 'notifications/mark_as_seen', to: 'notifications#mark_as_seen'
     post 'notifications/mark_as_unseen', to: 'notifications#mark_as_unseen'

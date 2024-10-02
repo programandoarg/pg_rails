@@ -3,7 +3,7 @@
 div style="max-width: 22em" data-controller="pg_form"
   = pg_form_for(@<%= singular_name %> || object) do |f|
   <%- attributes.each do |attribute| -%>
-    = f.<%= attribute.reference? ? :pg_associable : :input %> :<%= attribute.name %>
+    = f.field :<%= attribute.name %>
   <%- end -%>
     .mt-2
     = f.button :submit

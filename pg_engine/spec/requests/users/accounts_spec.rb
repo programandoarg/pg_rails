@@ -16,7 +16,6 @@ describe 'Users::AccountsController' do
   it 'denies foreign account' do
     other_account = create :account
     get "/u/cuentas/#{other_account.to_param}"
-    expect(response).to have_http_status(:redirect)
-    expect(flash[:alert]).to eq 'Acceso no autorizado'
+    expect(response).to have_http_status(:unauthorized)
   end
 end

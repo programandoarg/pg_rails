@@ -25,7 +25,8 @@ div
               th.text-nowrap style="font-size: 0.8em" = encabezado att, ordenable: true
             th.text-end
               - unless @export_link == false
-                = @clase_modelo.new.decorate.export_link(request.url)
+                .actions-wrapper
+                  = @clase_modelo.new.decorate.export_link(request.url)
         tbody
           - @collection.each do |object|
             - object = object.decorate
