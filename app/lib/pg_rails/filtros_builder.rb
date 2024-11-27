@@ -5,7 +5,7 @@ module PgRails
     include PostgresHelper
     attr_accessor :controller
 
-    SUFIJOS = ['desde', 'hasta', 'incluye', 'es_igual_a']
+    SUFIJOS = ['desde', 'hasta', 'incluye', 'includes_any', 'es_igual_a']
 
     def initialize(controller, clase_modelo, campos)
       @clase_modelo = clase_modelo
@@ -37,7 +37,14 @@ module PgRails
         if @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:query].present?
           query = @filtros[campo.to_sym][:query].call(query, parametros[campo])
         elsif tipo(campo) == :enumerized
-          query = query.where("#{@clase_modelo.table_name}.#{campo} = ?", parametros[campo])
+          nombre_campo = sin_sufijo(campo)
+          suf = extraer_sufijo(campo)
+          if suf == 'includes_any'
+            array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
+            query = query.where("#{@clase_modelo.table_name}.#{nombre_campo} IN (#{array})")
+          else
+            query = query.where("#{@clase_modelo.table_name}.#{nombre_campo} = ?", parametros[campo])
+          end
         elsif tipo(campo).in?(%i[integer float decimal])
           campo_a_comparar = "#{@clase_modelo.table_name}.#{sin_sufijo(campo)}"
           query = query.where("#{campo_a_comparar} #{comparador(campo)} ?", parametros[campo])
@@ -47,14 +54,38 @@ module PgRails
           asociacion = obtener_asociacion(nombre_campo)
           if asociacion.class == ActiveRecord::Reflection::HasAndBelongsToManyReflection
             array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
+
+            # TODO: quizás usar el mismo where IN que en ActiveRecord::Reflection::HasManyReflection
             query = query.joins(nombre_campo.to_sym).group("#{@clase_modelo.table_name}.id")
               .having("ARRAY_AGG(#{asociacion.join_table}.#{asociacion.association_foreign_key}) #{comparador_array(suf)} ARRAY[#{array}]::bigint[]")
+          elsif asociacion.class == ActiveRecord::Reflection::HasManyReflection
+            array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
+            query = query.joins(nombre_campo.to_sym).where("#{asociacion.klass.table_name}.#{asociacion.association_primary_key} IN (#{array})").distinct
           elsif asociacion.class == ActiveRecord::Reflection::BelongsToReflection
+            nombre_campo = sin_sufijo(campo)
+            suf = extraer_sufijo(campo)
             if asociacion.active_record.table_name != @clase_modelo.table_name
               query = query.joins(asociacion.plural_name.to_sym)
             end
             # query = query.where("#{@clase_modelo.table_name}.#{campo}_id = ?", parametros[campo])
-            query = query.where("#{asociacion.active_record.table_name}.#{asociacion.foreign_key} = ?", parametros[campo])
+            if suf == 'includes_any'
+              array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
+              query = query.where("#{asociacion.active_record.table_name}.#{asociacion.foreign_key} IN (#{array})")
+            else
+              query = query.where("#{asociacion.active_record.table_name}.#{asociacion.foreign_key} = ?", parametros[campo])
+            end
+          elsif asociacion.class == ActiveRecord::Reflection::HasOneReflection
+            nombre_campo = sin_sufijo(campo)
+            suf = extraer_sufijo(campo)
+            if asociacion.active_record.table_name != @clase_modelo.table_name
+              query = query.joins(asociacion.plural_name.to_sym)
+            end
+            if suf == 'includes_any'
+              array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
+              query = query.joins(nombre_campo.to_sym).where("#{asociacion.klass.table_name}.#{asociacion.association_primary_key} IN (#{array})").distinct
+            else
+              query = query.where("#{asociacion.active_record.table_name}.#{asociacion.foreign_key} = ?", parametros[campo])
+            end
           else
             fail 'filtro de asociacion no soportado'
           end
@@ -104,6 +135,8 @@ module PgRails
         '='
       elsif sufijo == 'incluye'
         '@>'
+      elsif sufijo == 'includes_any'
+        '&&'
       else
         # si no tiene sufijo que por defecto se use el includes
         '@>'
@@ -140,6 +173,9 @@ module PgRails
     def placeholder_campo(campo)
       suf = extraer_sufijo(campo)
       if suf.present?
+        if suf == 'includes_any'
+          suf = ''
+        end
         "#{@clase_modelo.human_attribute_name(sin_sufijo(campo))} #{suf}"
       else
         @clase_modelo.human_attribute_name(campo)
@@ -174,8 +210,12 @@ module PgRails
       nombre_campo = sin_sufijo(campo)
       suf = extraer_sufijo(campo)
       asociacion = @clase_modelo.reflect_on_all_associations.find {|a| a.name == nombre_campo.to_sym }
+      # byebug if campo.to_s == 'cursos'
       fail 'no se encontró la asociacion' if asociacion.nil?
       if asociacion.class == ActiveRecord::Reflection::ThroughReflection
+        delegate_reflection = asociacion.instance_variable_get(:@delegate_reflection)
+        return delegate_reflection
+
         through_class = asociacion.through_reflection.class_name.constantize
         asociacion_posta = through_class.reflect_on_all_associations.find {|a| nombre_campo.to_sym.in? [a.name, a.plural_name.to_sym]  }
         fail 'no se encontró la asociacion' if asociacion_posta.nil?
@@ -187,10 +227,13 @@ module PgRails
 
     def filtro_asociacion(campo, placeholder = '')
       asociacion = obtener_asociacion(campo)
-      multiple = asociacion.class.in? [
+      suf = extraer_sufijo(campo)
+      nombre_campo = sin_sufijo(campo)
+      multiple = asociacion.class.in?([
         ActiveRecord::Reflection::HasAndBelongsToManyReflection,
         ActiveRecord::Reflection::HasManyReflection
-      ]
+      ]) || suf == 'includes_any'
+      # byebug if campo.to_s.include? 'creado'
       nombre_clase = asociacion.options[:class_name]
       if nombre_clase.nil?
         if multiple
@@ -200,14 +243,18 @@ module PgRails
         end
       end
       clase_asociacion = Object.const_get(nombre_clase)
-      scope = Pundit.policy_scope!(controller.current_user, clase_asociacion)
+      if @filtros[campo][:scope].present?
+        scope = @filtros[campo][:scope]
+      else
+        scope = Pundit.policy_scope!(controller.current_user, clase_asociacion)
+      end
       if scope.respond_to?(:without_deleted)
         scope = scope.without_deleted
       end
       map = scope.map { |o| [o.to_s, o.id] }
 
       unless @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:include_blank] == false
-        map.unshift ["Seleccionar #{@clase_modelo.human_attribute_name(campo.to_sym).downcase}", nil]
+        map.unshift ["Seleccionar #{@clase_modelo.human_attribute_name(nombre_campo.to_sym).downcase}", nil]
       end
 
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
@@ -221,15 +268,24 @@ module PgRails
     end
 
     def filtro_select(campo, placeholder = '')
-      map = @clase_modelo.send(campo).values.map do |key|
-        [I18n.t("#{@clase_modelo.to_s.underscore}.#{campo}.#{key}", default: key.humanize), key.value]
+      suf = extraer_sufijo(campo)
+      nombre_campo = sin_sufijo(campo)
+      multiple = suf == 'includes_any'
+
+      map = @clase_modelo.send(nombre_campo).values.map do |key|
+        [I18n.t("#{@clase_modelo.to_s.underscore}.#{nombre_campo}.#{key}", default: key.humanize), key.value]
       end
       unless @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:include_blank] == false
         map.unshift ["Seleccionar #{placeholder.downcase}", nil]
       end
       default = parametros_controller[campo].nil? ? nil : parametros_controller[campo]
       content_tag :div, class: 'filter' do
-        select_tag campo, options_for_select(map, default), class: 'form-control pg-input-lg'
+        if multiple
+          select_tag campo, options_for_select(map, default), multiple: true, class: 'form-control selectize pg-input-lg'
+        else
+          select_tag campo, options_for_select(map, default), class: 'form-control pg-input-lg'
+        end
+        # select_tag campo, options_for_select(map, default), class: 'form-control pg-input-lg'
       end
     end
 
