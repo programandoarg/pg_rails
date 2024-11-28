@@ -34,6 +34,8 @@ module PgRails
       parametros = parametros_controller if parametros.nil?
       @filtros.each do |campo, opciones|
         next unless parametros[campo].present?
+        next if parametros[campo].is_a?(Array) && parametros[campo].select(&:present?).empty?
+
         if @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:query].present?
           query = @filtros[campo.to_sym][:query].call(query, parametros[campo])
         elsif tipo(campo) == :enumerized
