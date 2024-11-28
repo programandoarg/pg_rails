@@ -62,7 +62,7 @@ module PgRails
               .having("ARRAY_AGG(#{asociacion.join_table}.#{asociacion.association_foreign_key}) #{comparador_array(suf)} ARRAY[#{array}]::bigint[]")
           elsif asociacion.class == ActiveRecord::Reflection::HasManyReflection
             array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
-            query = query.joins(nombre_campo.to_sym).where("#{asociacion.klass.table_name}.#{asociacion.association_primary_key} IN (#{array})").distinct
+            query = query.joins(nombre_campo.to_sym).where("#{asociacion.klass.table_name}.#{asociacion.association_primary_key} IN (#{array})")
           elsif asociacion.class == ActiveRecord::Reflection::BelongsToReflection
             nombre_campo = sin_sufijo(campo)
             suf = extraer_sufijo(campo)
@@ -84,7 +84,7 @@ module PgRails
             end
             if suf == 'includes_any'
               array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
-              query = query.joins(nombre_campo.to_sym).where("#{asociacion.klass.table_name}.#{asociacion.association_primary_key} IN (#{array})").distinct
+              query = query.joins(nombre_campo.to_sym).where("#{asociacion.klass.table_name}.#{asociacion.association_primary_key} IN (#{array})")
             else
               query = query.where("#{asociacion.active_record.table_name}.#{asociacion.foreign_key} = ?", parametros[campo])
             end
