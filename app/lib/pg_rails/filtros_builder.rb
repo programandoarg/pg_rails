@@ -52,42 +52,23 @@ module PgRails
           query = query.where("#{campo_a_comparar} #{comparador(campo)} ?", parametros[campo])
         elsif tipo(campo) == :asociacion
           nombre_campo = sin_sufijo(campo)
-          suf = extraer_sufijo(campo)
+          # suf = extraer_sufijo(campo)
           asociacion = obtener_asociacion(nombre_campo)
           if asociacion.class == ActiveRecord::Reflection::HasAndBelongsToManyReflection
-            array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
-
-            # TODO: quizás usar el mismo where IN que en ActiveRecord::Reflection::HasManyReflection
-            query = query.joins(nombre_campo.to_sym).group("#{@clase_modelo.table_name}.id")
-              .having("ARRAY_AGG(#{asociacion.join_table}.#{asociacion.association_foreign_key}) #{comparador_array(suf)} ARRAY[#{array}]::bigint[]")
+            query = query.left_joins(nombre_campo.to_sym)
+            query = add_asociacion_cond(query, "#{asociacion.klass.table_name}.#{asociacion.association_primary_key}", parametros[campo])
           elsif asociacion.class == ActiveRecord::Reflection::HasManyReflection
-            array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
-            query = query.joins(nombre_campo.to_sym).where("#{asociacion.klass.table_name}.#{asociacion.association_primary_key} IN (#{array})")
+            query = query.left_joins(nombre_campo.to_sym)
+            query = add_asociacion_cond(query, "#{asociacion.klass.table_name}.#{asociacion.association_primary_key}", parametros[campo])
           elsif asociacion.class == ActiveRecord::Reflection::BelongsToReflection
-            nombre_campo = sin_sufijo(campo)
-            suf = extraer_sufijo(campo)
             if asociacion.active_record.table_name != @clase_modelo.table_name
               query = query.joins(asociacion.plural_name.to_sym)
             end
-            # query = query.where("#{@clase_modelo.table_name}.#{campo}_id = ?", parametros[campo])
-            if suf == 'includes_any'
-              array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
-              query = query.where("#{asociacion.active_record.table_name}.#{asociacion.foreign_key} IN (#{array})")
-            else
-              query = query.where("#{asociacion.active_record.table_name}.#{asociacion.foreign_key} = ?", parametros[campo])
-            end
+
+            query = add_asociacion_cond(query, "#{asociacion.active_record.table_name}.#{asociacion.foreign_key}", parametros[campo])
           elsif asociacion.class == ActiveRecord::Reflection::HasOneReflection
-            nombre_campo = sin_sufijo(campo)
-            suf = extraer_sufijo(campo)
-            if asociacion.active_record.table_name != @clase_modelo.table_name
-              query = query.joins(asociacion.plural_name.to_sym)
-            end
-            if suf == 'includes_any'
-              array = parametros[campo].class == Array ? parametros[campo].join(',') : parametros[campo]
-              query = query.joins(nombre_campo.to_sym).where("#{asociacion.klass.table_name}.#{asociacion.association_primary_key} IN (#{array})")
-            else
-              query = query.where("#{asociacion.active_record.table_name}.#{asociacion.foreign_key} = ?", parametros[campo])
-            end
+            query = query.left_joins(nombre_campo.to_sym)
+            query = add_asociacion_cond(query, "#{asociacion.klass.table_name}.#{asociacion.association_primary_key}", parametros[campo])
           else
             fail 'filtro de asociacion no soportado'
           end
@@ -112,6 +93,22 @@ module PgRails
         end
       end
       query
+    end
+
+    def add_asociacion_cond(query, field_name, value)
+      array = if value.class == Array
+                value
+              else
+                [value]
+              end
+      should_include_nil = array.include?('blank')
+      include_nil = nil
+      include_nil = "#{field_name} IS NULL" if should_include_nil
+      array = array.reject { |_1| _1 == 'blank' }.join(',')
+      array_cond = nil
+      array_cond = "#{field_name} IN (#{array})" if array.present?
+      cond = [array_cond, include_nil].compact.join(' OR ')
+      query.where(cond)
     end
 
     def tipo(campo)
@@ -254,6 +251,7 @@ module PgRails
         scope = scope.without_deleted
       end
       map = scope.map { |o| [o.to_s, o.id] }
+      map.unshift ["- Ninguno -", 'blank']
 
       unless @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:include_blank] == false
         map.unshift ["Seleccionar #{@clase_modelo.human_attribute_name(nombre_campo.to_sym).downcase}", nil]
