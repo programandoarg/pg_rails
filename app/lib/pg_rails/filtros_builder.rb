@@ -115,6 +115,8 @@ module PgRails
       nombre_campo = sin_sufijo(campo)
       if @filtros[nombre_campo.to_sym].present? && @filtros[nombre_campo.to_sym][:tipo].present?
         @filtros[nombre_campo.to_sym][:tipo]
+      elsif @filtros[campo.to_sym].present? && @filtros[campo.to_sym][:tipo].present?
+        @filtros[campo.to_sym][:tipo]
       elsif @clase_modelo.respond_to?(:enumerized_attributes) && @clase_modelo.enumerized_attributes[nombre_campo.to_s].present?
         :enumerized
       elsif @clase_modelo.reflect_on_all_associations.find {|a| a.name == nombre_campo.to_sym }.present?
