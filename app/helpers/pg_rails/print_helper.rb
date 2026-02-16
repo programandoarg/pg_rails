@@ -135,6 +135,8 @@ module PgRails
           if nombre_clase.constantize.defined_enums[field].present?
             valor = nombre_clase.constantize.defined_enums[field].invert[value]
             I18n.t("enums.#{nombre_clase.downcase}.#{field}.#{valor}", default: valor)
+          elsif nombre_clase.constantize.respond_to?(:enumerized_attributes) && @clase_modelo.enumerized_attributes[field.to_s].present?
+            nombre_clase.constantize.new(field => value).send("#{field}_text")
           else
             truncate_title(value.to_s.encode("UTF-8", invalid: :replace, undef: :replace))
           end
