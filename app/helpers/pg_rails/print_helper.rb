@@ -114,8 +114,7 @@ module PgRails
         value ? 'Si' : 'No'
       elsif value.nil?
         '-'
-      elsif field.ends_with?("_id") && value.present?
-        asociacion = nombre_clase.constantize.reflect_on_all_associations.find {|a| a.name == field.gsub(/_id$/, '').to_sym }
+      elsif field.ends_with?("_id") && value.present? && (asociacion = nombre_clase.constantize.reflect_on_all_associations.find {|a| a.name == field.gsub(/_id$/, '').to_sym })
         nombre_clase = asociacion.options[:class_name]
         multiple = asociacion.class.in?([
           ActiveRecord::Reflection::HasAndBelongsToManyReflection,
@@ -128,8 +127,12 @@ module PgRails
             nombre_clase = asociacion.name.to_s.camelize
           end
         end
-        clase_asociacion = Object.const_get(nombre_clase)
-        clase_asociacion.find(value)
+	begin
+          clase_asociacion = Object.const_get(nombre_clase)
+          clase_asociacion.find(value)
+	rescue NameError => e
+	  value
+	end
       else
         begin
           if nombre_clase.constantize.defined_enums[field].present?
@@ -144,11 +147,13 @@ module PgRails
           Rails.logger.error(e)
           Rollbar.error(e)
           truncate_title(value.to_s.encode("UTF-8", invalid: :replace, undef: :replace))
+	  nil
         end
       end
     rescue StandardError => e
       Rails.logger.error(e)
       Rollbar.error(e)
+      nil
     end
 
     def parsear_tiempo(datetime)
